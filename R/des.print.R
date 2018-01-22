@@ -302,17 +302,17 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       b <- grep("b", erg$`p-values`)
       erg$`p-values` <- gsub("a", "", erg$`p-values`)
       erg$`p-values` <- gsub("b", "", erg$`p-values`)
-      erg <- ReporteRs::FlexTable(erg, header.columns = F, add.rownames = F)
+      erg <- FlexTable(erg, header.columns = F, add.rownames = F)
 
       if (length(a) != 0) {
         erg[a, 'p-values' ,
-            text.properties=ReporteRs::textBold(vertical.align = 'superscript', font.size = fsizeSup)] <- 'a'
+            text.properties=textBold(vertical.align = 'superscript', font.size = fsizeSup)] <- 'a'
       }
       if(length(b)!=0) {
         erg[b, 'p-values' ,
-            text.properties=ReporteRs::textBold(vertical.align = 'superscript', font.size = fsizeSup)] <- 'b'
+            text.properties=textBold(vertical.align = 'superscript', font.size = fsizeSup)] <- 'b'
       }
-      erg <- ReporteRs::addHeaderRow(erg, value = names.erg)
+      erg <- addHeaderRow(erg, value = names.erg)
 
       header <- c("")
       if ("groups" %in% which.col) {
@@ -328,21 +328,21 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
         header <- c(header, "")
       }
 
-      erg <- ReporteRs::addHeaderRow(erg, value = header)
-      erg <- ReporteRs::addFooterRow(erg, value = foot.ab, colspan = colspan, text.properties = ReporteRs::textBoldItalic(font.size = fsizeFoo))
-      erg[to = "header"] <- ReporteRs::parCenter()
-      erg[,2:(colspan - 1)] <- ReporteRs::parCenter()
-      erg[,colspan] <- ReporteRs::parRight()
-      erg <- ReporteRs::setFlexTableBorders(object=erg, inner.vertical = ReporteRs::borderProperties( width = 0 ),
-                                            inner.horizontal = ReporteRs::borderProperties( width = 0 ),
-                                            outer.vertical = ReporteRs::borderProperties( width = 0 ),
-                                            outer.horizontal = ReporteRs::borderProperties(color="black",style="solid"), body = TRUE, header = TRUE,footer=TRUE)
-      erg <- ReporteRs::setFlexTableWidths(erg, widths =c(1.5/width, rep(0.9/width, colspan-1)) )
-      doc <- ReporteRs::docx( )
-      doc <- ReporteRs::addParagraph(doc, ReporteRs::pot(tab.caption, ReporteRs::textProperties( font.size = fsizeSup, font.weight = "bold")), level = 1, underline = T)
-      doc <- ReporteRs::addFlexTable(doc, erg)
+      erg <- addHeaderRow(erg, value = header)
+      erg <- addFooterRow(erg, value = foot.ab, colspan = colspan, text.properties = textBoldItalic(font.size = fsizeFoo))
+      erg[to = "header"] <- parCenter()
+      erg[,2:(colspan - 1)] <- parCenter()
+      erg[,colspan] <- parRight()
+      erg <- setFlexTableBorders(object=erg, inner.vertical = borderProperties( width = 0 ),
+                                            inner.horizontal = borderProperties( width = 0 ),
+                                            outer.vertical = borderProperties( width = 0 ),
+                                            outer.horizontal = borderProperties(color="black",style="solid"), body = TRUE, header = TRUE,footer=TRUE)
+      erg <- setFlexTableWidths(erg, widths =c(1.5/width, rep(0.9/width, colspan-1)) )
+      doc <- docx( )
+      doc <- addParagraph(doc, pot(tab.caption, textProperties( font.size = fsizeSup, font.weight = "bold")), level = 1, underline = T)
+      doc <- addFlexTable(doc, erg)
       if (create == "word") {
-        ReporteRs::writeDoc(doc, file = file)
+        writeDoc(doc, file = file)
       }
       else if (create == "R") {
         show(erg)
@@ -351,8 +351,8 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
 
     } else {
       colspan <- length(erg[1,])
-      erg <- ReporteRs::FlexTable(erg, header.columns = F, add.rownames = F)
-      erg <- ReporteRs::addHeaderRow(erg, value = names.erg)
+      erg <- FlexTable(erg, header.columns = F, add.rownames = F)
+      erg <- addHeaderRow(erg, value = names.erg)
       header <- c("")
       if ("groups" %in% which.col) {
         header <-c (header, n.vec)
@@ -367,20 +367,20 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
         header <- c(header, "")
       }
 
-      erg <- ReporteRs::addHeaderRow(erg, value = header)
-      erg[to = "header"] <- ReporteRs::parCenter()
-      erg[,2:(colspan - 1)] <- ReporteRs::parCenter()
-      erg[,colspan] <- ReporteRs::parRight()
-      erg <- ReporteRs::setFlexTableBorders(object=erg, inner.vertical = ReporteRs::borderProperties( width = 0 ),
-                                            inner.horizontal = ReporteRs::borderProperties( width = 0 ),
-                                            outer.vertical = ReporteRs::borderProperties( width = 0 ),
-                                            outer.horizontal = ReporteRs::borderProperties(color = "black",style = "solid"), body = TRUE, header = TRUE)
-      erg <- ReporteRs::setFlexTableWidths(erg, widths = c(1.5, rep(0.9, colspan-1)) )
-      doc <- ReporteRs::docx( )
-      doc <- ReporteRs::addParagraph(doc, ReporteRs::pot(tab.caption, ReporteRs::textProperties( font.size = fsizeSup, font.weight = "bold")), level = 1, underline = T)
-      doc <- ReporteRs::addFlexTable(doc, erg)
+      erg <- addHeaderRow(erg, value = header)
+      erg[to = "header"] <- parCenter()
+      erg[,2:(colspan - 1)] <- parCenter()
+      erg[,colspan] <- parRight()
+      erg <- setFlexTableBorders(object=erg, inner.vertical = borderProperties( width = 0 ),
+                                            inner.horizontal = borderProperties( width = 0 ),
+                                            outer.vertical = borderProperties( width = 0 ),
+                                            outer.horizontal = borderProperties(color = "black",style = "solid"), body = TRUE, header = TRUE)
+      erg <- setFlexTableWidths(erg, widths = c(1.5, rep(0.9, colspan-1)) )
+      doc <- docx( )
+      doc <- addParagraph(doc, pot(tab.caption, textProperties( font.size = fsizeSup, font.weight = "bold")), level = 1, underline = T)
+      doc <- addFlexTable(doc, erg)
       if (create == "word") {
-        ReporteRs::writeDoc(doc, file = file)
+        writeDoc(doc, file = file)
       }
       if (create == "R") {
         show(erg)
