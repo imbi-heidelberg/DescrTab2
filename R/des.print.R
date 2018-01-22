@@ -169,7 +169,22 @@
 #' dat <- ChickWeight[,-4]
 #' des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 #' @keyword descriptive statistics table
-#' @import ReporteRs
+#' @importFrom ReporteRs FlexTable
+#' @importFrom ReporteRs textBold
+#' @importFrom ReporteRs addHeaderRow
+#' @importFrom ReporteRs addFooterRow
+#' @importFrom ReporteRs textBoldItalic
+#' @importFrom ReporteRs parCenter
+#' @importFrom ReporteRs parRight
+#' @importFrom ReporteRs setFlexTableBorders
+#' @importFrom ReporteRs borderProperties
+#' @importFrom ReporteRs setFlexTableWidths
+#' @importFrom ReporteRs docx
+#' @importFrom ReporteRs addParagraph
+#' @importFrom ReporteRs pot
+#' @importFrom ReporteRs textProperties
+#' @importFrom ReporteRs addFlexTable
+#' @importFrom ReporteRs writeDoc
 #' @importFrom xtable xtable
 #' @importFrom tools texi2dvi
 #' @export
