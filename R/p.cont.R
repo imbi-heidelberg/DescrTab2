@@ -1,5 +1,3 @@
-#' @name p.cont
-#' @alias p.cont
 #' @title
 #' p-value calculator for continous variables
 #' @description
@@ -42,9 +40,9 @@
 #' \link[nlme]{lme}
 #' \link[car]{Anova}
 #' examples
-#' \dontrun
+#' \dontrun{
 #' p.cont(x=rnorm(100,0,1), group=rep(1:4,25))
-#' @keyword p-value for continous
+#' }
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #' @export

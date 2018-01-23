@@ -18,10 +18,17 @@ The median is returned.
 \description{
 Compute the median of continous variables.
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
+\examples{
+\dontrun{
+set.seed(12345)
+x<-rnorm(100)
+
+med.new(x,k=c(3))
+}
 }
 \seealso{
 \code{\link{formatr}}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}

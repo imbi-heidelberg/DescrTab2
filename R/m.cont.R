@@ -1,5 +1,3 @@
-#' @name m.cont
-#' @alias m.cont
 #' @title
 #' Decide which test to use for the p-value calculation by continous variables.
 #' @description
@@ -21,9 +19,9 @@
 #' @author
 #' Lorenz Uhlmann, Csilla van Lunteren
 #' @examples
-#' \dontrun
+#' \dontrun{
 #' m.cont(group=rep(1:4,25))
-#' @keyword test by continous
+#' }
 #' @export
 m.cont <- function(group, paired = F, is.ordered = F, nonparametric = F, t.log = F) {
   if (length(levels(group)) == 2) {

@@ -1,5 +1,3 @@
-#' @name p.cat
-#' @alias p.cat
 #' @title
 #' p-value calculator for categorical variables
 #' @description
@@ -15,7 +13,7 @@
 #' Logical. Is the categorial Variable paired?
 #' @param is.ordered
 #' Logical. Is the categorial Variable ordered?
-#' @correct.cat
+#' @param correct.cat
 #' Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})
 #' @param correct.wilcox
 #' Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})
@@ -24,7 +22,7 @@
 #' The footnotes aren't produced in this function.
 #' @param create
 #' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
-#' Only usefull if \code{index} is not \code{NULL.
+#' Only usefull if \code{index} is not \code{NULL}.
 #' @details
 #' Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples. (see \code{\link{wilcox.test}}).
 #' Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent, ordered samples. (see \code{\link{kruskal.test}}).
@@ -35,9 +33,9 @@
 #' @author
 #' Lorenz Uhlmann, Csilla van Lunteren
 #' @examples
-#' \dontrun
+#' \dontrun{
 #' p.cat(x=rep(1:5,20), group=rep(1:4,25))
-#' @keyword p-value for categorical
+#' }
 #' @export
 p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(),
                   create = "tex") {

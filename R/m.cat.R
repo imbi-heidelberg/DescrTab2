@@ -1,5 +1,3 @@
-#' @name m.cat
-#' @alias m.cat
 #' @title
 #' Decide which test to use for the p-value calculation by categorial variables.
 #' @description
@@ -17,9 +15,9 @@
 #' @author
 #' Lorenz Uhlmann, Csilla van Lunteren
 #' @examples
-#' \dontrun
+#' \dontrun{
 #' m.cat(paired=T, is.ordered=T)
-#' @keyword test by categorial
+#' }
 #' @export
 m.cat <- function(group, paired = F, is.ordered = F) {
   if (is.ordered) {
