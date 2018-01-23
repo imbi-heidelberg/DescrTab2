@@ -1,5 +1,3 @@
-#' @name inqur
-#' @alias inqur
 #' @title
 #' Calculation of the first and third quantile
 #' @description
@@ -22,9 +20,8 @@
 #' set.seed(12345)
 #' x<-rnorm(100)
 #'
-#' inqur(x, k = c(3))}
-#' @keyword quantile
-#'
+#' inqur(x, k = c(3))
+#' }
 #' @export
 
 inqur <- function(x, k = c()) {

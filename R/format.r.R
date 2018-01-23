@@ -1,5 +1,3 @@
-#' @name formatr
-#' @alias formatr
 #' @title Format numbers
 #' @description
 #' Rounds a number x to k decimal places with a uniform representation (<0.001 for k=3) for all numbers that are not in the disabling area.
@@ -19,8 +17,8 @@
 #' @examples
 #' \dontrun{
 #' x<-c(0.1,0.01,0.001)
-#' formatr(x, k=2, cl.z=T)}
-#' @keyword Format numbers uniform
+#' formatr(x, k=2, cl.z=T)
+#' }
 #' @export
 formatr <- function(x, k = 3, cl.z = F) {
   val <- f.r(x, k)

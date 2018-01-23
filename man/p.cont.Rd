@@ -48,7 +48,7 @@ Anova: A parametric Test for a comparison of more than 2 independent samples. (s
 \link[nlme]{lme}
 \link[car]{Anova}
 examples
-\dontrun
+\dontrun{
 p.cont(x=rnorm(100,0,1), group=rep(1:4,25))
 }
-
+}

@@ -1,7 +1,4 @@
-#' @title Create or print an output of a descriptive statistics table
-#'
-#' @name des.print
-#' @alias des.print
+#' Create or print an output of a descriptive statistics table
 #'
 #' @description
 #' This is the main function for the user.
@@ -48,10 +45,10 @@
 #' @param var.equal
 #' Logical. Should variances be assumed to be equal when applying t-tests?
 #' @param correct.cat
-#' @param Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})
+#' Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})
 #' @param correct.wilcox
 #' Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})
-#' @param t.log}{
+#' @param t.log
 #' Vector of indices: The variables for which the log of the original data
 #' should be used when testint for a difference between the groups.
 #' @param which.col
@@ -168,7 +165,7 @@
 #' group <- Diet
 #' dat <- ChickWeight[,-4]
 #' des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
-#' @keyword descriptive statistics table
+#' }
 #' @importFrom ReporteRs FlexTable
 #' @importFrom ReporteRs textBold
 #' @importFrom ReporteRs addHeaderRow

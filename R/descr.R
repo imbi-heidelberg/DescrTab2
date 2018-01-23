@@ -1,6 +1,5 @@
-#' @name descr
-#' @alias descr
 #' @title Create a descriptive statistics table
+#'
 #' @description
 #' Generate a table of descriptive statistics with p-values obtained in tests for difference between the groups.
 #' @usage
@@ -77,7 +76,7 @@
 #' \code{\link{p.cat}}
 #' \code{\link{p.cont}}
 #' @examples
-#' \dontrun
+#' \dontrun{
 #' ##Dataset with two groups
 #' infert
 #' attach(infert)
@@ -122,7 +121,7 @@
 #' group <- Diet
 #' dat <- ChickWeight[,-4]
 #' descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create = "word")
-#' @keyword descriptive statistics
+#' }
 #' @export
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,

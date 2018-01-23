@@ -24,10 +24,10 @@ The Name of the Test is returned.
 It choose the test which should use for the p-value calculation for continous variables. The Wilcoxon-Test, t-Test, Firedman-Test, Anova Typ III, Kruskal-Test and a Anova are possible.
 }
 \examples{
-\dontrun
+\dontrun{
 m.cont(group=rep(1:4,25))
+}
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren
 }
-

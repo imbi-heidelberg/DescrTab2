@@ -19,16 +19,16 @@ If not specified, the number of decimal places is 1 or 2.}
 Compute the minimum and maximum of continous variables.
 }
 \examples{
-\dontrun
+\dontrun{
 set.seed(12345)
 x<-rnorm(100)
 
 minmax(x,k=2)
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
 }
 \seealso{
 \code{\link{formatr}}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}

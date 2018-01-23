@@ -1,7 +1,4 @@
-#' @name minmax
-#' @alias minmax
-#' @title
-#' Minimum and maximum value of continous variables
+#' @title Minimum and maximum value of continous variables
 #' @description
 #' Compute the minimum and maximum of continous variables.
 #' @usage
@@ -18,12 +15,12 @@
 #' @seealso
 #' \code{\link{formatr}}
 #' @examples
-#' \dontrun
+#' \dontrun{
 #' set.seed(12345)
 #' x<-rnorm(100)
 #'
 #' minmax(x,k=2)
-#' @keyword Minimum and maximum
+#' }
 #' @export
 minmax <- function(x, k = 1) {
   if (length(x) != 0){

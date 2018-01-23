@@ -72,7 +72,7 @@ Attention: the table has no caption and numers of observations per group.
 Generate a table of descriptive statistics with p-values obtained in tests for difference between the groups.
 }
 \examples{
-\dontrun
+\dontrun{
 ##Dataset with two groups
 infert
 attach(infert)
@@ -118,8 +118,6 @@ group <- Diet
 dat <- ChickWeight[,-4]
 descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create = "word")
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
 }
 \seealso{
 \code{\link{med.new}}
@@ -132,4 +130,6 @@ Lorenz Uhlmann, Csilla van Lunteren
 \code{\link{p.cat}}
 \code{\link{p.cont}}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}

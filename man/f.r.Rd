@@ -18,10 +18,13 @@ The rounded number is returned.
 Rounds a number x to k decimal places.
 }
 \examples{
-\dontrun
+\dontrun{
 set.seed(12345)
 x<-rnorm(1)
 k<-3
 f.r(x,k)
 }
-
+}
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}

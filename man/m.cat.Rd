@@ -20,10 +20,10 @@ The name of the test is returned.
 It choose the test which should use for the p-value calculation for categorial variables. The Wilcoxon-Test, McNemar-Test and the Chi-Squared-Test are possible.
 }
 \examples{
-\dontrun
+\dontrun{
 m.cat(paired=T, is.ordered=T)
+}
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren
 }
-

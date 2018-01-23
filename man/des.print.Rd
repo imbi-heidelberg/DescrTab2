@@ -42,7 +42,12 @@ Default fontsize:
 
 \item{var.equal}{Logical. Should variances be assumed to be equal when applying t-tests?}
 
+\item{correct.cat}{Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})}
+
 \item{correct.wilcox}{Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})}
+
+\item{t.log}{Vector of indices: The variables for which the log of the original data
+should be used when testint for a difference between the groups.}
 
 \item{which.col}{Which columns should be provided ("groups", "total", "p-values")? Combinations are allowed. "groups" or "total" must be listed. Only "total" and "p-values" is not possible.
 Type of p-value calculation see \code{\link{p.cat}} (categorical) or \code{\link{p.cont}} (continuous).}
@@ -84,11 +89,6 @@ If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 wi
 \item{digits.p}{Number of digits for presentation in the table: For percentages.}
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
-
-\item{Logical.}{Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})}
-
-\item{t.log}{}{Vector of indices: The variables for which the log of the original data
-should be used when testint for a difference between the groups.}
 }
 \value{
 Only by using \code{create == "R"} An R object will be returned. However, depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table and saved in a file as specified in the file parameter.
@@ -106,8 +106,56 @@ Even though it is supposed to be a good starting point for a descriptive analysi
 If no group variable is specified only the total column (see parameter \code{which.col}) will be returned.
 Attention in the case of \code{create = "word"}: Note that ReporteRs requires Java (>=  1.6). Make sure you have an installed JRE. You can check this with \code{system("java -version")}
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
+\examples{
+\dontrun{
+infert
+attach(infert)
+#is.factor(education)
+#is.factor(age)
+#is.factor(parity)
+#is.factor(induced)
+#is.factor(case)
+#infert$case<-as.factor(case)
+#case<-as.factor(case)
+
+#is.factor(spontaneous)
+#is.factor(stratum)
+#is.factor(pooled.stratum)
+
+#we use case as Grouping variable
+file <- "C:/Users/lunteren/Desktop/infert/DescriptiveStatisticTable.docx"
+
+#Version 1
+des.print(dat = infert, group = 5, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+#Version 2
+des.print(dat = infert, group = case, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+#Version 3
+group <- case
+dat <- infert[,-5]
+des.print(dat = dat, group = group, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+
+##Dataset with more then two groups
+ChickWeight
+attach(ChickWeight)
+
+#is.factor(weight)
+#is.factor(Time)
+#is.factor(Chick)
+#is.factor(Diet)
+
+#we use Diet as Grouping variable
+
+file <- "C:/Users/lunteren/Desktop/ChickWeight/DescriptiveStatisticTable.docx"
+
+#Version 1
+des.print(dat = ChickWeight, group = 4, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+#Version 2
+des.print(dat = ChickWeight, group = Diet, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+#Version 3
+group <- Diet
+dat <- ChickWeight[,-4]
+des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+}
 }
 \seealso{
 \code{\link{descr}}
@@ -124,4 +172,6 @@ Lorenz Uhlmann, Csilla van Lunteren
 \link[xtable]{xtable}
 \link[tools]{texi2dvi}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}

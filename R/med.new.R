@@ -1,7 +1,4 @@
-#' @name med.new
-#' @alias med.new
-#' @title
-#' Median value for continous variables
+#' @title Median value for continous variables
 #' @description
 #' Compute the median of continous variables.
 #' @usage
@@ -23,7 +20,7 @@
 #' x<-rnorm(100)
 #'
 #' med.new(x,k=c(3))
-#' @keyword Median
+#' }
 #' @export
 med.new <- function(x, k = c()) {
   if (length(x)!=0){
