@@ -116,7 +116,23 @@
 #' \code{\link{minmax}}
 #' \code{\link{p.cat}}
 #' \code{\link{p.cont}}
-#' \link{ReporteRs}
+#' \link[flextable]{regulartable}
+#' \link[flextable]{autofit}
+#' \link[flextable]{flextable}
+#' \link[flextable]{set_header_df}
+#' \link[flextable]{merge_h}
+#' \link[flextable]{merge_at}
+#' \link[flextable]{align}
+#' \link[flextable]{style}
+#' \link[flextable]{border}
+#' \link[flextable]{bold}
+#' \link[flextable]{width}
+#' \link[flextable]{height}
+#' \link[flextable]{body_add_flextable}
+#' \link[officer]{fp_text}
+#' \link[officer]{fp_cell}
+#' \link[officer]{fp_border}
+#' \link[officer]{read_docx}
 #' \link[xtable]{xtable}
 #' \link[tools]{texi2dvi}
 #'
@@ -171,22 +187,23 @@
 #' des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 #' }
 #'
-#' @importFrom ReporteRs FlexTable
-#' @importFrom ReporteRs textBold
-#' @importFrom ReporteRs addHeaderRow
-#' @importFrom ReporteRs addFooterRow
-#' @importFrom ReporteRs textBoldItalic
-#' @importFrom ReporteRs parCenter
-#' @importFrom ReporteRs parRight
-#' @importFrom ReporteRs setFlexTableBorders
-#' @importFrom ReporteRs borderProperties
-#' @importFrom ReporteRs setFlexTableWidths
-#' @importFrom ReporteRs docx
-#' @importFrom ReporteRs addParagraph
-#' @importFrom ReporteRs pot
-#' @importFrom ReporteRs textProperties
-#' @importFrom ReporteRs addFlexTable
-#' @importFrom ReporteRs writeDoc
+#' @importFrom flextable regulartable
+#' @importFrom flextable autofit
+#' @importFrom flextable flextable
+#' @importFrom flextable set_header_df
+#' @importFrom flextable merge_h
+#' @importFrom flextable merge_at
+#' @importFrom flextable align
+#' @importFrom flextable style
+#' @importFrom flextable border
+#' @importFrom flextable bold
+#' @importFrom flextable width
+#' @importFrom flextable height
+#' @importFrom flextable body_add_flextable
+#' @importFrom officer fp_text
+#' @importFrom officer fp_cell
+#' @importFrom officer fp_border
+#' @importFrom officer read_docx
 #' @importFrom xtable xtable
 #' @importFrom tools texi2dvi
 #'
@@ -486,9 +503,9 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       erg <- erg[, -erg.out]
 
     if ("p-values" %in% which.col) {
-      ab.t <- xtable(erg, align = c(erg.align, "r"), caption = tab.caption, label = label)
+      ab.t <- xtable::xtable(erg, align = c(erg.align, "r"), caption = tab.caption, label = label)
     } else {
-      ab.t <- xtable(erg, align = c(erg.align), caption = tab.caption, label = label)
+      ab.t <- xtable::xtable(erg, align = c(erg.align), caption = tab.caption, label = label)
     }
 
     if (missing(caption))
@@ -632,7 +649,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
             tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
             hline.after = NULL, add.to.row = pc, caption.placement = "top")
 
-      texi2dvi("a.tex", pdf = T, clean = T, texi2dvi = "")
+      tools::texi2dvi("a.tex", pdf = T, clean = T, texi2dvi = "")
 
       file.rename("a.pdf", file)
 

@@ -23,7 +23,7 @@
 #' }
 #' @export
 minmax <- function(x, k = 1) {
-  if (length(x) != 0){
+  if (length(x) > 1){
     paste(formatr(min(x), k), " -- ", formatr(max(x), k), sep = "")
   }else{
     "-"
