@@ -350,7 +350,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     names(jet)[1] <- "var"
 
     if("p-values" %in% which.col)
-      names(jet)[which(names(jet == "p-values"))] <- "p.values"
+      names(jet)[which(names(jet) == "p-values")] <- "p.values"
     if (index)
       names(jet)[ncol(jet)] <- "index"
 
