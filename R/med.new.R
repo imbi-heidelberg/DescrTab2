@@ -35,7 +35,7 @@ med.new <- function(x, k = c()) {
       x.med <- formatr(x.med, k)
     }
   }else{
-    x.med <- "."
+    x.med <- "-"
   }
   x.med
 }

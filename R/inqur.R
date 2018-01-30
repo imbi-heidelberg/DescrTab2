@@ -43,9 +43,9 @@ inqur <- function(x, k = c()) {
       x.q1 <- formatr(x.q1, k)
       x.q3 <- formatr(x.q3, k)
     }
+    paste(x.q1, " -- ", x.q3, sep = "")
   }else{
-    x.q1 <- "."
-    x.q3 <- "."
+    paste("-")
   }
-  paste(x.q1, " -- ", x.q3, sep = "")
+
 }

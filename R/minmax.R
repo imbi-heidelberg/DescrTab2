@@ -26,6 +26,6 @@ minmax <- function(x, k = 1) {
   if (length(x) != 0){
     paste(formatr(min(x), k), " -- ", formatr(max(x), k), sep = "")
   }else{
-    "." #new comment
+    "-"
   }
 }
