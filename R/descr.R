@@ -186,7 +186,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           ab <- data.frame(cbind(ab, as.vector(d), as.vector(e) * 100))
         }
         if (create == "word" | create == "R") {
-          for (j in seq(1, 2*(length(levels(group))) + 1, by = 2)) {
+          for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
             for (k in 1:nrow(ab)) {
               if (ab[k, j] != 0 ) {
                 ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p), "%)", sep = "")
