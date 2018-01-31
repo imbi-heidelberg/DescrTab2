@@ -116,7 +116,6 @@
 #' \code{\link{minmax}}
 #' \code{\link{p.cat}}
 #' \code{\link{p.cont}}
-#' \link[flextable]{regulartable}
 #' \link[flextable]{autofit}
 #' \link[flextable]{flextable}
 #' \link[flextable]{set_header_df}
