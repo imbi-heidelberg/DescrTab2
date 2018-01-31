@@ -266,6 +266,8 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
 
       ab <- as.data.frame(ab)
+      if (create == "R")
+        var.n <- paste("- ", var.n)
       if ("miss.cat" %in% n.or.miss) {
         ab[ ,1] <- c(var.n, levels(dat[ ,i]), "Missing", "")
       } else {
@@ -295,14 +297,14 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           a.list[[k]] <- na.omit(a[which(group == levels(group)[k])])
           n.vector <- c(n.vector, length(a.list[[k]]))
         }
-        for (l in 1:length(levels(group))){
-          if (n.vector[l] < groupsize){
+        for (l in 1:length(levels(group))) {
+          if (n.vector[l] < groupsize) {
             pvalues_var[i] <- F
           }
         }
-        if (length(table(dat[,i])) == 1){
+        if (length(table(dat[,i])) == 1) {
           pvalues_var[i] = F
-        }else{
+        } else {
           for (l in 1:length(table(dat[,i]))) {
             if(table(dat[,i])[l] == 0) {
               pvalues_var[i] = F
@@ -412,7 +414,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         var.n <- names(dat)[i]
       }
 
-      if (create == "word" | create == "R") {
+      if (create == "word") {
         row.ab <- c()
         if ("n" %in% n.or.miss)
           row.ab <- c(row.ab, "    N")
@@ -421,6 +423,15 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
           row.ab <- c(row.ab, "  ")
         row.ab <- c(row.ab, "    Mean", "    SD", "    Median", "    Q1 -- Q3", "    Min. -- Max.")
+      } else if (create == "R"){
+        row.ab <- c()
+        if ("n" %in% n.or.miss)
+          row.ab <- c(row.ab, "    N")
+        if ("miss" %in% n.or.miss)
+          row.ab <- c(row.ab, "    Missing")
+        if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
+          row.ab <- c(row.ab, "  ")
+        row.ab <- c(row.ab, "    - Mean", "    - SD", "    - Median", "    - Q1 -- Q3", "    - Min. -- Max.")
       } else {
         row.ab <- c()
         if ("n" %in% n.or.miss)
