@@ -25,7 +25,7 @@
 #' @export
 
 inqur <- function(x, k = c()) {
-  if (length(x) != 0){
+  if (length(x) > 1){
     x.q1 <- quantile(x, type = 7)[2]
     x.q3 <- quantile(x, type = 7)[4]
     if (is.null(k)) {
@@ -43,9 +43,9 @@ inqur <- function(x, k = c()) {
       x.q1 <- formatr(x.q1, k)
       x.q3 <- formatr(x.q3, k)
     }
+    paste(x.q1, " -- ", x.q3, sep = "")
   }else{
-    x.q1 <- "."
-    x.q3 <- "."
+    paste("-")
   }
-  paste(x.q1, " -- ", x.q3, sep = "")
+
 }
