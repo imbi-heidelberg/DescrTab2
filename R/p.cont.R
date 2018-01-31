@@ -53,7 +53,7 @@
 #'
 #' @import lme4
 #' @import SparseM
-#' @importFrom MatrixModels mmodel.Matrix
+#' @importFrom MatrixModels model.Matrix
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #'
