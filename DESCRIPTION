@@ -17,6 +17,7 @@ Imports:
     flextable,
     officer,
     lme4,
+    SparseM,
     car,
     tools 
 License: GPL
