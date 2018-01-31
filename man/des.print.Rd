@@ -104,7 +104,7 @@ The aim of this function is to help the user to create well-formated descriptive
 The format can then be fine-tuned in the word, tex or knitr file itself. Only the pdf file is (more or less) unchangeable.
 Even though it is supposed to be a good starting point for a descriptive analysis, care has to be taken when using the results and a detailed check of the results  might be necessary. For instance, in case of missing values in the group variable and \code{group.miss = FALSE} the respective observations will be omitted also in the total column. A warning will be displayed.
 If no group variable is specified only the total column (see parameter \code{which.col}) will be returned.
-Attention in the case of \code{create = "word"}: Note that ReporteRs requires Java (>=  1.6). Make sure you have an installed JRE. You can check this with \code{system("java -version")}
+Attention in the case of \code{create = "word"}: Note that RepoRS requires Java (>=  1.6). Make sure you have an installed JRE. You can check this with \code{system("java -version")}
 }
 \examples{
 \dontrun{

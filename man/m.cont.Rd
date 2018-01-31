@@ -27,6 +27,7 @@ It choose the test which should use for the p-value calculation for continous va
 \dontrun{
 m.cont(group=rep(1:4,25))
 }
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren

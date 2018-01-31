@@ -42,6 +42,7 @@ Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent, not o
 \dontrun{
 p.cat(x=rep(1:5,20), group=rep(1:4,25))
 }
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren

@@ -127,7 +127,9 @@
 #' dat <- ChickWeight[,-4]
 #' descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create = "word")
 #' }
+#'
 #' @export
+#'
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
                   p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,

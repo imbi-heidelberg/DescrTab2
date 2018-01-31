@@ -24,6 +24,7 @@ Rounds a number x to k decimal places with a uniform representation (<0.001 for 
 x<-c(0.1,0.01,0.001)
 formatr(x, k=2, cl.z=T)
 }
+
 }
 \seealso{
 \code{\link{f.r}}
