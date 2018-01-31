@@ -52,6 +52,7 @@
 #' }
 #'
 #' @import lme4
+#' @import SparseM
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #'
