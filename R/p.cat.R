@@ -1,10 +1,13 @@
 #' @title
 #' p-value calculator for categorical variables
+#'
 #' @description
 #' Calculate the p-value for categorial variables. The decision which test to use is equal to \code{\link{m.cat}}.
 #' The p-value is calculated using one of the three tests: Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
+#'
 #' @usage
 #' p.cat(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(), create = "tex")
+#'
 #' @param x
 #' Vector of the categorial variable.
 #' @param group
@@ -23,20 +26,26 @@
 #' @param create
 #' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
 #' Only usefull if \code{index} is not \code{NULL}.
+#'
 #' @details
 #' Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples. (see \code{\link{wilcox.test}}).
 #' Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent, ordered samples. (see \code{\link{kruskal.test}}).
 #' McNemar Test: A Test for a comparison of 2 or more than 2 dependent, not ordered samples. (see \code{\link{mcnemar.test}}).
 #' Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent, not ordered samples. (see \code{\link{chisq.test}}).
+#'
 #' @return
 #' The p-value with index which test is ussed is returned.
+#'
 #' @author
 #' Lorenz Uhlmann, Csilla van Lunteren
+#'
 #' @examples
 #' \dontrun{
 #' p.cat(x=rep(1:5,20), group=rep(1:4,25))
 #' }
+#'
 #' @export
+#'
 p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(),
                   create = "tex") {
   if (is.ordered) {

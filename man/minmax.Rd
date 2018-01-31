@@ -25,6 +25,7 @@ x<-rnorm(100)
 
 minmax(x,k=2)
 }
+
 }
 \seealso{
 \code{\link{formatr}}

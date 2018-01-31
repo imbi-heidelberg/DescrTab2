@@ -25,6 +25,7 @@ x<-rnorm(100)
 
 inqur(x, k = c(3))
 }
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren

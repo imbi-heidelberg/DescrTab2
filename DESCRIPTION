@@ -14,7 +14,9 @@ Depends:
 Imports:
     xtable,
     nlme,
-    ReporteRs,
+    flextable,
+    officer,
+    lme4,
     car,
     tools 
 License: GPL

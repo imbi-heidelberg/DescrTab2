@@ -25,6 +25,7 @@ x<-rnorm(100)
 
 med.new(x,k=c(3))
 }
+
 }
 \seealso{
 \code{\link{formatr}}

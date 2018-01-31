@@ -23,6 +23,7 @@ It choose the test which should use for the p-value calculation for categorial v
 \dontrun{
 m.cat(paired=T, is.ordered=T)
 }
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren

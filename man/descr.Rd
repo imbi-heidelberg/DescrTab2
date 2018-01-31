@@ -118,6 +118,7 @@ group <- Diet
 dat <- ChickWeight[,-4]
 descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create = "word")
 }
+
 }
 \seealso{
 \code{\link{med.new}}
