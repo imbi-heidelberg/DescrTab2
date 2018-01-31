@@ -156,6 +156,7 @@ group <- Diet
 dat <- ChickWeight[,-4]
 des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 }
+
 }
 \seealso{
 \code{\link{descr}}
@@ -168,7 +169,22 @@ des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, va
 \code{\link{minmax}}
 \code{\link{p.cat}}
 \code{\link{p.cont}}
-\link{ReporteRs}
+\link[flextable]{autofit}
+\link[flextable]{flextable}
+\link[flextable]{set_header_df}
+\link[flextable]{merge_h}
+\link[flextable]{merge_at}
+\link[flextable]{align}
+\link[flextable]{style}
+\link[flextable]{border}
+\link[flextable]{bold}
+\link[flextable]{width}
+\link[flextable]{height}
+\link[flextable]{body_add_flextable}
+\link[officer]{fp_text}
+\link[officer]{fp_cell}
+\link[officer]{fp_border}
+\link[officer]{read_docx}
 \link[xtable]{xtable}
 \link[tools]{texi2dvi}
 }
