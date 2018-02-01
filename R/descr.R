@@ -18,14 +18,14 @@
 #' @param percent.vertical
 #' Logical. Should "vertical" percentages for categorical variables be provided?
 #' @param data.names
-#' Logical. If \code{var.names} are specified, should names as saved in the dat be added in brackets?
+#' Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?
 #' @param nonparametric
 #' Logical or vector of indices. If logical / vector of indices then all / only these continuous variables will be tested using non-parametric methods.
 #' @param landscape
 #' Logical. Should the table be in landscape? Only useful if you want create a "pdf"- or "knitr"-document in the following. (see \code{pos.pagebr})
 #' @param pos.pagebr
-#' Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is number of lines after a pagebreak should be done.
-#' If it is not specified, 45 will be used for "\code{landscape=FALSE}" and 30 will be used for "\code{landscape=TURE}".
+#' Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is the number of lines after a pagebreak should be done.\cr
+#' If it is not specified, 45 will be used for "\code{landscape=FALSE}" and 30 will be used for "\code{landscape=TURE}".\cr
 #' Only useful if you want know the number for a pagebreak when you create a "pdf"- or "knitr"-document in the following.
 #' @param paired
 #' Logical. Should paired tests be applied? The groups must have the same length.
@@ -47,12 +47,13 @@
 #' @param group.miss
 #' Logical. Schould add a column for the Missings in group?
 #' @param t.log
-#' Vector of indices: The variables for which the log of the original data should be used when testint for a difference between the groups.
+#' Vector of indices: The variables for which the log of the original data should be used when testing for a difference between the groups.
 #' @param index
 #' Logical. Should the tests used be labeled by footnotes? Only usefull if "p-values" in \code{which.col}.
 #' @param create
 #' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", "word" or "R").
-#' @param digits.m Number of digits for presentation in the table: For mean.
+#' @param digits.m
+#' Number of digits for presentation in the table: For mean.
 #' @param digits.sd
 #' Number of digits for presentation in the table: For standard deviation.
 #' @param digits.qu
@@ -63,9 +64,9 @@
 #' Number of digits for presentation in the table: For percentages.
 #'
 #' @return
-#' Depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
+#' Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
 #' For example you choose \code{create="pdf"} then the table is written in \code{TeX}-Code.
-#' Attention: the table has no caption and numers of observations per group.
+#' Attention: the table has no caption and numbers of observations per group.
 #'
 #' @author Lorenz Uhlmann, Csilla van Lunteren
 #'
