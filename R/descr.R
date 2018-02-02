@@ -294,7 +294,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       pvalues_var <- matrix(F, ncol = ncol(dat))
       pvalues_var[i] <- p.values
-      if (pvalues_var[i]){
+      if (pvalues_var[i]) {
         a <- dat[ ,i]
         a.list <- list()
         a.list[[(length(levels(group)) + 1)]] <- na.omit(a)
@@ -364,7 +364,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       ab <- matrix(NA, nrow = 6, ncol = (length(levels(group)) + 1))
 
-      if(group.miss){
+      if(group.miss) {
         a.miss <- datmiss[ ,i]
         a.miss <- na.omit(a.miss)
         a.list.miss <- na.omit(a.miss[which(groupmiss=="NA")])
@@ -384,10 +384,10 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         ab[1, ] <- n.vector
       if (!("n" %in% n.or.miss) & "miss" %in% n.or.miss)
         ab[1, ] <- n.miss
-      for (d in 1:length(a.list)){
-        if (length(a.list[[d]]) != 0){
-          ab[2,d] <- formatr(mean(a.list[[d]]), digits.m)
-          ab[3,d] <- formatr(sd(a.list[[d]]), digits.sd)
+      for (d in 1:length(a.list)) {
+        if (length(a.list[[d]]) != 0) {
+          ab[2, d] <- formatr(mean(a.list[[d]]), digits.m)
+          ab[3, d] <- formatr(sd(a.list[[d]]), digits.sd)
         }else{
           ab[2,d] <- "-"
           ab[3,d] <- "-"
@@ -397,7 +397,8 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       ab[5, ] <- sapply(a.list, inqur, simplify = T, k = digits.qu)
       ab[6, ] <- sapply(a.list, minmax, simplify = T, k = digits.minmax)
 
-      if ("n" %in% n.or.miss & "miss" %in% n.or.miss) ab <- rbind(ab[1, ], n.miss, ab[2:6, ])
+      if ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+        ab <- rbind(ab[1, ], n.miss, ab[2:6, ])
 
       row.names(ab) <- NULL
 
@@ -423,8 +424,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         row.ab <- c()
         if ("n" %in% n.or.miss)
           row.ab <- c(row.ab, "    N")
-        if ("miss" %in% n.or.miss){
-
+        if ("miss" %in% n.or.miss)
             row.ab <- c(row.ab, "    Missing")
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
           row.ab <- c(row.ab, "  ")
