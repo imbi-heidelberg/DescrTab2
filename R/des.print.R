@@ -389,7 +389,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
 
     flextable::autofit(flextable::flextable(head))
     jet <- flextable::set_header_df(jet, mapping = head, key = "col_keys")
-    jet <- flextable::merge_h(jet, part = "header")
+    jet <- flextable::merge_h(jet, i = 1, part = "header")
     if (index)
       jet <- flextable::merge_at(jet, i = nrow(erg), j = 1:ncol(erg))
     jet <- flextable::align(jet, j = 1, align = "left", part = "all")
