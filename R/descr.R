@@ -274,7 +274,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         if (create == "R"){
           ab[ ,1] <- c(var.n, levels(dat[ ,i]), "- Missing", "")
         } else {
-          ab[ ,1] <- c(var.n, levels(dat[ ,i]), " Missing", "")
+          ab[ ,1] <- c(var.n, levels(dat[ ,i]), "  Missing", "")
         }
       } else {
         ab[ ,1] <- c(var.n, levels(dat[ ,i]), "")
@@ -421,10 +421,20 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       if (create == "word") {
         row.ab <- c()
-        if ("n" %in% n.or.miss)
-          row.ab <- c(row.ab, "    N")
-        if ("miss" %in% n.or.miss)
-          row.ab <- c(row.ab, "    Missing")
+        if ("n" %in% n.or.miss){
+          if (create == "R"){
+            row.ab <- c(row.ab, " - N")
+          }else{
+            row.ab <- c(row.ab, "    N")
+          }
+        }
+        if ("miss" %in% n.or.miss){
+          if (create == "R"){
+            row.ab <- c(row.ab, " - Missing")
+          }else{
+            row.ab <- c(row.ab, "    Missing")
+          }
+        }
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
           row.ab <- c(row.ab, "  ")
         row.ab <- c(row.ab, "    Mean", "    SD", "    Median", "    Q1 -- Q3", "    Min. -- Max.")
