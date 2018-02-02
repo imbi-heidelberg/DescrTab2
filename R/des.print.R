@@ -424,7 +424,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     jet <- flextable::border(x = jet, i = hh, border.bottom = officer::fp_border(width = 2), part = "header")
     jet <- flextable::bold(x = jet, bold = TRUE, part = "header")
     jet <- flextable::border(x = jet, i = nrow(erg), border.top = officer::fp_border(width = 2))
-    jet <- flextable::width(jet, width = 1.2 * (fsize / 11), j = 1)
+    jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 1)
 
     if ("p-values" %in% which.col & index) {
       if (ncol(erg)>2) {
