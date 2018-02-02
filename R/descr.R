@@ -421,19 +421,11 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       if (create == "word") {
         row.ab <- c()
-        if ("n" %in% n.or.miss){
-          if (create == "R"){
-            row.ab <- c(row.ab, " - N")
-          }else{
-            row.ab <- c(row.ab, "    N")
-          }
-        }
+        if ("n" %in% n.or.miss)
+          row.ab <- c(row.ab, "    N")
         if ("miss" %in% n.or.miss){
-          if (create == "R"){
+          if (create == "R")
             row.ab <- c(row.ab, " - Missing")
-          }else{
-            row.ab <- c(row.ab, "    Missing")
-          }
         }
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
           row.ab <- c(row.ab, "  ")
@@ -441,9 +433,9 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       } else if (create == "R"){
         row.ab <- c()
         if ("n" %in% n.or.miss)
-          row.ab <- c(row.ab, "    N")
+          row.ab <- c(row.ab, "  - N")
         if ("miss" %in% n.or.miss)
-          row.ab <- c(row.ab, "    Missing")
+          row.ab <- c(row.ab, "   - Missing")
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
           row.ab <- c(row.ab, "  ")
         row.ab <- c(row.ab, "    - Mean", "    - SD", "    - Median", "    - Q1 -- Q3", "    - Min. -- Max.")
