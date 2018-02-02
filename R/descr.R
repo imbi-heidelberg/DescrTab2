@@ -150,19 +150,16 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
   datmiss <- matrix(NA, nrow = nrow(dat), ncol = ncol(dat))
   group.na.index <- which(is.na(group))
+
+  if (group.miss) {
+    groupmiss <- as.numeric(group)
+    groupmiss[group.na.index] <- "NA"
+    datmiss <- dat
+  }
   if (length(group.na.index) != 0) {
-    if (group.miss) {
-      warning(paste("Missing values in the group variable ( Observations: ", list(group.na.index), " )" ))
-      groupmiss <- as.numeric(group)
-      groupmiss[group.na.index] <- "NA"
-      datmiss <- dat
-    } else {
-      warning(paste("Missing values in the group variable ( Observations: ", list(group.na.index), " )! Observations will be removed!"))
-    }
+    warning(paste("Missing values in the group variable ( Observations: ", list(group.na.index), " )! Observations will be removed!"))
     dat <- dat[-group.na.index, ]
     group <- group[-group.na.index]
-  } else {
-    groupmiss <-as.numeric(group)
   }
 
   lgr <- length(levels(group))
@@ -372,7 +369,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         n.vector.miss <- length(a.list.miss)
 
         miss.k.miss <- which(is.na(a.miss[which(groupmiss == "NA")]))
-        n.miss.miss <- c(length(miss.k))
+        n.miss.miss <- c(length(miss.k.miss))
 
         n.vector <- c(n.vector, n.vector.miss)
         n.miss <- c(n.miss, n.miss.miss)
