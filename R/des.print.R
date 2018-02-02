@@ -450,7 +450,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     if (create == "word") {
       my_doc <- officer::read_docx()
       my_doc <- flextable::body_add_flextable(my_doc, jet)
-      print(my_doc, target ="U:/hier.docx")
+      print(my_doc, target = file)
     } else if (create == "R") {
       show(jet)
     }
