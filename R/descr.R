@@ -268,7 +268,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       ab <- as.data.frame(ab)
       if (create == "R")
-        var.n <- paste("- ", var.n)
+        levels(dat[,i]) <- paste("- ", levels(dat[,i]))
       if ("miss.cat" %in% n.or.miss) {
         ab[ ,1] <- c(var.n, levels(dat[ ,i]), "Missing", "")
       } else {
@@ -343,7 +343,6 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       a.list <- list()
       a.list[[(length(levels(group)) + 1)]] <- na.omit(a)
 
-      #n.list <- list
       n.vector <- c()
       for (k in 1:length(levels(group))) {
         a.list[[k]] <- na.omit(a[which(group == levels(group)[k])])
