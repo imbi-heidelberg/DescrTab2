@@ -267,10 +267,15 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
 
       ab <- as.data.frame(ab)
+      levels(dat[,i]) <- paste("  ", levels(dat[,i]))
       if (create == "R")
         levels(dat[,i]) <- paste("- ", levels(dat[,i]))
       if ("miss.cat" %in% n.or.miss) {
-        ab[ ,1] <- c(var.n, levels(dat[ ,i]), "Missing", "")
+        if (create == "R"){
+          ab[ ,1] <- c(var.n, levels(dat[ ,i]), "- Missing", "")
+        } else {
+          ab[ ,1] <- c(var.n, levels(dat[ ,i]), "Missing", "")
+        }
       } else {
         ab[ ,1] <- c(var.n, levels(dat[ ,i]), "")
       }
