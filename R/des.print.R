@@ -409,7 +409,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     if (index)
       jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria (Textkörper)", font.size = fsizeFoo), i = nrow(erg))
     if ("p-values" %in% which.col & index)
-      jet <- flextable::style(jet, j = length(jet) + 1, pr_t = officer::fp_text(vertical.align = "superscript"))
+      jet <- flextable::style(jet, j = ncol(erg), pr_t = officer::fp_text(vertical.align = "superscript"))
 
     def_cell <- officer::fp_cell(border = officer::fp_border(color = "transparent"))
     jet <- flextable::style( jet, pr_c = def_cell, part = "body")
