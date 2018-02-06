@@ -24,6 +24,7 @@ x<-rnorm(1)
 k<-3
 f.r(x,k)
 }
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren

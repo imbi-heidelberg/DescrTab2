@@ -29,8 +29,6 @@
 #' inqur(x, k = c(3))
 #' }
 #'
-#' @export
-
 inqur <- function(x, k = c()) {
   if (length(x) > 1){
     x.q1 <- quantile(x, type = 7)[2]

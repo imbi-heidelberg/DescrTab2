@@ -29,8 +29,6 @@
 #' med.new(x,k=c(3))
 #' }
 #'
-#' @export
-#'
 med.new <- function(x, k = c()) {
   if (length(x) > 1) {
     x.med <- median(x)

@@ -29,8 +29,6 @@
 #' m.cont(group=rep(1:4,25))
 #' }
 #'
-#' @export
-#'
 m.cont <- function(group, paired = F, is.ordered = F, nonparametric = F, t.log = F) {
   if (length(levels(group)) == 2) {
     if (nonparametric) {
