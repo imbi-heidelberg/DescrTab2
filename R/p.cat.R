@@ -44,8 +44,6 @@
 #' p.cat(x=rep(1:5,20), group=rep(1:4,25))
 #' }
 #'
-#' @export
-#'
 p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(),
                   create = "tex") {
   if (is.ordered) {

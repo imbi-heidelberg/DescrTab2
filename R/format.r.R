@@ -29,8 +29,6 @@
 #' formatr(x, k=2, cl.z=T)
 #' }
 #'
-#' @export
-#'
 formatr <- function(x, k = 3, cl.z = F) {
   val <- f.r(x, k)
   if (cl.z) {

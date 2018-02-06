@@ -16,7 +16,7 @@
 #' k<-3
 #' f.r(x,k)
 #' }
-#' @export
+#'
 f.r <- function(x, k){
   format(round(x, k), nsmall = k)
 }

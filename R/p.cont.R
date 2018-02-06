@@ -57,8 +57,6 @@
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #'
-#' @export
-#'
 p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.log = F, var.equal = F,
                    index = c(), create = "tex") {
   if (length(levels(group)) == 2) {

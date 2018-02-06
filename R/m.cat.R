@@ -25,8 +25,6 @@
 #' m.cat(paired=T, is.ordered=T)
 #' }
 #'
-#' @export
-#'
 m.cat <- function(group, paired = F, is.ordered = F) {
   if (is.ordered) {
     if (length(levels(group)) == 2) {
