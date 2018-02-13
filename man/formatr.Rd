@@ -22,12 +22,13 @@ Rounds a number x to k decimal places with a uniform representation (<0.001 for 
 \examples{
 \dontrun{
 x<-c(0.1,0.01,0.001)
-formatr(x, k=2, cl.z=T)}
+formatr(x, k=2, cl.z=T)
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
+
 }
 \seealso{
 \code{\link{f.r}}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}

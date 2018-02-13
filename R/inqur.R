@@ -1,34 +1,36 @@
-#' @name inqur
-#' @alias inqur
 #' @title
 #' Calculation of the first and third quantile
+#'
 #' @description
 #' It calculate the first an third quantil of continuous variables.
+#'
 #' @usage
 #' inqur(x, k = c())
+#'
 #' @param x
 #' Vector of continuous cariables.
 #' @param k
 #' Optional. The number of decimal places.
 #' If not specified, the number of decimal places is 1 or 2.
+#'
 #' @return
 #' The first and third quantil is returned.
+#'
 #' @author
 #' Lorenz Uhlmann, Csilla van Lunteren
 #' seealso
 #' \code{\link{formatr}}
+#'
 #' @examples
 #' \dontrun{
 #' set.seed(12345)
 #' x<-rnorm(100)
 #'
-#' inqur(x, k = c(3))}
-#' @keyword quantile
+#' inqur(x, k = c(3))
+#' }
 #'
-#' @export
-
 inqur <- function(x, k = c()) {
-  if (length(x) != 0){
+  if (length(x) > 1){
     x.q1 <- quantile(x, type = 7)[2]
     x.q3 <- quantile(x, type = 7)[4]
     if (is.null(k)) {
@@ -46,9 +48,9 @@ inqur <- function(x, k = c()) {
       x.q1 <- formatr(x.q1, k)
       x.q3 <- formatr(x.q3, k)
     }
+    paste(x.q1, " -- ", x.q3, sep = "")
   }else{
-    x.q1 <- "."
-    x.q3 <- "."
+    paste("-")
   }
-  paste(x.q1, " -- ", x.q3, sep = "")
+
 }

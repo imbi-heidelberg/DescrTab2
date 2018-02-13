@@ -44,11 +44,13 @@ Anova Type III: A parametric Test for a comparison of more than 2 dependent samp
 Kruskal-Wallis-Test: A nonparametric Test for a comparison of more than 2 independent samples. (see \code{\link{kruskal.test}}).
 Anova: A parametric Test for a comparison of more than 2 independent samples. (see \code{\link{aov}}).
 }
-\seealso{
-\link[nlme]{lme}
-\link[car]{Anova}
-examples
-\dontrun
+\examples{
+\dontrun{
 p.cont(x=rnorm(100,0,1), group=rep(1:4,25))
 }
 
+}
+\seealso{
+\link[nlme]{lme}
+\link[car]{Anova}
+}

@@ -1,32 +1,36 @@
-#' @name med.new
-#' @alias med.new
-#' @title
-#' Median value for continous variables
+#' @title Median value for continous variables
+#'
 #' @description
 #' Compute the median of continous variables.
+#'
 #' @usage
 #' med.new(x, k = c())
+#'
 #' @param x
 #' Vector of the continous variable.
 #' @param k
 #' Number of decimal places.
 #' If not specified, the number of decimal places is 1 or 2.
+#'
 #' @return
 #' The median is returned.
+#'
 #' @author
 #' Lorenz Uhlmann, Csilla van Lunteren
+#'
 #' @seealso
 #' \code{\link{formatr}}
+#'
 #' @examples
 #' \dontrun{
 #' set.seed(12345)
 #' x<-rnorm(100)
 #'
 #' med.new(x,k=c(3))
-#' @keyword Median
-#' @export
+#' }
+#'
 med.new <- function(x, k = c()) {
-  if (length(x)!=0){
+  if (length(x) > 1) {
     x.med <- median(x)
     if (is.null(k)) {
       if (as.integer(x.med / 0.25 / 2) == (x.med / 0.25 / 2) | as.integer(x.med / 0.25) != (x.med / 0.25)) {
@@ -38,7 +42,7 @@ med.new <- function(x, k = c()) {
       x.med <- formatr(x.med, k)
     }
   }else{
-    x.med <- "."
+    x.med <- "-"
   }
   x.med
 }

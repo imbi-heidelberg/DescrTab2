@@ -18,14 +18,14 @@ descr(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric
 
 \item{percent.vertical}{Logical. Should "vertical" percentages for categorical variables be provided?}
 
-\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in the dat be added in brackets?}
+\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?}
 
 \item{nonparametric}{Logical or vector of indices. If logical / vector of indices then all / only these continuous variables will be tested using non-parametric methods.}
 
 \item{landscape}{Logical. Should the table be in landscape? Only useful if you want create a "pdf"- or "knitr"-document in the following. (see \code{pos.pagebr})}
 
-\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is number of lines after a pagebreak should be done.
-If it is not specified, 45 will be used for "\code{landscape=FALSE}" and 30 will be used for "\code{landscape=TURE}".
+\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is the number of lines after a pagebreak should be done.\cr
+If it is not specified, 45 will be used for "\code{landscape=FALSE}" and 30 will be used for "\code{landscape=TURE}".\cr
 Only useful if you want know the number for a pagebreak when you create a "pdf"- or "knitr"-document in the following.}
 
 \item{paired}{Logical. Should paired tests be applied? The groups must have the same length.}
@@ -47,7 +47,7 @@ Number.Instead of two any other number.}
 
 \item{group.miss}{Logical. Schould add a column for the Missings in group?}
 
-\item{t.log}{Vector of indices: The variables for which the log of the original data should be used when testint for a difference between the groups.}
+\item{t.log}{Vector of indices: The variables for which the log of the original data should be used when testing for a difference between the groups.}
 
 \item{index}{Logical. Should the tests used be labeled by footnotes? Only usefull if "p-values" in \code{which.col}.}
 
@@ -64,15 +64,15 @@ Number.Instead of two any other number.}
 \item{digits.p}{Number of digits for presentation in the table: For percentages.}
 }
 \value{
-Depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
+Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
 For example you choose \code{create="pdf"} then the table is written in \code{TeX}-Code.
-Attention: the table has no caption and numers of observations per group.
+Attention: the table has no caption and numbers of observations per group.
 }
 \description{
 Generate a table of descriptive statistics with p-values obtained in tests for difference between the groups.
 }
 \examples{
-\dontrun
+\dontrun{
 ##Dataset with two groups
 infert
 attach(infert)
@@ -118,8 +118,7 @@ group <- Diet
 dat <- ChickWeight[,-4]
 descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create = "word")
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
+
 }
 \seealso{
 \code{\link{med.new}}
@@ -132,4 +131,6 @@ Lorenz Uhlmann, Csilla van Lunteren
 \code{\link{p.cat}}
 \code{\link{p.cont}}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}
