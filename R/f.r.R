@@ -1,5 +1,3 @@
-#' @name f.r
-#' @alias f.r
 #' @title Format numbers
 #' @description Rounds a number x to k decimal places.
 #' @usage f.r(x, k)
@@ -10,14 +8,15 @@
 #' @return
 #' The rounded number is returned.
 #' @author
+#' Lorenz Uhlmann, Csilla van Lunteren
 #' @examples
-#' \dontrun
+#' \dontrun{
 #' set.seed(12345)
 #' x<-rnorm(1)
 #' k<-3
 #' f.r(x,k)
-#' @keyword Format numbers
-#' @export
+#' }
+#'
 f.r <- function(x, k){
   format(round(x, k), nsmall = k)
 }

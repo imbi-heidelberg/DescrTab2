@@ -10,15 +10,18 @@ Description: The packages creates descriptive statistics such as mean, standard
     deviation or relative and absolute frequencies grouped by a factor and also
     provides p-values obtained from testint for differences between the groups.
 Depends:
-    R  (>= 3.1.3)
+    R  (>= 3.3.0)
 Imports:
     xtable,
     nlme,
-    ReporteRs,
+    flextable,
+    officer,
+    lme4,
+    SparseM,
+    MatrixModels,
     car,
     tools 
 License: GPL
 LazyLoad: yes
-RoxygenNote: 5.0.1
-
-
+RoxygenNote: 6.0.1
+Suggests: testthat

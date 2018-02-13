@@ -23,11 +23,12 @@ It calculate the first an third quantil of continuous variables.
 set.seed(12345)
 x<-rnorm(100)
 
-inqur(x, k = c(3))}
+inqur(x, k = c(3))
+}
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren
 seealso
 \code{\link{formatr}}
 }
-

@@ -15,10 +15,15 @@ p.cat(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T,
 
 \item{is.ordered}{Logical. Is the categorial Variable ordered?}
 
+\item{correct.cat}{Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})}
+
 \item{correct.wilcox}{Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})}
 
 \item{index}{Optional. Label for the footnote.
 The footnotes aren't produced in this function.}
+
+\item{create}{Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
+Only usefull if \code{index} is not \code{NULL}.}
 }
 \value{
 The p-value with index which test is ussed is returned.
@@ -34,10 +39,11 @@ McNemar Test: A Test for a comparison of 2 or more than 2 dependent, not ordered
 Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent, not ordered samples. (see \code{\link{chisq.test}}).
 }
 \examples{
-\dontrun
+\dontrun{
 p.cat(x=rep(1:5,20), group=rep(1:4,25))
+}
+
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren
 }
-

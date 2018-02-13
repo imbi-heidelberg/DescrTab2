@@ -16,25 +16,23 @@ des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
 \arguments{
 \item{dat}{Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
 
-\item{group}{The (optional) grouping variable.
-Three options to specify it:
-1. The index of the group variable in \code{dat}.
-2. The variable name. It must be a variable in \code{dat}.
-3. As a vector with the same length as the number of rows in \code{dat}.
+\item{group}{The (optional) grouping variable.\cr
+Three options to specify it:\cr
+1. The index of the group variable in \code{dat}.\cr
+2. The variable name. It must be a variable in \code{dat}.\cr
+3. As a vector with the same length as the number of rows in \code{dat}.\cr
 The specified variable has to be a factor variable with two or more levels.
 If not specified, a random grouping variable with 2 groups is used.}
 
 \item{create}{Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R").}
 
 \item{file}{File name, which can included the directory (has to have the proper file extension, i.e. .pdf, .tex, or .docx). directory.
-Only for \code{create == "R"} isn't a file necessary.}
+Only for \code{create == "R"} or \code{"knitr"} isn't a file necessary.}
 
 \item{index}{Logical. Should the tests used be labeled by footnotes?}
 
-\item{fsize}{The fontsize in the Output-Document.
-Default fontsize:
-\code{create = }"word" or "R" fsize = 11
-\code{create = }"pdf" fsize = 12}
+\item{fsize}{The fontsize in the Output-Document.\cr
+Default fontsize: For \code{create = "word"} or \code{"R"} fsize = 11 and for \code{create = "pdf"} fsize = 12}
 
 \item{paired}{Logical. Should paired tests be applied? The groups must have the same length.}
 
@@ -42,7 +40,12 @@ Default fontsize:
 
 \item{var.equal}{Logical. Should variances be assumed to be equal when applying t-tests?}
 
+\item{correct.cat}{Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})}
+
 \item{correct.wilcox}{Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})}
+
+\item{t.log}{Vector of indices: The variables for which the log of the original data
+should be used when testing for a difference between the groups.}
 
 \item{which.col}{Which columns should be provided ("groups", "total", "p-values")? Combinations are allowed. "groups" or "total" must be listed. Only "total" and "p-values" is not possible.
 Type of p-value calculation see \code{\link{p.cat}} (categorical) or \code{\link{p.cont}} (continuous).}
@@ -52,23 +55,23 @@ Number. Instead of two any other number.}
 
 \item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.}
 
-\item{group.miss}{Logical. Should add a column for the Missings in group? If \code{FALSE} in total there are only the observations without a missing in group.}
+\item{group.miss}{Logical. Should add a column for the Missings in group? For both cases in \code{total} there are only the observations without a missing in group.}
 
 \item{percent.vertical}{Logical. Should "vertical" percentages for categorical variables be provided?}
 
 \item{var.names}{Optional. Vector of names to be used in the table for the analyzed variables.}
 
-\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in the dat be added in brackets?}
+\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?}
 
-\item{caption}{Optional. Vector of names of the categories of group.
+\item{caption}{Optional. Vector of names of the categories of group.\cr
 If not specified, \code{levels(group)} will be used.}
 
-\item{tab.caption}{Optional. The caption of the table.
+\item{tab.caption}{Optional. The caption of the table.\cr
 If not specified, "Descriptive statistics" will be written.}
 
 \item{landscape}{Logical. Should the table be in landscape? Only useful for \code{create = "pdf"}.}
 
-\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is number of lines after a pagebreak should be done.
+\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is the number of lines after a pagebreak should be done.\cr
 If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 will be used for "\code{landscape = TRUE}".}
 
 \item{label}{Character. If tex (or knitr) in \code{create} is specified, the label of the table.}
@@ -84,14 +87,9 @@ If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 wi
 \item{digits.p}{Number of digits for presentation in the table: For percentages.}
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
-
-\item{Logical.}{Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})}
-
-\item{t.log}{}{Vector of indices: The variables for which the log of the original data
-should be used when testint for a difference between the groups.}
 }
 \value{
-Only by using \code{create == "R"} An R object will be returned. However, depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table and saved in a file as specified in the file parameter.
+Only by using \code{create == "R"} an R object will be returned. However, depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table and saved in a file as specified in the file parameter.
 }
 \description{
 This is the main function for the user.
@@ -104,10 +102,58 @@ The aim of this function is to help the user to create well-formated descriptive
 The format can then be fine-tuned in the word, tex or knitr file itself. Only the pdf file is (more or less) unchangeable.
 Even though it is supposed to be a good starting point for a descriptive analysis, care has to be taken when using the results and a detailed check of the results  might be necessary. For instance, in case of missing values in the group variable and \code{group.miss = FALSE} the respective observations will be omitted also in the total column. A warning will be displayed.
 If no group variable is specified only the total column (see parameter \code{which.col}) will be returned.
-Attention in the case of \code{create = "word"}: Note that ReporteRs requires Java (>=  1.6). Make sure you have an installed JRE. You can check this with \code{system("java -version")}
 }
-\author{
-Lorenz Uhlmann, Csilla van Lunteren
+\examples{
+\dontrun{
+infert
+attach(infert)
+#is.factor(education)
+#is.factor(age)
+#is.factor(parity)
+#is.factor(induced)
+#is.factor(case)
+#infert$case<-as.factor(case)
+#case<-as.factor(case)
+
+#is.factor(spontaneous)
+#is.factor(stratum)
+#is.factor(pooled.stratum)
+
+#we use case as Grouping variable
+file <- "C:/Users/lunteren/Desktop/infert/DescriptiveStatisticTable.docx"
+
+#Version 1
+des.print(dat = infert, group = 5, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+#Version 2
+des.print(dat = infert, group = case, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+#Version 3
+group <- case
+dat <- infert[,-5]
+des.print(dat = dat, group = group, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+
+##Dataset with more then two groups
+ChickWeight
+attach(ChickWeight)
+
+#is.factor(weight)
+#is.factor(Time)
+#is.factor(Chick)
+#is.factor(Diet)
+
+#we use Diet as Grouping variable
+
+file <- "C:/Users/lunteren/Desktop/ChickWeight/DescriptiveStatisticTable.docx"
+
+#Version 1
+des.print(dat = ChickWeight, group = 4, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+#Version 2
+des.print(dat = ChickWeight, group = Diet, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+#Version 3
+group <- Diet
+dat <- ChickWeight[,-4]
+des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+}
+
 }
 \seealso{
 \code{\link{descr}}
@@ -120,8 +166,25 @@ Lorenz Uhlmann, Csilla van Lunteren
 \code{\link{minmax}}
 \code{\link{p.cat}}
 \code{\link{p.cont}}
-\link{ReporteRs}
+\link[flextable]{autofit}
+\link[flextable]{flextable}
+\link[flextable]{set_header_df}
+\link[flextable]{merge_h}
+\link[flextable]{merge_at}
+\link[flextable]{align}
+\link[flextable]{style}
+\link[flextable]{border}
+\link[flextable]{bold}
+\link[flextable]{width}
+\link[flextable]{height}
+\link[flextable]{body_add_flextable}
+\link[officer]{fp_text}
+\link[officer]{fp_cell}
+\link[officer]{fp_border}
+\link[officer]{read_docx}
 \link[xtable]{xtable}
 \link[tools]{texi2dvi}
 }
-
+\author{
+Lorenz Uhlmann, Csilla van Lunteren
+}
