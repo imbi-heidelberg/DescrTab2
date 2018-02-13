@@ -194,7 +194,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                       n.or.miss = c("n", "miss", "miss.cat"), group.miss = F, percent.vertical = T, var.names,
                       data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
-                      digits.minmax = 1, digits.p = 1, silent = T) {
+                      digits.minmax = 1, digits.p = 1, silent = T, ...) {
 
 
    if (!("groups" %in% which.col) & !("total" %in% which.col)) stop( "At least, either groups or total must be listed in which.col" )
@@ -583,7 +583,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
 
       print(ab.t, file = "t.tex", type = "latex", include.colnames = F, include.rownames = F,
             tabular.environment = "longtable", sanitize.text.function=function(x){x}, floating = F,
-            hline.after = NULL, add.to.row = pc, caption.placement = "top")
+            hline.after = NULL, add.to.row = pc, caption.placement = "top", ...)
 
       texi2dvi("a.tex", pdf = T, clean = T, texi2dvi = "")
 
@@ -602,6 +602,10 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
             tabular.environment = "longtable", sanitize.text.function=function(x){x}, floating = F,
             hline.after = NULL, add.to.row = pc, caption.placement = "top")
     }
+    if (create == "custom") {
+      print(ab.t, type = "latex", include.colnames = F, include.rownames = F,
+            sanitize.text.function=function(x){x}, hline.after = NULL,
+            add.to.row = pc, ...)
+    }
   }
-  if (create != "knitr") cat("Descriptive statistics table successfully created.")
 }
