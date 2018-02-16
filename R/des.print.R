@@ -25,6 +25,7 @@
 #' 1. The index of the group variable in \code{dat}.\cr
 #' 2. The variable name. It must be a variable in \code{dat}.\cr
 #' 3. As a vector with the same length as the number of rows in \code{dat}.\cr
+#' 4. Nothing. Then you need \code{which.col = ("total")}.\cr
 #' The specified variable has to be a factor variable with two or more levels.
 #' If not specified, a random grouping variable with 2 groups is used.
 #' @param create
@@ -214,7 +215,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
                       digits.minmax = 1, digits.p = 1, silent = T) {
 
-
+  ##Input data correction
   if (!("groups" %in% which.col) & !("total" %in% which.col))
     stop( "At least, either groups or total must be listed in which.col" )
 
@@ -242,6 +243,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
   if ("total" %in% which.col & "p-values" %in% which.col & !("groups" %in% which.col))
     stop( "Only total and p-value is not a useful approach." )
 
+  ##Handling with the group variable
   if (is.numeric(group) & length(group) == 1) {
     gr <- group
     group <- dat[, group]
@@ -262,6 +264,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       }
   }
 
+  ##output settings
   if (missing(dat) | missing(group))
     stop( "Parameters dat and group must be specified" )
   if (create == "word" & !is.numeric(fsize)) {
@@ -280,7 +283,9 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     tab.caption <- "Descriptive statistics"
   }
 
+  ##creation of the output separated for word/R and knitr/pdf/tex
   if (create == "word" | create == "R") {
+    ##raw data table
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, groupsize, n.or.miss, group.miss, t.log, index, create, digits.m,
@@ -289,6 +294,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     if (missing(caption))
       caption <- levels(group)
 
+    ##which column shoul be printed
     erg.out <- c()
     if (!("groups" %in% which.col))
       erg.out <- 2:(length(levels(group)) + 1)
@@ -308,6 +314,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       names.erg <- c(names.erg, "p-values")
     names(erg)<-names.erg
 
+    ##numbers per group
     n.vec <- c()
     for (j in 1:length(levels(group))) {
       n.j <- paste("(", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
@@ -320,10 +327,12 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       erg[, k] <- as.character(erg[, k])
     }
 
+    ##fontsize calculation
     difference <- 11 - fsize
     fsizeFoo <- 10 - difference
     width <- 11 / fsize
 
+    ##footline & output creation
     if (index & "p-values" %in% which.col) {
       if (!is.null(erg.a$testings)) {
         foot.ab <- paste(letters[1], erg.a$testings[1], sep = ":")
@@ -455,6 +464,9 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       show(jet)
     }
   } else {
+    ##pdf, knitr, tex
+
+    ##tex language
     r.s <- c("%", "{", "}", "&", "#")
     r.s.a <- c(">", "<", "|")
     if (!(missing(var.names))) {
@@ -475,12 +487,14 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     names(dat) <- gsub("~", "\\~{}", names(dat), fixed = T)
     names(dat) <- gsub("_", "\\_", names(dat), fixed = T)
 
+    ##raw data table
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, groupsize, n.or.miss, group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p)
     erg <- erg.a$descr
 
+    ##which column shoul be printed
     erg.anz <- 0
     erg.out <- c()
     if ("groups" %in% which.col) {
@@ -505,6 +519,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       ab.t <- xtable::xtable(erg, align = c(erg.align), caption = tab.caption, label = label)
     }
 
+    ##tex language
     if (missing(caption))
       caption <- levels(group)
 
@@ -517,6 +532,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
 
     pos <- list(0)
 
+    ##numbers per group
     n.vec <- c()
     for (j in 1:length(levels(group))) {
       n.j <- paste("(", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
@@ -526,6 +542,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     if(group.miss)
       n.miss <- paste("(", "n = ",length(which(is.na(group))), ")", sep = "")
 
+    ##footline & output creation
     if (index) {
       foot.ab <- paste("$^", letters[1], "$", erg.a$testings[1], "\\quad", sep = "")
       if (length(erg.a$testings) >= 2) {
@@ -535,6 +552,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       }
     }
 
+    ##line labeling
     command <- "\\hline"
     if ("groups" %in% which.col)
       command <-  paste(command, paste(caption, collapse = " & "), sep = " & ")
@@ -583,6 +601,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     pc <- list("pos" = pos, "command" = command)
 
     if (create == "pdf") {
+      ##fontsize calculation
       if (is.numeric(fsize)) {
         if (fsize <= 6) {
           fsizep <- "tiny"
@@ -619,6 +638,8 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
         if (fsize %in% c("LARGE", "huge", "Huge"))
           fsizec <- "Large"
       }
+
+      ##output creation
       if (landscape) {
         cat(paste("\\documentclass[landscape]{report} \n
                   \\usepackage[T1]{fontenc}\n
