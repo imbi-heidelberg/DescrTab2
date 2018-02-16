@@ -21,6 +21,7 @@ Three options to specify it:\cr
 1. The index of the group variable in \code{dat}.\cr
 2. The variable name. It must be a variable in \code{dat}.\cr
 3. As a vector with the same length as the number of rows in \code{dat}.\cr
+4. Nothing. Then you need \code{which.col = ("total")}.\cr
 The specified variable has to be a factor variable with two or more levels.
 If not specified, a random grouping variable with 2 groups is used.}
 
