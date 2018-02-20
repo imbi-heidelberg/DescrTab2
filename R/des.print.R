@@ -15,7 +15,7 @@
 #'          percent.vertical = T, var.names, data.names = T, caption, tab.caption,
 #'          landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
 #'          digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = 1,
-#'          silent = T)
+#'          silent = T, ...)
 #'
 #' @param dat
 #' Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
@@ -29,7 +29,7 @@
 #' The specified variable has to be a factor variable with two or more levels.
 #' If not specified, a random grouping variable with 2 groups is used.
 #' @param create
-#' Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R").
+#' Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R"). Choose "custom" if you add more arguments see \code{...}.
 #' @param file
 #' File name, which can included the directory (has to have the proper file extension, i.e. .pdf, .tex, or .docx). directory.
 #' Only for \code{create == "R"} or \code{"knitr"} isn't a file necessary.
@@ -92,6 +92,8 @@
 #' Number of digits for presentation in the table: For percentages.
 #' @param silent
 #' Logical. Should intermediate stages be shown (more for technical reasons)?
+#' @param ...
+#' further arguments to be passed to or from methods.
 #'
 #' @details
 #' The aim of this function is to help the user to create well-formated descriptive statistics tables.
@@ -213,7 +215,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                       n.or.miss = c("n", "miss", "miss.cat"), group.miss = F, percent.vertical = T, var.names,
                       data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
-                      digits.minmax = 1, digits.p = 1, silent = T) {
+                      digits.minmax = 1, digits.p = 1, silent = T, ...) {
 
   ##Input data correction
   if (!("groups" %in% which.col) & !("total" %in% which.col))
@@ -464,7 +466,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       show(jet)
     }
   } else {
-    ##pdf, knitr, tex
+    ##pdf, knitr, tex, custom
 
     ##tex language
     r.s <- c("%", "{", "}", "&", "#")
@@ -665,7 +667,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
 
       print(ab.t, file = "t.tex", type = "latex", include.colnames = F, include.rownames = F,
             tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
-            hline.after = NULL, add.to.row = pc, caption.placement = "top")
+            hline.after = NULL, add.to.row = pc, caption.placement = "top", ...)
 
       tools::texi2dvi("a.tex", pdf = T, clean = T, texi2dvi = "")
 
@@ -673,7 +675,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
 
       file.remove("a.tex")
       file.remove("t.tex")
-      }
+    }
     if (create == "tex") {
       print(ab.t, file = file, type = "latex", include.colnames = F, include.rownames = F,
             tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
@@ -683,6 +685,10 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       print(ab.t, type = "latex", include.colnames = F, include.rownames = F,
             tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
             hline.after = NULL, add.to.row = pc, caption.placement = "top")
+    }
+    if (create == "custom") {
+      print(ab.t, type = "latex", include.colnames = F, include.rownames = F,
+            sanitize.text.function = function(x){x}, hline.after = NULL, add.to.row = pc, ...)
     }
   }
   if (create != "knitr")
