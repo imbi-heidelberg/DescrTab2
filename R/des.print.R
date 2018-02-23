@@ -691,6 +691,5 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
             sanitize.text.function = function(x){x}, hline.after = NULL, add.to.row = pc, ...)
     }
   }
-  if (create != "knitr")
-    cat("Descriptive statistics table successfully created.")
+
 }
