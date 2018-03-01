@@ -11,7 +11,7 @@ des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
          percent.vertical = T, var.names, data.names = T, caption, tab.caption,
          landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
          digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = 1,
-         silent = T)
+         silent = T, ...)
 }
 \arguments{
 \item{dat}{Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
@@ -21,10 +21,11 @@ Three options to specify it:\cr
 1. The index of the group variable in \code{dat}.\cr
 2. The variable name. It must be a variable in \code{dat}.\cr
 3. As a vector with the same length as the number of rows in \code{dat}.\cr
+4. Nothing. Then you need \code{which.col = ("total")}.\cr
 The specified variable has to be a factor variable with two or more levels.
 If not specified, a random grouping variable with 2 groups is used.}
 
-\item{create}{Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R").}
+\item{create}{Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R"). Choose "custom" if you add more arguments see \code{...}.}
 
 \item{file}{File name, which can included the directory (has to have the proper file extension, i.e. .pdf, .tex, or .docx). directory.
 Only for \code{create == "R"} or \code{"knitr"} isn't a file necessary.}
@@ -87,6 +88,8 @@ If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 wi
 \item{digits.p}{Number of digits for presentation in the table: For percentages.}
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
+
+\item{...}{further arguments to be passed to or from methods.}
 }
 \value{
 Only by using \code{create == "R"} an R object will be returned. However, depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table and saved in a file as specified in the file parameter.
@@ -156,34 +159,34 @@ des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, va
 
 }
 \seealso{
-\code{\link{descr}}
-\code{\link{f.r}}
-\code{\link{formatr}}
-\code{\link{inqur}}
-\code{\link{m.cat}}
-\code{\link{m.cont}}
-\code{\link{med.new}}
-\code{\link{minmax}}
-\code{\link{p.cat}}
-\code{\link{p.cont}}
-\link[flextable]{autofit}
-\link[flextable]{flextable}
-\link[flextable]{set_header_df}
-\link[flextable]{merge_h}
-\link[flextable]{merge_at}
-\link[flextable]{align}
-\link[flextable]{style}
-\link[flextable]{border}
-\link[flextable]{bold}
-\link[flextable]{width}
-\link[flextable]{height}
-\link[flextable]{body_add_flextable}
-\link[officer]{fp_text}
-\link[officer]{fp_cell}
-\link[officer]{fp_border}
-\link[officer]{read_docx}
-\link[xtable]{xtable}
-\link[tools]{texi2dvi}
+\code{\link{descr}}\cr
+\code{\link{f.r}}\cr
+\code{\link{formatr}}\cr
+\code{\link{inqur}}\cr
+\code{\link{m.cat}}\cr
+\code{\link{m.cont}}\cr
+\code{\link{med.new}}\cr
+\code{\link{minmax}}\cr
+\code{\link{p.cat}}\cr
+\code{\link{p.cont}}\cr
+\link[flextable]{autofit}\cr
+\link[flextable]{flextable}\cr
+\link[flextable]{set_header_df}\cr
+\link[flextable]{merge_h}\cr
+\link[flextable]{merge_at}\cr
+\link[flextable]{align}\cr
+\link[flextable]{style}\cr
+\link[flextable]{border}\cr
+\link[flextable]{bold}\cr
+\link[flextable]{width}\cr
+\link[flextable]{height}\cr
+\link[flextable]{body_add_flextable}\cr
+\link[officer]{fp_text}\cr
+\link[officer]{fp_cell}\cr
+\link[officer]{fp_border}\cr
+\link[officer]{read_docx}\cr
+\link[xtable]{xtable}\cr
+\link[tools]{texi2dvi}\cr
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren

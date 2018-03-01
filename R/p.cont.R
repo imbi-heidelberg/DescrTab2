@@ -43,8 +43,8 @@
 #' Lorenz Uhlmann, Csilla van Lunteren
 #'
 #' @seealso
-#' \link[nlme]{lme}
-#' \link[car]{Anova}
+#' \link[nlme]{lme}\cr
+#' \link[car]{Anova}\cr
 #'
 #' @examples
 #' \dontrun{
