@@ -44,7 +44,7 @@
 #'
 #' @seealso
 #' \link[nlme]{lme}\cr
-#' \link[car]{Anova}
+#' \link[car]{Anova}\cr
 #'
 #' @examples
 #' \dontrun{

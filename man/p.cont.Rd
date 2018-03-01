@@ -51,6 +51,6 @@ p.cont(x=rnorm(100,0,1), group=rep(1:4,25))
 
 }
 \seealso{
-\link[nlme]{lme}
-\link[car]{Anova}
+\link[nlme]{lme}\cr
+\link[car]{Anova}\cr
 }
