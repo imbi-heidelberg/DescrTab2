@@ -121,15 +121,15 @@ descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create
 
 }
 \seealso{
-\code{\link{med.new}}
-\code{\link{inqur}}
-\code{\link{minmax}}
-\code{\link{f.r}}
-\code{\link{formatr}}
-\code{\link{m.cat}}
-\code{\link{m.cont}}
-\code{\link{p.cat}}
-\code{\link{p.cont}}
+\code{\link{med.new}}\cr
+\code{\link{inqur}}\cr
+\code{\link{minmax}}\cr
+\code{\link{f.r}}\cr
+\code{\link{formatr}}\cr
+\code{\link{m.cat}}\cr
+\code{\link{m.cont}}\cr
+\code{\link{p.cat}}\cr
+\code{\link{p.cont}}\cr
 }
 \author{
 Lorenz Uhlmann, Csilla van Lunteren
