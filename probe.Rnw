@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{longtable}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+<<echo=FALSE, results="tex", include=TRUE>>=
+library(DescrTab)
+
+MyData <- read.csv(file="C:/Users/vragovic/Documents/testdata.csv",
+                   sep=";",
+                   fileEncoding = "windows-1252",
+                   dec=",")
+
+des.print( dat = MyData, create = "knitr",
+           var.names = c("sex", "jaw","front",
+                         "premolar","anchor_tooth","furcation","GTR",
+                         "bone_level","prognosis","age"),
+           caption = c("null","eins"),
+           tab.caption = "Beispiel Auswertung", digits.m = 3, digits.sd = 6)
+@
+
+
+\end{document}
