@@ -1,0 +1,175 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{longtable}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in des.print(dat = MyData, create = "{}knitr"{}, var.names = c("{}sex"{}, : group is missing! index and group.miss were set to FALSE and which.col were set to "{}total"{}}}\begin{verbatim}
+## % latex table generated in R 3.5.3 by xtable 1.8-4 package
+## % Tue May 28 15:06:07 2019
+## \begin{longtable}{lc}
+## \caption{Beispiel Auswertung} \\ 
+##    \hline & Total   \\ & (n = 25) \\
+##                                       \hline\\
+##                                       \endhead
+##                                       \hline\\\endfoot sex (sex) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.200 \\ 
+##   \hspace{2ex} SD & 0.408248 \\ 
+##   \hspace{2ex} Median & 0 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 0 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 1.0 \\ 
+##    &  \\ 
+##   jaw (jaw) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.520 \\ 
+##   \hspace{2ex} SD & 0.509902 \\ 
+##   \hspace{2ex} Median & 1 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 1 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 1.0 \\ 
+##    &  \\ 
+##   front (front) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.960 \\ 
+##   \hspace{2ex} SD & 0.734847 \\ 
+##   \hspace{2ex} Median & 1 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 1 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 2.0 \\ 
+##    &  \\ 
+##   premolar (premolar) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.240 \\ 
+##   \hspace{2ex} SD & 0.435890 \\ 
+##   \hspace{2ex} Median & 0 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 0 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 1.0 \\ 
+##    &  \\ 
+##   anchor\_tooth (molar) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.280 \\ 
+##   \hspace{2ex} SD & 0.458258 \\ 
+##   \hspace{2ex} Median & 0 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 1 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 1.0 \\ 
+##    &  \\ 
+##    \pagebreak furcation (anchor\_tooth) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.280 \\ 
+##   \hspace{2ex} SD & 0.458258 \\ 
+##   \hspace{2ex} Median & 0 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 1 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 1.0 \\ 
+##    &  \\ 
+##   GTR (furcation) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.480 \\ 
+##   \hspace{2ex} SD & 0.714143 \\ 
+##   \hspace{2ex} Median & 0 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 1 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 2.0 \\ 
+##    &  \\ 
+##   bone\_level (GTR) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 0.120 \\ 
+##   \hspace{2ex} SD & 0.331662 \\ 
+##   \hspace{2ex} Median & 0 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 0 -- 0 \\ 
+##   \hspace{2ex} Min. -- Max. & 0.0 -- 1.0 \\ 
+##    &  \\ 
+##   prognosis (bone\_level) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 1.720 \\ 
+##   \hspace{2ex} SD & 0.890693 \\ 
+##   \hspace{2ex} Median & 1 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 1 -- 2 \\ 
+##   \hspace{2ex} Min. -- Max. & 1.0 -- 4.0 \\ 
+##    &  \\ 
+##   age (prognosis) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 1.120 \\ 
+##   \hspace{2ex} SD & 0.331662 \\ 
+##   \hspace{2ex} Median & 1 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 1 -- 1 \\ 
+##   \hspace{2ex} Min. -- Max. & 1.0 -- 2.0 \\ 
+##    &  \\ 
+##    \pagebreak NA (age) &  \\ 
+##       \hspace{2ex} N  & 25 \\ 
+##   \hspace{2ex} Missing & 0 \\ 
+##   \hspace{2ex} Mean & 52.800 \\ 
+##   \hspace{2ex} SD & 12.529964 \\ 
+##   \hspace{2ex} Median & 54 \\ 
+##   \hspace{2ex} Q1 -- Q3 & 43 -- 61 \\ 
+##   \hspace{2ex} Min. -- Max. & 31.0 -- 76.0 \\ 
+##    &  \\ 
+##   \hline
+## \end{longtable}
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}
