@@ -7,7 +7,7 @@
 #' descr(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
 #'       pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
 #'       p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
-#'       create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = 1)
+#'       create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2))
 #'
 #' @param dat
 #' Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
@@ -61,7 +61,10 @@
 #' @param digits.minmax
 #' Number of digits for presentation in the table: For minimum and maximum.
 #' @param digits.p
-#' Number of digits for presentation in the table: For percentages.
+#' Vector with numbers of digits for presentation in the table: For percentages.
+#' First vector element is number of digits for the first variable, second element for second variable and so on.
+#' @param q.type
+#' Integer between 1 and 9 that selects a quantile algorithm.
 #'
 #' @return
 #' Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
@@ -132,7 +135,7 @@
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
                   p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,
-                  digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = 1) {
+                  digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=7) {
 
   if (is.null(nonparametric))
     nonparametric <- rep(F, ncol(dat))
@@ -183,11 +186,16 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           ab <- data.frame(cbind(ab, as.vector(d), as.vector(e) * 100))
         }
+
+
+        digits.p <- c(digits.p, rep(digits.p[length(digits.p)], length=length(var.names)))
+
+
         if (create == "word" | create == "R") {
           for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
             for (k in 1:nrow(ab)) {
               if (ab[k, j] != 0 ) {
-                ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p), "%)", sep = "")
+                ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
               } else {
                 ab[k, j] <- paste(ab[k, j], " ( - ) ")
               }
@@ -196,7 +204,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
             for (k in 1:nrow(ab))
-              ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p), "\\%)", sep = "")
+              ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "\\%)", sep = "")
           }
         }
       } else {
@@ -215,13 +223,13 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         if (create == "word" | create == "R") {
           for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
             for (k in 1:nrow(ab)) {
-              ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p), "%)", sep = "")
+              ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
             }
           }
         } else {
           for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
             for (k in 1:nrow(ab)) {
-              ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p), "\\%)", sep = "")
+              ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "\\%)", sep = "")
             }
           }
         }
@@ -389,7 +397,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         }
       }
       ab[4, ] <- sapply(a.list, med.new, simplify = T, k = digits.qu)
-      ab[5, ] <- sapply(a.list, inqur, simplify = T, k = digits.qu)
+      ab[5, ] <- sapply(a.list, inqur, simplify = T, k = digits.qu, n=q.type)
       ab[6, ] <- sapply(a.list, minmax, simplify = T, k = digits.minmax)
 
       if ("n" %in% n.or.miss & "miss" %in% n.or.miss)

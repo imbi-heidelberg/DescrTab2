@@ -7,7 +7,7 @@
 descr(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
       pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
       p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
-      create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = 1)
+      create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2))
 }
 \arguments{
 \item{dat}{Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
@@ -61,7 +61,10 @@ Number.Instead of two any other number.}
 
 \item{digits.minmax}{Number of digits for presentation in the table: For minimum and maximum.}
 
-\item{digits.p}{Number of digits for presentation in the table: For percentages.}
+\item{digits.p}{Vector with numbers of digits for presentation in the table: For percentages.
+First vector element is number of digits for the first variable, second element for second variable and so on.}
+
+\item{q.type}{Integer between 1 and 9 that selects a quantile algorithm.}
 }
 \value{
 Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
