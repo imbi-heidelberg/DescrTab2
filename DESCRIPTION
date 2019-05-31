@@ -11,6 +11,10 @@ Description: The packages creates descriptive statistics such as mean, standard
     provides p-values obtained from testint for differences between the groups.
 Depends:
     R  (>= 3.3.0)
+Suggests:
+    testthat,
+    covr,
+    knitr
 Imports:
     xtable,
     nlme,
@@ -24,8 +28,5 @@ Imports:
 License: GPL
 LazyLoad: yes
 RoxygenNote: 6.0.1
-Suggests:
-    testthat,
-    covr,
-    devtools
+
           
