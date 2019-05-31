@@ -22,7 +22,8 @@ Imports:
     car,
     tools 
 Suggests
-    testthat
+    testthat,
+    covr
 License: GPL
 LazyLoad: yes
 RoxygenNote: 6.0.1
