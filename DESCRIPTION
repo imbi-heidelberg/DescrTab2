@@ -21,6 +21,8 @@ Imports:
     MatrixModels,
     car,
     tools 
+Suggests
+    testthat
 License: GPL
 LazyLoad: yes
 RoxygenNote: 6.0.1
