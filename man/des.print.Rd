@@ -10,7 +10,7 @@ des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
          groupsize = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
          percent.vertical = T, var.names, data.names = T, caption, tab.caption,
          landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
-         digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = 1,
+         digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2),
          silent = T, ...)
 }
 \arguments{
@@ -85,9 +85,12 @@ If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 wi
 
 \item{digits.minmax}{Number of digits for presentation in the table: For minimum and maximum.}
 
-\item{digits.p}{Number of digits for presentation in the table: For percentages.}
+\item{digits.p}{Vector with numbers of digits for presentation in the table: For percentages.
+First vector element is number of digits for the first variable, second element for second variable and so on.}
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
+
+\item{q.type}{Integer between 1 and 9 that selects a quantile algorithm.}
 
 \item{...}{further arguments to be passed to or from methods.}
 }

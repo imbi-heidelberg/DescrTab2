@@ -5,13 +5,16 @@
 #' It calculate the first an third quantil of continuous variables.
 #'
 #' @usage
-#' inqur(x, k = c())
+#' inqur(x, k = c(),n)
 #'
 #' @param x
 #' Vector of continuous cariables.
 #' @param k
 #' Optional. The number of decimal places.
 #' If not specified, the number of decimal places is 1 or 2.
+#'
+#'@param n
+#' Optional. Integer between 1 and 9 that selects a quantile algorithm.
 #'
 #' @return
 #' The first and third quantil is returned.
@@ -26,13 +29,13 @@
 #' set.seed(12345)
 #' x<-rnorm(100)
 #'
-#' inqur(x, k = c(3))
+#' inqur(x, k = c(3),4)
 #' }
 #'
-inqur <- function(x, k = c()) {
+inqur <- function(x, k = c(), n=7) {
   if (length(x) > 1){
-    x.q1 <- quantile(x, type = 7)[2]
-    x.q3 <- quantile(x, type = 7)[4]
+    x.q1 <- quantile(x, type = n)[2]
+    x.q3 <- quantile(x, type = n)[4]
     if (is.null(k)) {
       if (as.integer(x.q1 / 0.25 / 2) == (x.q1 / 0.25 / 2) | (as.integer(x.q1 / 0.25) != (x.q1 / 0.25))) {
         x.q1 <- round(x.q1, 1)
