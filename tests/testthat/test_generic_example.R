@@ -17,7 +17,7 @@ dat <- structure(list(
   Gewicht = c( 68, 75, 75, NA, 115, 87, 90, NA, 86, 56)),
   .Names = c("Geschlecht", "Schulabschluss", "Raucher","Groesse", "Gewicht"),
   row.names = c(NA,10L), class = "data.frame")
-descr( dat = dat, group = 1, create = "knitr",
+des.print(dat = dat, group = 1, create = "knitr",
            var.names = c("Schulabschluss", "Raucher","Groesse", "Gewicht"),
            caption = c("WEIBLICH","MAENNLICH"),
            tab.caption = "Beispiel Auswertung",
