@@ -90,7 +90,7 @@ First vector element is number of digits for the first variable, second element 
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
 
-\item{q.type}{Integer between 1 and 9 that selects a quantile algorithm.}
+\item{q.type}{an integer between 1 and 9 selecting one of the nine quantile algorithms detailed in \code{?quantile} to be used.}
 
 \item{...}{further arguments to be passed to or from methods.}
 }
