@@ -166,23 +166,23 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
   lgr <- length(levels(group))
   for (i in 1:ncol(dat)) {
     gr.miss <- c()
-    if (is.factor(dat[ ,i])) {
-      a <- table(dat[ ,i], group)
+    if (is.factor(dat[[i]])) {
+      a <- table(dat[[i]], group)
       if (group.miss & length(group.na.index) != 0)
         gr.miss <- c(gr.miss, table(datmiss[ ,i], groupmiss)[ ,which(colnames(table(datmiss[ ,i], groupmiss)) == "NA")])
       if (group.miss & length(group.na.index) == 0)
-        gr.miss <- rep(0,length(levels(dat[,i])))
-      d <- table(dat[ ,i])
+        gr.miss <- rep(0,length(levels(dat[[i]])))
+      d <- table(dat[[i]])
       if (percent.vertical == T) {
-        b <- prop.table(as.matrix(table(dat[ ,i], group)), 2)
-        e <- prop.table(as.matrix(table(dat[ ,i])), 2)
+        b <- prop.table(as.matrix(table(dat[[i]], group)), 2)
+        e <- prop.table(as.matrix(table(dat[[i]])), 2)
         ab <- data.frame(cbind(a[ ,1], b[ ,1]*100))
         if (ncol(a) >= 2) {
           for (k in 2:ncol(a))
             ab <- data.frame(cbind(ab, a[ ,k], b[ ,k]*100))
         }
         if (group.miss) {
-          ab <- data.frame(cbind(ab, as.vector(d) + gr.miss, as.vector(prop.table((as.matrix(table(dat[ ,i])) + gr.miss), 2))*100))
+          ab <- data.frame(cbind(ab, as.vector(d) + gr.miss, as.vector(prop.table((as.matrix(table(dat[[i]])) + gr.miss), 2))*100))
         } else {
           ab <- data.frame(cbind(ab, as.vector(d), as.vector(e) * 100))
         }
@@ -208,7 +208,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           }
         }
       } else {
-        b <- prop.table(as.matrix(table(dat[, i], group)), 1)
+        b <- prop.table(as.matrix(table(dat[[i]], group)), 1)
         ab <- data.frame(cbind(a[, 1], b[, 1] * 100))
         if (ncol(a) >= 2) {
           for (k in 2:ncol(a)) {
@@ -244,7 +244,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           miss.j <- length(which(is.na(dat[which(group == levels(group)[j]), i])))
           miss.end <- c(miss.end, miss.j)
         }
-        miss.all <- length(which(is.na(dat[ ,i])))
+        miss.all <- length(which(is.na(dat[[i]])))
         ab <- rbind(ab, c(miss.end, miss.all))
         if (group.miss) {
           gr.miss <- c(gr.miss, length(which(is.na(datmiss[which(groupmiss == "NA"), i]))))
@@ -270,24 +270,24 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
 
       ab <- as.data.frame(ab)
-      levels(dat[,i]) <- paste(" ", levels(dat[,i]))
+      levels(dat[[i]]) <- paste(" ", levels(dat[[i]]))
       if (create == "R")
-        levels(dat[,i]) <- paste("- ", levels(dat[,i]))
+        levels(dat[[i]]) <- paste("- ", levels(dat[[i]]))
       if ("miss.cat" %in% n.or.miss) {
         if (create == "R"){
-          ab[ ,1] <- c(var.n, levels(dat[ ,i]), "- Missing", "")
+          ab[ ,1] <- c(var.n, levels(dat[[i]]), "- Missing", "")
         } else {
-          ab[ ,1] <- c(var.n, levels(dat[ ,i]), "  Missing", "")
+          ab[ ,1] <- c(var.n, levels(dat[[i]]), "  Missing", "")
         }
       } else {
-        ab[ ,1] <- c(var.n, levels(dat[ ,i]), "")
+        ab[ ,1] <- c(var.n, levels(dat[[i]]), "")
       }
       if (create != "word" & create != "R") {
-        for (j in 1:(length(levels(dat[, i])) + ("miss.cat" %in% n.or.miss))) {
+        for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
           ab[j + 1, 1] <- paste("\\hspace{2ex}", ab[j + 1, 1])
         }
       } else {
-        for (j in 1:(length(levels(dat[ ,i])) + ("miss.cat" %in% n.or.miss))) {
+        for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
           ab[j + 1, 1] <- paste(" ", ab[j + 1, 1])
         }
       }
@@ -298,7 +298,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       pvalues_var <- matrix(F, ncol = ncol(dat))
       pvalues_var[i] <- p.values
       if (pvalues_var[i]) {
-        a <- dat[ ,i]
+        a <- dat[[i]]
         a.list <- list()
         a.list[[(length(levels(group)) + 1)]] <- na.omit(a)
         n.vector <- c()
@@ -311,11 +311,11 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
             pvalues_var[i] <- F
           }
         }
-        if (length(table(dat[,i])) == 1) {
+        if (length(table(dat[[i]])) == 1) {
           pvalues_var[i] = F
         } else {
-          for (l in 1:length(table(dat[,i]))) {
-            if(table(dat[,i])[l] == 0) {
+          for (l in 1:length(table(dat[[i]]))) {
+            if(table(dat[[i]])[l] == 0) {
               pvalues_var[i] = F
             }
           }
@@ -323,7 +323,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       if (pvalues_var[i]) {
         if (index) {
-          m <- m.cat(group, paired = paired, is.ordered = is.ordered(dat[, i]))
+          m <- m.cat(group, paired = paired, is.ordered = is.ordered(dat[[i]]))
           if (!(m %in% testings)) {
             testings <- c(testings, m)
             l.i <- l.i + 1
@@ -332,7 +332,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           index.i <- c()
         }
-        pv <- p.cat(dat[ ,i], group, paired = paired, is.ordered = is.ordered(dat[ ,i]),
+        pv <- p.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
                     correct.cat = correct.cat, correct.wilcox = correct.wilcox, index = index.i,
                     create = create)
         index_var[i] <- T
@@ -340,14 +340,14 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         index_var[i] <- F
         pv <- "--"
       }
-      ab <- cbind(ab, c("", pv, rep("", length(levels(dat[, i])) + ("miss.cat" %in% n.or.miss))))
+      ab <- cbind(ab, c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))))
       }
 
       pos.i.alt <- pos.i
 
-      pos.i <- pos.i + length(levels(dat[ ,i])) + 2 + length(n.or.miss)
+      pos.i <- pos.i + length(levels(dat[[i]])) + 2 + length(n.or.miss)
     } else {
-      a <- dat[, i]
+      a <- dat[[i]]
       a.list <- list()
       a.list[[(length(levels(group)) + 1)]] <- na.omit(a)
 
@@ -464,18 +464,18 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           if (n.vector[ -length(n.vector)][l] < groupsize)
             pvalues_var[i] <- F
         }
-        if (length(table(dat[,i])) == 1) {
+        if (length(table(dat[[i]])) == 1) {
           pvalues_var[i] = F
         } else {
-          for (l in 1:length(table(dat[,i]))) {
-            if (table(dat[,i])[l] == 0)
+          for (l in 1:length(table(dat[[i]]))) {
+            if (table(dat[[i]])[l] == 0)
               pvalues_var[i] = F
           }
         }
 
       if (pvalues_var[i]) {
         if (index) {
-          m <- m.cont(group, paired = paired, is.ordered = is.ordered(dat[, i]),
+          m <- m.cont(group, paired = paired, is.ordered = is.ordered(dat[[i]]),
                       nonparametric = nonparametric[i], t.log = t.log[i])
           if (!(m %in% testings)) {
             testings <- c(testings, m)
@@ -485,7 +485,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           index.i <- c()
         }
-        pv <- p.cont(dat[ ,i], group, paired = paired, is.ordered = is.ordered(dat[ ,i]),
+        pv <- p.cont(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
                      nonparametric = nonparametric[i], t.log = t.log[i], var.equal = var.equal,
                      index = index.i, create = create)
         index_var[i] <- T

@@ -252,13 +252,13 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
   ##Handling with the group variable
   if (is.numeric(group) & length(group) == 1) {
     gr <- group
-    group <- dat[, group]
+    group <- dat[[group]]
     dat <- dat[, -gr, drop = FALSE]
   }
 
   if (is.character(group)) {
     gr <- which(names(dat) == group)
-    group <- dat[, group]
+    group <- dat[[group]]
     dat <- dat[, -gr, drop = FALSE]
   }
 
