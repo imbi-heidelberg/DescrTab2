@@ -28,3 +28,4 @@ Imports:
 License: GPL
 LazyLoad: yes
 RoxygenNote: 6.1.1
+Encoding: UTF-8
