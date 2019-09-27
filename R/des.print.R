@@ -391,14 +391,16 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
         col_keys = jet$col_keys,
         tab = tab.caption,
         what = names.erg,
-        measure  =header
+        measure  =header,
+        stringsAsFactors = F
       )
     } else {
       head <- data.frame(
         col_keys = jet$col_keys,
         tab = tab.caption,
         what = c(names.erg, ""),
-        measure = c(header, "")
+        measure = c(header, ""),
+        stringsAsFactors = F
       )
     }
 
@@ -467,7 +469,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       my_doc <- flextable::body_add_flextable(my_doc, jet)
       print(my_doc, target = file)
     } else if (create == "R") {
-      show(jet)
+      return(jet)
     }
   } else {
     ##pdf, knitr, tex, custom

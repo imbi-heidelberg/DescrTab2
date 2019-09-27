@@ -435,7 +435,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       } else if (create == "R"){
         row.ab <- c()
         if ("n" %in% n.or.miss)
-          row.ab <- c(row.ab, "  - N")
+          row.ab <- c(row.ab, "    - N")
         if ("miss" %in% n.or.miss)
           row.ab <- c(row.ab, "   - Missing")
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
