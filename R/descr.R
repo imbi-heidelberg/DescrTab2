@@ -135,7 +135,7 @@
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
                   p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,
-                  digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=7) {
+                  digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=2) {
 
   if (is.null(nonparametric))
     nonparametric <- rep(F, ncol(dat))
@@ -397,7 +397,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         }
       }
       ab[4, ] <- sapply(a.list, med.new, simplify = T, k = digits.qu)
-      ab[5, ] <- sapply(a.list, inqur, simplify = T, k = digits.qu, n=q.type)
+      ab[5, ] <- sapply(a.list, inqur, simplify = T, k = digits.qu, q.type=q.type)
       ab[6, ] <- sapply(a.list, minmax, simplify = T, k = digits.minmax)
 
       if ("n" %in% n.or.miss & "miss" %in% n.or.miss)

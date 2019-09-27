@@ -4,7 +4,7 @@
 \alias{inqur}
 \title{Calculation of the first and third quantile}
 \usage{
-inqur(x, k = c(),n)
+inqur(x, k = c(), q.type = 2)
 }
 \arguments{
 \item{x}{Vector of continuous cariables.}
@@ -12,7 +12,7 @@ inqur(x, k = c(),n)
 \item{k}{Optional. The number of decimal places.
 If not specified, the number of decimal places is 1 or 2.}
 
-\item{n}{Optional. Integer between 1 and 9 that selects a quantile algorithm.}
+\item{q.type}{Optional. Integer between 1 and 9 that selects a quantile algorithm.}
 }
 \value{
 The first and third quantil is returned.
@@ -25,7 +25,7 @@ It calculate the first an third quantil of continuous variables.
 set.seed(12345)
 x<-rnorm(100)
 
-inqur(x, k = c(3),4)
+inqur(x, k = c(3), 4)
 }
 
 }
