@@ -188,7 +188,13 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         }
 
 
-        digits.p <- c(digits.p, rep(digits.p[length(digits.p)], length=length(var.names)))
+        if (missing(var.names)){
+          digits.p <- c(digits.p, rep(digits.p[length(digits.p)], length=length(names(dat))))
+        }
+        else {
+          digits.p <- c(digits.p, rep(digits.p[length(digits.p)], length=length(var.names)))
+        }
+
 
 
         if (create == "word" | create == "R") {
