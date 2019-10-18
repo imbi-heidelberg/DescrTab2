@@ -317,7 +317,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
             pvalues_var[i] <- F
           }
         }
-        if (length(table(dat[[i]])) == 1) {
+        if (length(table(dat[[i]])) <= 1) {
           pvalues_var[i] = F
         } else {
           for (l in 1:length(table(dat[[i]]))) {
@@ -470,7 +470,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           if (n.vector[ -length(n.vector)][l] < groupsize)
             pvalues_var[i] <- F
         }
-        if (length(table(dat[[i]])) == 1) {
+        if (length(table(dat[[i]])) <= 1) {
           pvalues_var[i] = F
         } else {
           for (l in 1:length(table(dat[[i]]))) {
