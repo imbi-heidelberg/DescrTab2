@@ -335,6 +335,10 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
             l.i <- l.i + 1
             index.i <- letters[l.i]
           }
+          else {
+            index.i <- letters[which(testings==m)[1]]
+          }
+
         } else {
           index.i <- c()
         }
@@ -487,6 +491,9 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
             testings <- c(testings, m)
             l.i <- l.i + 1
             index.i <- letters[l.i]
+          }
+          else {
+            index.i <- letters[which(testings==m)[1]]
           }
         } else {
           index.i <- c()
