@@ -11,7 +11,7 @@
 #' des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
 #'          nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
 #'          t.log = c(), which.col = c("groups", "total", "p-values"),
-#'          groupsize = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
+#'          group.min.size = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
 #'          percent.vertical = T, var.names, data.names = T, caption, tab.caption,
 #'          landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
 #'          digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2),
@@ -54,9 +54,12 @@
 #' @param which.col
 #' Which columns should be provided ("groups", "total", "p-values")? Combinations are allowed. "groups" or "total" must be listed. Only "total" and "p-values" is not possible.
 #' Type of p-value calculation see \code{\link{p.cat}} (categorical) or \code{\link{p.cont}} (continuous).
-#' @param groupsize
-#' Logical. Should be checked for each variable whether the groups contain at least two cases.
-#' Number. Instead of two any other number.
+#' @param group.min.size
+#' For each variable, a p-value is only calculated if each non-empty group contains at least \code{group.min.size} observations for that variable.
+#' @param group.non.empty
+#' For each variable, a p-value is only calculated if each group contains at least one observation for that variable.
+#' @param cat.non.empty
+#' For categorical variables a p-value is only calculated if each category is non-empty.
 #' @param n.or.miss
 #' Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.
 #' @param group.miss
@@ -215,9 +218,9 @@
 #'
 des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                       paired = F, nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
-                      t.log = c(), which.col = c("groups", "total", "p-values"), groupsize = F,
-                      n.or.miss = c("n", "miss", "miss.cat"), group.miss = F, percent.vertical = T, var.names,
-                      data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
+                      t.log = c(), which.col = c("groups", "total", "p-values"), group.min.size = F, group.non.empty=F,
+                      cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
+                      percent.vertical = T, var.names, data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
                       digits.minmax = 1, digits.p = c(1), silent = T, q.type=2, ...) {
 
@@ -238,8 +241,8 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     p.values <- F
   }
 
-  if (p.values & groupsize == T)
-    groupsize <- 2
+  if (p.values & group.min.size == T)
+    group.min.size <- 2
 
   if (!(p.values) & index) {
     index <- F
@@ -294,7 +297,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     ##raw data table
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, groupsize, n.or.miss, group.miss, t.log, index, create, digits.m,
+                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type)
     erg <- erg.a$descr
     if (missing(caption))
@@ -498,7 +501,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     ##raw data table
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, groupsize, n.or.miss, group.miss, t.log, index, create, digits.m,
+                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type)
     erg <- erg.a$descr
 
