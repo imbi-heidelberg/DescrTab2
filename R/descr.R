@@ -6,7 +6,7 @@
 #' @usage
 #' descr(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
 #'       pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
-#'       p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
+#'       p.values = T, group.min.size = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
 #'       create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2))
 #'
 #' @param dat
@@ -39,9 +39,12 @@
 #' Logical. Should intermediate stages be shown (more for technical reasons)?
 #' @param p.values
 #' Logical. Should calculate p-values? If you won't p-values \code{index} were set to \code{FALSE}.
-#' @param groupsize
-#' Logical. Should be checked for each variable whether the groups contain at least two cases.
-#' Number.Instead of two any other number.
+#' @param group.min.size
+#' For each variable, a p-value is only calculated if each non-empty group contains at least \code{group.min.size} observations for that variable.
+#' @param group.non.empty
+#' For each variable, a p-value is only calculated if each group contains at least one observation for that variable.
+#' @param cat.non.empty
+#' For categorical variables a p-value is only calculated if each category is non-empty.
 #' @param n.or.miss
 #' Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.
 #' @param group.miss
@@ -134,7 +137,8 @@
 #'
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
-                  p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,
+                  p.values = T, group.min.size = F, group.non.empty=F, cat.non.empty=F,
+                  n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,
                   digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=2) {
 
   if (is.null(nonparametric))
@@ -313,16 +317,34 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
           n.vector <- c(n.vector, length(a.list[[k]]))
         }
         for (l in 1:length(levels(group))) {
-          if (n.vector[l] < groupsize) {
+          if (n.vector[l] == 0) {
+            if (group.non.empty){
+              pvalues_var[i] <- F
+            }
+            else{
+              warning(paste0("For variable ", var.n, " a group has no observations for that variable.
+                             This group will be dropped for p-value calculations."))
+            }
+          }
+          else if (n.vector[l] < group.min.size) {
             pvalues_var[i] <- F
           }
         }
+
+
         if (length(table(dat[[i]])) <= 1) {
+          warning(paste0("Variable ", var.n, " only has 1 category. No p-value calculations will be performed."))
           pvalues_var[i] = F
         } else {
           for (l in 1:length(table(dat[[i]]))) {
             if(table(dat[[i]])[l] == 0) {
-              pvalues_var[i] = F
+              if (cat.non.empty){
+                pvalues_var[i] = F
+              }
+              else{
+                warning(paste0("Variable ", var.n, " Has an empty category.
+                               This category will be dropped for p-value calculations."))
+              }
             }
           }
         }
@@ -471,8 +493,18 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       pvalues_var[i] <- p.values
       if (pvalues_var[i]) {
         for (l in 1:length(levels(group))) {
-          if (n.vector[ -length(n.vector)][l] < groupsize)
+          if (n.vector[l] == 0) {
+            if (group.non.empty){
+              pvalues_var[i] <- F
+            }
+            else{
+              warning(paste0("For variable ", var.n, " a group has no observations for that variable.
+                             This group will be dropped for p-value calculations."))
+            }
+          }
+          else if (n.vector[l] < group.min.size) {
             pvalues_var[i] <- F
+          }
         }
         if (length(table(dat[[i]])) <= 1) {
           pvalues_var[i] = F
