@@ -7,7 +7,7 @@
 des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
          nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
          t.log = c(), which.col = c("groups", "total", "p-values"),
-         groupsize = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
+         group.min.size = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
          percent.vertical = T, var.names, data.names = T, caption, tab.caption,
          landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
          digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2),
@@ -51,8 +51,11 @@ should be used when testing for a difference between the groups.}
 \item{which.col}{Which columns should be provided ("groups", "total", "p-values")? Combinations are allowed. "groups" or "total" must be listed. Only "total" and "p-values" is not possible.
 Type of p-value calculation see \code{\link{p.cat}} (categorical) or \code{\link{p.cont}} (continuous).}
 
-\item{groupsize}{Logical. Should be checked for each variable whether the groups contain at least two cases.
-Number. Instead of two any other number.}
+\item{group.min.size}{For each variable, a p-value is only calculated if each non-empty group contains at least \code{group.min.size} observations for that variable.}
+
+\item{group.non.empty}{For each variable, a p-value is only calculated if each group contains at least one observation for that variable.}
+
+\item{cat.non.empty}{For categorical variables a p-value is only calculated if each category is non-empty.}
 
 \item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.}
 

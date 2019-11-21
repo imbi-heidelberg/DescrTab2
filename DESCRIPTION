@@ -27,5 +27,5 @@ Imports:
     tools 
 License: GPL
 LazyLoad: yes
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Encoding: UTF-8

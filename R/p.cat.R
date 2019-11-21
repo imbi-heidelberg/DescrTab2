@@ -46,6 +46,10 @@
 #'
 p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(),
                   create = "tex") {
+
+  group <- droplevels(group);
+  x <- droplevels(x);
+
   if (is.ordered) {
     if (length(levels(group)) == 2) {
       pv <- wilcox.test(as.numeric(x) ~ group, paired = paired)$p.value

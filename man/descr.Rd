@@ -6,7 +6,7 @@
 \usage{
 descr(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
       pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
-      p.values = T, groupsize = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
+      p.values = T, group.min.size = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
       create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2))
 }
 \arguments{
@@ -40,8 +40,11 @@ Only useful if you want know the number for a pagebreak when you create a "pdf"-
 
 \item{p.values}{Logical. Should calculate p-values? If you won't p-values \code{index} were set to \code{FALSE}.}
 
-\item{groupsize}{Logical. Should be checked for each variable whether the groups contain at least two cases.
-Number.Instead of two any other number.}
+\item{group.min.size}{For each variable, a p-value is only calculated if each non-empty group contains at least \code{group.min.size} observations for that variable.}
+
+\item{group.non.empty}{For each variable, a p-value is only calculated if each group contains at least one observation for that variable.}
+
+\item{cat.non.empty}{For categorical variables a p-value is only calculated if each category is non-empty.}
 
 \item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.}
 
