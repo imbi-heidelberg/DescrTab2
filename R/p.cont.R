@@ -59,6 +59,9 @@
 #'
 p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.log = F, var.equal = F,
                    index = c(), create = "tex") {
+
+  group <- droplevels(group);
+
   if (length(levels(group)) == 2) {
     if (nonparametric) {
       pv <- wilcox.test(x ~ group, paired = paired)$p.value
