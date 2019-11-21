@@ -52,18 +52,30 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
 
   if (is.ordered) {
     if (length(levels(group)) == 2) {
-      pv <- wilcox.test(as.numeric(x) ~ group, paired = paired)$p.value
+      test.name <- "Wilcoxen"
+      tl <-  wilcox.test(as.numeric(x) ~ group, paired = paired)
+      pv <- tl$p.value
+      test.value <- tl$statistic
     } else {
-      pv <- kruskal.test(x ~ group)$p.value
+      test.name <- "Kruskal"
+      tl <- kruskal.test(x ~ group)
+      pv <- tl$p.value
+      test.value <- tl$statistic
     }
   } else {
     if (paired) {
-      pv <- mcnemar.test(table(x, group), correct = correct.cat)$p.value
+      test.name <- "McNemar"
+      tl <- mcnemar.test(table(x, group), correct = correct.cat)
+      pv <- tl$p.value
+      test.value <- tl$statistic
     } else {
-      pv <- chisq.test(x, group, correct = correct.cat)$p.value
+      test.name <- "Chisq"
+      tl <- chisq.test(x, group, correct = correct.cat)
+      pv <- tl$p.value
+      test.value <- tl$statistic
     }
   }
-  pv <- formatr(pv, 3, cl.z = T)
+  pform <- formatr(pv, 3, cl.z = T)
   if (!is.null(index)) {
     if (create == "word" | create == "R") {
       pv <- paste(pv, index, sep = "")
@@ -71,5 +83,5 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
       pv <- paste(pv, "$^", index, "$", sep = "")
     }
   }
-  pv
+  list(pv.formatted = pform, p.value = pv, test.value = test.value,  test.name = test.name)
 }

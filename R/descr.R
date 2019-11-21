@@ -364,15 +364,21 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           index.i <- c()
         }
-        pv <- p.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
-                    correct.cat = correct.cat, correct.wilcox = correct.wilcox, index = index.i,
-                    create = create)
+        p_list <- p.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
+                        correct.cat = correct.cat, correct.wilcox = correct.wilcox, index = index.i,
+                        create = create)
+        pv <- p_list$pv.formatted
         index_var[i] <- T
       } else {
         index_var[i] <- F
         pv <- "--"
       }
-      ab <- cbind(ab, c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))))
+      ab <- cbind(ab,
+                  c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", p_list$p.value, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)))
+                  )
       }
 
       pos.i.alt <- pos.i
