@@ -96,6 +96,8 @@
 #' First vector element is number of digits for the first variable, second element for second variable and so on.
 #' @param q.type
 #' an integer between 1 and 9 selecting one of the nine quantile algorithms detailed in \code{?quantile} to be used.
+#'  @param alignment
+#' Specifies where the table shoould be aligned in the ouput document. Default is "c", other options are "l" and "r"
 #'
 #' @param silent
 #' Logical. Should intermediate stages be shown (more for technical reasons)?
@@ -222,7 +224,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                       cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
                       percent.vertical = T, var.names, data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
-                      digits.minmax = 1, digits.p = c(1), silent = T, q.type=2, ...) {
+                      digits.minmax = 1, digits.p = c(1), silent = T, q.type=2, alignment="c", ...) {
 
   ##Input data correction
   if (!("groups" %in% which.col) & !("total" %in% which.col))
@@ -464,12 +466,22 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     } else {
       jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
     }
-    jet <- flextable::height(jet, height = .01 * (fsize / 11), part = "body")
+    jet <- flextable::height(jet, height = .25 * (fsize / 11), part = "body")
     jet <- flextable::height(jet, height = .25 * (fsize / 11), part = "header")
 
     if (create == "word") {
       my_doc <- officer::read_docx()
-      my_doc <- flextable::body_add_flextable(my_doc, jet)
+
+      if (alignment=="l"){
+        my_doc <- flextable::body_add_flextable(my_doc, jet, align = "left")
+      }
+      else if (alignment=="r"){
+        my_doc <- flextable::body_add_flextable(my_doc, jet, align = "right")
+      }
+      else{
+        my_doc <- flextable::body_add_flextable(my_doc, jet)
+      }
+
       print(my_doc, target = file)
     } else if (create == "R") {
       return(jet)
@@ -674,9 +686,25 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                   \\end{document}", sep = ""), file = "a.tex")
       }
 
-      print(ab.t, file = "t.tex", type = "latex", include.colnames = F, include.rownames = F,
-            tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
-            hline.after = NULL, add.to.row = pc, caption.placement = "top", ...)
+
+
+
+       tmp.ltx <- capture.output(print(ab.t,  type = "latex", include.colnames = F, include.rownames = F,
+                                            tabular.environment = "longtable",
+                                       sanitize.text.function = function(x){x}, floating = F,
+                                            hline.after = NULL, add.to.row = pc, caption.placement = "top", ...))
+      if (alignment=="c"){
+
+      }
+      else if (alignment=="l"){
+        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[l]")
+      }
+      else if (alignment=="r"){
+        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[r]")
+      }
+      cat(tmp.ltx, sep="\n", file="t.tex")
+
+
 
       tools::texi2dvi("a.tex", pdf = T, clean = T, texi2dvi = "")
 
@@ -686,14 +714,34 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       file.remove("t.tex")
     }
     if (create == "tex") {
-      print(ab.t, file = file, type = "latex", include.colnames = F, include.rownames = F,
-            tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
-            hline.after = NULL, add.to.row = pc, caption.placement = "top")
+      tmp.ltx <- capture.output(print(ab.t, file = file, type = "latex", include.colnames = F, include.rownames = F,
+                                      tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
+                                      hline.after = NULL, add.to.row = pc, caption.placement = "top"))
+      if (alignment=="c"){
+
+      }
+      else if (alignment=="l"){
+        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[l]")
+      }
+      else if (alignment=="r"){
+        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[r]")
+      }
+      cat(tmp.ltx, sep="\n")
     }
     if (create == "knitr") {
-      print(ab.t, type = "latex", include.colnames = F, include.rownames = F,
+      tmp.ltx <- capture.output(print(ab.t, type = "latex", include.colnames = F, include.rownames = F, latex.environments = "left",
             tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
-            hline.after = NULL, add.to.row = pc, caption.placement = "top", comment = FALSE)
+            hline.after = NULL, add.to.row = pc, caption.placement = "top", comment = FALSE))
+      if (alignment=="c"){
+
+      }
+      else if (alignment=="l"){
+        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[l]")
+      }
+      else if (alignment=="r"){
+        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[r]")
+      }
+      cat(tmp.ltx, sep="\n")
     }
     if (create == "custom") {
       print(ab.t, type = "latex", include.colnames = F, include.rownames = F,
