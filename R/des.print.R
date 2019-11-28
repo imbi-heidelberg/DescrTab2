@@ -299,7 +299,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type)
-    erg <- erg.a$descr
+    erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
     if (missing(caption))
       caption <- levels(group)
 
@@ -474,7 +474,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     } else if (create == "R") {
       return(jet)
     }
-  } else {
+  } else if (create %in% c("pdf", "knitr", "tex", "custom")) {
     ##pdf, knitr, tex, custom
 
     ##tex language
@@ -503,7 +503,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type)
-    erg <- erg.a$descr
+    erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
 
     ##which column shoul be printed
     erg.anz <- 0
@@ -700,5 +700,43 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
             sanitize.text.function = function(x){x}, hline.after = NULL, add.to.row = pc, ...)
     }
   }
+  else if (create == "archive"){
+    erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
+                   pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
+                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
+                   digits.sd, digits.qu, digits.minmax, digits.p, q.type)
 
+
+    n.vec <- c()
+    for (j in 1:length(levels(group))) {
+      n.j <- paste(" (", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
+      n.vec <- c(n.vec, n.j)
+    }
+
+    if (missing(caption))
+      caption <- levels(group)
+
+    n.total <- paste(" (", "n = ", length(group), ")", sep = "")
+    if (group.miss)
+      n.miss<- paste(" (", "n = ",length(which(is.na(group))), ")", sep = "")
+
+    names.erg <- c("")
+    if ("groups" %in% which.col)
+      names.erg <- c(names.erg, stringr::str_c(caption, n.vec))
+    if ("total" %in% which.col)
+      names.erg <- c(names.erg, stringr::str_c("Total", n.total))
+    if (group.miss)
+      names.erg <- c(names.erg, stringr::str_c("Missing in group", n.miss))
+    if ("p-values" %in% which.col)
+      names.erg <- c(names.erg, "p_formatted", "p_val", "test_val", "test_name")
+
+
+
+    names(erg.a$descr) <- names.erg
+    if (!missing(file)){
+      write.csv(erg.a$descr, file = file)
+    }
+
+    return(erg.a$descr)
+  }
 }
