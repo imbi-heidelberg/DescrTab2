@@ -77,10 +77,10 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
   }
   pform <- formatr(pv, 3, cl.z = T)
   if (!is.null(index)) {
-    if (create == "word" | create == "R") {
-      pv <- paste(pv, index, sep = "")
+    if (create == "word" | create == "R" | create== "archive") {
+      pform <- paste(pform, index, sep = "")
     } else {
-      pv <- paste(pv, "$^", index, "$", sep = "")
+      pform <- paste(pform, "$^", index, "$", sep = "")
     }
   }
   list(pv.formatted = pform, p.value = pv, test.value = test.value,  test.name = test.name)
