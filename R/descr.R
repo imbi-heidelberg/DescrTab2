@@ -201,7 +201,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
 
 
-        if (create == "word" | create == "R") {
+        if (create == "word" | create == "R" | create=="archive") {
           for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
             for (k in 1:nrow(ab)) {
               if (ab[k, j] != 0 ) {
@@ -230,7 +230,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           ab <- data.frame(cbind(ab, as.vector(d)))
         }
-        if (create == "word" | create == "R") {
+        if (create == "word" | create == "R" | create=="archive") {
           for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
             for (k in 1:nrow(ab)) {
               ab[k, j] <- paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
@@ -292,7 +292,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       } else {
         ab[ ,1] <- c(var.n, levels(dat[[i]]), "")
       }
-      if (create != "word" & create != "R") {
+      if (create != "word" & create != "R" & create != "archive") {
         for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
           ab[j + 1, 1] <- paste("\\hspace{2ex}", ab[j + 1, 1])
         }
@@ -364,15 +364,22 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           index.i <- c()
         }
-        pv <- p.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
-                    correct.cat = correct.cat, correct.wilcox = correct.wilcox, index = index.i,
-                    create = create)
+        p_list <- p.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
+                        correct.cat = correct.cat, correct.wilcox = correct.wilcox, index = index.i,
+                        create = create)
+        pv <- p_list$pv.formatted
         index_var[i] <- T
       } else {
         index_var[i] <- F
         pv <- "--"
+        p_list <- list(p.value = "--", test.value = "--", test.name="--")
       }
-      ab <- cbind(ab, c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))))
+      ab <- cbind(ab,
+                  c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", p_list$p.value, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", p_list$test.value, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", p_list$test.name, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)))
+                  )
       }
 
       # pos.i.alt <- pos.i
@@ -473,6 +480,16 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
           row.ab <- c(row.ab, "  ")
         row.ab <- c(row.ab, "    - Mean", "    - SD", "    - Median", "    - Q1 -- Q3", "    - Min. -- Max.")
+      }
+        else if (create == "archive"){
+          row.ab <- c()
+          if ("n" %in% n.or.miss)
+            row.ab <- c(row.ab, "-N")
+          if ("miss" %in% n.or.miss)
+            row.ab <- c(row.ab, "-Missing")
+          if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss))
+            row.ab <- c(row.ab, "  ")
+          row.ab <- c(row.ab, "-Mean", "-SD", "-Median", "-Q1 -- Q3", "-Min. -- Max.")
       } else {
         row.ab <- c()
         if ("n" %in% n.or.miss)
@@ -530,19 +547,31 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         } else {
           index.i <- c()
         }
-        pv <- p.cont(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
+        p_list <- p.cont(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
                      nonparametric = nonparametric[i], t.log = t.log[i], var.equal = var.equal,
                      index = index.i, create = create)
+        pv <- p_list$pv.formatted
         index_var[i] <- T
       } else {
         index_var[i] <- F
         pv <- "--"
+        p_list <- list(p.value = "--", test.value = "--", test.name="--")
       }
         if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
-          ab <- cbind(ab, c("","", pv, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))))
+          ab <- cbind(ab,
+                      c("", pv, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                      c("", p_list$p.value, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                      c("", p_list$test.value, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                      c("", p_list$test.name, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
+          )
           ab <- ab[-2, ]
         } else {
-          ab <- cbind(ab, c("", pv, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))))
+          ab <- cbind(ab,
+                      c("", pv, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                      c("", p_list$p.value, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                      c("", p_list$test.value, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                      c("", p_list$test.name, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
+          )
         }
     }
 
@@ -565,7 +594,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       print(list("i" = i, "pos.i" = pos.i, "ab1" = ab1))
     if (landscape == F) {
       if (is.null(pos.pagebr))
-        pos.pagebr <- 45
+        pos.pagebr <- 50
     } else {
       if (is.null(pos.pagebr)) {
         pos.pagebr <- 30
