@@ -385,9 +385,9 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
                   )
       }
 
-      pos.i.alt <- pos.i
-
-      pos.i <- pos.i + length(levels(dat[[i]])) + 2 + length(n.or.miss)
+      # pos.i.alt <- pos.i
+      #
+      # pos.i <- pos.i + length(levels(dat[[i]])) + 2 + length(n.or.miss)
     } else {
       a <- dat[[i]]
       a.list <- list()
@@ -578,9 +578,9 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         }
     }
 
-      pos.i.alt <- pos.i
+      # pos.i.alt <- pos.i
+      # pos.i <- pos.i + 8 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
 
-      pos.i <- pos.i + 8 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
     }
     names(ab) <- 1:length(ab)
 
@@ -589,6 +589,10 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
     } else {
       ab1 <- rbind(ab1, ab)
     }
+
+    pos.i.alt <- pos.i
+    pos.i <- nrow(ab1)
+
     if (!silent)
       print(list("i" = i, "pos.i" = pos.i, "ab1" = ab1))
     if (landscape == F) {
