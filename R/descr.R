@@ -68,6 +68,8 @@
 #' First vector element is number of digits for the first variable, second element for second variable and so on.
 #' @param q.type
 #' Integer between 1 and 9 that selects a quantile algorithm.
+#' @param default.unordered.unpaired.test
+#' Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.
 #'
 #' @return
 #' Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
@@ -139,7 +141,8 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
                   p.values = T, group.min.size = F, group.non.empty=F, cat.non.empty=F,
                   n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,
-                  digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=2) {
+                  digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=2,
+                  default.unordered.unpaired.test = "Chisq") {
 
   if (is.null(nonparametric))
     nonparametric <- rep(F, ncol(dat))
@@ -351,7 +354,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       if (pvalues_var[i]) {
         if (index) {
-          m <- m.cat(group, paired = paired, is.ordered = is.ordered(dat[[i]]))
+          m <- m.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]), default.unordered.unpaired.test)
           if (!(m %in% testings)) {
             testings <- c(testings, m)
             l.i <- l.i + 1
@@ -366,7 +369,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         }
         p_list <- p.cat(dat[[i]], group, paired = paired, is.ordered = is.ordered(dat[[i]]),
                         correct.cat = correct.cat, correct.wilcox = correct.wilcox, index = index.i,
-                        create = create)
+                        create = create, default.unordered.unpaired.test)
         pv <- p_list$pv.formatted
         index_var[i] <- T
       } else {

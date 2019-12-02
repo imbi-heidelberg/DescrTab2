@@ -45,7 +45,8 @@
 #' }
 #'
 p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(),
-                  create = "tex") {
+                  create = "tex",
+                  default.unordered.unpaired.test = "Chisq") {
 
   group <- droplevels(group);
   x <- droplevels(x);
@@ -69,10 +70,33 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
-      test.name <- "Chisq"
-      tl <- chisq.test(x, group, correct = correct.cat)
-      pv <- tl$p.value
-      test.value <- tl$statistic
+      if (default.unordered.unpaired.test == "Chisq"){
+        test.name <- "Chisq"
+        tl <- chisq.test(x, group, correct = correct.cat)
+        pv <- tl$p.value
+        test.value <- tl$statistic
+      }
+      else if (default.unordered.unpaired.test == "Fisher_boschloo"){
+        if ((nrow(table(x,group))!= 2) | (ncol(table(x,group))!= 2)){
+          warning("Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fisher_exact.")
+          test.name <- "Fisher_exact"
+          tl <- fisher.test(x, group)
+          pv <- tl$p.value
+          test.value <- 0
+        }
+        else{
+          test.name <- "Fisher_boschloo"
+          tl <- Exact::exact.test(table(x,group), method="boschloo", to.plot=F)
+          pv <- tl$p.value
+          test.value <- tl$statistic
+        }
+      }
+      else if (default.unordered.unpaired.test == "Fisher_exact"){
+        test.name <- "Fisher_exact"
+        tl <- fisher.test(x, group)
+        pv <- tl$p.value
+        test.value <- 0
+      }
     }
   }
   pform <- formatr(pv, 3, cl.z = T)

@@ -68,6 +68,8 @@ Only useful if you want know the number for a pagebreak when you create a "pdf"-
 First vector element is number of digits for the first variable, second element for second variable and so on.}
 
 \item{q.type}{Integer between 1 and 9 that selects a quantile algorithm.}
+
+\item{default.unordered.unpaired.test}{Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.}
 }
 \value{
 Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.

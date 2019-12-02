@@ -96,6 +96,8 @@
 #' First vector element is number of digits for the first variable, second element for second variable and so on.
 #' @param q.type
 #' an integer between 1 and 9 selecting one of the nine quantile algorithms detailed in \code{?quantile} to be used.
+#' @param default.unordered.unpaired.test
+#' Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.
 #'
 #' @param silent
 #' Logical. Should intermediate stages be shown (more for technical reasons)?
@@ -222,7 +224,8 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
                       cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
                       percent.vertical = T, var.names, data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
-                      digits.minmax = 1, digits.p = c(1), silent = T, q.type=2, ...) {
+                      digits.minmax = 1, digits.p = c(1), silent = T, q.type=2,
+                      default.unordered.unpaired.test = "Chisq", ...) {
 
   ##Input data correction
   if (!("groups" %in% which.col) & !("total" %in% which.col))
@@ -298,7 +301,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
-                   digits.sd, digits.qu, digits.minmax, digits.p, q.type)
+                   digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
     erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
     if (missing(caption))
       caption <- levels(group)
@@ -502,7 +505,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
-                   digits.sd, digits.qu, digits.minmax, digits.p, q.type)
+                   digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
     erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
 
     ##which column shoul be printed
@@ -704,7 +707,7 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
                    p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
-                   digits.sd, digits.qu, digits.minmax, digits.p, q.type)
+                   digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
 
 
     n.vec <- c()
