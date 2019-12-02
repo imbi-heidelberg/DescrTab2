@@ -24,7 +24,8 @@ Imports:
     SparseM,
     MatrixModels,
     car,
-    tools 
+    tools,
+    Exact
 License: GPL
 LazyLoad: yes
 RoxygenNote: 7.0.0
