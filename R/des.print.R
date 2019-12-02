@@ -782,7 +782,6 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       names.erg <- c(names.erg, "p_formatted", "p_val", "test_val", "test_name")
 
 
-
     names(erg.a$descr) <- names.erg
     if (!missing(file)){
       write.csv(erg.a$descr, file = file)
