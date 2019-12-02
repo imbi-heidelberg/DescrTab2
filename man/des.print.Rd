@@ -93,11 +93,11 @@ First vector element is number of digits for the first variable, second element 
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
 
-\item{q.type}{an integer between 1 and 9 selecting one of the nine quantile algorithms detailed in \code{?quantile} to be used.
+\item{q.type}{an integer between 1 and 9 selecting one of the nine quantile algorithms detailed in \code{?quantile} to be used.}
+
+\item{default.unordered.unpaired.test}{Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.
  @param alignment
 Specifies where the table shoould be aligned in the ouput document. Default is "c", other options are "l" and "r"}
-
-\item{default.unordered.unpaired.test}{Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.}
 
 \item{...}{further arguments to be passed to or from methods.}
 }
