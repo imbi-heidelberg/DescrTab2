@@ -25,7 +25,7 @@
 #' m.cat(paired=T, is.ordered=T)
 #' }
 #'
-m.cat <- function(group, paired = F, is.ordered = F) {
+m.cat <- function(x, group, paired = F, is.ordered = F, default.unordered.unpaired.test = "Chisq") {
   if (is.ordered) {
     if (length(levels(group)) == 2) {
       pv <- "wilcox"
@@ -36,7 +36,20 @@ m.cat <- function(group, paired = F, is.ordered = F) {
     if (paired) {
       pv <- "mcnemar"
     } else {
-      pv <- "chisq"
+      if (default.unordered.unpaired.test=="Chisq"){
+        pv <- "chisq"
+      }
+      else if (default.unordered.unpaired.test=="Fisher_boschloo"){
+        if ((nrow(table(x,group))!= 2) | (ncol(table(x,group))!= 2)){
+          pv <- "Fisher_exact"
+        }
+        else{
+          pv <- "Fisher_boschloo"
+        }
+      }
+      else if (default.unordered.unpaired.test=="Fisher_exact"){
+        pv <- "Fisher_exact"
+      }
     }
   }
   pv
