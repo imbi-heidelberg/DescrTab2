@@ -717,7 +717,51 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       file.remove("t.tex")
     }
     if (create == "tex") {
-      tmp.ltx <- capture.output(print(ab.t, file = file, type = "latex", include.colnames = F, include.rownames = F,
+
+      ##fontsize calculation
+      if (is.numeric(fsize)) {
+        if (fsize <= 6) {
+          fsizep <- "tiny"
+          fsizec <- "scriptsize"
+        }
+        if (fsize > 6 & fsize <= 8)
+          fsizep <- fsizec <- "scriptsize"
+        if (fsize == 9)
+          fsizep <- fsizec <- "footnotesize"
+        if (fsize == 10)
+          fsizep <- fsizec <- "small"
+        if (fsize == 11)
+          fsizep <- fsizec <- "normalsize"
+        if (fsize == 12)
+          fsizep <- fsizec <- "large"
+        if (fsize > 12 & fsize <= 15)
+          fsizep <- fsizec <- "Large"
+        if (fsize > 15 & fsize <= 18) {
+          fsizep <- "LARGE"
+          fsizec <- "Large"
+        }
+        if (fsize > 18 & fsize <= 22) {
+          fsizep <- "huge"
+          fsizec <- "Large"
+        }
+        if (fsize > 22) {
+          fsizep <- "Huge"
+          fsizec <- "Large"
+        }
+      } else {
+        fsizep <- fsizec <- fsize
+        if (fsize == "tiny")
+          fsizec <- "scriptsize"
+        if (fsize %in% c("LARGE", "huge", "Huge"))
+          fsizec <- "Large"
+      }
+
+
+
+
+
+      tmp.ltx <- capture.output(print(ab.t, file = file, type = "latex", size = fsizep,
+                                      include.colnames = F, include.rownames = F,
                                       tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
                                       hline.after = NULL, add.to.row = pc, caption.placement = "top"))
       if (alignment=="c"){
@@ -732,7 +776,51 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
       cat(tmp.ltx, sep="\n")
     }
     if (create == "knitr") {
-      tmp.ltx <- capture.output(print(ab.t, type = "latex", include.colnames = F, include.rownames = F, latex.environments = "left",
+
+      ##fontsize calculation
+      if (is.numeric(fsize)) {
+        if (fsize <= 6) {
+          fsizep <- "tiny"
+          fsizec <- "scriptsize"
+        }
+        if (fsize > 6 & fsize <= 8)
+          fsizep <- fsizec <- "scriptsize"
+        if (fsize == 9)
+          fsizep <- fsizec <- "footnotesize"
+        if (fsize == 10)
+          fsizep <- fsizec <- "small"
+        if (fsize == 11)
+          fsizep <- fsizec <- "normalsize"
+        if (fsize == 12)
+          fsizep <- fsizec <- "large"
+        if (fsize > 12 & fsize <= 15)
+          fsizep <- fsizec <- "Large"
+        if (fsize > 15 & fsize <= 18) {
+          fsizep <- "LARGE"
+          fsizec <- "Large"
+        }
+        if (fsize > 18 & fsize <= 22) {
+          fsizep <- "huge"
+          fsizec <- "Large"
+        }
+        if (fsize > 22) {
+          fsizep <- "Huge"
+          fsizec <- "Large"
+        }
+      } else {
+        fsizep <- fsizec <- fsize
+        if (fsize == "tiny")
+          fsizec <- "scriptsize"
+        if (fsize %in% c("LARGE", "huge", "Huge"))
+          fsizec <- "Large"
+      }
+
+
+
+
+
+      tmp.ltx <- capture.output(print(ab.t, type = "latex", size=fsizep,
+            include.colnames = F, include.rownames = F, latex.environments = "left",
             tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
             hline.after = NULL, add.to.row = pc, caption.placement = "top", comment = FALSE))
       if (alignment=="c"){
@@ -786,7 +874,6 @@ des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
     if (!missing(file)){
       write.csv(erg.a$descr, file = file)
     }
-
     return(erg.a$descr)
   }
 }
