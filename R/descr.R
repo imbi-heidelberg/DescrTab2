@@ -140,7 +140,7 @@
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
                   p.values = T, group.min.size = F, group.non.empty=F, cat.non.empty=F,
-                  n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "tex", digits.m = 1,
+                  n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "knitr", digits.m = 1,
                   digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=2,
                   default.unordered.unpaired.test = "Chisq") {
 
