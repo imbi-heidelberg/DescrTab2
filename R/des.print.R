@@ -220,7 +220,7 @@
 #'
 #' @export
 #'
-des.print <- function(dat, group, create = "pdf", file, index = T, fsize = 11,
+des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
                       paired = F, nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
                       t.log = c(), which.col = c("groups", "total", "p-values"), group.min.size = F, group.non.empty=F,
                       cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
