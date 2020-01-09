@@ -59,6 +59,8 @@ Type of p-value calculation see \code{\link{p.cat}} (categorical) or \code{\link
 
 \item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.}
 
+\item{adaptive.miss}{Should the missing row be automatically omitted if there are not missings?}
+
 \item{group.miss}{Logical. Should add a column for the Missings in group? For both cases in \code{total} there are only the observations without a missing in group.}
 
 \item{percent.vertical}{Logical. Should "vertical" percentages for categorical variables be provided?}
