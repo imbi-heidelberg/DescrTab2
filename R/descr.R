@@ -47,6 +47,8 @@
 #' For categorical variables a p-value is only calculated if each category is non-empty.
 #' @param n.or.miss
 #' Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.
+#' @param adaptive.miss
+#' Should the missing row be automatically omitted if there are not missings?
 #' @param group.miss
 #' Logical. Schould add a column for the Missings in group?
 #' @param t.log
@@ -140,7 +142,7 @@
 descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
                   pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
                   p.values = T, group.min.size = F, group.non.empty=F, cat.non.empty=F,
-                  n.or.miss = "n", group.miss = F, t.log = c(), index = T, create = "knitr", digits.m = 1,
+                  n.or.miss = "n", adaptive.miss=T, group.miss = F, t.log = c(), index = T, create = "knitr", digits.m = 1,
                   digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1), q.type=2,
                   default.unordered.unpaired.test = "Chisq") {
 
@@ -171,9 +173,43 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
   }
 
   lgr <- length(levels(group))
+
+  n.or.miss_original <- n.or.miss;
+
+
   for (i in 1:ncol(dat)) {
     gr.miss <- c()
-    if (is.factor(dat[[i]])) {
+
+    n.or.miss <- n.or.miss_original
+    if (adaptive.miss & !anyNA(dat[[i]]) ){
+      if ("miss.cat" %in% n.or.miss){
+        n.or.miss <- n.or.miss[-which(n.or.miss=="miss.cat")]
+      }
+      if ("miss" %in% n.or.miss){
+        n.or.miss <- n.or.miss[-which(n.or.miss=="miss")]
+      }
+    }
+
+
+    if (all(is.na(dat[[i]]))){
+      if (!(missing(var.names))) {
+        if (data.names == T) {
+          var.n1 <- var.names[i]
+          var.n2 <- paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
+          var.n <- paste(var.n1, var.n2, sep = " ")
+        } else {
+          var.n <- var.names[i]
+        }
+      } else {
+        var.n <- names(dat)[i]
+      }
+      ab <- matrix( c(var.n, "", rep(c("-", ""), (1 + length(levels(group))+group.miss + 1 + + p.values+ 3 -1) )),
+                   nrow=2)
+      ab <- as.data.frame(ab)
+
+
+    }
+    else if (is.factor(dat[[i]])) {
       a <- table(dat[[i]], group)
       if (group.miss & length(group.na.index) != 0)
         gr.miss <- c(gr.miss, table(datmiss[ ,i], groupmiss)[ ,which(colnames(table(datmiss[ ,i], groupmiss)) == "NA")])
@@ -378,12 +414,18 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         p_list <- list(p.value = "--", test.value = "--", test.name="--")
       }
       ab <- cbind(ab,
-                  c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
+                  c("", pv, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)))
+                  )
+      }
+      else{
+        p_list <- list(p.value = "--", test.value = "--", test.name="--")
+      }
+
+      ab <- cbind(ab,
                   c("", p_list$p.value, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
                   c("", p_list$test.value, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))),
                   c("", p_list$test.name, rep("", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)))
-                  )
-      }
+      )
 
       # pos.i.alt <- pos.i
       #
@@ -562,24 +604,33 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       }
         if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
           ab <- cbind(ab,
-                      c("", pv, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
-                      c("", p_list$p.value, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
-                      c("", p_list$test.value, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
-                      c("", p_list$test.name, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
+                      c("", pv, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
           )
           ab <- ab[-2, ]
         } else {
           ab <- cbind(ab,
-                      c("", pv, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
-                      c("", p_list$p.value, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
-                      c("", p_list$test.value, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
-                      c("", p_list$test.name, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
+                      c("", pv, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
           )
         }
-    }
+      }
+      else{
+        p_list <- list(p.value = "--", test.value = "--", test.name="--")
+      }
 
-      # pos.i.alt <- pos.i
-      # pos.i <- pos.i + 8 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+      if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
+        ab <- cbind(ab,
+                    c("", p_list$p.value, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                    c("", p_list$test.value, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                    c("", p_list$test.name, rep("", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
+        )
+        ab <- ab[-2, ]
+      } else {
+        ab <- cbind(ab,
+                    c("", p_list$p.value, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                    c("", p_list$test.value, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss))),
+                    c("", p_list$test.name, rep("", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)))
+        )
+      }
 
     }
     names(ab) <- 1:length(ab)

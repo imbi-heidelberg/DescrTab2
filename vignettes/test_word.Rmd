@@ -1,0 +1,19 @@
+---
+title: "test_word"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Test
+
+
+```{r cars}
+library(DescrTab)
+
+des.print(iris, create="R")
+
+```
+
