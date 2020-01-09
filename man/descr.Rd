@@ -48,6 +48,8 @@ Only useful if you want know the number for a pagebreak when you create a "pdf"-
 
 \item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.}
 
+\item{adaptive.miss}{Should the missing row be automatically omitted if there are not missings?}
+
 \item{group.miss}{Logical. Schould add a column for the Missings in group?}
 
 \item{t.log}{Vector of indices: The variables for which the log of the original data should be used when testing for a difference between the groups.}
