@@ -27,6 +27,8 @@ Imports:
     tools,
     Exact
 License: GPL
-LazyLoad: yes
+LazyLoad: true
+LazyData: true
 RoxygenNote: 7.0.0
 Encoding: UTF-8
+  

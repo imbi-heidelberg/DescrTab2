@@ -62,6 +62,8 @@
 #' For categorical variables a p-value is only calculated if each category is non-empty.
 #' @param n.or.miss
 #' Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.
+#' @param adaptive.miss
+#' Should the missing row be automatically omitted if there are not missings?
 #' @param group.miss
 #' Logical. Should add a column for the Missings in group? For both cases in \code{total} there are only the observations without a missing in group.
 #' @param percent.vertical
@@ -223,7 +225,7 @@
 des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
                       paired = F, nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
                       t.log = c(), which.col = c("groups", "total", "p-values"), group.min.size = F, group.non.empty=F,
-                      cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
+                      cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"), adaptive.miss=T, group.miss = F,
                       percent.vertical = T, var.names, data.names = T,caption, tab.caption, landscape = F, pos.pagebr = NULL,
                       label = NULL, digits.m = 1, digits.sd = 2, digits.qu = c(),
                       digits.minmax = 1, digits.p = c(1), silent = T, q.type=2, alignment="c",
@@ -302,7 +304,8 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
     ##raw data table
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
+                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, adaptive.miss,
+                   group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
     erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
     if (missing(caption))
@@ -516,7 +519,8 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
     ##raw data table
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
+                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, adaptive.miss,
+                   group.miss, t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
     erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
 
@@ -842,7 +846,8 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
   else if (create == "archive"){
     erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
                    pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, t.log, index, create, digits.m,
+                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, adaptive.miss,
+                   t.log, index, create, digits.m,
                    digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
 
 
