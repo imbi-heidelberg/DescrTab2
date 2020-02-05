@@ -168,7 +168,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
   }
   if (length(group.na.index) != 0) {
     warning(paste("Missing values in the group variable ( Observations: ", list(group.na.index), " )! Observations will be removed!"))
-    dat <- dat[-group.na.index, ]
+    dat <- dat[-group.na.index, , drop=FALSE]
     group <- group[-group.na.index]
   }
 
