@@ -86,7 +86,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
         }
         else{
           test.name <- "Fisher_boschloo"
-          tl <- Exact::exact.test(table(x,group), method="boschloo", to.plot=F)
+          tl <- Exact::exact.test(table(group,x), method="boschloo", to.plot=F)
           pv <- tl$p.value
           test.value <- tl$statistic
         }
