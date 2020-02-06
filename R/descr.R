@@ -661,3 +661,4 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
   }
   return(list("descr" = ab1, "pos" = pos, "pos.pagebr" = pos.pagebr, "testings" = testings, "pvalues_var" = pvalues_var))
 }
+
