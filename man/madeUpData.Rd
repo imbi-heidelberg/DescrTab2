@@ -6,7 +6,7 @@
 \title{Data that is made to look like clinical data.}
 \format{A data frame with 200 rows and 5 variables:
 \describe{
-  \itme{group}{control or treatment}
+  \item{group}{control or treatment}
   \item{gender}{male or female}
   \item{age}{number between 15-90}
   \item{blood_hg}{Number between 50 and 150}

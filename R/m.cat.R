@@ -1,11 +1,6 @@
-#' @title
 #' Decide which test to use for the p-value calculation by categorial variables.
 #'
-#' @description
 #' It choose the test which should use for the p-value calculation for categorial variables. The Wilcoxon-Test, McNemar-Test and the Chi-Squared-Test are possible.
-#'
-#' @usage
-#' m.cat(group, paired = F, is.ordered = F)
 #'
 #' @param group
 #' Vector of the grouping variable.

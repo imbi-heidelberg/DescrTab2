@@ -1,12 +1,9 @@
-#' @title
 #' p-value calculator for categorical variables
 #'
-#' @description
-#' Calculate the p-value for categorial variables. The decision which test to use is equal to \code{\link{m.cat}}.
-#' The p-value is calculated using one of the three tests: Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
-#'
-#' @usage
-#' p.cat(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(), create = "tex")
+#' Calculate the p-value for categorial variables.
+#' The decision which test to use is equal to \code{\link{m.cat}}.
+#' The p-value is calculated using one of the three tests:
+#' Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
 #'
 #' @param x
 #' Vector of the categorial variable.
@@ -24,14 +21,19 @@
 #' Optional. Label for the footnote.
 #' The footnotes aren't produced in this function.
 #' @param create
-#' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
+#' Which output document should be produced in the following step
+#' (one of "pdf", "tex", "knitr", or "word").
 #' Only usefull if \code{index} is not \code{NULL}.
 #'
 #' @details
-#' Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples. (see \code{\link{wilcox.test}}).
-#' Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent, ordered samples. (see \code{\link{kruskal.test}}).
-#' McNemar Test: A Test for a comparison of 2 or more than 2 dependent, not ordered samples. (see \code{\link{mcnemar.test}}).
-#' Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent, not ordered samples. (see \code{\link{chisq.test}}).
+#' Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples.
+#' (see \code{\link{wilcox.test}}).
+#' Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent,
+#' ordered samples. (see \code{\link{kruskal.test}}).
+#' McNemar Test: A Test for a comparison of 2 or more than 2 dependent,
+#' not ordered samples. (see \code{\link{mcnemar.test}}).
+#' Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent,
+#' not ordered samples. (see \code{\link{chisq.test}}).
 #'
 #' @return
 #' The p-value with index which test is ussed is returned.
@@ -44,8 +46,8 @@
 #' p.cat(x=rep(1:5,20), group=rep(1:4,25))
 #' }
 #'
-p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(),
-                  create = "tex",
+p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
+                  correct.wilcox = T, index = c(), create = "tex",
                   default.unordered.unpaired.test = "Chisq") {
 
   group <- droplevels(group);
@@ -54,25 +56,25 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
   if (is.ordered) {
     if (length(levels(group)) == 2) {
       test.name <- "Wilcoxen"
-      tl <-  wilcox.test(as.numeric(x) ~ group, paired = paired)
+      tl <- stats::wilcox.test(as.numeric(x) ~ group, paired = paired)
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
       test.name <- "Kruskal"
-      tl <- kruskal.test(x ~ group)
+      tl <- stats::kruskal.test(x ~ group)
       pv <- tl$p.value
       test.value <- tl$statistic
     }
   } else {
     if (paired) {
       test.name <- "McNemar"
-      tl <- mcnemar.test(table(x, group), correct = correct.cat)
+      tl <- stats::mcnemar.test(table(x, group), correct = correct.cat)
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
       if (default.unordered.unpaired.test == "Chisq"){
         test.name <- "Chisq"
-        tl <- chisq.test(x, group, correct = correct.cat)
+        tl <- stats::chisq.test(x, group, correct = correct.cat)
         pv <- tl$p.value
         test.value <- tl$statistic
       }
@@ -80,7 +82,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
         if ((nrow(table(x,group))!= 2) | (ncol(table(x,group))!= 2)){
           warning("Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fisher_exact.")
           test.name <- "Fisher_exact"
-          tl <- fisher.test(x, group)
+          tl <- stats::fisher.test(x, group)
           pv <- tl$p.value
           test.value <- 0
         }
@@ -93,7 +95,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
       }
       else if (default.unordered.unpaired.test == "Fisher_exact"){
         test.name <- "Fisher_exact"
-        tl <- fisher.test(x, group)
+        tl <- stats::fisher.test(x, group)
         pv <- tl$p.value
         test.value <- 0
       }
@@ -107,5 +109,5 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F, correct
       pform <- paste(pform, "$^", index, "$", sep = "")
     }
   }
-  list(pv.formatted = pform, p.value = pv, test.value = test.value,  test.name = test.name)
+  list(pv.formatted = pform, p.value = pv, test.value = test.value, test.name = test.name)
 }
