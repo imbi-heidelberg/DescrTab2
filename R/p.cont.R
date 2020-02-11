@@ -1,12 +1,9 @@
-#' @title
 #' p-value calculator for continous variables
 #'
-#' @description
-#' Calculate the p-value for continous variables. The decision which test to use is equal to \code{\link{m.cont}}.
-#' The p-value is calculated using one of the four tests: Wilcoxon-Test, t-Test, Kruskal-Test, Anova.
-#'
-#' @usage
-#' p.cont(x, group, paired = F, is.ordered = F, nonparametric = F, t.log = F, var.equal = F, index = c(), create = "tex")
+#' Calculate the p-value for continous variables.
+#' The decision which test to use is equal to \code{\link{m.cont}}.
+#' The p-value is calculated using one of the four tests:
+#' Wilcoxon-Test, t-Test, Kruskal-Test, Anova.
 #'
 #' @param x
 #' Vector of the continous variable.
@@ -29,13 +26,20 @@
 #' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
 #'
 #' @details
-#' Wilcoxon Test: A nonparametric Test for a comparison of 2 dependent samples. (see \code{\link{wilcox.test}}).
-#' Mann-Whitney-U Test: A nonparametric Test for a comparison of 2 independent samples. (see \code{\link{wilcox.test}}).
-#' t-Test: A parametric Test for a comparison of 2 (in)dependent samples. (see \code{\link{t.test}}).
-#' Friedman-Test: A nonparametric Test for a comparison of more than 2 dependent samples. (see \code{\link{friedman.test}}).
-#' Anova Type III: A parametric Test for a comparison of more than 2 dependent samples. (see \code{\link[car]{Anova}} with \code{}).
-#' Kruskal-Wallis-Test: A nonparametric Test for a comparison of more than 2 independent samples. (see \code{\link{kruskal.test}}).
-#' Anova: A parametric Test for a comparison of more than 2 independent samples. (see \code{\link{aov}}).
+#' Wilcoxon Test: A nonparametric Test for a comparison of 2 dependent samples.
+#' (see \code{\link{wilcox.test}}).
+#' Mann-Whitney-U Test: A nonparametric Test for a comparison of 2 independent samples. (
+#' see \code{\link{wilcox.test}}).
+#' t-Test: A parametric Test for a comparison of 2 (in)dependent samples.
+#' (see \code{\link{t.test}}).
+#' Friedman-Test: A nonparametric Test for a comparison of more than 2 dependent samples.
+#' (see \code{\link{friedman.test}}).
+#' Anova Type III: A parametric Test for a comparison of more than 2 dependent samples.
+#' (see \code{\link[car]{Anova}} with \code{}).
+#' Kruskal-Wallis-Test: A nonparametric Test for a comparison of more than 2 independent samples.
+#' (see \code{\link{kruskal.test}}).
+#' Anova: A parametric Test for a comparison of more than 2 independent samples.
+#' (see \code{\link{aov}}).
 #'
 #' @return
 #' The p-value with index which test is ussed is returned.
@@ -57,15 +61,15 @@
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #'
-p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.log = F, var.equal = F,
-                   index = c(), create = "tex") {
+p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
+                   t.log = F, var.equal = F, index = c(), create = "tex") {
 
   group <- droplevels(group);
 
   if (length(levels(group)) == 2) {
     if (nonparametric) {
       test.name <- "Wilcoxen"
-      tl <- wilcox.test(x ~ group, paired = paired)
+      tl <- stats::wilcox.test(x ~ group, paired = paired)
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
@@ -74,7 +78,7 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.lo
         x <- log(x)
       }
       test.name <- "t-test"
-      tl <- t.test(x ~ group, paired = paired, var.equal = var.equal)
+      tl <- stats::t.test(x ~ group, paired = paired, var.equal = var.equal)
       pv <- tl$p.value
       test.value <- tl$statistic
     }
@@ -86,7 +90,7 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.lo
         x.ind <- rep(1:(length(x) / length(levels(group))), length(levels(group)))
         test.name <- "Friedman"
 
-        tl <- friedman.test(x ~ group | x.ind)
+        tl <- stats::friedman.test(x ~ group | x.ind)
         pv <- tl$p.value
         test.value <- tl$statistic
       } else {
@@ -100,12 +104,12 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.lo
     } else {
       if (nonparametric) {
         test.name <- "Kruskal"
-        tl <- kruskal.test(x ~ group)
+        tl <- stats::kruskal.test(x ~ group)
         pv <- tl$p.value
         test.value <- tl$statistic
       } else {
         test.name <- "F-test"
-        tl <- summary(aov(x ~ group))[[1]]
+        tl <- summary(stats::aov(x ~ group))[[1]]
         pv <- tl$`Pr(>F)`[1]
         test.value <- tl$`F value`[1]
       }

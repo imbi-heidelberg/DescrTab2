@@ -4,14 +4,45 @@
 \alias{des.print}
 \title{Create or print an output of a descriptive statistics table}
 \usage{
-des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
-         nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
-         t.log = c(), which.col = c("groups", "total", "p-values"),
-         group.min.size = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
-         percent.vertical = T, var.names, data.names = T, caption, tab.caption,
-         landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
-         digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2),
-         silent = T, ...)
+des.print(
+  dat,
+  group,
+  create = "knitr",
+  file,
+  index = T,
+  fsize = 11,
+  paired = F,
+  nonparametric = F,
+  var.equal = T,
+  correct.cat = F,
+  correct.wilcox = T,
+  t.log = c(),
+  which.col = c("groups", "total", "p-values"),
+  group.min.size = F,
+  group.non.empty = F,
+  cat.non.empty = F,
+  n.or.miss = c("n", "miss", "miss.cat"),
+  adaptive.miss = T,
+  group.miss = F,
+  percent.vertical = T,
+  var.names,
+  data.names = T,
+  caption,
+  tab.caption,
+  landscape = F,
+  pos.pagebr = NULL,
+  label = NULL,
+  digits.m = 1,
+  digits.sd = 2,
+  digits.qu = c(),
+  digits.minmax = 1,
+  digits.p = c(1),
+  silent = T,
+  q.type = 2,
+  alignment = "c",
+  default.unordered.unpaired.test = "Chisq",
+  ...
+)
 }
 \arguments{
 \item{dat}{Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
@@ -25,19 +56,23 @@ Three options to specify it:\cr
 The specified variable has to be a factor variable with two or more levels.
 If not specified, a random grouping variable with 2 groups is used.}
 
-\item{create}{Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R"). Choose "custom" if you add more arguments see \code{...}.}
+\item{create}{Which output document should be produced (one of "pdf", "tex", "knitr","word" or "R").
+Choose "custom" if you add more arguments see \code{...}.}
 
-\item{file}{File name, which can included the directory (has to have the proper file extension, i.e. .pdf, .tex, or .docx). directory.
+\item{file}{File name, which can included the directory (
+has to have the proper file extension, i.e. .pdf, .tex, or .docx). directory.
 Only for \code{create == "R"} or \code{"knitr"} isn't a file necessary.}
 
 \item{index}{Logical. Should the tests used be labeled by footnotes?}
 
 \item{fsize}{The fontsize in the Output-Document.\cr
-Default fontsize: For \code{create = "word"} or \code{"R"} fsize = 11 and for \code{create = "pdf"} fsize = 12}
+Default fontsize: For \code{create = "word"} or \code{"R"} fsize = 11 and for
+\code{create = "pdf"} fsize = 12}
 
 \item{paired}{Logical. Should paired tests be applied? The groups must have the same length.}
 
-\item{nonparametric}{Logical or vector of indices. If logical / vector of indices then all / only these continuous variables will be tested using non-parametric methods.}
+\item{nonparametric}{Logical or vector of indices. If logical / vector of indices then all / only
+these continuous variables will be tested using non-parametric methods.}
 
 \item{var.equal}{Logical. Should variances be assumed to be equal when applying t-tests?}
 
@@ -48,26 +83,36 @@ Default fontsize: For \code{create = "word"} or \code{"R"} fsize = 11 and for \c
 \item{t.log}{Vector of indices: The variables for which the log of the original data
 should be used when testing for a difference between the groups.}
 
-\item{which.col}{Which columns should be provided ("groups", "total", "p-values")? Combinations are allowed. "groups" or "total" must be listed. Only "total" and "p-values" is not possible.
-Type of p-value calculation see \code{\link{p.cat}} (categorical) or \code{\link{p.cont}} (continuous).}
+\item{which.col}{Which columns should be provided ("groups", "total", "p-values")?
+Combinations are allowed. "groups" or "total" must be listed.
+Only "total" and "p-values" is not possible.
+Type of p-value calculation see \code{\link{p.cat}} (categorical)
+or \code{\link{p.cont}} (continuous).}
 
-\item{group.min.size}{For each variable, a p-value is only calculated if each non-empty group contains at least \code{group.min.size} observations for that variable.}
+\item{group.min.size}{For each variable, a p-value is only calculated if each non-empty group
+contains at least \code{group.min.size} observations for that variable.}
 
-\item{group.non.empty}{For each variable, a p-value is only calculated if each group contains at least one observation for that variable.}
+\item{group.non.empty}{For each variable, a p-value is only calculated if each group contains
+at least one observation for that variable.}
 
-\item{cat.non.empty}{For categorical variables a p-value is only calculated if each category is non-empty.}
+\item{cat.non.empty}{For categorical variables a p-value is only calculated if each category
+is non-empty.}
 
-\item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.}
+\item{n.or.miss}{Should the number of observations, missings for continuous variables,
+and/or missings for categorical variables be provided ("n", "miss", "miss.cat")?
+Combinations are allowed.}
 
 \item{adaptive.miss}{Should the missing row be automatically omitted if there are not missings?}
 
-\item{group.miss}{Logical. Should add a column for the Missings in group? For both cases in \code{total} there are only the observations without a missing in group.}
+\item{group.miss}{Logical. Should add a column for the Missings in group? For both cases in \code{total}
+there are only the observations without a missing in group.}
 
 \item{percent.vertical}{Logical. Should "vertical" percentages for categorical variables be provided?}
 
 \item{var.names}{Optional. Vector of names to be used in the table for the analyzed variables.}
 
-\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?}
+\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in
+\code{dat} be added in brackets?}
 
 \item{caption}{Optional. Vector of names of the categories of group.\cr
 If not specified, \code{levels(group)} will be used.}
@@ -77,8 +122,10 @@ If not specified, "Descriptive statistics" will be written.}
 
 \item{landscape}{Logical. Should the table be in landscape? Only useful for \code{create = "pdf"}.}
 
-\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is the number of lines after a pagebreak should be done.\cr
-If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 will be used for "\code{landscape = TRUE}".}
+\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy.
+It is the number of lines after a pagebreak should be done.\cr
+If it is not specified, 45 will be used for "\code{landscape = FALSE}" and
+30 will be used for "\code{landscape = TRUE}".}
 
 \item{label}{Character. If tex (or knitr) in \code{create} is specified, the label of the table.}
 
@@ -86,25 +133,33 @@ If it is not specified, 45 will be used for "\code{landscape = FALSE}" and 30 wi
 
 \item{digits.sd}{Number of digits for presentation in the table: For standard deviation.}
 
-\item{digits.qu}{Vector of numbers of digits for presentation in the table: For quantiles (if no value is specified it will be tried to provide a reasonable presentation).}
+\item{digits.qu}{Vector of numbers of digits for presentation in the table:
+For quantiles (if no value is specified it will be tried to provide a reasonable presentation).}
 
 \item{digits.minmax}{Number of digits for presentation in the table: For minimum and maximum.}
 
 \item{digits.p}{Vector with numbers of digits for presentation in the table: For percentages.
-First vector element is number of digits for the first variable, second element for second variable and so on.}
+First vector element is number of digits for the first variable,
+ second element for second variable and so on.}
 
 \item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
 
-\item{q.type}{an integer between 1 and 9 selecting one of the nine quantile algorithms detailed in \code{?quantile} to be used.}
+\item{q.type}{an integer between 1 and 9 selecting one of the nine quantile algorithms
+detailed in \code{?quantile} to be used.}
 
-\item{default.unordered.unpaired.test}{Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.
+\item{default.unordered.unpaired.test}{Any of c("Chisq", "Fisher_exact", "Fisher_boschloo").
+ Chooses the default test for categorical, unordered, unpaired variables.
  @param alignment
-Specifies where the table shoould be aligned in the ouput document. Default is "c", other options are "l" and "r"}
+Specifies where the table shoould be aligned in the ouput document.
+Default is "c", other options are "l" and "r"}
 
 \item{...}{further arguments to be passed to or from methods.}
 }
 \value{
-Only by using \code{create == "R"} an R object will be returned. However, depending on the value of the create parameter either pdf, word, tex or an file optimized for use in connection with knitr will be created containing the descriptive statistics table and saved in a file as specified in the file parameter.
+Only by using \code{create == "R"} an R object will be returned.
+However, depending on the value of the create parameter either pdf, word, tex
+or an file optimized for use in connection with knitr will be created containing
+the descriptive statistics table and saved in a file as specified in the file parameter.
 }
 \description{
 This is the main function for the user.
@@ -113,10 +168,18 @@ difference between the groups. There are five options for the output: pdf, tex, 
 or an Output in R. knitr is not really useful as an output file but for the use within a knitr file.
 }
 \details{
-The aim of this function is to help the user to create well-formated descriptive statistics tables.
-The format can then be fine-tuned in the word, tex or knitr file itself. Only the pdf file is (more or less) unchangeable.
-Even though it is supposed to be a good starting point for a descriptive analysis, care has to be taken when using the results and a detailed check of the results  might be necessary. For instance, in case of missing values in the group variable and \code{group.miss = FALSE} the respective observations will be omitted also in the total column. A warning will be displayed.
-If no group variable is specified only the total column (see parameter \code{which.col}) will be returned.
+The aim of this function is to help the user to create well-formated
+descriptive statistics tables.
+The format can then be fine-tuned in the word, tex or knitr file itself.
+Only the pdf file is (more or less) unchangeable.
+Even though it is supposed to be a good starting point for a descriptive analysis,
+are has to be taken when using the results and a detailed check of the results
+might be necessary.
+or instance, in case of missing values in the group variable and \code{group.miss = FALSE}
+the respective observations will be omitted also in the total column.
+A warning will be displayed.
+If no group variable is specified only the total column (see parameter \code{which.col})
+will be returned.
 }
 \examples{
 \dontrun{
@@ -138,13 +201,19 @@ attach(infert)
 file <- "C:/Users/lunteren/Desktop/infert/DescriptiveStatisticTable.docx"
 
 #Version 1
-des.print(dat = infert, group = 5, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+des.print(dat = infert, group = 5, create = "word", file=file, fsize = 10,
+var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"),
+caption = c("Group 1", "Group 2"))
 #Version 2
-des.print(dat = infert, group = case, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+des.print(dat = infert, group = case, create = "word", file=file, fsize = 10,
+var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"),
+caption = c("Group 1", "Group 2"))
 #Version 3
 group <- case
 dat <- infert[,-5]
-des.print(dat = dat, group = group, create = "word", file=file, fsize = 10, var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"), caption = c("Group 1", "Group 2"))
+des.print(dat = dat, group = group, create = "word", file=file, fsize = 10,
+var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"),
+caption = c("Group 1", "Group 2"))
 
 ##Dataset with more then two groups
 ChickWeight
@@ -160,13 +229,19 @@ attach(ChickWeight)
 file <- "C:/Users/lunteren/Desktop/ChickWeight/DescriptiveStatisticTable.docx"
 
 #Version 1
-des.print(dat = ChickWeight, group = 4, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+des.print(dat = ChickWeight, group = 4, create = "word", file = file, fsize = 10,
+var.names = c("weight", "Time", "Chick"),
+caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 #Version 2
-des.print(dat = ChickWeight, group = Diet, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+des.print(dat = ChickWeight, group = Diet, create = "word", file = file, fsize = 10,
+var.names = c("weight", "Time", "Chick"),
+caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 #Version 3
 group <- Diet
 dat <- ChickWeight[,-4]
-des.print(dat = dat, group = group, create = "word", file = file, fsize = 10, var.names = c("weight", "Time", "Chick"), caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
+des.print(dat = dat, group = group, create = "word", file = file, fsize = 10,
+var.names = c("weight", "Time", "Chick"),
+caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 }
 
 }

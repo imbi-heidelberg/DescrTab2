@@ -1,12 +1,15 @@
 ---
 title: "DescrTab Tutorial"
-output: pdf_document
+output: rmarkdown::pdf_document
 header-includes:
   - \usepackage{longtable}
   - \usepackage{geometry}
   - \usepackage{pdflscape}
   - \newcommand{\blandscape}{\begin{landscape}}
   - \newcommand{\elandscape}{\end{landscape}}
+vignette: >
+  %\VignetteIndexEntry{DescrTab Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-`DescrTab` is a package to create descriptive statistics tables. It supports a variety of different customization options and can be used in .Rmd files in conjunction with knitr.
+`DescrTab` is a package to create descriptive statistics tables.
+It supports a variety of different customization options and can be used
+in .Rmd files in conjunction with knitr.
 
 ## Preamble settings
 
@@ -53,24 +58,29 @@ somewhere in the document before you use it.
 
 Creating a simple descriptive statistics table now is as easy as typing:
 
-````markdown
-`r ''````{r, results='asis'}
-
+```{r, results='asis'}
 des.print(madeUpData)
-
 ```
-````
+```
+
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 
 des.print(madeUpData)
 
 ```
 
-Note the chunk option ` results='asis' `. The `des.print` function returns \LaTeX code by default. The directive `results='asis'` tells knitr to interpret the output of des.print as if it were pasted into the .tex file that is used to create the pdf output. Without the `results='asis'` chunk option, the table will not be rendered properly in the output document.
+Note the chunk option `results='asis'`. 
+The `des.print` function returns \LaTeX code by default. 
+The directive `results='asis'` tells knitr to interpret the output of des.print 
+as if it were pasted into the .tex file that is used to create the pdf output. 
+Without the `results='asis'` chunk option, the table will not be rendered 
+properly in the output document.
 
 ### The most common usecase
 
-Usually a study population is divided into serveral groups of interest, and we would like to examine a comparison of these. This can be achieved by using the `group` parameter:
+Usually a study population is divided into serveral groups of interest, and 
+we would like to examine a comparison of these.
+This can be achieved by using the `group` parameter:
 
 
 ```{r, echo=TRUE, results='asis', message=FALSE, warning=FALSE}
@@ -79,7 +89,9 @@ des.print(madeUpData, group="group")
 
 ```
 
-You can assign labels to the different variables using the ` var.names ` parameter. Additionally, setting ` data.names=F ` will surpress output of the variable names and only print out the given labels.
+You can assign labels to the different variables using the ` var.names ` parameter.
+Additionally, setting ` data.names=F ` will surpress output of the variable names
+and only print out the given labels.
 
 ```{r, echo=TRUE, results='asis', message=FALSE, warning=FALSE}
 
@@ -103,7 +115,8 @@ des.print(madeUpData, group="group", tab.caption="A nice table", caption=c("Plac
 
 There are a couple of mechanisms that can be used to deal with this problem.
 
-Firstly, you can try to decrease the fontsize via the ` fsize ` parameter (default is ` fsize = 11 `), which will shrink the whole table:
+Firstly, you can try to decrease the fontsize via the ` fsize ` parameter 
+(default is ` fsize = 11 `), which will shrink the whole table:
 
 ```{r, echo=TRUE, results='asis', message=FALSE, warning=FALSE}
 
@@ -115,7 +128,8 @@ des.print(madeUpData, group="group", fsize=6)
 \blandscape
 \thispagestyle{empty}
 
-You could also try temporarily switching your document to landscape mode. This can by done by including the following in your preamble:
+You could also try temporarily switching your document to landscape mode. 
+This can by done by including the following in your preamble:
 
 ````rmarkdown
 header-includes:

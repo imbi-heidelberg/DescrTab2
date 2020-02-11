@@ -1,6 +1,7 @@
-#' @title Format numbers
-#' @description Rounds a number x to k decimal places.
-#' @usage f.r(x, k)
+#' Format numbers
+#'
+#' Rounds a number x to k decimal places.
+#'
 #' @param x
 #' Number, which should be rounded.
 #' @param k
