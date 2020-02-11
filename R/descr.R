@@ -364,10 +364,10 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       if (pvalues_var[i]) {
         a <- dat[[i]]
         a.list <- list()
-        a.list[[(length(levels(group)) + 1)]] <- na.omit(a)
+        a.list[[(length(levels(group)) + 1)]] <- stats::na.omit(a)
         n.vector <- c()
         for (k in 1:length(levels(group))) {
-          a.list[[k]] <- na.omit(a[which(group == levels(group)[k])])
+          a.list[[k]] <- stats::na.omit(a[which(group == levels(group)[k])])
           n.vector <- c(n.vector, length(a.list[[k]]))
         }
         for (l in 1:length(levels(group))) {
@@ -448,14 +448,14 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
     } else {
       a <- dat[[i]]
       a.list <- list()
-      a.list[[(length(levels(group)) + 1)]] <- na.omit(a)
+      a.list[[(length(levels(group)) + 1)]] <- stats::na.omit(a)
 
       n.vector <- c()
       for (k in 1:length(levels(group))) {
-        a.list[[k]] <- na.omit(a[which(group == levels(group)[k])])
+        a.list[[k]] <- stats::na.omit(a[which(group == levels(group)[k])])
         n.vector <- c(n.vector, length(a.list[[k]]))
       }
-      n.vector <- c(n.vector, length(na.omit(a)))
+      n.vector <- c(n.vector, length(stats::na.omit(a)))
 
       n.miss <- c()
       for (k in 1:length(levels(group))) {
@@ -468,8 +468,8 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
 
       if(group.miss) {
         a.miss <- datmiss[ ,i]
-        a.miss <- na.omit(a.miss)
-        a.list.miss <- na.omit(a.miss[which(groupmiss=="NA")])
+        a.miss <- stats::na.omit(a.miss)
+        a.list.miss <- stats::na.omit(a.miss[which(groupmiss=="NA")])
 
         n.vector.miss <- length(a.list.miss)
 
@@ -489,7 +489,7 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
       for (d in 1:length(a.list)) {
         if (length(a.list[[d]]) != 0) {
           ab[2, d] <- formatr(mean(a.list[[d]]), digits.m)
-          ab[3, d] <- formatr(sd(a.list[[d]]), digits.sd)
+          ab[3, d] <- formatr(stats::sd(a.list[[d]]), digits.sd)
         }else{
           ab[2,d] <- "-"
           ab[3,d] <- "-"

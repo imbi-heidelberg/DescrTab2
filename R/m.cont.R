@@ -34,7 +34,7 @@ m.cont <- function(group, paired = F, is.ordered = F, nonparametric = F, t.log =
   } else {
     if (paired) {
       if (nonparametric) {
-        pv<- "Friedman"
+        pv <- "Friedman"
       } else {
         pv <- "Anova Typ III"
       }

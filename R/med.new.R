@@ -27,7 +27,7 @@
 #'
 med.new <- function(x, k = c()) {
   if (length(x) > 1) {
-    x.med <- median(x)
+    x.med <- stats::median(x)
     if (is.null(k)) {
       if (as.integer(x.med / 0.25 / 2) == (x.med / 0.25 / 2) | as.integer(x.med / 0.25) != (x.med / 0.25)) {
         x.med <- round(x.med, 1)

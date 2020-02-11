@@ -69,7 +69,7 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
   if (length(levels(group)) == 2) {
     if (nonparametric) {
       test.name <- "Wilcoxen"
-      tl <- wilcox.test(x ~ group, paired = paired)
+      tl <- stats::wilcox.test(x ~ group, paired = paired)
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
@@ -78,7 +78,7 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
         x <- log(x)
       }
       test.name <- "t-test"
-      tl <- t.test(x ~ group, paired = paired, var.equal = var.equal)
+      tl <- stats::t.test(x ~ group, paired = paired, var.equal = var.equal)
       pv <- tl$p.value
       test.value <- tl$statistic
     }
@@ -90,7 +90,7 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
         x.ind <- rep(1:(length(x) / length(levels(group))), length(levels(group)))
         test.name <- "Friedman"
 
-        tl <- friedman.test(x ~ group | x.ind)
+        tl <- stats::friedman.test(x ~ group | x.ind)
         pv <- tl$p.value
         test.value <- tl$statistic
       } else {
@@ -104,12 +104,12 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
     } else {
       if (nonparametric) {
         test.name <- "Kruskal"
-        tl <- kruskal.test(x ~ group)
+        tl <- stats::kruskal.test(x ~ group)
         pv <- tl$p.value
         test.value <- tl$statistic
       } else {
         test.name <- "F-test"
-        tl <- summary(aov(x ~ group))[[1]]
+        tl <- summary(stats::aov(x ~ group))[[1]]
         pv <- tl$`Pr(>F)`[1]
         test.value <- tl$`F value`[1]
       }
