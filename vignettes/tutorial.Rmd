@@ -58,21 +58,19 @@ somewhere in the document before you use it.
 
 Creating a simple descriptive statistics table now is as easy as typing:
 
-````markdown
-`r ''````{r, results='asis'}
-
+```{r, results='asis'}
 des.print(madeUpData)
-
 ```
-````
+```
+
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 
 des.print(madeUpData)
 
 ```
 
-Note the chunk option ` results='asis' `. The `des.print` function returns 
-\LaTeX code by default. 
+Note the chunk option `results='asis'`. 
+The `des.print` function returns \LaTeX code by default. 
 The directive `results='asis'` tells knitr to interpret the output of des.print 
 as if it were pasted into the .tex file that is used to create the pdf output. 
 Without the `results='asis'` chunk option, the table will not be rendered 
