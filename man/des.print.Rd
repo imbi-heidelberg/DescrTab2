@@ -4,14 +4,45 @@
 \alias{des.print}
 \title{Create or print an output of a descriptive statistics table}
 \usage{
-des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
-         nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
-         t.log = c(), which.col = c("groups", "total", "p-values"),
-         group.min.size = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
-         percent.vertical = T, var.names, data.names = T, caption, tab.caption,
-         landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
-         digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2),
-         silent = T, ...)
+des.print(
+  dat,
+  group,
+  create = "knitr",
+  file,
+  index = T,
+  fsize = 11,
+  paired = F,
+  nonparametric = F,
+  var.equal = T,
+  correct.cat = F,
+  correct.wilcox = T,
+  t.log = c(),
+  which.col = c("groups", "total", "p-values"),
+  group.min.size = F,
+  group.non.empty = F,
+  cat.non.empty = F,
+  n.or.miss = c("n", "miss", "miss.cat"),
+  adaptive.miss = T,
+  group.miss = F,
+  percent.vertical = T,
+  var.names,
+  data.names = T,
+  caption,
+  tab.caption,
+  landscape = F,
+  pos.pagebr = NULL,
+  label = NULL,
+  digits.m = 1,
+  digits.sd = 2,
+  digits.qu = c(),
+  digits.minmax = 1,
+  digits.p = c(1),
+  silent = T,
+  q.type = 2,
+  alignment = "c",
+  default.unordered.unpaired.test = "Chisq",
+  ...
+)
 }
 \arguments{
 \item{dat}{Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}

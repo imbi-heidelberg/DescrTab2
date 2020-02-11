@@ -1,11 +1,6 @@
-#' @title
 #' Decide which test to use for the p-value calculation by continous variables.
 #'
-#' @description
 #' It choose the test which should use for the p-value calculation for continous variables. The Wilcoxon-Test, t-Test, Firedman-Test, Anova Typ III, Kruskal-Test and a Anova are possible.
-#'
-#' @usage
-#' m.cont(group, paired = F, is.ordered = F, nonparametric = F, t.log = F)
 #'
 #' @param group
 #' Vector of the grouping variable.

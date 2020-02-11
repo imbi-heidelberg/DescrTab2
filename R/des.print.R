@@ -1,21 +1,9 @@
-#' @title
 #' Create or print an output of a descriptive statistics table
 #'
-#' @description
 #' This is the main function for the user.
 #' It can be used to generate a table of descriptive statistics with p-values obtained in tests for
 #' difference between the groups. There are five options for the output: pdf, tex, knitr, word file
 #' or an Output in R. knitr is not really useful as an output file but for the use within a knitr file.
-#'
-#' @usage
-#' des.print(dat, group, create = "pdf", file, index = T, fsize = 11, paired = F,
-#'          nonparametric = F, var.equal = T, correct.cat = F, correct.wilcox = T,
-#'          t.log = c(), which.col = c("groups", "total", "p-values"),
-#'          group.min.size = F, n.or.miss = c("n", "miss", "miss.cat"), group.miss = F,
-#'          percent.vertical = T, var.names, data.names = T, caption, tab.caption,
-#'          landscape = F, pos.pagebr = NULL, label = NULL, digits.m = 1,
-#'          digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2),
-#'          silent = T, ...)
 #'
 #' @param dat
 #' Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.

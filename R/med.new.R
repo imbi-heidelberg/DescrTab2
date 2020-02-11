@@ -1,10 +1,6 @@
-#' @title Median value for continous variables
+#' Median value for continous variables
 #'
-#' @description
 #' Compute the median of continous variables.
-#'
-#' @usage
-#' med.new(x, k = c())
 #'
 #' @param x
 #' Vector of the continous variable.

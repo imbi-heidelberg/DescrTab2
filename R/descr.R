@@ -1,16 +1,7 @@
-#' @title Create a descriptive statistics table
+#' Create a descriptive statistics table
 #'
-#' @description
 #' Generate a table of descriptive statistics with p-values obtained in tests
 #' for difference between the groups.
-#'
-#' @usage
-#' descr(dat, group, var.names, percent.vertical = T, data.names = T,
-#'       nonparametric = c(), landscape = F, pos.pagebr = NULL, paired = F, var.equal = T,
-#'       correct.cat = F,  correct.wilcox = T, silent = T,
-#'       p.values = T, group.min.size = F, n.or.miss = "n", group.miss = F,
-#'       t.log = c(), index = T, create = "tex", digits.m = 1, digits.sd = 2,
-#'       digits.qu = c(),  digits.minmax = 1, digits.p = c(1,2))
 #'
 #' @param dat
 #' Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.

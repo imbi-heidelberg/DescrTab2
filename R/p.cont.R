@@ -1,15 +1,9 @@
-#' @title
 #' p-value calculator for continous variables
 #'
-#' @description
 #' Calculate the p-value for continous variables.
 #' The decision which test to use is equal to \code{\link{m.cont}}.
 #' The p-value is calculated using one of the four tests:
 #' Wilcoxon-Test, t-Test, Kruskal-Test, Anova.
-#'
-#' @usage
-#' p.cont(x, group, paired = F, is.ordered = F, nonparametric = F,
-#' t.log = F, var.equal = F, index = c(), create = "tex")
 #'
 #' @param x
 #' Vector of the continous variable.

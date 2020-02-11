@@ -1,11 +1,6 @@
-#' @title
 #' Format numbers
 #'
-#' @description
 #' Rounds a number x to k decimal places with a uniform representation (<0.001 for k=3) for all numbers that are not in the disabling area.
-#'
-#' @usage
-#' formatr(x, k = 3, cl.z = F)
 #'
 #' @param x
 #' Number, which should be rounded.
