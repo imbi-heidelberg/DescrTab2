@@ -4,7 +4,13 @@
 \alias{m.cat}
 \title{Decide which test to use for the p-value calculation by categorial variables.}
 \usage{
-m.cat(group, paired = F, is.ordered = F)
+m.cat(
+  x,
+  group,
+  paired = F,
+  is.ordered = F,
+  default.unordered.unpaired.test = "Chisq"
+)
 }
 \arguments{
 \item{group}{Vector of the grouping variable.}

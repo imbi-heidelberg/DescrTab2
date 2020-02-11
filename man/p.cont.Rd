@@ -4,8 +4,17 @@
 \alias{p.cont}
 \title{p-value calculator for continous variables}
 \usage{
-p.cont(x, group, paired = F, is.ordered = F, nonparametric = F,
-t.log = F, var.equal = F, index = c(), create = "tex")
+p.cont(
+  x,
+  group,
+  paired = F,
+  is.ordered = F,
+  nonparametric = F,
+  t.log = F,
+  var.equal = F,
+  index = c(),
+  create = "tex"
+)
 }
 \arguments{
 \item{x}{Vector of the continous variable.}

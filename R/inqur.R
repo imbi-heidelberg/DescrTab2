@@ -1,11 +1,6 @@
-#' @title
 #' Calculation of the first and third quantile
 #'
-#' @description
 #' It calculate the first an third quantil of continuous variables.
-#'
-#' @usage
-#' inqur(x, k = c(), q.type = 2)
 #'
 #' @param x
 #' Vector of continuous cariables.

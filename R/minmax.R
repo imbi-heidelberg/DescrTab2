@@ -1,10 +1,6 @@
-#' @title Minimum and maximum value of continous variables
+#' Minimum and maximum value of continous variables
 #'
-#' @description
 #' Compute the minimum and maximum of continous variables.
-#'
-#' @usage
-#' minmax(x, k = 1)
 #'
 #' @param x
 #' Vector of the continous variable.

@@ -1,15 +1,9 @@
-#' @title
 #' p-value calculator for categorical variables
 #'
-#' @description
 #' Calculate the p-value for categorial variables.
 #' The decision which test to use is equal to \code{\link{m.cat}}.
 #' The p-value is calculated using one of the three tests:
 #' Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
-#'
-#' @usage
-#' p.cat(x, group, paired = F, is.ordered = F, correct.cat = F,
-#' correct.wilcox = T, index = c(), create = "tex")
 #'
 #' @param x
 #' Vector of the categorial variable.

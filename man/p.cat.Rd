@@ -4,8 +4,17 @@
 \alias{p.cat}
 \title{p-value calculator for categorical variables}
 \usage{
-p.cat(x, group, paired = F, is.ordered = F, correct.cat = F,
-correct.wilcox = T, index = c(), create = "tex")
+p.cat(
+  x,
+  group,
+  paired = F,
+  is.ordered = F,
+  correct.cat = F,
+  correct.wilcox = T,
+  index = c(),
+  create = "tex",
+  default.unordered.unpaired.test = "Chisq"
+)
 }
 \arguments{
 \item{x}{Vector of the categorial variable.}
