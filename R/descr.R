@@ -1,13 +1,16 @@
 #' @title Create a descriptive statistics table
 #'
 #' @description
-#' Generate a table of descriptive statistics with p-values obtained in tests for difference between the groups.
+#' Generate a table of descriptive statistics with p-values obtained in tests
+#' for difference between the groups.
 #'
 #' @usage
-#' descr(dat, group, var.names, percent.vertical = T, data.names = T, nonparametric = c(), landscape = F,
-#'       pos.pagebr = NULL, paired = F, var.equal = T, correct.cat = F, correct.wilcox = T, silent = T,
-#'       p.values = T, group.min.size = F, n.or.miss = "n", group.miss = F, t.log = c(), index = T,
-#'       create = "tex", digits.m = 1, digits.sd = 2, digits.qu = c(), digits.minmax = 1, digits.p = c(1,2))
+#' descr(dat, group, var.names, percent.vertical = T, data.names = T,
+#'       nonparametric = c(), landscape = F, pos.pagebr = NULL, paired = F, var.equal = T,
+#'       correct.cat = F,  correct.wilcox = T, silent = T,
+#'       p.values = T, group.min.size = F, n.or.miss = "n", group.miss = F,
+#'       t.log = c(), index = T, create = "tex", digits.m = 1, digits.sd = 2,
+#'       digits.qu = c(),  digits.minmax = 1, digits.p = c(1,2))
 #'
 #' @param dat
 #' Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
@@ -20,13 +23,18 @@
 #' @param data.names
 #' Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?
 #' @param nonparametric
-#' Logical or vector of indices. If logical / vector of indices then all / only these continuous variables will be tested using non-parametric methods.
+#' Logical or vector of indices. If logical / vector of indices then all / only
+#' these continuous variables will be tested using non-parametric methods.
 #' @param landscape
-#' Logical. Should the table be in landscape? Only useful if you want create a "pdf"- or "knitr"-document in the following. (see \code{pos.pagebr})
+#' Logical. Should the table be in landscape? Only useful if you want create a
+#'  "pdf"- or "knitr"-document in the following. (see \code{pos.pagebr})
 #' @param pos.pagebr
-#' Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy. It is the number of lines after a pagebreak should be done.\cr
-#' If it is not specified, 45 will be used for "\code{landscape=FALSE}" and 30 will be used for "\code{landscape=TURE}".\cr
-#' Only useful if you want know the number for a pagebreak when you create a "pdf"- or "knitr"-document in the following.
+#' Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy.
+#' It is the number of lines after a pagebreak should be done.\cr
+#' If it is not specified, 45 will be used for "\code{landscape=FALSE}" and
+#' 30 will be used for "\code{landscape=TURE}".\cr
+#' Only useful if you want know the number for a pagebreak when you create
+#' a "pdf"- or "knitr"-document in the following.
 #' @param paired
 #' Logical. Should paired tests be applied? The groups must have the same length.
 #' @param var.equal
@@ -40,41 +48,53 @@
 #' @param p.values
 #' Logical. Should calculate p-values? If you won't p-values \code{index} were set to \code{FALSE}.
 #' @param group.min.size
-#' For each variable, a p-value is only calculated if each non-empty group contains at least \code{group.min.size} observations for that variable.
+#' For each variable, a p-value is only calculated if each non-empty group contains
+#'  at least \code{group.min.size} observations for that variable.
 #' @param group.non.empty
-#' For each variable, a p-value is only calculated if each group contains at least one observation for that variable.
+#' For each variable, a p-value is only calculated if each group contains
+#' at least one observation for that variable.
 #' @param cat.non.empty
 #' For categorical variables a p-value is only calculated if each category is non-empty.
 #' @param n.or.miss
-#' Should the number of observations, missings for continuous variables, and/or missings for categorical variables be provided ("n", "miss", "miss.cat")? Combinations are allowed.
+#' Should the number of observations, missings for continuous variables, and/or
+#' missings for categorical variables be provided ("n", "miss", "miss.cat")?
+#' Combinations are allowed.
 #' @param adaptive.miss
 #' Should the missing row be automatically omitted if there are not missings?
 #' @param group.miss
 #' Logical. Schould add a column for the Missings in group?
 #' @param t.log
-#' Vector of indices: The variables for which the log of the original data should be used when testing for a difference between the groups.
+#' Vector of indices: The variables for which the log of the original data should
+#' be used when testing for a difference between the groups.
 #' @param index
-#' Logical. Should the tests used be labeled by footnotes? Only usefull if "p-values" in \code{which.col}.
+#' Logical. Should the tests used be labeled by footnotes? Only usefull if
+#' "p-values" in \code{which.col}.
 #' @param create
-#' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", "word" or "R").
+#' Which output document should be produced in the following step
+#' (one of "pdf", "tex", "knitr", "word" or "R").
 #' @param digits.m
 #' Number of digits for presentation in the table: For mean.
 #' @param digits.sd
 #' Number of digits for presentation in the table: For standard deviation.
 #' @param digits.qu
-#' Vector of numbers of digits for presentation in the table: For quantiles (if no value is specified it will be tried to provide a reasonable presentation).
+#' Vector of numbers of digits for presentation in the table: For quantiles
+#' (if no value is specified it will be tried to provide a reasonable presentation).
 #' @param digits.minmax
 #' Number of digits for presentation in the table: For minimum and maximum.
 #' @param digits.p
 #' Vector with numbers of digits for presentation in the table: For percentages.
-#' First vector element is number of digits for the first variable, second element for second variable and so on.
+#' First vector element is number of digits for the first variable,
+#' second element for second variable and so on.
 #' @param q.type
 #' Integer between 1 and 9 that selects a quantile algorithm.
 #' @param default.unordered.unpaired.test
-#' Any of c("Chisq", "Fisher_exact", "Fisher_boschloo"). Chooses the default test for categorical, unordered, unpaired variables.
+#' Any of c("Chisq", "Fisher_exact", "Fisher_boschloo").
+#' Chooses the default test for categorical, unordered, unpaired variables.
 #'
 #' @return
-#' Depending on the value of the create parameter either pdf, word, tex, R or an file optimized for use in connection with knitr will be created containing the descriptive statistics table with the speak for the document to create in the following.
+#' Depending on the value of the create parameter either pdf, word, tex, R
+#' or an file optimized for use in connection with knitr will be created containing
+#' the descriptive statistics table with the speak for the document to create in the following.
 #' For example you choose \code{create="pdf"} then the table is written in \code{TeX}-Code.
 #' Attention: the table has no caption and numbers of observations per group.
 #'
@@ -112,11 +132,15 @@
 #' #we use case as Grouping variable
 #'
 #' #Version 1
-#' descr(dat = infert, group = case, var.names = c("education", "age", "parity", "induced", "spontaneous", "stratum", "pooled.stratum"),create = "word")
+#' descr(dat = infert, group = case,
+#' var.names = c("education", "age", "parity", "induced", "spontaneous", "stratum", "pooled.stratum"),
+#' create = "word")
 #' #Version 2
 #' group <- case
 #' dat <- infert[,-5]
-#' descr(dat = dat, group = group, var.names = c("education", "age", "parity", "induced", "spontaneous", "stratum", "pooled.stratum"),create = "word")
+#' descr(dat = dat, group = group,
+#' var.names = c("education", "age", "parity", "induced", "spontaneous", "stratum", "pooled.stratum"),
+#' create = "word")
 #'
 #'
 #' ##Dataset with more then two groups

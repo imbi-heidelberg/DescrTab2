@@ -4,7 +4,8 @@
 \alias{p.cat}
 \title{p-value calculator for categorical variables}
 \usage{
-p.cat(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T, index = c(), create = "tex")
+p.cat(x, group, paired = F, is.ordered = F, correct.cat = F,
+correct.wilcox = T, index = c(), create = "tex")
 }
 \arguments{
 \item{x}{Vector of the categorial variable.}
@@ -22,21 +23,28 @@ p.cat(x, group, paired = F, is.ordered = F, correct.cat = F, correct.wilcox = T,
 \item{index}{Optional. Label for the footnote.
 The footnotes aren't produced in this function.}
 
-\item{create}{Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
+\item{create}{Which output document should be produced in the following step
+(one of "pdf", "tex", "knitr", or "word").
 Only usefull if \code{index} is not \code{NULL}.}
 }
 \value{
 The p-value with index which test is ussed is returned.
 }
 \description{
-Calculate the p-value for categorial variables. The decision which test to use is equal to \code{\link{m.cat}}.
-The p-value is calculated using one of the three tests: Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
+Calculate the p-value for categorial variables.
+The decision which test to use is equal to \code{\link{m.cat}}.
+The p-value is calculated using one of the three tests:
+Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
 }
 \details{
-Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples. (see \code{\link{wilcox.test}}).
-Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent, ordered samples. (see \code{\link{kruskal.test}}).
-McNemar Test: A Test for a comparison of 2 or more than 2 dependent, not ordered samples. (see \code{\link{mcnemar.test}}).
-Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent, not ordered samples. (see \code{\link{chisq.test}}).
+Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples.
+(see \code{\link{wilcox.test}}).
+Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent,
+ordered samples. (see \code{\link{kruskal.test}}).
+McNemar Test: A Test for a comparison of 2 or more than 2 dependent,
+not ordered samples. (see \code{\link{mcnemar.test}}).
+Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent,
+not ordered samples. (see \code{\link{chisq.test}}).
 }
 \examples{
 \dontrun{

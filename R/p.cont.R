@@ -2,11 +2,14 @@
 #' p-value calculator for continous variables
 #'
 #' @description
-#' Calculate the p-value for continous variables. The decision which test to use is equal to \code{\link{m.cont}}.
-#' The p-value is calculated using one of the four tests: Wilcoxon-Test, t-Test, Kruskal-Test, Anova.
+#' Calculate the p-value for continous variables.
+#' The decision which test to use is equal to \code{\link{m.cont}}.
+#' The p-value is calculated using one of the four tests:
+#' Wilcoxon-Test, t-Test, Kruskal-Test, Anova.
 #'
 #' @usage
-#' p.cont(x, group, paired = F, is.ordered = F, nonparametric = F, t.log = F, var.equal = F, index = c(), create = "tex")
+#' p.cont(x, group, paired = F, is.ordered = F, nonparametric = F,
+#' t.log = F, var.equal = F, index = c(), create = "tex")
 #'
 #' @param x
 #' Vector of the continous variable.
@@ -29,13 +32,20 @@
 #' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
 #'
 #' @details
-#' Wilcoxon Test: A nonparametric Test for a comparison of 2 dependent samples. (see \code{\link{wilcox.test}}).
-#' Mann-Whitney-U Test: A nonparametric Test for a comparison of 2 independent samples. (see \code{\link{wilcox.test}}).
-#' t-Test: A parametric Test for a comparison of 2 (in)dependent samples. (see \code{\link{t.test}}).
-#' Friedman-Test: A nonparametric Test for a comparison of more than 2 dependent samples. (see \code{\link{friedman.test}}).
-#' Anova Type III: A parametric Test for a comparison of more than 2 dependent samples. (see \code{\link[car]{Anova}} with \code{}).
-#' Kruskal-Wallis-Test: A nonparametric Test for a comparison of more than 2 independent samples. (see \code{\link{kruskal.test}}).
-#' Anova: A parametric Test for a comparison of more than 2 independent samples. (see \code{\link{aov}}).
+#' Wilcoxon Test: A nonparametric Test for a comparison of 2 dependent samples.
+#' (see \code{\link{wilcox.test}}).
+#' Mann-Whitney-U Test: A nonparametric Test for a comparison of 2 independent samples. (
+#' see \code{\link{wilcox.test}}).
+#' t-Test: A parametric Test for a comparison of 2 (in)dependent samples.
+#' (see \code{\link{t.test}}).
+#' Friedman-Test: A nonparametric Test for a comparison of more than 2 dependent samples.
+#' (see \code{\link{friedman.test}}).
+#' Anova Type III: A parametric Test for a comparison of more than 2 dependent samples.
+#' (see \code{\link[car]{Anova}} with \code{}).
+#' Kruskal-Wallis-Test: A nonparametric Test for a comparison of more than 2 independent samples.
+#' (see \code{\link{kruskal.test}}).
+#' Anova: A parametric Test for a comparison of more than 2 independent samples.
+#' (see \code{\link{aov}}).
 #'
 #' @return
 #' The p-value with index which test is ussed is returned.
@@ -57,8 +67,8 @@
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #'
-p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F, t.log = F, var.equal = F,
-                   index = c(), create = "tex") {
+p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
+                   t.log = F, var.equal = F, index = c(), create = "tex") {
 
   group <- droplevels(group);
 
