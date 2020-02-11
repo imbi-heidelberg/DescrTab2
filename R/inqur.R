@@ -29,8 +29,8 @@
 #'
 inqur <- function(x, k = c(), q.type=2) {
   if (length(x) > 1){
-    x.q1 <- quantile(x, type = q.type)[2]
-    x.q3 <- quantile(x, type = q.type)[4]
+    x.q1 <- stats::quantile(x, type = q.type)[2]
+    x.q3 <- stats::quantile(x, type = q.type)[4]
     if (is.null(k)) {
       if (as.integer(x.q1 / 0.25 / 2) == (x.q1 / 0.25 / 2) | (as.integer(x.q1 / 0.25) != (x.q1 / 0.25))) {
         x.q1 <- round(x.q1, 1)

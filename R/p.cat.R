@@ -56,25 +56,25 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
   if (is.ordered) {
     if (length(levels(group)) == 2) {
       test.name <- "Wilcoxen"
-      tl <-  wilcox.test(as.numeric(x) ~ group, paired = paired)
+      tl <- stats::wilcox.test(as.numeric(x) ~ group, paired = paired)
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
       test.name <- "Kruskal"
-      tl <- kruskal.test(x ~ group)
+      tl <- stats::kruskal.test(x ~ group)
       pv <- tl$p.value
       test.value <- tl$statistic
     }
   } else {
     if (paired) {
       test.name <- "McNemar"
-      tl <- mcnemar.test(table(x, group), correct = correct.cat)
+      tl <- stats::mcnemar.test(table(x, group), correct = correct.cat)
       pv <- tl$p.value
       test.value <- tl$statistic
     } else {
       if (default.unordered.unpaired.test == "Chisq"){
         test.name <- "Chisq"
-        tl <- chisq.test(x, group, correct = correct.cat)
+        tl <- stats::chisq.test(x, group, correct = correct.cat)
         pv <- tl$p.value
         test.value <- tl$statistic
       }
@@ -82,7 +82,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
         if ((nrow(table(x,group))!= 2) | (ncol(table(x,group))!= 2)){
           warning("Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fisher_exact.")
           test.name <- "Fisher_exact"
-          tl <- fisher.test(x, group)
+          tl <- stats::fisher.test(x, group)
           pv <- tl$p.value
           test.value <- 0
         }
@@ -95,7 +95,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
       }
       else if (default.unordered.unpaired.test == "Fisher_exact"){
         test.name <- "Fisher_exact"
-        tl <- fisher.test(x, group)
+        tl <- stats::fisher.test(x, group)
         pv <- tl$p.value
         test.value <- 0
       }
@@ -109,5 +109,5 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
       pform <- paste(pform, "$^", index, "$", sep = "")
     }
   }
-  list(pv.formatted = pform, p.value = pv, test.value = test.value,  test.name = test.name)
+  list(pv.formatted = pform, p.value = pv, test.value = test.value, test.name = test.name)
 }

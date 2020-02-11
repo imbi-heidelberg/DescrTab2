@@ -732,10 +732,10 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
 
 
 
-       tmp.ltx <- capture.output(print(ab.t,  type = "latex", include.colnames = F, include.rownames = F,
-                                            tabular.environment = "longtable",
-                                       sanitize.text.function = function(x){x}, floating = F,
-                                            hline.after = NULL, add.to.row = pc, caption.placement = "top", ...))
+       tmp.ltx <- utils::capture.output(print(ab.t,  type = "latex", include.colnames = F, include.rownames = F,
+                                              tabular.environment = "longtable",
+                                              sanitize.text.function = function(x){x}, floating = F,
+                                              hline.after = NULL, add.to.row = pc, caption.placement = "top", ...))
       if (alignment=="c"){
 
       }
@@ -800,10 +800,10 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
 
 
 
-      tmp.ltx <- capture.output(print(ab.t, file = file, type = "latex", size = fsizep,
-                                      include.colnames = F, include.rownames = F,
-                                      tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
-                                      hline.after = NULL, add.to.row = pc, caption.placement = "top"))
+      tmp.ltx <- utils::capture.output(print(ab.t, file = file, type = "latex", size = fsizep,
+                                             include.colnames = F, include.rownames = F,
+                                             tabular.environment = "longtable", sanitize.text.function = function(x){x},
+                                             floating = F, hline.after = NULL, add.to.row = pc, caption.placement = "top"))
       if (alignment=="c"){
 
       }
@@ -859,10 +859,18 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
 
 
 
-      tmp.ltx <- capture.output(print(ab.t, type = "latex", size=fsizep,
-            include.colnames = F, include.rownames = F, latex.environments = "left",
-            tabular.environment = "longtable", sanitize.text.function = function(x){x}, floating = F,
-            hline.after = NULL, add.to.row = pc, caption.placement = "top", comment = FALSE))
+      tmp.ltx <- utils::capture.output(print(ab.t, type = "latex",
+                                             size=fsizep,
+                                             include.colnames = F,
+                                             include.rownames = F,
+                                             latex.environments = "left",
+                                             tabular.environment = "longtable",
+                                             sanitize.text.function = function(x){x},
+                                             floating = F,
+                                             hline.after = NULL,
+                                             add.to.row = pc,
+                                             caption.placement = "top",
+                                             comment = FALSE))
       if (alignment=="c"){
 
       }
@@ -913,7 +921,7 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
 
     names(erg.a$descr) <- names.erg
     if (!missing(file)){
-      write.csv(erg.a$descr, file = file)
+      utils::write.csv(erg.a$descr, file = file)
     }
     return(erg.a$descr)
   }
