@@ -25,7 +25,8 @@ Imports:
     MatrixModels,
     car,
     tools,
-    Exact
+    Exact,
+    stringr
 License: GPL
 LazyLoad: true
 LazyData: true
