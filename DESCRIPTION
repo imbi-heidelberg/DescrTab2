@@ -4,7 +4,8 @@ Title: Creates a table with descriptive statistics
 Version: 1.0
 Date: 2017-11-10
 Author: person("Lorenz", "Uhlmann", role = c("aut", "cre")), person("Csilla",
-    "van Lunteren", role = c("aut", "cre"))
+    "van Lunteren", role = c("aut", "cre")), person("Jan", "Meis", 
+    role = c("aut"))
 Maintainer: Lorenz Uhlmann <uhlmann@imbi.uni-heidelberg.de>
 Description: The packages creates descriptive statistics such as mean, standard
     deviation or relative and absolute frequencies grouped by a factor and also
