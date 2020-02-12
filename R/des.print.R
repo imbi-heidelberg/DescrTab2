@@ -468,10 +468,10 @@ des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
       jet <- flextable::align(jet, j = 2:ncol(erg), align = "center", part = "all")
     }
 
-    jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria (Textkörper)", font.size = fsize, bold = TRUE), part = "header")
-    jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria (Textkörper)", font.size = fsize), part = "body")
+    jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria", font.size = fsize, bold = TRUE), part = "header")
+    jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria", font.size = fsize), part = "body")
     if (index)
-      jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria (Textkörper)", font.size = fsizeFoo), i = nrow(erg))
+      jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria", font.size = fsizeFoo), i = nrow(erg))
     if ("p-values" %in% which.col & index)
       jet <- flextable::style(jet, j = ncol(erg), pr_t = officer::fp_text(vertical.align = "superscript"))
 
