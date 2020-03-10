@@ -106,7 +106,12 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
     if (create == "word" | create == "R" | create== "archive") {
       pform <- paste(pform, index, sep = "")
     } else {
-      pform <- paste(pform, "$^", index, "$", sep = "")
+      if(grepl("<", pform)){
+        pform <- paste("\\textless", gsub("<", "", pform), "$^", index, "$", sep = "")
+      }
+      else{
+        pform <- paste(pform, "$^", index, "$", sep = "")
+      }
     }
   }
   list(pv.formatted = pform, p.value = pv, test.value = test.value, test.name = test.name)
