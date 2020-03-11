@@ -120,10 +120,10 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
     if (create == "word" | create == "R" | create=="archive") {
       pform <- paste(pform, index, sep = "")
     } else {
-      if(grepl("<", pform)){
+      if (grepl("<", pform)) {
         pform <- paste("\\textless", gsub("<", "", pform), "$^", index, "$", sep = "")
       }
-      else{
+      else {
         pform <- paste(pform, "$^", index, "$", sep = "")
       }
     }
