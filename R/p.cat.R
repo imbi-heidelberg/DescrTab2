@@ -86,7 +86,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
           pv <- tl$p.value
           test.value <- 0
         }
-        else{
+        else {
           test.name <- "Fisher_boschloo"
           tl <- Exact::exact.test(table(group,x), method="boschloo", to.plot=F)
           pv <- tl$p.value
@@ -106,10 +106,10 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
     if (create == "word" | create == "R" | create== "archive") {
       pform <- paste(pform, index, sep = "")
     } else {
-      if(grepl("<", pform)){
+      if (grepl("<", pform)) {
         pform <- paste("\\textless", gsub("<", "", pform), "$^", index, "$", sep = "")
       }
-      else{
+      else {
         pform <- paste(pform, "$^", index, "$", sep = "")
       }
     }
