@@ -386,8 +386,8 @@ descr <- function(dat, group, var.names, percent.vertical = T, data.names = T, n
         }
 
 
-        if (length(table(dat[[i]])) <= 1) {
-          warning(paste0("Variable ", var.n, " only has 1 category. No p-value calculations will be performed."))
+        if (length(table(factor(dat[[i]]))) <= 1) {
+          warning(paste0("Variable ", var.n, " has less than 2 non-empty categories. No p-value calculations will be performed."))
           pvalues_var[i] = F
         } else {
           for (l in 1:length(table(dat[[i]]))) {
