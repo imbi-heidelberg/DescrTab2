@@ -115,6 +115,7 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
       }
     }
   }
+
   pform <- formatr(pv, 3, cl.z = T)
   if (!is.null(index)) {
     if (create == "word" | create == "R" | create=="archive") {
@@ -128,5 +129,18 @@ p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
       }
     }
   }
+  else{
+    if (create == "word" | create == "R" | create== "archive") {
+      pform <- paste(pform)
+    } else {
+      if (grepl("<", pform)) {
+        pform <- paste("\\textless", gsub("<", "", pform), sep = "")
+      }
+      else {
+        pform <- paste(pform, sep = "")
+      }
+    }
+  }
+
   list(pv.formatted = pform, p.value = pv, test.value = test.value,  test.name = test.name)
 }
