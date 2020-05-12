@@ -32,5 +32,5 @@ VignetteBuilder: knitr
 License: GPL
 LazyLoad: true
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8

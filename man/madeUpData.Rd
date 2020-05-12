@@ -4,7 +4,8 @@
 \name{madeUpData}
 \alias{madeUpData}
 \title{Data that is made to look like clinical data.}
-\format{A data frame with 200 rows and 5 variables:
+\format{
+A data frame with 200 rows and 5 variables:
 \describe{
   \item{group}{control or treatment}
   \item{gender}{male or female}
@@ -12,7 +13,8 @@
   \item{blood_hg}{Number between 50 and 150}
   \item{QoL_score}{sad, normal or happy}
   ...
-}}
+}
+}
 \usage{
 madeUpData
 }
