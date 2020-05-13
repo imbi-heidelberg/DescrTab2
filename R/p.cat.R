@@ -114,5 +114,17 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
       }
     }
   }
+  else{
+    if (create == "word" | create == "R" | create== "archive") {
+      pform <- paste(pform)
+    } else {
+      if (grepl("<", pform)) {
+        pform <- paste("\\textless", gsub("<", "", pform), sep = "")
+      }
+      else {
+        pform <- paste(pform, sep = "")
+      }
+    }
+  }
   list(pv.formatted = pform, p.value = pv, test.value = test.value, test.name = test.name)
 }
