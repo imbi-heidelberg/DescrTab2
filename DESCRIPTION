@@ -27,7 +27,8 @@ Imports:
     car,
     tools,
     Exact,
-    stringr
+    stringr,
+    DescTools
 VignetteBuilder: knitr
 License: GPL
 LazyLoad: true
