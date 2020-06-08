@@ -55,7 +55,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
 
   if (is.ordered) {
     if (length(levels(group)) == 2) {
-      test.name <- "Wilcoxen"
+      test.name <- "Wilcoxon"
       tl <- stats::wilcox.test(as.numeric(x) ~ group, paired = paired)
       pv <- tl$p.value
       test.value <- tl$statistic
