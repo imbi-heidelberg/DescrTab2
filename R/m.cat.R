@@ -29,7 +29,11 @@ m.cat <- function(x, group, paired = F, is.ordered = F, default.unordered.unpair
     }
   } else {
     if (paired) {
-      pv <- "mcnemar"
+      if (length(levels(group)) == 2) {
+        pv <- "mcnemar"
+      } else {
+        pv <- "cochran_q"
+      }
     } else {
       if (default.unordered.unpaired.test=="Chisq"){
         pv <- "chisq"
