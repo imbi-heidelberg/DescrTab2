@@ -50,9 +50,11 @@ Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples.
 (see \code{\link{wilcox.test}}).
 Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent,
 ordered samples. (see \code{\link{kruskal.test}}).
-McNemar Test: A Test for a comparison of 2 or more than 2 dependent,
+McNemar Test: A Test for a comparison of 2 dependent,
 not ordered samples. (see \code{\link{mcnemar.test}}).
 Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent,
+not ordered samples. (see \code{\link[DescTools]{CochranQTest}}).
+Cochran's Q Test: A test for a comparison of 2 or more than 2 dependent,
 not ordered samples. (see \code{\link{chisq.test}}).
 }
 \examples{

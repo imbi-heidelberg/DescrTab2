@@ -30,9 +30,11 @@
 #' (see \code{\link{wilcox.test}}).
 #' Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent,
 #' ordered samples. (see \code{\link{kruskal.test}}).
-#' McNemar Test: A Test for a comparison of 2 or more than 2 dependent,
+#' McNemar Test: A Test for a comparison of 2 dependent,
 #' not ordered samples. (see \code{\link{mcnemar.test}}).
 #' Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent,
+#' not ordered samples. (see \code{\link[DescTools]{CochranQTest}}).
+#' Cochran's Q Test: A test for a comparison of 2 or more than 2 dependent,
 #' not ordered samples. (see \code{\link{chisq.test}}).
 #'
 #' @return
@@ -55,7 +57,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
 
   if (is.ordered) {
     if (length(levels(group)) == 2) {
-      test.name <- "Wilcoxen"
+      test.name <- "Wilcoxon"
       tl <- stats::wilcox.test(as.numeric(x) ~ group, paired = paired)
       pv <- tl$p.value
       test.value <- tl$statistic
@@ -67,10 +69,18 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
     }
   } else {
     if (paired) {
-      test.name <- "McNemar"
-      tl <- stats::mcnemar.test(table(x, group), correct = correct.cat)
-      pv <- tl$p.value
-      test.value <- tl$statistic
+      if (length(levels(group)) == 2) {
+        test.name <- "McNemar"
+        tl <- stats::mcnemar.test(table(x, group), correct = correct.cat)
+        pv <- tl$p.value
+        test.value <- tl$statistic
+      } else {
+        x.ind <- rep(1:(length(x) / length(levels(group))), length(levels(group)))
+        test.name <- "Cochran_Q"
+        tl <- DescTools::CochranQTest(x ~ group | x.ind)
+        pv <- tl$p.value
+        test.value <- tl$statistic
+      }
     } else {
       if (default.unordered.unpaired.test == "Chisq"){
         test.name <- "Chisq"
