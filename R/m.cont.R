@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' m.cont(group=rep(1:4,25))
+#' m.cont(group = rep(1:4, 25))
 #' }
 #'
 m.cont <- function(group, paired = F, is.ordered = F, nonparametric = F, t.log = F) {
@@ -48,4 +48,3 @@ m.cont <- function(group, paired = F, is.ordered = F, nonparametric = F, t.log =
   }
   pv
 }
-

@@ -20,15 +20,15 @@
 #' @examples
 #' \dontrun{
 #' set.seed(12345)
-#' x<-rnorm(100)
+#' x <- rnorm(100)
 #'
-#' minmax(x,k=2)
+#' minmax(x, k = 2)
 #' }
 #'
 minmax <- function(x, k = 1) {
-  if (length(x) > 1){
+  if (length(x) > 1) {
     paste(formatr(min(x), k), " -- ", formatr(max(x), k), sep = "")
-  }else{
+  } else {
     "-"
   }
 }

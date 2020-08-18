@@ -20,9 +20,9 @@
 #' @examples
 #' \dontrun{
 #' set.seed(12345)
-#' x<-rnorm(100)
+#' x <- rnorm(100)
 #'
-#' med.new(x,k=c(3))
+#' med.new(x, k = c(3))
 #' }
 #'
 med.new <- function(x, k = c()) {
@@ -34,10 +34,10 @@ med.new <- function(x, k = c()) {
       } else {
         x.med <- round(x.med, 2)
       }
-    }else {
+    } else {
       x.med <- formatr(x.med, k)
     }
-  }else{
+  } else {
     x.med <- "-"
   }
   x.med
