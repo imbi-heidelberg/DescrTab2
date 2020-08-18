@@ -20,8 +20,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' x<-c(0.1,0.01,0.001)
-#' formatr(x, k=2, cl.z=T)
+#' x <- c(0.1, 0.01, 0.001)
+#' formatr(x, k = 2, cl.z = T)
 #' }
 #'
 formatr <- function(x, k = 3, cl.z = F) {

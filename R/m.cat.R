@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' m.cat(paired=T, is.ordered=T)
+#' m.cat(paired = T, is.ordered = T)
 #' }
 #'
 m.cat <- function(x, group, paired = F, is.ordered = F, default.unordered.unpaired.test = "Chisq") {
@@ -35,18 +35,18 @@ m.cat <- function(x, group, paired = F, is.ordered = F, default.unordered.unpair
         pv <- "cochran\\_q"
       }
     } else {
-      if (default.unordered.unpaired.test=="Chisq"){
+      if (default.unordered.unpaired.test == "Chisq") {
         pv <- "chisq"
       }
-      else if (default.unordered.unpaired.test=="Fisher_boschloo"){
-        if ((nrow(table(x,group))!= 2) | (ncol(table(x,group))!= 2)){
+      else if (default.unordered.unpaired.test == "Fisher_boschloo") {
+        if ((nrow(table(x, group)) != 2) | (ncol(table(x, group)) != 2)) {
           pv <- "Fisher\\_exact"
         }
-        else{
+        else {
           pv <- "Fisher\\_boschloo"
         }
       }
-      else if (default.unordered.unpaired.test=="Fisher_exact"){
+      else if (default.unordered.unpaired.test == "Fisher_exact") {
         pv <- "Fisher\\_exact"
       }
     }

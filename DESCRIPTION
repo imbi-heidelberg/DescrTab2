@@ -17,6 +17,8 @@ Suggests:
     covr,
     knitr
 Imports:
+    dplyr,
+    stringr,
     xtable,
     nlme,
     flextable,
@@ -27,7 +29,6 @@ Imports:
     car,
     tools,
     Exact,
-    stringr,
     DescTools
 VignetteBuilder: knitr
 License: GPL

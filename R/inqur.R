@@ -8,7 +8,7 @@
 #' Optional. The number of decimal places.
 #' If not specified, the number of decimal places is 1 or 2.
 #'
-#'@param q.type
+#' @param q.type
 #' Optional. Integer between 1 and 9 that selects a quantile algorithm.
 #'
 #' @return
@@ -22,13 +22,13 @@
 #' @examples
 #' \dontrun{
 #' set.seed(12345)
-#' x<-rnorm(100)
+#' x <- rnorm(100)
 #'
 #' inqur(x, k = c(3), 4)
 #' }
 #'
-inqur <- function(x, k = c(), q.type=2) {
-  if (length(x) > 1){
+inqur <- function(x, k = c(), q.type = 2) {
+  if (length(x) > 1) {
     x.q1 <- stats::quantile(x, type = q.type)[2]
     x.q3 <- stats::quantile(x, type = q.type)[4]
     if (is.null(k)) {
@@ -42,13 +42,12 @@ inqur <- function(x, k = c(), q.type=2) {
       } else {
         x.q3 <- round(x.q3, 2)
       }
-    }else {
+    } else {
       x.q1 <- formatr(x.q1, k)
       x.q3 <- formatr(x.q3, k)
     }
     paste(x.q1, " -- ", x.q3, sep = "")
-  }else{
+  } else {
     paste("-")
   }
-
 }

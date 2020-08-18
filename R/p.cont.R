@@ -52,7 +52,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' p.cont(x=rnorm(100,0,1), group=rep(1:4,25))
+#' p.cont(x = rnorm(100, 0, 1), group = rep(1:4, 25))
 #' }
 #'
 #' @import lme4
@@ -61,86 +61,107 @@
 #' @importFrom  nlme lme
 #' @importFrom car Anova
 #'
-p.cont <- function(x, group, paired = F, is.ordered = F, nonparametric = F,
-                   t.log = F, var.equal = F, index = c(), create = "tex") {
+p.cont <-
+  function(x,
+           group,
+           paired = F,
+           is.ordered = F,
+           nonparametric = F,
+           t.log = F,
+           var.equal = F,
+           index = c(),
+           create = "tex") {
+    group <- droplevels(group)
 
-  group <- droplevels(group);
-
-  if (length(levels(group)) == 2) {
-    if (nonparametric) {
-      test.name <- "Wilcoxen"
-      tl <- stats::wilcox.test(x ~ group, paired = paired)
-      pv <- tl$p.value
-      test.value <- tl$statistic
-    } else {
-      if (t.log){
-        test.name <- "log-t-test"
-        x <- log(x)
-      }
-      test.name <- "t-test"
-      tl <- stats::t.test(x ~ group, paired = paired, var.equal = var.equal)
-      pv <- tl$p.value
-      test.value <- tl$statistic
-    }
-  } else {
-    if (paired) {
-      # Annahme: Beobachtungen stehen pro "Gruppe" jeweils in derselben Reihenfolge untereinander!
-      x.ind <- rep(1:(length(x) / length(levels(group))), length(levels(group)))
+    if (length(levels(group)) == 2) {
       if (nonparametric) {
-        x.ind <- rep(1:(length(x) / length(levels(group))), length(levels(group)))
-        test.name <- "Friedman"
-
-        tl <- stats::friedman.test(x ~ group | x.ind)
+        test.name <- "Wilcoxen"
+        tl <- stats::wilcox.test(x ~ group, paired = paired)
         pv <- tl$p.value
         test.value <- tl$statistic
       } else {
-        test.name <- "paired_lme_F-test(dont_really_know_what_happens_here)"
-        fit <- nlme::lme(x ~ group, random = ~ 1 | x.ind)
-        # pv <- car::Anova(fit, type = "III")[2, 3]
-        tl <- nlme::anova.lme(fit)
-        pv <- tl$`p-value`[2]
-        test.value <- tl$`F-value`[2]
-      }
-    } else {
-      if (nonparametric) {
-        test.name <- "Kruskal"
-        tl <- stats::kruskal.test(x ~ group)
+        if (t.log) {
+          test.name <- "log-t-test"
+          x <- log(x)
+        }
+        test.name <- "t-test"
+        tl <-
+          stats::t.test(x ~ group, paired = paired, var.equal = var.equal)
         pv <- tl$p.value
         test.value <- tl$statistic
+      }
+    } else {
+      if (paired) {
+        # Annahme: Beobachtungen stehen pro "Gruppe" jeweils in derselben Reihenfolge untereinander!
+        x.ind <-
+          rep(1:(length(x) / length(levels(group))), length(levels(group)))
+        if (nonparametric) {
+          x.ind <-
+            rep(1:(length(x) / length(levels(group))), length(levels(group)))
+          test.name <- "Friedman"
+
+          tl <- stats::friedman.test(x ~ group | x.ind)
+          pv <- tl$p.value
+          test.value <- tl$statistic
+        } else {
+          test.name <- "paired_lme_F-test(dont_really_know_what_happens_here)"
+          fit <- nlme::lme(x ~ group, random = ~ 1 | x.ind)
+          # pv <- car::Anova(fit, type = "III")[2, 3]
+          tl <- nlme::anova.lme(fit)
+          pv <- tl$`p-value`[2]
+          test.value <- tl$`F-value`[2]
+        }
       } else {
-        test.name <- "F-test"
-        tl <- summary(stats::aov(x ~ group))[[1]]
-        pv <- tl$`Pr(>F)`[1]
-        test.value <- tl$`F value`[1]
+        if (nonparametric) {
+          test.name <- "Kruskal"
+          tl <- stats::kruskal.test(x ~ group)
+          pv <- tl$p.value
+          test.value <- tl$statistic
+        } else {
+          test.name <- "F-test"
+          tl <- summary(stats::aov(x ~ group))[[1]]
+          pv <- tl$`Pr(>F)`[1]
+          test.value <- tl$`F value`[1]
+        }
       }
     }
-  }
 
-  pform <- formatr(pv, 3, cl.z = T)
-  if (!is.null(index)) {
-    if (create == "word" | create == "R" | create=="archive") {
-      pform <- paste(pform, index, sep = "")
-    } else {
-      if (grepl("<", pform)) {
-        pform <- paste("\\textless", gsub("<", "", pform), "$^", index, "$", sep = "")
-      }
-      else {
-        pform <- paste(pform, "$^", index, "$", sep = "")
-      }
-    }
-  }
-  else{
-    if (create == "word" | create == "R" | create== "archive") {
-      pform <- paste(pform)
-    } else {
-      if (grepl("<", pform)) {
-        pform <- paste("\\textless", gsub("<", "", pform), sep = "")
-      }
-      else {
-        pform <- paste(pform, sep = "")
+    pform <- formatr(pv, 3, cl.z = T)
+    if (!is.null(index)) {
+      if (create == "word" | create == "R" | create == "archive") {
+        pform <- paste(pform, index, sep = "")
+      } else {
+        if (grepl("<", pform)) {
+          pform <-
+            paste("\\textless",
+                  gsub("<", "", pform),
+                  "$^",
+                  index,
+                  "$",
+                  sep = "")
+        }
+        else {
+          pform <- paste(pform, "$^", index, "$", sep = "")
+        }
       }
     }
-  }
+    else {
+      if (create == "word" | create == "R" | create == "archive") {
+        pform <- paste(pform)
+      } else {
+        if (grepl("<", pform)) {
+          pform <- paste("\\textless", gsub("<", "", pform), sep = "")
+        }
+        else {
+          pform <- paste(pform, sep = "")
+        }
+      }
+    }
 
-  list(pv.formatted = pform, p.value = pv, test.value = test.value,  test.name = test.name)
-}
+    list(
+      pv.formatted = pform,
+      p.value = pv,
+      test.value = test.value,
+      test.name = test.name
+    )
+  }

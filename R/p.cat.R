@@ -45,15 +45,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' p.cat(x=rep(1:5,20), group=rep(1:4,25))
+#' p.cat(x = rep(1:5, 20), group = rep(1:4, 25))
 #' }
 #'
 p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
                   correct.wilcox = T, index = c(), create = "tex",
                   default.unordered.unpaired.test = "Chisq") {
-
-  group <- droplevels(group);
-  x <- droplevels(x);
+  group <- droplevels(group)
+  x <- droplevels(x)
 
   if (is.ordered) {
     if (length(levels(group)) == 2) {
@@ -82,14 +81,14 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
         test.value <- tl$statistic
       }
     } else {
-      if (default.unordered.unpaired.test == "Chisq"){
+      if (default.unordered.unpaired.test == "Chisq") {
         test.name <- "Chisq"
         tl <- stats::chisq.test(x, group, correct = correct.cat)
         pv <- tl$p.value
         test.value <- tl$statistic
       }
-      else if (default.unordered.unpaired.test == "Fisher_boschloo"){
-        if ((nrow(table(x,group))!= 2) | (ncol(table(x,group))!= 2)){
+      else if (default.unordered.unpaired.test == "Fisher_boschloo") {
+        if ((nrow(table(x, group)) != 2) | (ncol(table(x, group)) != 2)) {
           warning("Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fisher_exact.")
           test.name <- "Fisher_exact"
           tl <- stats::fisher.test(x, group)
@@ -98,12 +97,12 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
         }
         else {
           test.name <- "Fisher_boschloo"
-          tl <- Exact::exact.test(table(group,x), method="boschloo", to.plot=F)
+          tl <- Exact::exact.test(table(group, x), method = "boschloo", to.plot = F)
           pv <- tl$p.value
           test.value <- tl$statistic
         }
       }
-      else if (default.unordered.unpaired.test == "Fisher_exact"){
+      else if (default.unordered.unpaired.test == "Fisher_exact") {
         test.name <- "Fisher_exact"
         tl <- stats::fisher.test(x, group)
         pv <- tl$p.value
@@ -113,7 +112,7 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
   }
   pform <- formatr(pv, 3, cl.z = T)
   if (!is.null(index)) {
-    if (create == "word" | create == "R" | create== "archive") {
+    if (create == "word" | create == "R" | create == "archive") {
       pform <- paste(pform, index, sep = "")
     } else {
       if (grepl("<", pform)) {
@@ -124,8 +123,8 @@ p.cat <- function(x, group, paired = F, is.ordered = F, correct.cat = F,
       }
     }
   }
-  else{
-    if (create == "word" | create == "R" | create== "archive") {
+  else {
+    if (create == "word" | create == "R" | create == "archive") {
       pform <- paste(pform)
     } else {
       if (grepl("<", pform)) {

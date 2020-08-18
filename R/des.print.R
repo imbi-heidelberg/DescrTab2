@@ -40,9 +40,6 @@
 #' Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})
 #' @param correct.wilcox
 #' Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})
-#' @param t.log
-#' Vector of indices: The variables for which the log of the original data
-#' should be used when testing for a difference between the groups.
 #' @param which.col
 #' Which columns should be provided ("groups", "total", "p-values")?
 #' Combinations are allowed. "groups" or "total" must be listed.
@@ -65,7 +62,7 @@
 #' @param adaptive.miss
 #' Should the missing row be automatically omitted if there are not missings?
 #' @param group.miss
-#' Logical. Should add a column for the Missings in group? For both cases in \code{total}
+#' Logical. Should add a column for the missings in group? For both cases in \code{total}
 #'  there are only the observations without a missing in group.
 #' @param percent.vertical
 #' Logical. Should "vertical" percentages for categorical variables be provided?
@@ -171,65 +168,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' infert
-#' attach(infert)
-#' #is.factor(education)
-#' #is.factor(age)
-#' #is.factor(parity)
-#' #is.factor(induced)
-#' #is.factor(case)
-#' #infert$case<-as.factor(case)
-#' #case<-as.factor(case)
-#'
-#' #is.factor(spontaneous)
-#' #is.factor(stratum)
-#' #is.factor(pooled.stratum)
-#'
-#' #we use case as Grouping variable
-#' file <- "C:/Users/lunteren/Desktop/infert/DescriptiveStatisticTable.docx"
-#'
-#' #Version 1
-#' des.print(dat = infert, group = 5, create = "word", file=file, fsize = 10,
-#' var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"),
-#' caption = c("Group 1", "Group 2"))
-#' #Version 2
-#' des.print(dat = infert, group = case, create = "word", file=file, fsize = 10,
-#' var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"),
-#' caption = c("Group 1", "Group 2"))
-#' #Version 3
-#' group <- case
-#' dat <- infert[,-5]
-#' des.print(dat = dat, group = group, create = "word", file=file, fsize = 10,
-#' var.names = c("education", "age", "parity","induced", "spontaneous", "stratum", "pooled.stratum"),
-#' caption = c("Group 1", "Group 2"))
-#'
-#' ##Dataset with more then two groups
-#' ChickWeight
-#' attach(ChickWeight)
-#'
-#' #is.factor(weight)
-#' #is.factor(Time)
-#' #is.factor(Chick)
-#' #is.factor(Diet)
-#'
-#' #we use Diet as Grouping variable
-#'
-#' file <- "C:/Users/lunteren/Desktop/ChickWeight/DescriptiveStatisticTable.docx"
-#'
-#' #Version 1
-#' des.print(dat = ChickWeight, group = 4, create = "word", file = file, fsize = 10,
-#' var.names = c("weight", "Time", "Chick"),
-#' caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
-#' #Version 2
-#' des.print(dat = ChickWeight, group = Diet, create = "word", file = file, fsize = 10,
-#' var.names = c("weight", "Time", "Chick"),
-#' caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
-#' #Version 3
-#' group <- Diet
-#' dat <- ChickWeight[,-4]
-#' des.print(dat = dat, group = group, create = "word", file = file, fsize = 10,
-#' var.names = c("weight", "Time", "Chick"),
-#' caption = c("Group 1", "Group 2", "Group 3", "Group 4"))
 #' }
 #'
 #' @importFrom flextable regulartable
@@ -254,675 +192,1120 @@
 #'
 #' @export
 #'
-des.print <- function(dat, group, create = "knitr", file, index = T, fsize = 11,
-                      paired = F, nonparametric = F, var.equal = T, correct.cat = F,
-                      correct.wilcox = T, t.log = c(),
-                      which.col = c("groups", "total", "p-values"),
-                      group.min.size = F, group.non.empty=F,
-                      cat.non.empty=F, n.or.miss = c("n", "miss", "miss.cat"),
-                      adaptive.miss=T, group.miss = F, percent.vertical = T,
-                      var.names, data.names = T,caption, tab.caption, landscape = F,
-                      pos.pagebr = NULL, label = NULL, digits.m = 1, digits.sd = 2,
-                      digits.qu = c(), digits.minmax = 1, digits.p = c(1),
-                      silent = T, q.type=2, alignment="c",
-                      default.unordered.unpaired.test = "Chisq", ...) {
+des.print <-
+  function(dat,
+           group,
+           create = "knitr",
+           file,
+           index = T,
+           fsize = 11,
+           paired = F,
+           nonparametric = F,
+           var.equal = T,
+           correct.cat = F,
+           correct.wilcox = T,
+           which.col = c("groups", "total", "p-values"),
+           which.row.cont = c("N", "Nmiss", "mean", "sd", "median", "quart", "minmax"),
+           miss.row.cat = c("extra.cat", "separate", "none"),
+           group.min.size = F,
+           group.non.empty = F,
+           cat.non.empty = F,
+           adaptive.miss = T,
+           group.miss = F,
+           percent.vertical = T,
+           var.names,
+           data.names = T,
+           caption,
+           tab.caption,
+           landscape = F,
+           pos.pagebr = NULL,
+           label = NULL,
+           digits.m = 1,
+           digits.sd = 2,
+           digits.qu = c(),
+           digits.minmax = 1,
+           digits.p = c(1),
+           silent = T,
+           q.type = 2,
+           alignment = "c",
+           default.unordered.unpaired.test = "Chisq",
+           ...) {
 
-  ##Input data correction
-  if (!("groups" %in% which.col) & !("total" %in% which.col))
-    stop( "At least, either groups or total must be listed in which.col" )
+    ## Input data correction
+    if (!("groups" %in% which.col) & !("total" %in% which.col)) {
+      stop("At least, either groups or total must be listed in which.col")
+    }
 
-  if (missing(group)) {
-    group <- as.factor(rep(1, nrow(dat)))
-    which.col <- "total"
-    index <- F
-    group.miss <- F
-    warning( "group is missing! index and group.miss were set to FALSE and which.col were set to \"total\" " )
-  }
-  if ("p-values" %in% which.col) {
-    p.values <- T
-  } else {
-    p.values <- F
-  }
+    if (is.null(group)){
+      group <- as.factor(rep(1, nrow(dat)))
+      which.col <- "total"
+      index <- F
+      group.miss <- F
+      warning(
+        "group is missing! index and group.miss were set to FALSE and which.col were set to \"total\" "
+      )
+    }
 
-  if (p.values & group.min.size == T)
-    group.min.size <- 2
 
-  if (!(p.values) & index) {
-    index <- F
-    warning( "If you don't want p-values, you don't need an output which test was used. \"index\" was set to FALSE." )
-  }
+    if ("p-values" %in% which.col) {
+      p.values <- T
+    } else {
+      p.values <- F
+    }
 
-  if ("total" %in% which.col & "p-values" %in% which.col & !("groups" %in% which.col))
-    stop( "Only total and p-value is not a useful approach." )
+    if (p.values & group.min.size > 0 %>% isTRUE() ) {
+      group.min.size <- 2
+    }
 
-  ##Handling with the group variable
-  if (is.numeric(group) & length(group) == 1) {
-    gr <- group
-    group <- dat[[group]]
-    dat <- dat[, -gr, drop = FALSE]
-  }
+    if (!(p.values) & index) {
+      index <- F
+      warning(
+        "If you don't want p-values, you don't need an output which test was used. \"index\" was set to FALSE."
+      )
+    }
 
-  if (is.character(group)) {
-    gr <- which(names(dat) == group)
-    group <- dat[[group]]
-    dat <- dat[, -gr, drop = FALSE]
-  }
+    if ("total" %in% which.col &
+      "p-values" %in% which.col & !("groups" %in% which.col)) {
+      stop("Only total and p-value is not a useful approach.")
+    }
 
-  if (is.logical(nonparametric)) {
-    if (nonparametric == T) {
-      nonparametric <- 1:ncol(dat)
+    ## Handling with the group variable
+    if (is.numeric(group) & length(group) == 1) {
+      gr <- group
+      group <- dat[[group]]
+      dat <- dat[, -gr, drop = FALSE]
+    }
+
+    if (is.character(group)) {
+      gr <- which(names(dat) == group)
+      group <- dat[[group]]
+      dat <- dat[, -gr, drop = FALSE]
+    }
+
+    if (is.logical(nonparametric)) {
+      if (nonparametric == T) {
+        nonparametric <- 1:ncol(dat)
       } else {
         nonparametric <- c()
       }
-  }
-
-  ##output settings
-  if (missing(dat) | missing(group))
-    stop( "Parameters dat and group must be specified" )
-  if (create == "word" & !is.numeric(fsize)) {
-    warning( "If create=word only whole numbers (numeric variable) are allowed. fsize is set equal to 11." )
-    fsize <- 11
-  }
-
-  pos.pagebreak <- NULL
-
-  if (length(pos.pagebr) > 1) {
-    pos.pagebreak <- pos.pagebr
-    pos.pagebr <- NULL
-  }
-
-  if (missing(tab.caption)) {
-    tab.caption <- "Descriptive statistics"
-  }
-
-  ##creation of the output separated for word/R and knitr/pdf/tex
-  if (create == "word" | create == "R") {
-    ##raw data table
-    erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
-                   pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, adaptive.miss,
-                   group.miss, t.log, index, create, digits.m,
-                   digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
-    erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
-    if (missing(caption))
-      caption <- levels(group)
-
-    ##which column shoul be printed
-    erg.out <- c()
-    if (!("groups" %in% which.col))
-      erg.out <- 2:(length(levels(group)) + 1)
-    if (!("total" %in% which.col))
-      erg.out <- 2 + length(levels(group))
-    if (length(erg.out) != 0)
-      erg <- erg[, -erg.out]
-
-    names.erg <- c("")
-    if ("groups" %in% which.col)
-      names.erg <- c(names.erg, caption)
-    if ("total" %in% which.col)
-      names.erg <- c(names.erg, "Total")
-    if (group.miss)
-      names.erg <- c(names.erg, "Missing in group")
-    if ("p-values" %in% which.col)
-      names.erg <- c(names.erg, "p-values")
-    names(erg)<-names.erg
-
-    ##numbers per group
-    n.vec <- c()
-    for (j in 1:length(levels(group))) {
-      n.j <- paste("(", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
-      n.vec <- c(n.vec, n.j)
-    }
-    n.total <- paste("(", "n = ", length(group), ")", sep = "")
-    if (group.miss)
-      n.miss<- paste("(", "n = ",length(which(is.na(group))), ")", sep = "")
-    for (k in 1:ncol(erg)) {
-      erg[, k] <- as.character(erg[, k])
     }
 
-    ##fontsize calculation
-    difference <- 11 - fsize
-    fsizeFoo <- 10 - difference
-    width <- 11 / fsize
+    ## output settings
+    if (missing(dat) | missing(group)) {
+      stop("Parameters dat and group must be specified")
+    }
+    if (create == "word" & !is.numeric(fsize)) {
+      warning(
+        "If create=word only whole numbers (numeric variable) are allowed. fsize is set equal to 11."
+      )
+      fsize <- 11
+    }
 
-    ##footline & output creation
-    if (index & "p-values" %in% which.col) {
-      if (!is.null(erg.a$testings)) {
-        foot.ab <- paste(letters[1], erg.a$testings[1], sep = ":")
+    pos.pagebreak <- NULL
+
+    if (length(pos.pagebr) > 1) {
+      pos.pagebreak <- pos.pagebr
+      pos.pagebr <- NULL
+    }
+
+    if (missing(tab.caption)) {
+      tab.caption <- "Descriptive statistics"
+    }
+
+    ## creation of the output separated for word/R and knitr/pdf/tex
+    if (create == "word" | create == "R") {
+      ## raw data table
+      erg.a <- descr(
+        dat,
+        group,
+        var.names,
+        percent.vertical,
+        data.names,
+        nonparametric,
+        landscape,
+        pos.pagebr,
+        paired,
+        var.equal,
+        correct.cat,
+        correct.wilcox,
+        silent,
+        p.values,
+        group.min.size,
+        group.non.empty,
+        cat.non.empty,
+        n.or.miss,
+        adaptive.miss,
+        group.miss,
+        t.log,
+        index,
+        create,
+        digits.m,
+        digits.sd,
+        digits.qu,
+        digits.minmax,
+        digits.p,
+        q.type,
+        default.unordered.unpaired.test
+      )
+      erg <-
+        erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
+      if (missing(caption)) {
+        caption <- levels(group)
+      }
+
+      ## which column shoul be printed
+      erg.out <- c()
+      if (!("groups" %in% which.col)) {
+        erg.out <- 2:(length(levels(group)) + 1)
+      }
+      if (!("total" %in% which.col)) {
+        erg.out <- 2 + length(levels(group))
+      }
+      if (length(erg.out) != 0) {
+        erg <- erg[, -erg.out]
+      }
+
+      names.erg <- c("")
+      if ("groups" %in% which.col) {
+        names.erg <- c(names.erg, caption)
+      }
+      if ("total" %in% which.col) {
+        names.erg <- c(names.erg, "Total")
+      }
+      if (group.miss) {
+        names.erg <- c(names.erg, "Missing in group")
+      }
+      if ("p-values" %in% which.col) {
+        names.erg <- c(names.erg, "p-values")
+      }
+      names(erg) <- names.erg
+
+      ## numbers per group
+      n.vec <- c()
+      for (j in 1:length(levels(group))) {
+        n.j <-
+          paste("(", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
+        n.vec <- c(n.vec, n.j)
+      }
+      n.total <- paste("(", "n = ", length(group), ")", sep = "")
+      if (group.miss) {
+        n.miss <-
+          paste("(", "n = ", length(which(is.na(group))), ")", sep = "")
+      }
+      for (k in 1:ncol(erg)) {
+        erg[, k] <- as.character(erg[, k])
+      }
+
+      ## fontsize calculation
+      difference <- 11 - fsize
+      fsizeFoo <- 10 - difference
+      width <- 11 / fsize
+
+      ## footline & output creation
+      if (index & "p-values" %in% which.col) {
+        if (!is.null(erg.a$testings)) {
+          foot.ab <- paste(letters[1], erg.a$testings[1], sep = ":")
+          if (length(erg.a$testings) >= 2) {
+            for (k in 2:length(erg.a$testings)) {
+              foot.ab <-
+                paste(foot.ab,
+                  paste(letters[k], erg.a$testings[k], sep = ":"),
+                  sep = "; "
+                )
+            }
+          }
+        } else {
+          foot.ab <- ""
+        }
+
+        a <- grep("a", erg$`p-values`)
+        b <- grep("b", erg$`p-values`)
+        erg$`p-values` <- gsub("a", "", erg$`p-values`)
+        erg$`p-values` <- gsub("b", "", erg$`p-values`)
+
+        footsuperscript <- rep("", nrow(erg))
+        footsuperscript[a] <- "a"
+        footsuperscript[b] <- "b"
+        erg <- cbind(erg, footsuperscript)
+        foot <- rep("", ncol(erg) - 1)
+        foot <- c(foot.ab, foot)
+        erg <- rbind(erg, foot)
+      }
+
+      header <- c("")
+      if ("groups" %in% which.col) {
+        header <- c(header, n.vec)
+      }
+      if ("total" %in% which.col) {
+        header <- c(header, n.total)
+      }
+      if (group.miss) {
+        header <- c(header, n.miss)
+      }
+      if ("p-values" %in% which.col) {
+        header <- c(header, "")
+      }
+
+      jet <- erg
+      names(jet)[1] <- "var"
+
+      if ("p-values" %in% which.col) {
+        names(jet)[which(names(jet) == "p-values")] <- "p.values"
+      }
+      if (index) {
+        names(jet)[ncol(jet)] <- "index"
+      }
+
+      jet <- flextable::regulartable(data = jet)
+      jet <- flextable::autofit(jet)
+
+      if (index == F) {
+        head <- data.frame(
+          col_keys = jet$col_keys,
+          tab = tab.caption,
+          what = names.erg,
+          measure = header,
+          stringsAsFactors = F
+        )
+      } else {
+        head <- data.frame(
+          col_keys = jet$col_keys,
+          tab = tab.caption,
+          what = c(names.erg, ""),
+          measure = c(header, ""),
+          stringsAsFactors = F
+        )
+      }
+
+      flextable::autofit(flextable::flextable(head))
+      jet <-
+        flextable::set_header_df(jet, mapping = head, key = "col_keys")
+      jet <- flextable::merge_h(jet, i = 1, part = "header")
+      if (index) {
+        jet <- flextable::merge_at(jet, i = nrow(erg), j = 1:ncol(erg))
+      }
+      jet <-
+        flextable::align(jet,
+          j = 1,
+          align = "left",
+          part = "all"
+        )
+      if ("p-values" %in% which.col & index) {
+        jet <-
+          flextable::align(jet,
+            j = 2:(ncol(erg) - 2),
+            align = "center",
+            part = "all"
+          )
+        jet <-
+          flextable::align(jet,
+            j = ncol(erg) - 1,
+            align = "right",
+            part = "all"
+          )
+        jet <-
+          flextable::align(jet,
+            j = ncol(erg),
+            align = "left",
+            part = "all"
+          )
+      } else if ("p-values" %in% which.col & !index) {
+        jet <-
+          flextable::align(jet,
+            j = 2:(ncol(erg) - 1),
+            align = "center",
+            part = "all"
+          )
+        jet <-
+          flextable::align(jet,
+            j = ncol(erg),
+            align = "right",
+            part = "all"
+          )
+      } else {
+        jet <-
+          flextable::align(jet,
+            j = 2:ncol(erg),
+            align = "center",
+            part = "all"
+          )
+      }
+
+      jet <-
+        flextable::style(
+          jet,
+          pr_t = officer::fp_text(
+            font.family = "Cambria",
+            font.size = fsize,
+            bold = TRUE
+          ),
+          part = "header"
+        )
+      jet <-
+        flextable::style(
+          jet,
+          pr_t = officer::fp_text(font.family = "Cambria", font.size = fsize),
+          part = "body"
+        )
+      if (index) {
+        jet <-
+          flextable::style(
+            jet,
+            pr_t = officer::fp_text(font.family = "Cambria", font.size = fsizeFoo),
+            i = nrow(erg)
+          )
+      }
+      if ("p-values" %in% which.col & index) {
+        jet <-
+          flextable::style(
+            jet,
+            j = ncol(erg),
+            pr_t = officer::fp_text(vertical.align = "superscript")
+          )
+      }
+
+      def_cell <-
+        officer::fp_cell(border = officer::fp_border(color = "transparent"))
+      jet <- flextable::style(jet, pr_c = def_cell, part = "body")
+      jet <-
+        flextable::border(
+          x = jet,
+          i = 1,
+          border.top = officer::fp_border(width = 2),
+          part = "header"
+        )
+      if (is.null(jet[["header"]])) {
+        hh <- 0
+      } else if (is.null(jet[["header"]]$dataset)) {
+        hh <- 0
+      } else {
+        hh <- nrow(jet[["header"]]$dataset)
+      }
+      jet <-
+        flextable::border(
+          x = jet,
+          i = hh,
+          border.bottom = officer::fp_border(width = 2),
+          part = "header"
+        )
+      jet <- flextable::bold(x = jet, bold = TRUE, part = "header")
+      jet <-
+        flextable::border(
+          x = jet,
+          i = nrow(erg),
+          border.top = officer::fp_border(width = 2)
+        )
+      jet <-
+        flextable::width(jet, width = 1.3 * (fsize / 11), j = 1)
+
+      if ("p-values" %in% which.col & index) {
+        if (ncol(erg) > 2) {
+          jet <-
+            flextable::width(jet,
+              width = 1.3 * (fsize / 11),
+              j = 2:(ncol(erg) - 2)
+            )
+          jet <-
+            flextable::width(jet,
+              width = .7 * (fsize / 11),
+              j = ncol(erg) - 1
+            )
+          jet <-
+            flextable::width(jet, width = .1 * (fsize / 11), j = ncol(erg))
+        } else {
+          jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
+        }
+      } else if ("p-values" %in% which.col & !index) {
+        if (ncol(erg) > 2) {
+          jet <-
+            flextable::width(jet,
+              width = 1.3 * (fsize / 11),
+              j = 2:(ncol(erg) - 1)
+            )
+          jet <-
+            flextable::width(jet, width = .7 * (fsize / 11), j = ncol(erg))
+        } else {
+          jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
+        }
+      } else {
+        jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
+      }
+      jet <-
+        flextable::height(jet, height = .25 * (fsize / 11), part = "body")
+      jet <-
+        flextable::height(jet, height = .25 * (fsize / 11), part = "header")
+
+      if (create == "word") {
+        my_doc <- officer::read_docx()
+
+        if (alignment == "l") {
+          my_doc <- flextable::body_add_flextable(my_doc, jet, align = "left")
+        }
+        else if (alignment == "r") {
+          my_doc <-
+            flextable::body_add_flextable(my_doc, jet, align = "right")
+        }
+        else {
+          my_doc <- flextable::body_add_flextable(my_doc, jet)
+        }
+
+        print(my_doc, target = file)
+      } else if (create == "R") {
+        return(jet)
+      }
+    } else if (create %in% c("pdf", "knitr", "tex", "custom")) {
+      ## pdf, knitr, tex, custom
+
+      ## tex language
+      r.s <- c("%", "{", "}", "&", "#")
+      r.s.a <- c(">", "<", "|")
+      if (!(missing(var.names))) {
+        for (i in 1:length(r.s)) {
+          var.names <-
+            gsub(r.s[i], paste("\\\\", r.s[i], sep = ""), var.names, fixed = T)
+        }
+        for (i in 1:length(r.s.a)) {
+          var.names <-
+            gsub(r.s.a[i],
+              paste("$", r.s.a[i], "$", sep = ""),
+              var.names,
+              fixed = T
+            )
+        }
+        var.names <- gsub("^", "\\verb|^|", var.names, fixed = T)
+        var.names <- gsub("~", "\\~{}", var.names, fixed = T)
+        var.names <- gsub("_", "\\_", var.names, fixed = T)
+      }
+
+      for (i in 1:length(r.s)) {
+        names(dat) <-
+          gsub(r.s[i], paste("\\\\", r.s[i], sep = ""), names(dat), fixed = T)
+      }
+      for (i in 1:length(r.s.a)) {
+        names(dat) <-
+          gsub(r.s.a[i],
+            paste("$", r.s.a[i], "$", sep = ""),
+            names(dat),
+            fixed = T
+          )
+      }
+      names(dat) <- gsub("^", "\\verb|^|", names(dat), fixed = T)
+      names(dat) <- gsub("~", "\\~{}", names(dat), fixed = T)
+      names(dat) <- gsub("_", "\\_", names(dat), fixed = T)
+
+      ## raw data table
+      erg.a <- descr(
+        dat,
+        group,
+        var.names,
+        percent.vertical,
+        data.names,
+        nonparametric,
+        landscape,
+        pos.pagebr,
+        paired,
+        var.equal,
+        correct.cat,
+        correct.wilcox,
+        silent,
+        p.values,
+        group.min.size,
+        group.non.empty,
+        cat.non.empty,
+        n.or.miss,
+        adaptive.miss,
+        group.miss,
+        t.log,
+        index,
+        create,
+        digits.m,
+        digits.sd,
+        digits.qu,
+        digits.minmax,
+        digits.p,
+        q.type,
+        default.unordered.unpaired.test
+      )
+      erg <-
+        erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
+
+      ## which column shoul be printed
+      erg.anz <- 0
+      erg.out <- c()
+      if ("groups" %in% which.col) {
+        erg.anz <- erg.anz + length(levels(group))
+      } else {
+        erg.out <- 2:(length(levels(group)) + 1)
+      }
+      if ("total" %in% which.col) {
+        erg.anz <- erg.anz + 1
+      } else {
+        erg.out <- 2 + length(levels(group))
+      }
+      if (group.miss) {
+        erg.anz <- erg.anz + 1
+      }
+      erg.align <- c("l", "l", rep("c", erg.anz))
+      if (length(erg.out) != 0) {
+        erg <- erg[, -erg.out]
+      }
+
+      if ("p-values" %in% which.col) {
+        ab.t <-
+          xtable::xtable(
+            erg,
+            align = c(erg.align, "r"),
+            caption = tab.caption,
+            label = label
+          )
+      } else {
+        ab.t <-
+          xtable::xtable(
+            erg,
+            align = c(erg.align),
+            caption = tab.caption,
+            label = label
+          )
+      }
+
+      ## tex language
+      if (missing(caption)) {
+        caption <- levels(group)
+      }
+
+      for (i in 1:length(r.s)) {
+        caption <-
+          gsub(r.s[i], paste("\\\\", r.s[i], sep = ""), caption, fixed = T)
+      }
+      for (i in 1:length(r.s.a)) {
+        caption <-
+          gsub(r.s.a[i], paste("$", r.s.a[i], "$", sep = ""), caption, fixed = T)
+      }
+      caption <- gsub("^", "\\verb|^|", caption, fixed = T)
+      caption <- gsub("~", "\\~{}", caption, fixed = T)
+
+      pos <- list(0)
+
+      ## numbers per group
+      n.vec <- c()
+      for (j in 1:length(levels(group))) {
+        n.j <-
+          paste("(", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
+        n.vec <- c(n.vec, n.j)
+      }
+      n.total <- paste("(", "n = ", length(group), ")", sep = "")
+      if (group.miss) {
+        n.miss <-
+          paste("(", "n = ", length(which(is.na(group))), ")", sep = "")
+      }
+
+      ## footline & output creation
+      if (index) {
+        foot.ab <-
+          paste("$^", letters[1], "$", erg.a$testings[1], "\\quad", sep = "")
         if (length(erg.a$testings) >= 2) {
           for (k in 2:length(erg.a$testings)) {
-            foot.ab <- paste(foot.ab, paste(letters[k], erg.a$testings[k], sep = ":"), sep = "; ")
+            foot.ab <-
+              paste(foot.ab,
+                "$^",
+                letters[k],
+                "$",
+                erg.a$testings[k],
+                "\\quad",
+                sep = ""
+              )
           }
         }
-      }else{
-        foot.ab <- ""
       }
 
-      a <- grep("a", erg$`p-values`)
-      b <- grep("b", erg$`p-values`)
-      erg$`p-values` <- gsub("a", "", erg$`p-values`)
-      erg$`p-values` <- gsub("b", "", erg$`p-values`)
-
-      footsuperscript <- rep("", nrow(erg))
-      footsuperscript[a] <- "a"
-      footsuperscript[b] <- "b"
-      erg <- cbind(erg, footsuperscript)
-      foot <- rep("", ncol(erg) - 1)
-      foot <- c(foot.ab, foot)
-      erg <- rbind(erg, foot)
-    }
-
-    header <- c("")
-    if ("groups" %in% which.col)
-      header <- c(header, n.vec)
-    if ("total" %in% which.col)
-      header <- c(header, n.total)
-    if (group.miss)
-      header <- c(header, n.miss)
-    if ("p-values" %in% which.col)
-      header <- c(header, "")
-
-    jet <- erg
-    names(jet)[1] <- "var"
-
-    if("p-values" %in% which.col)
-      names(jet)[which(names(jet) == "p-values")] <- "p.values"
-    if (index)
-      names(jet)[ncol(jet)] <- "index"
-
-    jet <- flextable::regulartable(data = jet)
-    jet <- flextable::autofit(jet)
-
-    if (index == F) {
-      head <- data.frame(
-        col_keys = jet$col_keys,
-        tab = tab.caption,
-        what = names.erg,
-        measure  =header,
-        stringsAsFactors = F
-      )
-    } else {
-      head <- data.frame(
-        col_keys = jet$col_keys,
-        tab = tab.caption,
-        what = c(names.erg, ""),
-        measure = c(header, ""),
-        stringsAsFactors = F
-      )
-    }
-
-    flextable::autofit(flextable::flextable(head))
-    jet <- flextable::set_header_df(jet, mapping = head, key = "col_keys")
-    jet <- flextable::merge_h(jet, i = 1, part = "header")
-    if (index)
-      jet <- flextable::merge_at(jet, i = nrow(erg), j = 1:ncol(erg))
-    jet <- flextable::align(jet, j = 1, align = "left", part = "all")
-    if ("p-values" %in% which.col & index){
-      jet <- flextable::align(jet, j = 2:(ncol(erg) - 2), align = "center", part = "all")
-      jet <- flextable::align(jet, j = ncol(erg) - 1, align = "right", part = "all")
-      jet <- flextable::align(jet, j = ncol(erg), align = "left", part = "all")
-    } else if ("p-values" %in% which.col & !index){
-      jet <- flextable::align(jet, j = 2:(ncol(erg) - 1), align = "center", part = "all")
-      jet <- flextable::align(jet, j = ncol(erg), align = "right", part = "all")
-    } else {
-      jet <- flextable::align(jet, j = 2:ncol(erg), align = "center", part = "all")
-    }
-
-    jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria", font.size = fsize, bold = TRUE), part = "header")
-    jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria", font.size = fsize), part = "body")
-    if (index)
-      jet <- flextable::style(jet, pr_t = officer::fp_text(font.family="Cambria", font.size = fsizeFoo), i = nrow(erg))
-    if ("p-values" %in% which.col & index)
-      jet <- flextable::style(jet, j = ncol(erg), pr_t = officer::fp_text(vertical.align = "superscript"))
-
-    def_cell <- officer::fp_cell(border = officer::fp_border(color = "transparent"))
-    jet <- flextable::style( jet, pr_c = def_cell, part = "body")
-    jet <- flextable::border(x = jet, i = 1, border.top = officer::fp_border(width = 2), part = "header")
-    if (is.null(jet[["header"]])) {
-      hh <- 0
-    } else if( is.null(jet[["header"]]$dataset) ){
-      hh <- 0
-    } else {
-      hh <- nrow(jet[["header"]]$dataset)
-    }
-    jet <- flextable::border(x = jet, i = hh, border.bottom = officer::fp_border(width = 2), part = "header")
-    jet <- flextable::bold(x = jet, bold = TRUE, part = "header")
-    jet <- flextable::border(x = jet, i = nrow(erg), border.top = officer::fp_border(width = 2))
-    jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 1)
-
-    if ("p-values" %in% which.col & index) {
-      if (ncol(erg)>2) {
-        jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2:(ncol(erg) - 2))
-        jet <- flextable::width(jet, width = .7 * (fsize / 11), j = ncol(erg) - 1)
-        jet <- flextable::width(jet, width = .1 * (fsize / 11), j = ncol(erg))
-      } else {
-        jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
+      ## line labeling
+      command <- "\\hline"
+      if ("groups" %in% which.col) {
+        command <-
+          paste(command, paste(caption, collapse = " & "), sep = " & ")
       }
-    } else if ("p-values" %in% which.col & !index) {
-      if (ncol(erg)>2) {
-        jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2:(ncol(erg) - 1))
-        jet <- flextable::width(jet, width = .7 * (fsize / 11), j = ncol(erg))
-      } else {
-        jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
+      if ("total" %in% which.col) {
+        command <- paste(command, "Total ", sep = " & ")
       }
-    } else {
-      jet <- flextable::width(jet, width = 1.3 * (fsize / 11), j = 2)
-    }
-    jet <- flextable::height(jet, height = .25 * (fsize / 11), part = "body")
-    jet <- flextable::height(jet, height = .25 * (fsize / 11), part = "header")
-
-    if (create == "word") {
-      my_doc <- officer::read_docx()
-
-      if (alignment=="l"){
-        my_doc <- flextable::body_add_flextable(my_doc, jet, align = "left")
+      if (group.miss) {
+        command <- paste(command, " Missing in group ", sep = " & ")
       }
-      else if (alignment=="r"){
-        my_doc <- flextable::body_add_flextable(my_doc, jet, align = "right")
+      if ("p-values" %in% which.col) {
+        command <- paste(command, "\\hspace{1ex} p-value ", sep = " & ")
       }
-      else{
-        my_doc <- flextable::body_add_flextable(my_doc, jet)
+      command <- paste(command, " \\\\")
+      if ("groups" %in% which.col) {
+        command <-
+          paste(command, paste(n.vec, collapse = " & "), sep = " & ")
+      }
+      if ("total" %in% which.col) {
+        command <- paste(command, n.total, sep = " & ")
+      }
+      if (group.miss) {
+        command <- paste(command, n.miss, sep = " & ")
       }
 
-      print(my_doc, target = file)
-    } else if (create == "R") {
-      return(jet)
-    }
-  } else if (create %in% c("pdf", "knitr", "tex", "custom")) {
-    ##pdf, knitr, tex, custom
-
-    ##tex language
-    r.s <- c("%", "{", "}", "&", "#")
-    r.s.a <- c(">", "<", "|")
-    if (!(missing(var.names))) {
-      for (i in 1:length(r.s))
-        var.names <- gsub(r.s[i], paste("\\\\", r.s[i], sep = ""), var.names, fixed = T)
-      for (i in 1:length(r.s.a))
-        var.names <- gsub(r.s.a[i], paste("$", r.s.a[i], "$", sep = ""), var.names, fixed = T)
-      var.names <- gsub("^", "\\verb|^|", var.names, fixed = T)
-      var.names <- gsub("~", "\\~{}", var.names, fixed = T)
-      var.names <- gsub("_", "\\_", var.names, fixed = T)
-    }
-
-    for (i in 1:length(r.s))
-      names(dat) <- gsub(r.s[i], paste("\\\\", r.s[i], sep = ""), names(dat), fixed = T)
-    for (i in 1:length(r.s.a))
-      names(dat) <- gsub(r.s.a[i], paste("$", r.s.a[i], "$", sep = ""), names(dat), fixed = T)
-    names(dat) <- gsub("^", "\\verb|^|", names(dat), fixed = T)
-    names(dat) <- gsub("~", "\\~{}", names(dat), fixed = T)
-    names(dat) <- gsub("_", "\\_", names(dat), fixed = T)
-
-    ##raw data table
-    erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
-                   pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, adaptive.miss,
-                   group.miss, t.log, index, create, digits.m,
-                   digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
-    erg <- erg.a$descr[(-(ncol(erg.a$descr) - 2)):(-ncol(erg.a$descr))]
-
-    ##which column shoul be printed
-    erg.anz <- 0
-    erg.out <- c()
-    if ("groups" %in% which.col) {
-      erg.anz <- erg.anz + length(levels(group))
-    } else {
-      erg.out <- 2:(length(levels(group)) + 1)
-    }
-    if ("total" %in% which.col) {
-      erg.anz <- erg.anz + 1
-    } else {
-      erg.out <- 2 + length(levels(group))
-    }
-    if (group.miss)
-      erg.anz <- erg.anz + 1
-    erg.align <- c("l", "l",  rep("c", erg.anz))
-    if (length(erg.out) != 0)
-      erg <- erg[, -erg.out]
-
-    if ("p-values" %in% which.col) {
-      ab.t <- xtable::xtable(erg, align = c(erg.align, "r"), caption = tab.caption, label = label)
-    } else {
-      ab.t <- xtable::xtable(erg, align = c(erg.align), caption = tab.caption, label = label)
-    }
-
-    ##tex language
-    if (missing(caption))
-      caption <- levels(group)
-
-    for (i in 1:length(r.s))
-      caption <- gsub(r.s[i], paste("\\\\", r.s[i], sep = ""), caption, fixed = T)
-    for (i in 1:length(r.s.a))
-      caption <- gsub(r.s.a[i], paste("$", r.s.a[i], "$", sep = ""), caption, fixed = T)
-    caption <- gsub("^", "\\verb|^|", caption, fixed = T)
-    caption <- gsub("~", "\\~{}", caption, fixed = T)
-
-    pos <- list(0)
-
-    ##numbers per group
-    n.vec <- c()
-    for (j in 1:length(levels(group))) {
-      n.j <- paste("(", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
-      n.vec <- c(n.vec, n.j)
-    }
-    n.total <- paste("(", "n = ", length(group), ")", sep = "")
-    if(group.miss)
-      n.miss <- paste("(", "n = ",length(which(is.na(group))), ")", sep = "")
-
-    ##footline & output creation
-    if (index) {
-      foot.ab <- paste("$^", letters[1], "$", erg.a$testings[1], "\\quad", sep = "")
-      if (length(erg.a$testings) >= 2) {
-        for (k in 2:length(erg.a$testings)) {
-          foot.ab <- paste(foot.ab, "$^", letters[k], "$", erg.a$testings[k], "\\quad", sep = "")
-        }
-      }
-    }
-
-    ##line labeling
-    command <- "\\hline"
-    if ("groups" %in% which.col)
-      command <-  paste(command, paste(caption, collapse = " & "), sep = " & ")
-    if ("total" %in% which.col)
-      command <- paste(command, "Total ", sep = " & ")
-    if (group.miss)
-      command <- paste(command, " Missing in group ", sep = " & ")
-    if ("p-values" %in% which.col)
-      command <- paste(command, "\\hspace{1ex} p-value ", sep = " & ")
-    command <- paste(command, " \\\\")
-    if ("groups" %in% which.col)
-      command <- paste(command, paste(n.vec, collapse = " & "), sep = " & ")
-    if ("total" %in% which.col)
-      command <- paste(command, n.total, sep = " & ")
-    if (group.miss)
-      command <- paste(command, n.miss, sep = " & ")
-
-    if (index) {
-      command <- paste(command, paste(
-        "\\\\
+      if (index) {
+        command <- paste(
+          command,
+          paste(
+            "\\\\
         \\hline\\\\  \\endhead
         \\hline\\noalign{
         \\smallskip
-        }",foot.ab,"\\endfoot ", sep = ""))
-
-    }else{
-      command <- paste(command, paste("\\\\
+        }",
+            foot.ab,
+            "\\endfoot ",
+            sep = ""
+          )
+        )
+      } else {
+        command <- paste(
+          command,
+          paste(
+            "\\\\
                                       \\hline\\\\
                                       \\endhead
                                       \\hline\\\\",
-                                      "\\endfoot ", sep = ""))
-    }
-
-    if (is.null(pos.pagebreak) & !is.null(erg.a$pos)) {
-      for (i in 1:length(erg.a$pos))
-        pos[[i + 1]] <- erg.a$pos[i]
-      command <- c(command, rep("\\pagebreak ", length(erg.a$pos)))
-    } else {
-      if (!is.null(pos.pagebreak)) {
-        for (i in 1:length(pos.pagebreak))
-          pos[[i + 1]] <- pos.pagebreak[i]
-        command <- c(command, rep("\\pagebreak ", length(pos.pagebreak)))
+            "\\endfoot ",
+            sep = ""
+          )
+        )
       }
-    }
 
-    pc <- list("pos" = pos, "command" = command)
-
-    if (create == "pdf") {
-      ##fontsize calculation
-      if (is.numeric(fsize)) {
-        if (fsize <= 6) {
-          fsizep <- "tiny"
-          fsizec <- "scriptsize"
+      if (is.null(pos.pagebreak) & !is.null(erg.a$pos)) {
+        for (i in 1:length(erg.a$pos)) {
+          pos[[i + 1]] <- erg.a$pos[i]
         }
-        if (fsize > 6 & fsize <= 8)
-          fsizep <- fsizec <- "scriptsize"
-        if (fsize == 9)
-          fsizep <- fsizec <- "footnotesize"
-        if (fsize == 10)
-          fsizep <- fsizec <- "small"
-        if (fsize == 11)
-          fsizep <- fsizec <- "normalsize"
-        if (fsize == 12)
-          fsizep <- fsizec <- "large"
-        if (fsize > 12 & fsize <= 15)
-          fsizep <- fsizec <- "Large"
-        if (fsize > 15 & fsize <= 18) {
-          fsizep <- "LARGE"
-          fsizec <- "Large"
-        }
-        if (fsize > 18 & fsize <= 22) {
-          fsizep <- "huge"
-          fsizec <- "Large"
-        }
-        if (fsize > 22) {
-          fsizep <- "Huge"
-          fsizec <- "Large"
-        }
+        command <-
+          c(command, rep("\\pagebreak ", length(erg.a$pos)))
       } else {
-        fsizep <- fsizec <- fsize
-        if (fsize == "tiny")
-          fsizec <- "scriptsize"
-        if (fsize %in% c("LARGE", "huge", "Huge"))
-          fsizec <- "Large"
+        if (!is.null(pos.pagebreak)) {
+          for (i in 1:length(pos.pagebreak)) {
+            pos[[i + 1]] <- pos.pagebreak[i]
+          }
+          command <-
+            c(command, rep("\\pagebreak ", length(pos.pagebreak)))
+        }
       }
 
-      ##output creation
-      if (landscape) {
-        cat(paste("\\documentclass[landscape]{report} \n
+      pc <- list("pos" = pos, "command" = command)
+
+      if (create == "pdf") {
+        ## fontsize calculation
+        if (is.numeric(fsize)) {
+          if (fsize <= 6) {
+            fsizep <- "tiny"
+            fsizec <- "scriptsize"
+          }
+          if (fsize > 6 & fsize <= 8) {
+            fsizep <- fsizec <- "scriptsize"
+          }
+          if (fsize == 9) {
+            fsizep <- fsizec <- "footnotesize"
+          }
+          if (fsize == 10) {
+            fsizep <- fsizec <- "small"
+          }
+          if (fsize == 11) {
+            fsizep <- fsizec <- "normalsize"
+          }
+          if (fsize == 12) {
+            fsizep <- fsizec <- "large"
+          }
+          if (fsize > 12 & fsize <= 15) {
+            fsizep <- fsizec <- "Large"
+          }
+          if (fsize > 15 & fsize <= 18) {
+            fsizep <- "LARGE"
+            fsizec <- "Large"
+          }
+          if (fsize > 18 & fsize <= 22) {
+            fsizep <- "huge"
+            fsizec <- "Large"
+          }
+          if (fsize > 22) {
+            fsizep <- "Huge"
+            fsizec <- "Large"
+          }
+        } else {
+          fsizep <- fsizec <- fsize
+          if (fsize == "tiny") {
+            fsizec <- "scriptsize"
+          }
+          if (fsize %in% c("LARGE", "huge", "Huge")) {
+            fsizec <- "Large"
+          }
+        }
+
+        ## output creation
+        if (landscape) {
+          cat(
+            paste(
+              "\\documentclass[landscape]{report} \n
                   \\usepackage[T1]{fontenc}\n
                   \\usepackage{longtable}
                   \\usepackage{a4wide}\n
                   \\usepackage[landscape]{geometry}
                   \\usepackage[justification=RaggedRight, singlelinecheck=off,
-                  margin = 1cm, labelfont=bf, skip=4pt, font=", fsizec, "]{caption}\n
-                  \\begin{document}\n\\", fsizep,
-                  "\\input{t.tex}\n
-                  \\end{document}", sep = ""), file = "a.tex")
-      } else {
-        cat(paste("\\documentclass{report} \n
+                  margin = 1cm, labelfont=bf, skip=4pt, font=",
+              fsizec,
+              "]{caption}\n
+                  \\begin{document}\n\\",
+              fsizep,
+              "\\input{t.tex}\n
+                  \\end{document}",
+              sep = ""
+            ),
+            file = "a.tex"
+          )
+        } else {
+          cat(
+            paste(
+              "\\documentclass{report} \n
                   \\usepackage[T1]{fontenc}\n
                   \\usepackage{longtable}
                   \\usepackage{a4wide}\n
                   \\usepackage[justification=RaggedRight, singlelinecheck=off,
-                  margin = 1cm, labelfont=bf, skip=4pt, font=", fsizec, "]{caption}\n
-                  \\begin{document}\n\\", fsizep,
-                  "\\input{t.tex}\n
-                  \\end{document}", sep = ""), file = "a.tex")
+                  margin = 1cm, labelfont=bf, skip=4pt, font=",
+              fsizec,
+              "]{caption}\n
+                  \\begin{document}\n\\",
+              fsizep,
+              "\\input{t.tex}\n
+                  \\end{document}",
+              sep = ""
+            ),
+            file = "a.tex"
+          )
+        }
+
+
+
+
+        tmp.ltx <- utils::capture.output(
+          print(
+            ab.t,
+            type = "latex",
+            include.colnames = F,
+            include.rownames = F,
+            tabular.environment = "longtable",
+            sanitize.text.function = function(x) {
+              x
+            },
+            floating = F,
+            hline.after = NULL,
+            add.to.row = pc,
+            caption.placement = "top",
+            ...
+          )
+        )
+        if (alignment == "c") {
+
+        }
+        else if (alignment == "l") {
+          tmp.ltx <-
+            stringr::str_replace(
+              tmp.ltx,
+              stringr::fixed("\\begin{longtable}"),
+              "\\begin{longtable}[l]"
+            )
+        }
+        else if (alignment == "r") {
+          tmp.ltx <-
+            stringr::str_replace(
+              tmp.ltx,
+              stringr::fixed("\\begin{longtable}"),
+              "\\begin{longtable}[r]"
+            )
+        }
+        cat(tmp.ltx, sep = "\n", file = "t.tex")
+
+
+
+        tools::texi2dvi("a.tex",
+          pdf = T,
+          clean = T,
+          texi2dvi = ""
+        )
+
+        file.rename("a.pdf", file)
+
+        file.remove("a.tex")
+        file.remove("t.tex")
       }
+      if (create == "tex") {
+        ## fontsize calculation
+        if (is.numeric(fsize)) {
+          if (fsize <= 6) {
+            fsizep <- "tiny"
+            fsizec <- "scriptsize"
+          }
+          if (fsize > 6 & fsize <= 8) {
+            fsizep <- fsizec <- "scriptsize"
+          }
+          if (fsize == 9) {
+            fsizep <- fsizec <- "footnotesize"
+          }
+          if (fsize == 10) {
+            fsizep <- fsizec <- "small"
+          }
+          if (fsize == 11) {
+            fsizep <- fsizec <- "normalsize"
+          }
+          if (fsize == 12) {
+            fsizep <- fsizec <- "large"
+          }
+          if (fsize > 12 & fsize <= 15) {
+            fsizep <- fsizec <- "Large"
+          }
+          if (fsize > 15 & fsize <= 18) {
+            fsizep <- "LARGE"
+            fsizec <- "Large"
+          }
+          if (fsize > 18 & fsize <= 22) {
+            fsizep <- "huge"
+            fsizec <- "Large"
+          }
+          if (fsize > 22) {
+            fsizep <- "Huge"
+            fsizec <- "Large"
+          }
+        } else {
+          fsizep <- fsizec <- fsize
+          if (fsize == "tiny") {
+            fsizec <- "scriptsize"
+          }
+          if (fsize %in% c("LARGE", "huge", "Huge")) {
+            fsizec <- "Large"
+          }
+        }
 
 
 
 
-       tmp.ltx <- utils::capture.output(print(ab.t,  type = "latex", include.colnames = F, include.rownames = F,
-                                              tabular.environment = "longtable",
-                                              sanitize.text.function = function(x){x}, floating = F,
-                                              hline.after = NULL, add.to.row = pc, caption.placement = "top", ...))
-      if (alignment=="c"){
 
+        tmp.ltx <- utils::capture.output(
+          print(
+            ab.t,
+            file = file,
+            type = "latex",
+            size = fsizep,
+            include.colnames = F,
+            include.rownames = F,
+            tabular.environment = "longtable",
+            sanitize.text.function = function(x) {
+              x
+            },
+            floating = F,
+            hline.after = NULL,
+            add.to.row = pc,
+            caption.placement = "top"
+          )
+        )
+        if (alignment == "c") {
+
+        }
+        else if (alignment == "l") {
+          tmp.ltx <-
+            stringr::str_replace(
+              tmp.ltx,
+              stringr::fixed("\\begin{longtable}"),
+              "\\begin{longtable}[l]"
+            )
+        }
+        else if (alignment == "r") {
+          tmp.ltx <-
+            stringr::str_replace(
+              tmp.ltx,
+              stringr::fixed("\\begin{longtable}"),
+              "\\begin{longtable}[r]"
+            )
+        }
+        cat(tmp.ltx, sep = "\n")
       }
-      else if (alignment=="l"){
-        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[l]")
+      if (create == "knitr") {
+        ## fontsize calculation
+        if (is.numeric(fsize)) {
+          if (fsize <= 6) {
+            fsizep <- "tiny"
+            fsizec <- "scriptsize"
+          }
+          if (fsize > 6 & fsize <= 8) {
+            fsizep <- fsizec <- "scriptsize"
+          }
+          if (fsize == 9) {
+            fsizep <- fsizec <- "footnotesize"
+          }
+          if (fsize == 10) {
+            fsizep <- fsizec <- "small"
+          }
+          if (fsize == 11) {
+            fsizep <- fsizec <- "normalsize"
+          }
+          if (fsize == 12) {
+            fsizep <- fsizec <- "large"
+          }
+          if (fsize > 12 & fsize <= 15) {
+            fsizep <- fsizec <- "Large"
+          }
+          if (fsize > 15 & fsize <= 18) {
+            fsizep <- "LARGE"
+            fsizec <- "Large"
+          }
+          if (fsize > 18 & fsize <= 22) {
+            fsizep <- "huge"
+            fsizec <- "Large"
+          }
+          if (fsize > 22) {
+            fsizep <- "Huge"
+            fsizec <- "Large"
+          }
+        } else {
+          fsizep <- fsizec <- fsize
+          if (fsize == "tiny") {
+            fsizec <- "scriptsize"
+          }
+          if (fsize %in% c("LARGE", "huge", "Huge")) {
+            fsizec <- "Large"
+          }
+        }
+
+
+        tmp.ltx <- utils::capture.output(
+          print(
+            ab.t,
+            type = "latex",
+            size = fsizep,
+            include.colnames = F,
+            include.rownames = F,
+            latex.environments = "left",
+            tabular.environment = "longtable",
+            sanitize.text.function = function(x) {
+              x
+            },
+            floating = F,
+            hline.after = NULL,
+            add.to.row = pc,
+            caption.placement = "top",
+            comment = FALSE
+          )
+        )
+        if (alignment == "c") {
+
+        }
+        else if (alignment == "l") {
+          tmp.ltx <-
+            stringr::str_replace(
+              tmp.ltx,
+              stringr::fixed("\\begin{longtable}"),
+              "\\begin{longtable}[l]"
+            )
+        }
+        else if (alignment == "r") {
+          tmp.ltx <-
+            stringr::str_replace(
+              tmp.ltx,
+              stringr::fixed("\\begin{longtable}"),
+              "\\begin{longtable}[r]"
+            )
+        }
+        cat(tmp.ltx, sep = "\n")
       }
-      else if (alignment=="r"){
-        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[r]")
+      if (create == "custom") {
+        print(
+          ab.t,
+          type = "latex",
+          include.colnames = F,
+          include.rownames = F,
+          sanitize.text.function = function(x) {
+            x
+          },
+          hline.after = NULL,
+          add.to.row = pc,
+          ...
+        )
       }
-      cat(tmp.ltx, sep="\n", file="t.tex")
-
-
-
-      tools::texi2dvi("a.tex", pdf = T, clean = T, texi2dvi = "")
-
-      file.rename("a.pdf", file)
-
-      file.remove("a.tex")
-      file.remove("t.tex")
     }
-    if (create == "tex") {
+    else if (create == "archive") {
+      erg.a <- descr(
+        dat,
+        group,
+        var.names,
+        percent.vertical,
+        data.names,
+        nonparametric,
+        landscape,
+        pos.pagebr,
+        paired,
+        var.equal,
+        correct.cat,
+        correct.wilcox,
+        silent,
+        p.values,
+        group.min.size,
+        group.non.empty,
+        cat.non.empty,
+        n.or.miss,
+        group.miss,
+        adaptive.miss,
+        t.log,
+        index,
+        create,
+        digits.m,
+        digits.sd,
+        digits.qu,
+        digits.minmax,
+        digits.p,
+        q.type,
+        default.unordered.unpaired.test
+      )
 
-      ##fontsize calculation
-      if (is.numeric(fsize)) {
-        if (fsize <= 6) {
-          fsizep <- "tiny"
-          fsizec <- "scriptsize"
-        }
-        if (fsize > 6 & fsize <= 8)
-          fsizep <- fsizec <- "scriptsize"
-        if (fsize == 9)
-          fsizep <- fsizec <- "footnotesize"
-        if (fsize == 10)
-          fsizep <- fsizec <- "small"
-        if (fsize == 11)
-          fsizep <- fsizec <- "normalsize"
-        if (fsize == 12)
-          fsizep <- fsizec <- "large"
-        if (fsize > 12 & fsize <= 15)
-          fsizep <- fsizec <- "Large"
-        if (fsize > 15 & fsize <= 18) {
-          fsizep <- "LARGE"
-          fsizec <- "Large"
-        }
-        if (fsize > 18 & fsize <= 22) {
-          fsizep <- "huge"
-          fsizec <- "Large"
-        }
-        if (fsize > 22) {
-          fsizep <- "Huge"
-          fsizec <- "Large"
-        }
-      } else {
-        fsizep <- fsizec <- fsize
-        if (fsize == "tiny")
-          fsizec <- "scriptsize"
-        if (fsize %in% c("LARGE", "huge", "Huge"))
-          fsizec <- "Large"
+
+      n.vec <- c()
+      for (j in 1:length(levels(group))) {
+        n.j <-
+          paste(" (", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
+        n.vec <- c(n.vec, n.j)
+      }
+
+      if (missing(caption)) {
+        caption <- levels(group)
+      }
+
+      n.total <- paste(" (", "n = ", length(group), ")", sep = "")
+      if (group.miss) {
+        n.miss <-
+          paste(" (", "n = ", length(which(is.na(group))), ")", sep = "")
+      }
+
+      names.erg <- c("")
+      if ("groups" %in% which.col) {
+        names.erg <- c(names.erg, stringr::str_c(caption, n.vec))
+      }
+      if ("total" %in% which.col) {
+        names.erg <- c(names.erg, stringr::str_c("Total", n.total))
+      }
+      if (group.miss) {
+        names.erg <-
+          c(names.erg, stringr::str_c("Missing in group", n.miss))
+      }
+      if ("p-values" %in% which.col) {
+        names.erg <-
+          c(
+            names.erg,
+            "p_formatted",
+            "p_val",
+            "test_val",
+            "test_name"
+          )
       }
 
 
-
-
-
-      tmp.ltx <- utils::capture.output(print(ab.t, file = file, type = "latex", size = fsizep,
-                                             include.colnames = F, include.rownames = F,
-                                             tabular.environment = "longtable", sanitize.text.function = function(x){x},
-                                             floating = F, hline.after = NULL, add.to.row = pc, caption.placement = "top"))
-      if (alignment=="c"){
-
+      names(erg.a$descr) <- names.erg
+      if (!missing(file)) {
+        utils::write.csv(erg.a$descr, file = file)
       }
-      else if (alignment=="l"){
-        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[l]")
-      }
-      else if (alignment=="r"){
-        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[r]")
-      }
-      cat(tmp.ltx, sep="\n")
-    }
-    if (create == "knitr") {
-
-      ##fontsize calculation
-      if (is.numeric(fsize)) {
-        if (fsize <= 6) {
-          fsizep <- "tiny"
-          fsizec <- "scriptsize"
-        }
-        if (fsize > 6 & fsize <= 8)
-          fsizep <- fsizec <- "scriptsize"
-        if (fsize == 9)
-          fsizep <- fsizec <- "footnotesize"
-        if (fsize == 10)
-          fsizep <- fsizec <- "small"
-        if (fsize == 11)
-          fsizep <- fsizec <- "normalsize"
-        if (fsize == 12)
-          fsizep <- fsizec <- "large"
-        if (fsize > 12 & fsize <= 15)
-          fsizep <- fsizec <- "Large"
-        if (fsize > 15 & fsize <= 18) {
-          fsizep <- "LARGE"
-          fsizec <- "Large"
-        }
-        if (fsize > 18 & fsize <= 22) {
-          fsizep <- "huge"
-          fsizec <- "Large"
-        }
-        if (fsize > 22) {
-          fsizep <- "Huge"
-          fsizec <- "Large"
-        }
-      } else {
-        fsizep <- fsizec <- fsize
-        if (fsize == "tiny")
-          fsizec <- "scriptsize"
-        if (fsize %in% c("LARGE", "huge", "Huge"))
-          fsizec <- "Large"
-      }
-
-
-
-
-
-      tmp.ltx <- utils::capture.output(print(ab.t, type = "latex",
-                                             size=fsizep,
-                                             include.colnames = F,
-                                             include.rownames = F,
-                                             latex.environments = "left",
-                                             tabular.environment = "longtable",
-                                             sanitize.text.function = function(x){x},
-                                             floating = F,
-                                             hline.after = NULL,
-                                             add.to.row = pc,
-                                             caption.placement = "top",
-                                             comment = FALSE))
-      if (alignment=="c"){
-
-      }
-      else if (alignment=="l"){
-        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[l]")
-      }
-      else if (alignment=="r"){
-        tmp.ltx <- stringr::str_replace(tmp.ltx, stringr::fixed("\\begin{longtable}"), "\\begin{longtable}[r]")
-      }
-      cat(tmp.ltx, sep="\n")
-    }
-    if (create == "custom") {
-      print(ab.t, type = "latex", include.colnames = F, include.rownames = F,
-            sanitize.text.function = function(x){x}, hline.after = NULL, add.to.row = pc, ...)
+      return(erg.a$descr)
     }
   }
-  else if (create == "archive"){
-    erg.a <- descr(dat, group, var.names, percent.vertical, data.names, nonparametric, landscape,
-                   pos.pagebr, paired, var.equal, correct.cat, correct.wilcox, silent,
-                   p.values, group.min.size, group.non.empty, cat.non.empty, n.or.miss, group.miss, adaptive.miss,
-                   t.log, index, create, digits.m,
-                   digits.sd, digits.qu, digits.minmax, digits.p, q.type, default.unordered.unpaired.test)
-
-
-    n.vec <- c()
-    for (j in 1:length(levels(group))) {
-      n.j <- paste(" (", "n = ", length(group[which(group == levels(group)[j])]), ")", sep = "")
-      n.vec <- c(n.vec, n.j)
-    }
-
-    if (missing(caption))
-      caption <- levels(group)
-
-    n.total <- paste(" (", "n = ", length(group), ")", sep = "")
-    if (group.miss)
-      n.miss<- paste(" (", "n = ",length(which(is.na(group))), ")", sep = "")
-
-    names.erg <- c("")
-    if ("groups" %in% which.col)
-      names.erg <- c(names.erg, stringr::str_c(caption, n.vec))
-    if ("total" %in% which.col)
-      names.erg <- c(names.erg, stringr::str_c("Total", n.total))
-    if (group.miss)
-      names.erg <- c(names.erg, stringr::str_c("Missing in group", n.miss))
-    if ("p-values" %in% which.col)
-      names.erg <- c(names.erg, "p_formatted", "p_val", "test_val", "test_name")
-
-
-    names(erg.a$descr) <- names.erg
-    if (!missing(file)){
-      utils::write.csv(erg.a$descr, file = file)
-    }
-    return(erg.a$descr)
-  }
-}

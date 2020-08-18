@@ -13,11 +13,11 @@
 #' @examples
 #' \dontrun{
 #' set.seed(12345)
-#' x<-rnorm(1)
-#' k<-3
-#' f.r(x,k)
+#' x <- rnorm(1)
+#' k <- 3
+#' f.r(x, k)
 #' }
 #'
-f.r <- function(x, k){
+f.r <- function(x, k) {
   format(round(x, k), nsmall = k)
 }
