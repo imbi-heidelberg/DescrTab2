@@ -326,6 +326,8 @@ print.DescrList <- function(DescrListObj, printFormat = options("DescrTabFormat"
   }
 }
 
+
+
 #' S3 dispatcher
 #'
 #' @param DescrVarObj
@@ -373,7 +375,6 @@ create_subtable.cat_summary <- function(DescrVarObj, var_name){
   test_name <- c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl-1))
   tbl %<>% bind_cols(Test = test_name)
 }
-
 
 
 #' Create subtables which will comprise the output table
