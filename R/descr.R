@@ -106,10 +106,19 @@
 #' \dontrun{
 #' }
 #'
+#' @importFrom dplyr select
+#' @importFrom magrittr `%<>%`
+#' @importFrom tibble as_tibble
+#' @importFrom forcats as_factor
+#'
+#'
+#' @importFrom flextable autofit
+#' @importFrom flextable flextable
+#'
 descr <-
   function(dat,
-           group=NULL,
-           var.names=NULL,
+           group = NULL,
+           var.names = NULL,
            percent.vertical = T,
            data.names = T,
            nonparametric = c(),
@@ -136,722 +145,1018 @@ descr <-
            digits.minmax = 1,
            digits.p = c(1),
            q.type = 2,
-           default.unordered.unpaired.test = "Chisq") {
+           default.unordered.unpaired.test = "Chisq",
+           ...) {
+    # Coerce dataset to tibble
+    dat %<>% as_tibble(dat)
 
-
-    if (is.null(nonparametric)) {
-      nonparametric <- rep(F, ncol(dat))
-    }
-    if (is.null(t.log)) {
-      t.log <- rep(F, ncol(dat))
-    }
-    l.i <- 0
-
-    testings <- c()
-    pos <- c()
-    pos.i <- 0
-    pos.mult <- 1
-    index_var <- c()
-
-    datmiss <- matrix(NA, nrow = nrow(dat), ncol = ncol(dat))
-    group.na.index <- which(is.na(group))
-
-    if (group.miss) {
-      groupmiss <- as.numeric(group)
-      groupmiss[group.na.index] <- "NA"
-      datmiss <- dat
-    }
-    if (length(group.na.index) != 0) {
-      warning(
-        paste(
-          "Missing values in the group variable ( Observations: ",
-          list(group.na.index),
-          " )! Observations will be removed!"
-        )
-      )
-      dat <- dat[-group.na.index, , drop = FALSE]
-      group <- group[-group.na.index]
+    # Remove group column from dataset & coerce group to factor
+    if (!is.null(group)) {
+      group_var <-
+        dat %>% pull(group) %>% as_factor() %>% fct_explicit_na()
+      dat %<>% select(-group)
+    } else{
+      group_var <- NULL
     }
 
-    lgr <- length(levels(group))
+    # Coerce all non-numeric columns to factors
+    dat %<>% mutate(across(-where(is.numeric), as_factor))
 
-    n.or.miss_original <- n.or.miss
+    # Create list where all results will be saved
+    ergs <- list()
+    ergs[["variables"]] <- vector("list", ncol(dat))
+    ergs[["group"]] <- group_var
 
 
-    for (i in 1:ncol(dat)) {
-      gr.miss <- c()
+    # Loop over all variables
+    for (var_name in names(dat)) {
+      var <- dat %>% pull(var_name)
 
-      n.or.miss <- n.or.miss_original
-      if (adaptive.miss & !anyNA(dat[[i]])) {
-        if ("miss.cat" %in% n.or.miss) {
-          n.or.miss <- n.or.miss[-which(n.or.miss == "miss.cat")]
-        }
-        if ("miss" %in% n.or.miss) {
-          n.or.miss <- n.or.miss[-which(n.or.miss == "miss")]
-        }
+      var_descr <- NULL
+      if (is.factor(var)) {
+        # Analyze categorical variable
+        var_descr <- descr_cat(var,
+                               group,
+                               ...)
+      } else if (is.numeric(var)) {
+        # Analyze continuous variable
+        var_descr <- descr_cont(var,
+                                group,
+                                ...)
+      } else{
+        stop("Somehow, you have variables that are neither factors nor numerical.")
       }
-
-
-      if (all(is.na(dat[[i]]))) {
-        if (!(missing(var.names))) {
-          if (data.names == T) {
-            var.n1 <- var.names[i]
-            var.n2 <-
-              paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
-            var.n <- paste(var.n1, var.n2, sep = " ")
-          } else {
-            var.n <- var.names[i]
-          }
-        } else {
-          var.n <- names(dat)[i]
-        }
-        ab <-
-          matrix(c(var.n, "", rep(
-            c("-", ""), (1 + length(levels(group)) + group.miss + 1++p.values + 3 - 1)
-          )),
-          nrow = 2)
-        ab <- as.data.frame(ab)
-      }
-      else if (is.factor(dat[[i]])) {
-        a <- table(dat[[i]], group)
-        if (group.miss & length(group.na.index) != 0) {
-          gr.miss <-
-            c(gr.miss, table(datmiss[, i], groupmiss)[, which(colnames(table(datmiss[, i], groupmiss)) == "NA")])
-        }
-        if (group.miss & length(group.na.index) == 0) {
-          gr.miss <- rep(0, length(levels(dat[[i]])))
-        }
-        d <- table(dat[[i]])
-        if (percent.vertical == T) {
-          b <- prop.table(as.matrix(table(dat[[i]], group)), 2)
-          e <- prop.table(as.matrix(table(dat[[i]])), 2)
-          ab <- data.frame(cbind(a[, 1], b[, 1] * 100))
-          if (ncol(a) >= 2) {
-            for (k in 2:ncol(a)) {
-              ab <- data.frame(cbind(ab, a[, k], b[, k] * 100))
-            }
-          }
-          if (group.miss) {
-            ab <-
-              data.frame(cbind(
-                ab,
-                as.vector(d) + gr.miss,
-                as.vector(prop.table((
-                  as.matrix(table(dat[[i]])) + gr.miss
-                ), 2)) * 100
-              ))
-          } else {
-            ab <- data.frame(cbind(ab, as.vector(d), as.vector(e) * 100))
-          }
-
-
-          if (missing(var.names)) {
-            digits.p <-
-              c(digits.p, rep(digits.p[length(digits.p)], length = length(names(dat))))
-          }
-          else {
-            digits.p <-
-              c(digits.p, rep(digits.p[length(digits.p)], length = length(var.names)))
-          }
-
-
-
-          if (create == "word" |
-              create == "R" | create == "archive") {
-            for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
-              for (k in 1:nrow(ab)) {
-                if (ab[k, j] != 0) {
-                  ab[k, j] <-
-                    paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
-                } else {
-                  ab[k, j] <- paste(ab[k, j], " ( - ) ")
-                }
-              }
-            }
-          } else {
-            for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
-              for (k in 1:nrow(ab)) {
-                ab[k, j] <-
-                  paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "\\%)", sep = "")
-              }
-            }
-          }
-        } else {
-          b <- prop.table(as.matrix(table(dat[[i]], group)), 1)
-          ab <- data.frame(cbind(a[, 1], b[, 1] * 100))
-          if (ncol(a) >= 2) {
-            for (k in 2:ncol(a)) {
-              ab <- data.frame(cbind(ab, a[, k], b[, k] * 100))
-            }
-          }
-          if (group.miss) {
-            ab <- data.frame(cbind(ab, as.vector(d) + gr.miss))
-          } else {
-            ab <- data.frame(cbind(ab, as.vector(d)))
-          }
-          if (create == "word" |
-              create == "R" | create == "archive") {
-            for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
-              for (k in 1:nrow(ab)) {
-                ab[k, j] <-
-                  paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
-              }
-            }
-          } else {
-            for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
-              for (k in 1:nrow(ab)) {
-                ab[k, j] <-
-                  paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "\\%)", sep = "")
-              }
-            }
-          }
-        }
-
-        index.delete <- (1:(length(levels(group)) + 1)) * 2
-        ab <- ab[, -index.delete]
-
-        if ("miss.cat" %in% n.or.miss) {
-          miss.end <- c()
-          for (j in 1:lgr) {
-            miss.j <-
-              length(which(is.na(dat[which(group == levels(group)[j]), i])))
-            miss.end <- c(miss.end, miss.j)
-          }
-          miss.all <- length(which(is.na(dat[[i]])))
-          ab <- rbind(ab, c(miss.end, miss.all))
-          if (group.miss) {
-            gr.miss <-
-              c(gr.miss, length(which(is.na(datmiss[which(groupmiss == "NA"), i]))))
-          }
-        }
-
-        ab <- rbind(rep("", lgr + 1), ab, rep("", lgr + 1))
-        if (group.miss) {
-          gr.miss <- c("", gr.miss, "")
-        }
-
-        if (!(missing(var.names))) {
-          if (data.names == T) {
-            var.n1 <- var.names[i]
-            var.n2 <-
-              paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
-            var.n <- paste(var.n1, var.n2, sep = " ")
-          } else {
-            var.n <- var.names[i]
-          }
-        } else {
-          var.n <- names(dat)[i]
-        }
-        ab <- cbind(NA, ab)
-
-
-        ab <- as.data.frame(ab)
-        levels(dat[[i]]) <- paste(" ", levels(dat[[i]]))
-        if (create == "R") {
-          levels(dat[[i]]) <- paste("- ", levels(dat[[i]]))
-        }
-        if ("miss.cat" %in% n.or.miss) {
-          if (create == "R") {
-            ab[, 1] <- c(var.n, levels(dat[[i]]), "- Missing", "")
-          } else {
-            ab[, 1] <- c(var.n, levels(dat[[i]]), "  Missing", "")
-          }
-        } else {
-          ab[, 1] <- c(var.n, levels(dat[[i]]), "")
-        }
-        if (create != "word" &
-            create != "R" & create != "archive") {
-          for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
-            ab[j + 1, 1] <- paste("\\hspace{2ex}", ab[j + 1, 1])
-          }
-        } else {
-          for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
-            ab[j + 1, 1] <- paste(" ", ab[j + 1, 1])
-          }
-        }
-        if (group.miss) {
-          ab <- cbind(ab, gr.miss)
-        }
-
-        pvalues_var <- matrix(F, ncol = ncol(dat))
-        pvalues_var[i] <- p.values
-        if (pvalues_var[i]) {
-          a <- dat[[i]]
-          a.list <- list()
-          a.list[[(length(levels(group)) + 1)]] <- stats::na.omit(a)
-          n.vector <- c()
-          for (k in 1:length(levels(group))) {
-            a.list[[k]] <- stats::na.omit(a[which(group == levels(group)[k])])
-            n.vector <- c(n.vector, length(a.list[[k]]))
-          }
-          for (l in 1:length(levels(group))) {
-            if (n.vector[l] == 0) {
-              if (group.non.empty) {
-                pvalues_var[i] <- F
-              }
-              else {
-                warning(
-                  paste0(
-                    "For variable ",
-                    var.n,
-                    " a group has no observations for that variable.
-                             This group will be dropped for p-value calculations."
-                  )
-                )
-              }
-            }
-            else if (n.vector[l] < group.min.size) {
-              pvalues_var[i] <- F
-            }
-          }
-
-
-          if (length(table(factor(dat[[i]]))) <= 1) {
-            warning(
-              paste0(
-                "Variable ",
-                var.n,
-                " has less than 2 non-empty categories. No p-value calculations will be performed."
-              )
-            )
-            pvalues_var[i] <- F
-          } else {
-            for (l in 1:length(table(dat[[i]]))) {
-              if (table(dat[[i]])[l] == 0) {
-                if (cat.non.empty) {
-                  pvalues_var[i] <- F
-                }
-                else {
-                  warning(
-                    paste0(
-                      "Variable ",
-                      var.n,
-                      " Has an empty category.
-                               This category will be dropped for p-value calculations."
-                    )
-                  )
-                }
-              }
-            }
-          }
-
-          if (pvalues_var[i]) {
-            if (index) {
-              m <-
-                m.cat(
-                  dat[[i]],
-                  group,
-                  paired = paired,
-                  is.ordered = is.ordered(dat[[i]]),
-                  default.unordered.unpaired.test
-                )
-              if (!(m %in% testings)) {
-                testings <- c(testings, m)
-                l.i <- l.i + 1
-                index.i <- letters[l.i]
-              }
-              else {
-                index.i <- letters[which(testings == m)[1]]
-              }
-            } else {
-              index.i <- c()
-            }
-            p_list <- p.cat(
-              dat[[i]],
-              group,
-              paired = paired,
-              is.ordered = is.ordered(dat[[i]]),
-              correct.cat = correct.cat,
-              correct.wilcox = correct.wilcox,
-              index = index.i,
-              create = create,
-              default.unordered.unpaired.test
-            )
-            pv <- p_list$pv.formatted
-            index_var[i] <- T
-          } else {
-            index_var[i] <- F
-            pv <- "--"
-            p_list <-
-              list(
-                p.value = "--",
-                test.value = "--",
-                test.name = "--"
-              )
-          }
-          ab <- cbind(ab,
-                      c("", pv, rep(
-                        "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
-                      )))
-        }
-        else {
-          p_list <- list(
-            p.value = "--",
-            test.value = "--",
-            test.name = "--"
-          )
-        }
-
-        ab <- cbind(
-          ab,
-          c("", p_list$p.value, rep(
-            "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
-          )),
-          c("", p_list$test.value, rep(
-            "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
-          )),
-          c("", p_list$test.name, rep(
-            "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
-          ))
-        )
-
-        # pos.i.alt <- pos.i
-        #
-        # pos.i <- pos.i + length(levels(dat[[i]])) + 2 + length(n.or.miss)
-      } else {
-        a <- dat[[i]]
-        a.list <- list()
-        a.list[[(length(levels(group)) + 1)]] <- stats::na.omit(a)
-
-        n.vector <- c()
-        for (k in 1:length(levels(group))) {
-          a.list[[k]] <- stats::na.omit(a[which(group == levels(group)[k])])
-          n.vector <- c(n.vector, length(a.list[[k]]))
-        }
-        n.vector <- c(n.vector, length(stats::na.omit(a)))
-
-        n.miss <- c()
-        for (k in 1:length(levels(group))) {
-          miss.k <- which(is.na(a[which(group == levels(group)[k])]))
-          n.miss <- c(n.miss, length(miss.k))
-        }
-        n.miss <- c(n.miss, length(which(is.na(a))))
-
-        ab <-
-          matrix(NA, nrow = 6, ncol = (length(levels(group)) + 1))
-
-        if (group.miss) {
-          a.miss <- datmiss[, i]
-          a.miss <- stats::na.omit(a.miss)
-          a.list.miss <-
-            stats::na.omit(a.miss[which(groupmiss == "NA")])
-
-          n.vector.miss <- length(a.list.miss)
-
-          miss.k.miss <-
-            which(is.na(a.miss[which(groupmiss == "NA")]))
-          n.miss.miss <- c(length(miss.k.miss))
-
-          n.vector <- c(n.vector, n.vector.miss)
-          n.miss <- c(n.miss, n.miss.miss)
-          a.list[[length(levels(group)) + 2]] <- a.list.miss
-          ab <-
-            matrix(NA, nrow = 6, ncol = (length(levels(group)) + 2))
-        }
-
-        if ("n" %in% n.or.miss) {
-          ab[1, ] <- n.vector
-        }
-        if (!("n" %in% n.or.miss) & "miss" %in% n.or.miss) {
-          ab[1, ] <- n.miss
-        }
-        for (d in 1:length(a.list)) {
-          if (length(a.list[[d]]) != 0) {
-            ab[2, d] <- formatr(mean(a.list[[d]]), digits.m)
-            ab[3, d] <- formatr(stats::sd(a.list[[d]]), digits.sd)
-          } else {
-            ab[2, d] <- "-"
-            ab[3, d] <- "-"
-          }
-        }
-        ab[4, ] <-
-          sapply(a.list, med.new, simplify = T, k = digits.qu)
-        ab[5, ] <-
-          sapply(
-            a.list,
-            inqur,
-            simplify = T,
-            k = digits.qu,
-            q.type = q.type
-          )
-        ab[6, ] <-
-          sapply(a.list, minmax, simplify = T, k = digits.minmax)
-
-        if ("n" %in% n.or.miss & "miss" %in% n.or.miss) {
-          ab <- rbind(ab[1, ], n.miss, ab[2:6, ])
-        }
-
-        row.names(ab) <- NULL
-
-        if (group.miss) {
-          ab <-
-            rbind(rep("", (length(
-              levels(group)
-            ) + 2)), ab, rep("", (length(
-              levels(group)
-            ) + 2)))
-        } else {
-          ab <-
-            rbind(rep("", (length(
-              levels(group)
-            ) + 1)), ab, rep("", (length(
-              levels(group)
-            ) + 1)))
-        }
-
-        if (!(missing(var.names))) {
-          if (data.names == T) {
-            var.n1 <- var.names[i]
-            var.n2 <-
-              paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
-            var.n <- paste(var.n1, var.n2, sep = " ")
-          } else {
-            var.n <- var.names[i]
-          }
-        } else {
-          var.n <- names(dat)[i]
-        }
-
-        if (create == "word") {
-          row.ab <- c()
-          if ("n" %in% n.or.miss) {
-            row.ab <- c(row.ab, "    N")
-          }
-          if ("miss" %in% n.or.miss) {
-            row.ab <- c(row.ab, "    Missing")
-          }
-          if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
-            row.ab <- c(row.ab, "  ")
-          }
-          row.ab <-
-            c(row.ab, "    Mean", "    SD", "    Median", "    Q1 -- Q3", "    Min. -- Max.")
-        } else if (create == "R") {
-          row.ab <- c()
-          if ("n" %in% n.or.miss) {
-            row.ab <- c(row.ab, "    - N")
-          }
-          if ("miss" %in% n.or.miss) {
-            row.ab <- c(row.ab, "   - Missing")
-          }
-          if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
-            row.ab <- c(row.ab, "  ")
-          }
-          row.ab <-
-            c(row.ab,
-              "    - Mean",
-              "    - SD",
-              "    - Median",
-              "    - Q1 -- Q3",
-              "    - Min. -- Max.")
-        }
-        else if (create == "archive") {
-          row.ab <- c()
-          if ("n" %in% n.or.miss) {
-            row.ab <- c(row.ab, "-N")
-          }
-          if ("miss" %in% n.or.miss) {
-            row.ab <- c(row.ab, "-Missing")
-          }
-          if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
-            row.ab <- c(row.ab, "  ")
-          }
-          row.ab <-
-            c(row.ab,
-              "-Mean",
-              "-SD",
-              "-Median",
-              "-Q1 -- Q3",
-              "-Min. -- Max.")
-        } else {
-          row.ab <- c()
-          if ("n" %in% n.or.miss) {
-            row.ab <- c(row.ab, "    \\hspace{2ex} N ")
-          }
-          if ("miss" %in% n.or.miss) {
-            row.ab <- c(row.ab, "\\hspace{2ex} Missing")
-          }
-          if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
-            row.ab <- c(row.ab, "  ")
-          }
-          row.ab <- c(
-            row.ab,
-            "\\hspace{2ex} Mean",
-            "\\hspace{2ex} SD",
-            "\\hspace{2ex} Median",
-            "\\hspace{2ex} Q1 -- Q3",
-            "\\hspace{2ex} Min. -- Max."
-          )
-        }
-
-        ab <- as.data.frame(ab)
-        ab <- cbind(NA, ab)
-        ab[, 1] <- c(var.n, row.ab, "")
-
-        pvalues_var <- matrix(F, ncol = ncol(dat))
-        pvalues_var[i] <- p.values
-        if (pvalues_var[i]) {
-          for (l in 1:length(levels(group))) {
-            if (n.vector[l] == 0) {
-              if (group.non.empty) {
-                pvalues_var[i] <- F
-              }
-              else {
-                warning(
-                  paste0(
-                    "For variable ",
-                    var.n,
-                    " a group has no observations for that variable.
-                             This group will be dropped for p-value calculations."
-                  )
-                )
-              }
-            }
-            else if (n.vector[l] < group.min.size) {
-              pvalues_var[i] <- F
-            }
-          }
-          if (length(table(dat[[i]])) <= 1) {
-            pvalues_var[i] <- F
-          } else {
-            for (l in 1:length(table(dat[[i]]))) {
-              if (table(dat[[i]])[l] == 0) {
-                pvalues_var[i] <- F
-              }
-            }
-          }
-
-          if (pvalues_var[i]) {
-            if (index) {
-              m <- m.cont(
-                group,
-                paired = paired,
-                is.ordered = is.ordered(dat[[i]]),
-                nonparametric = nonparametric[i],
-                t.log = t.log[i]
-              )
-              if (!(m %in% testings)) {
-                testings <- c(testings, m)
-                l.i <- l.i + 1
-                index.i <- letters[l.i]
-              }
-              else {
-                index.i <- letters[which(testings == m)[1]]
-              }
-            } else {
-              index.i <- c()
-            }
-            p_list <- p.cont(
-              dat[[i]],
-              group,
-              paired = paired,
-              is.ordered = is.ordered(dat[[i]]),
-              nonparametric = nonparametric[i],
-              t.log = t.log[i],
-              var.equal = var.equal,
-              index = index.i,
-              create = create
-            )
-            pv <- p_list$pv.formatted
-            index_var[i] <- T
-          } else {
-            index_var[i] <- F
-            pv <- "--"
-            p_list <-
-              list(
-                p.value = "--",
-                test.value = "--",
-                test.name = "--"
-              )
-          }
-          if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
-            ab <- cbind(ab,
-                        c("", pv, rep(
-                          "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-                        )))
-            ab <- ab[-2, ]
-          } else {
-            ab <- cbind(ab,
-                        c("", pv, rep(
-                          "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-                        )))
-          }
-        }
-        else {
-          p_list <- list(
-            p.value = "--",
-            test.value = "--",
-            test.name = "--"
-          )
-        }
-
-        if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
-          ab <- cbind(
-            ab,
-            c("", p_list$p.value, rep(
-              "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-            )),
-            c("", p_list$test.value, rep(
-              "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-            )),
-            c("", p_list$test.name, rep(
-              "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-            ))
-          )
-          ab <- ab[-2, ]
-        } else {
-          ab <- cbind(
-            ab,
-            c("", p_list$p.value, rep(
-              "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-            )),
-            c("", p_list$test.value, rep(
-              "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-            )),
-            c("", p_list$test.name, rep(
-              "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
-            ))
-          )
-        }
-      }
-      names(ab) <- 1:length(ab)
-
-      if (i == 1) {
-        ab1 <- ab
-      } else {
-        ab1 <- rbind(ab1, ab)
-      }
-
-      pos.i.alt <- pos.i
-      pos.i <- nrow(ab1)
-
-      if (!silent) {
-        print(list(
-          "i" = i,
-          "pos.i" = pos.i,
-          "ab1" = ab1
-        ))
-      }
-      if (landscape == F) {
-        if (is.null(pos.pagebr)) {
-          pos.pagebr <- 50
-        }
-      } else {
-        if (is.null(pos.pagebr)) {
-          pos.pagebr <- 30
-        }
-      }
-      if (pos.i > pos.pagebr * pos.mult & i <= ncol(dat)) {
-        pos <- c(pos, pos.i.alt)
-        pos.mult <- pos.mult + 1
-      }
+      # Append result of analysis to list
+      ergs[[var_name]] <- var_descr
     }
-    return(
-      list(
-        "descr" = ab1,
-        "pos" = pos,
-        "pos.pagebr" = pos.pagebr,
-        "testings" = testings,
-        "pvalues_var" = pvalues_var
-      )
-    )
+    # Make result a "DescrList" object and return
+    attr(ergs, "class") <- c("DescrList", "list")
+    return(ergs)
   }
+
+
+#' Create descriptive statistics for a categorical variable
+#'
+#' @param var
+#' @param group
+#'
+#' @return
+#' @export
+#'
+#' @examples
+descr_cat <- function(var, group) {
+  erg <- list()
+  var_levels <- levels(var)
+
+  for (group_name in levels(group)) {
+    # Subset values for the respective group
+    var_grp <- var[where(group == group_name)]
+    group_list <- list()
+    for (cat_name in var_levels) {
+      cat_list <- list()
+      for (summary_stat in cat_summary_stats_vertical) {
+        summary_stat_name <-
+          summary_stat %>% substitute() %>% as.character()
+
+        cat_list[[summary_stat]] <- summary_stat(var_grp)
+      }
+      group_list[[cat_name]] <- cat_list
+    }
+    erg[[group_name]] <- group_list
+  }
+
+  # Caclulate summary for whole cohort
+  {
+    group_list <- list()
+    for (cat_name in var_levels) {
+      cat_list <- list()
+      for (summary_stat in cat_summary_stats_vertical) {
+        summary_stat_name <-
+          summary_stat %>% substitute() %>% as.character()
+
+        cat_list[[summary_stat]] <- summary_stat(var)
+      }
+      group_list[[cat_name]] <- cat_list
+    }
+    erg[["Total"]] <- group_list
+  }
+
+  # Calculate test
+  erg[["test_list"]] <- test_cat(var, group, ...)
+
+  attr(erg, "class") <- c("cat_summary", "list")
+  erg
+}
+
+
+#' Create descriptive statistics for a continuous variable
+#'
+#' @param var
+#' @param group
+#'
+#' @return
+#' @export
+#'
+#' @examples
+descr_cont <- function(var, group, cont_summary_stats=c(sum, mean, )) {
+  erg <- list()
+  var_levels <- levels(var)
+
+  for (group_name in levels(group)) {
+    # Subset values for the respective group
+    var_grp <- var[where(group == group_name)]
+    group_list <- list()
+
+    for (summary_stat in cat_summary_stats_vertical) {
+      summary_stat_name <-
+        summary_stat %>% substitute() %>% as.character()
+
+
+      group_list[[summary_stat_name]] <- summary_stat(var, group)
+    }
+    erg[[group_name]] <- group_list
+  }
+
+  # Calculate summary for whole cohort
+  {
+    group_list <- list()
+    for (summary_stat in cat_summary_stats_vertical) {
+      summary_stat_name <-
+        summary_stat %>% substitute() %>% as.character()
+
+      group_list[[summary_stat_name]] <- cat_list
+    }
+    erg[["Total"]] <- group_list
+  }
+
+  # Calculate test
+  erg[["test_list"]] <- test_cont(var, group, ...)
+
+  attr(erg, "class") <- c("cont_summary", "list")
+  erg
+}
+
+
+#' S3 override for print function for DescrList objects
+#'
+#' @param DescrListObj
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' @importFrom tibble
+print.DescrList <- function(DescrListObj, printFormat = options("DescrTabFormat")){
+
+  var_names <- names(DescrListObj)
+  group_names <- c(DescrListObj$group %>% levels(),
+                   "Total")
+
+  tbl <- bind_cols(Variable=character())
+  for (group_name in group_names){
+    tbl %<>% bind_cols(!!group_name := numeric())
+  }
+  tbl %<>% bind_cols(p = numeric(),
+                     Test=character())
+
+
+  for (var_name in var_names){
+    sub_tbl <- DescrListObj[[var_name]] %>% create_subtable()
+    tbl %<>% bind_rows(sub_tbl)
+  }
+}
+
+#' S3 dispatcher
+#'
+#' @param DescrVarObj
+#' @param var_name
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_subtable <- function(DescrVarObj, var_name){
+  UseMethod("create_subtable", DescrVarObj, var_name)
+}
+
+#' Create subtables which will comprise the output table
+#'
+#' @param DescrVarObj
+#' @param var_name
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_subtable.cat_summary <- function(DescrVarObj, var_name){
+  tot <- DescrVarObj["Total"]
+  tot[sapply(tot, is.null)] <- NA
+  tot <- c(NA_real_, unlist(tot))
+
+  tbl <- tibble(Variable=c(var_name,
+                           names(tot)))
+  length_tbl <- nrow(tbl)
+
+  groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
+
+  for (group in groups){
+    tmp <- DescrVarObj[group]
+    tmp[sapply(tmp, is.null)] <- NA
+    tmp <- c(NA_real_, unlist(tmp))
+    tbl %<>% bind_cols(!!group := tmp)
+  }
+  tbl %<>% bind_cols(Total = tot)
+
+  p <- c(DescrVarObj["test_list"]$p, rep(NA_real_, length_tbl-1))
+  tbl %<>% bind_cols(p = p)
+
+  test_name <- c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl-1))
+  tbl %<>% bind_cols(Test = test_name)
+}
+
+
+
+#' Create subtables which will comprise the output table
+#'
+#' @param DescrVarObj
+#' @param var_name
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_subtable.cont_summary <- function(DescrVarObj, var_name){
+  tot <- DescrVarObj["Total"]
+  tot[sapply(tot, is.null)] <- NA
+  tot <- c(NA_real_, unlist(tot))
+
+  tbl <- tibble(Variable=c(var_name,
+                           names(tot)))
+  length_tbl <- nrow(tbl)
+
+  groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
+
+  for (group in groups){
+    tmp <- DescrVarObj[group]
+    tmp[sapply(tmp, is.null)] <- NA
+    tmp <- c(NA_real_, unlist(tmp))
+    tbl %<>% bind_cols(!!group := tmp)
+  }
+  tbl %<>% bind_cols(Total = tot)
+
+  p <- c(DescrVarObj["test_list"]$p, rep(NA_real_, length_tbl-1))
+  tbl %<>% bind_cols(p = p)
+
+  test_name <- c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl-1))
+  tbl %<>% bind_cols(Test = test_name)
+}
+
+
+
+
+
+#' Test categorical variables
+#'
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+test_cat <- function(...){
+  return(list(p=0.5, test_name="t.test"))
+}
+
+#' Test continuous variables
+#'
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+test_cont <- function(...){
+  return(list(p=0.5, test_name="t.test"))
+}
+
+
+
+
+#
+# {
+#   if (is.null(nonparametric)) {
+#     nonparametric <- rep(F, ncol(dat))
+#   }
+#   if (is.null(t.log)) {
+#     t.log <- rep(F, ncol(dat))
+#   }
+#   l.i <- 0
+#
+#   testings <- c()
+#   pos <- c()
+#   pos.i <- 0
+#   pos.mult <- 1
+#   index_var <- c()
+#
+#   datmiss <- matrix(NA, nrow = nrow(dat), ncol = ncol(dat))
+#   group.na.index <- which(is.na(group))
+#
+#   if (group.miss) {
+#     groupmiss <- as.numeric(group)
+#     groupmiss[group.na.index] <- "NA"
+#     datmiss <- dat
+#   }
+#   if (length(group.na.index) != 0) {
+#     warning(
+#       paste(
+#         "Missing values in the group variable ( Observations: ",
+#         list(group.na.index),
+#         " )! Observations will be removed!"
+#       )
+#     )
+#     dat <- dat[-group.na.index, , drop = FALSE]
+#     group <- group[-group.na.index]
+#   }
+#
+#   lgr <- length(levels(group))
+#
+#   n.or.miss_original <- n.or.miss
+#
+#
+#   for (i in 1:ncol(dat)) {
+#     gr.miss <- c()
+#
+#     n.or.miss <- n.or.miss_original
+#     if (adaptive.miss & !anyNA(dat[[i]])) {
+#       if ("miss.cat" %in% n.or.miss) {
+#         n.or.miss <- n.or.miss[-which(n.or.miss == "miss.cat")]
+#       }
+#       if ("miss" %in% n.or.miss) {
+#         n.or.miss <- n.or.miss[-which(n.or.miss == "miss")]
+#       }
+#     }
+#
+#
+#     if (all(is.na(dat[[i]]))) {
+#       if (!(missing(var.names))) {
+#         if (data.names == T) {
+#           var.n1 <- var.names[i]
+#           var.n2 <-
+#             paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
+#           var.n <- paste(var.n1, var.n2, sep = " ")
+#         } else {
+#           var.n <- var.names[i]
+#         }
+#       } else {
+#         var.n <- names(dat)[i]
+#       }
+#       ab <-
+#         matrix(c(var.n, "", rep(
+#           c("-", ""), (1 + length(levels(group)) + group.miss + 1++p.values + 3 - 1)
+#         )),
+#         nrow = 2)
+#       ab <- as.data.frame(ab)
+#     }
+#     else if (is.factor(dat[[i]])) {
+#       a <- table(dat[[i]], group)
+#       if (group.miss & length(group.na.index) != 0) {
+#         gr.miss <-
+#           c(gr.miss, table(datmiss[, i], groupmiss)[, which(colnames(table(datmiss[, i], groupmiss)) == "NA")])
+#       }
+#       if (group.miss & length(group.na.index) == 0) {
+#         gr.miss <- rep(0, length(levels(dat[[i]])))
+#       }
+#       d <- table(dat[[i]])
+#       if (percent.vertical == T) {
+#         b <- prop.table(as.matrix(table(dat[[i]], group)), 2)
+#         e <- prop.table(as.matrix(table(dat[[i]])), 2)
+#         ab <- data.frame(cbind(a[, 1], b[, 1] * 100))
+#         if (ncol(a) >= 2) {
+#           for (k in 2:ncol(a)) {
+#             ab <- data.frame(cbind(ab, a[, k], b[, k] * 100))
+#           }
+#         }
+#         if (group.miss) {
+#           ab <-
+#             data.frame(cbind(
+#               ab,
+#               as.vector(d) + gr.miss,
+#               as.vector(prop.table((
+#                 as.matrix(table(dat[[i]])) + gr.miss
+#               ), 2)) * 100
+#             ))
+#         } else {
+#           ab <- data.frame(cbind(ab, as.vector(d), as.vector(e) * 100))
+#         }
+#
+#
+#         if (missing(var.names)) {
+#           digits.p <-
+#             c(digits.p, rep(digits.p[length(digits.p)], length = length(names(dat))))
+#         }
+#         else {
+#           digits.p <-
+#             c(digits.p, rep(digits.p[length(digits.p)], length = length(var.names)))
+#         }
+#
+#
+#
+#         if (create == "word" |
+#             create == "R" | create == "archive") {
+#           for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
+#             for (k in 1:nrow(ab)) {
+#               if (ab[k, j] != 0) {
+#                 ab[k, j] <-
+#                   paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
+#               } else {
+#                 ab[k, j] <- paste(ab[k, j], " ( - ) ")
+#               }
+#             }
+#           }
+#         } else {
+#           for (j in seq(1, 2 * (length(levels(group))) + 1, by = 2)) {
+#             for (k in 1:nrow(ab)) {
+#               ab[k, j] <-
+#                 paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "\\%)", sep = "")
+#             }
+#           }
+#         }
+#       } else {
+#         b <- prop.table(as.matrix(table(dat[[i]], group)), 1)
+#         ab <- data.frame(cbind(a[, 1], b[, 1] * 100))
+#         if (ncol(a) >= 2) {
+#           for (k in 2:ncol(a)) {
+#             ab <- data.frame(cbind(ab, a[, k], b[, k] * 100))
+#           }
+#         }
+#         if (group.miss) {
+#           ab <- data.frame(cbind(ab, as.vector(d) + gr.miss))
+#         } else {
+#           ab <- data.frame(cbind(ab, as.vector(d)))
+#         }
+#         if (create == "word" |
+#             create == "R" | create == "archive") {
+#           for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
+#             for (k in 1:nrow(ab)) {
+#               ab[k, j] <-
+#                 paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "%)", sep = "")
+#             }
+#           }
+#         } else {
+#           for (j in seq(1, 2 * (length(levels(group))), by = 2)) {
+#             for (k in 1:nrow(ab)) {
+#               ab[k, j] <-
+#                 paste(ab[k, j], " (", formatr(ab[k, (j + 1)], digits.p[i]), "\\%)", sep = "")
+#             }
+#           }
+#         }
+#       }
+#
+#       index.delete <- (1:(length(levels(group)) + 1)) * 2
+#       ab <- ab[, -index.delete]
+#
+#       if ("miss.cat" %in% n.or.miss) {
+#         miss.end <- c()
+#         for (j in 1:lgr) {
+#           miss.j <-
+#             length(which(is.na(dat[which(group == levels(group)[j]), i])))
+#           miss.end <- c(miss.end, miss.j)
+#         }
+#         miss.all <- length(which(is.na(dat[[i]])))
+#         ab <- rbind(ab, c(miss.end, miss.all))
+#         if (group.miss) {
+#           gr.miss <-
+#             c(gr.miss, length(which(is.na(datmiss[which(groupmiss == "NA"), i]))))
+#         }
+#       }
+#
+#       ab <- rbind(rep("", lgr + 1), ab, rep("", lgr + 1))
+#       if (group.miss) {
+#         gr.miss <- c("", gr.miss, "")
+#       }
+#
+#       if (!(missing(var.names))) {
+#         if (data.names == T) {
+#           var.n1 <- var.names[i]
+#           var.n2 <-
+#             paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
+#           var.n <- paste(var.n1, var.n2, sep = " ")
+#         } else {
+#           var.n <- var.names[i]
+#         }
+#       } else {
+#         var.n <- names(dat)[i]
+#       }
+#       ab <- cbind(NA, ab)
+#
+#
+#       ab <- as.data.frame(ab)
+#       levels(dat[[i]]) <- paste(" ", levels(dat[[i]]))
+#       if (create == "R") {
+#         levels(dat[[i]]) <- paste("- ", levels(dat[[i]]))
+#       }
+#       if ("miss.cat" %in% n.or.miss) {
+#         if (create == "R") {
+#           ab[, 1] <- c(var.n, levels(dat[[i]]), "- Missing", "")
+#         } else {
+#           ab[, 1] <- c(var.n, levels(dat[[i]]), "  Missing", "")
+#         }
+#       } else {
+#         ab[, 1] <- c(var.n, levels(dat[[i]]), "")
+#       }
+#       if (create != "word" &
+#           create != "R" & create != "archive") {
+#         for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
+#           ab[j + 1, 1] <- paste("\\hspace{2ex}", ab[j + 1, 1])
+#         }
+#       } else {
+#         for (j in 1:(length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss))) {
+#           ab[j + 1, 1] <- paste(" ", ab[j + 1, 1])
+#         }
+#       }
+#       if (group.miss) {
+#         ab <- cbind(ab, gr.miss)
+#       }
+#
+#       pvalues_var <- matrix(F, ncol = ncol(dat))
+#       pvalues_var[i] <- p.values
+#       if (pvalues_var[i]) {
+#         a <- dat[[i]]
+#         a.list <- list()
+#         a.list[[(length(levels(group)) + 1)]] <- stats::na.omit(a)
+#         n.vector <- c()
+#         for (k in 1:length(levels(group))) {
+#           a.list[[k]] <- stats::na.omit(a[which(group == levels(group)[k])])
+#           n.vector <- c(n.vector, length(a.list[[k]]))
+#         }
+#         for (l in 1:length(levels(group))) {
+#           if (n.vector[l] == 0) {
+#             if (group.non.empty) {
+#               pvalues_var[i] <- F
+#             }
+#             else {
+#               warning(
+#                 paste0(
+#                   "For variable ",
+#                   var.n,
+#                   " a group has no observations for that variable.
+#                              This group will be dropped for p-value calculations."
+#                 )
+#               )
+#             }
+#           }
+#           else if (n.vector[l] < group.min.size) {
+#             pvalues_var[i] <- F
+#           }
+#         }
+#
+#
+#         if (length(table(factor(dat[[i]]))) <= 1) {
+#           warning(
+#             paste0(
+#               "Variable ",
+#               var.n,
+#               " has less than 2 non-empty categories. No p-value calculations will be performed."
+#             )
+#           )
+#           pvalues_var[i] <- F
+#         } else {
+#           for (l in 1:length(table(dat[[i]]))) {
+#             if (table(dat[[i]])[l] == 0) {
+#               if (cat.non.empty) {
+#                 pvalues_var[i] <- F
+#               }
+#               else {
+#                 warning(
+#                   paste0(
+#                     "Variable ",
+#                     var.n,
+#                     " Has an empty category.
+#                                This category will be dropped for p-value calculations."
+#                   )
+#                 )
+#               }
+#             }
+#           }
+#         }
+#
+#         if (pvalues_var[i]) {
+#           if (index) {
+#             m <-
+#               m.cat(
+#                 dat[[i]],
+#                 group,
+#                 paired = paired,
+#                 is.ordered = is.ordered(dat[[i]]),
+#                 default.unordered.unpaired.test
+#               )
+#             if (!(m %in% testings)) {
+#               testings <- c(testings, m)
+#               l.i <- l.i + 1
+#               index.i <- letters[l.i]
+#             }
+#             else {
+#               index.i <- letters[which(testings == m)[1]]
+#             }
+#           } else {
+#             index.i <- c()
+#           }
+#           p_list <- p.cat(
+#             dat[[i]],
+#             group,
+#             paired = paired,
+#             is.ordered = is.ordered(dat[[i]]),
+#             correct.cat = correct.cat,
+#             correct.wilcox = correct.wilcox,
+#             index = index.i,
+#             create = create,
+#             default.unordered.unpaired.test
+#           )
+#           pv <- p_list$pv.formatted
+#           index_var[i] <- T
+#         } else {
+#           index_var[i] <- F
+#           pv <- "--"
+#           p_list <-
+#             list(
+#               p.value = "--",
+#               test.value = "--",
+#               test.name = "--"
+#             )
+#         }
+#         ab <- cbind(ab,
+#                     c("", pv, rep(
+#                       "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
+#                     )))
+#       }
+#       else {
+#         p_list <- list(
+#           p.value = "--",
+#           test.value = "--",
+#           test.name = "--"
+#         )
+#       }
+#
+#       ab <- cbind(
+#         ab,
+#         c("", p_list$p.value, rep(
+#           "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
+#         )),
+#         c("", p_list$test.value, rep(
+#           "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
+#         )),
+#         c("", p_list$test.name, rep(
+#           "", length(levels(dat[[i]])) + ("miss.cat" %in% n.or.miss)
+#         ))
+#       )
+#
+#       # pos.i.alt <- pos.i
+#       #
+#       # pos.i <- pos.i + length(levels(dat[[i]])) + 2 + length(n.or.miss)
+#     } else {
+#       a <- dat[[i]]
+#       a.list <- list()
+#       a.list[[(length(levels(group)) + 1)]] <- stats::na.omit(a)
+#
+#       n.vector <- c()
+#       for (k in 1:length(levels(group))) {
+#         a.list[[k]] <- stats::na.omit(a[which(group == levels(group)[k])])
+#         n.vector <- c(n.vector, length(a.list[[k]]))
+#       }
+#       n.vector <- c(n.vector, length(stats::na.omit(a)))
+#
+#       n.miss <- c()
+#       for (k in 1:length(levels(group))) {
+#         miss.k <- which(is.na(a[which(group == levels(group)[k])]))
+#         n.miss <- c(n.miss, length(miss.k))
+#       }
+#       n.miss <- c(n.miss, length(which(is.na(a))))
+#
+#       ab <-
+#         matrix(NA, nrow = 6, ncol = (length(levels(group)) + 1))
+#
+#       if (group.miss) {
+#         a.miss <- datmiss[, i]
+#         a.miss <- stats::na.omit(a.miss)
+#         a.list.miss <-
+#           stats::na.omit(a.miss[which(groupmiss == "NA")])
+#
+#         n.vector.miss <- length(a.list.miss)
+#
+#         miss.k.miss <-
+#           which(is.na(a.miss[which(groupmiss == "NA")]))
+#         n.miss.miss <- c(length(miss.k.miss))
+#
+#         n.vector <- c(n.vector, n.vector.miss)
+#         n.miss <- c(n.miss, n.miss.miss)
+#         a.list[[length(levels(group)) + 2]] <- a.list.miss
+#         ab <-
+#           matrix(NA, nrow = 6, ncol = (length(levels(group)) + 2))
+#       }
+#
+#       if ("n" %in% n.or.miss) {
+#         ab[1, ] <- n.vector
+#       }
+#       if (!("n" %in% n.or.miss) & "miss" %in% n.or.miss) {
+#         ab[1, ] <- n.miss
+#       }
+#       for (d in 1:length(a.list)) {
+#         if (length(a.list[[d]]) != 0) {
+#           ab[2, d] <- formatr(mean(a.list[[d]]), digits.m)
+#           ab[3, d] <- formatr(stats::sd(a.list[[d]]), digits.sd)
+#         } else {
+#           ab[2, d] <- "-"
+#           ab[3, d] <- "-"
+#         }
+#       }
+#       ab[4, ] <-
+#         sapply(a.list, med.new, simplify = T, k = digits.qu)
+#       ab[5, ] <-
+#         sapply(
+#           a.list,
+#           inqur,
+#           simplify = T,
+#           k = digits.qu,
+#           q.type = q.type
+#         )
+#       ab[6, ] <-
+#         sapply(a.list, minmax, simplify = T, k = digits.minmax)
+#
+#       if ("n" %in% n.or.miss & "miss" %in% n.or.miss) {
+#         ab <- rbind(ab[1, ], n.miss, ab[2:6, ])
+#       }
+#
+#       row.names(ab) <- NULL
+#
+#       if (group.miss) {
+#         ab <-
+#           rbind(rep("", (length(
+#             levels(group)
+#           ) + 2)), ab, rep("", (length(
+#             levels(group)
+#           ) + 2)))
+#       } else {
+#         ab <-
+#           rbind(rep("", (length(
+#             levels(group)
+#           ) + 1)), ab, rep("", (length(
+#             levels(group)
+#           ) + 1)))
+#       }
+#
+#       if (!(missing(var.names))) {
+#         if (data.names == T) {
+#           var.n1 <- var.names[i]
+#           var.n2 <-
+#             paste(paste("(", names(dat)[i], sep = ""), ")", sep = "")
+#           var.n <- paste(var.n1, var.n2, sep = " ")
+#         } else {
+#           var.n <- var.names[i]
+#         }
+#       } else {
+#         var.n <- names(dat)[i]
+#       }
+#
+#       if (create == "word") {
+#         row.ab <- c()
+#         if ("n" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "    N")
+#         }
+#         if ("miss" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "    Missing")
+#         }
+#         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
+#           row.ab <- c(row.ab, "  ")
+#         }
+#         row.ab <-
+#           c(row.ab, "    Mean", "    SD", "    Median", "    Q1 -- Q3", "    Min. -- Max.")
+#       } else if (create == "R") {
+#         row.ab <- c()
+#         if ("n" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "    - N")
+#         }
+#         if ("miss" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "   - Missing")
+#         }
+#         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
+#           row.ab <- c(row.ab, "  ")
+#         }
+#         row.ab <-
+#           c(row.ab,
+#             "    - Mean",
+#             "    - SD",
+#             "    - Median",
+#             "    - Q1 -- Q3",
+#             "    - Min. -- Max.")
+#       }
+#       else if (create == "archive") {
+#         row.ab <- c()
+#         if ("n" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "-N")
+#         }
+#         if ("miss" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "-Missing")
+#         }
+#         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
+#           row.ab <- c(row.ab, "  ")
+#         }
+#         row.ab <-
+#           c(row.ab,
+#             "-Mean",
+#             "-SD",
+#             "-Median",
+#             "-Q1 -- Q3",
+#             "-Min. -- Max.")
+#       } else {
+#         row.ab <- c()
+#         if ("n" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "    \\hspace{2ex} N ")
+#         }
+#         if ("miss" %in% n.or.miss) {
+#           row.ab <- c(row.ab, "\\hspace{2ex} Missing")
+#         }
+#         if (!("n" %in% n.or.miss) & !("miss" %in% n.or.miss)) {
+#           row.ab <- c(row.ab, "  ")
+#         }
+#         row.ab <- c(
+#           row.ab,
+#           "\\hspace{2ex} Mean",
+#           "\\hspace{2ex} SD",
+#           "\\hspace{2ex} Median",
+#           "\\hspace{2ex} Q1 -- Q3",
+#           "\\hspace{2ex} Min. -- Max."
+#         )
+#       }
+#
+#       ab <- as.data.frame(ab)
+#       ab <- cbind(NA, ab)
+#       ab[, 1] <- c(var.n, row.ab, "")
+#
+#       pvalues_var <- matrix(F, ncol = ncol(dat))
+#       pvalues_var[i] <- p.values
+#       if (pvalues_var[i]) {
+#         for (l in 1:length(levels(group))) {
+#           if (n.vector[l] == 0) {
+#             if (group.non.empty) {
+#               pvalues_var[i] <- F
+#             }
+#             else {
+#               warning(
+#                 paste0(
+#                   "For variable ",
+#                   var.n,
+#                   " a group has no observations for that variable.
+#                              This group will be dropped for p-value calculations."
+#                 )
+#               )
+#             }
+#           }
+#           else if (n.vector[l] < group.min.size) {
+#             pvalues_var[i] <- F
+#           }
+#         }
+#         if (length(table(dat[[i]])) <= 1) {
+#           pvalues_var[i] <- F
+#         } else {
+#           for (l in 1:length(table(dat[[i]]))) {
+#             if (table(dat[[i]])[l] == 0) {
+#               pvalues_var[i] <- F
+#             }
+#           }
+#         }
+#
+#         if (pvalues_var[i]) {
+#           if (index) {
+#             m <- m.cont(
+#               group,
+#               paired = paired,
+#               is.ordered = is.ordered(dat[[i]]),
+#               nonparametric = nonparametric[i],
+#               t.log = t.log[i]
+#             )
+#             if (!(m %in% testings)) {
+#               testings <- c(testings, m)
+#               l.i <- l.i + 1
+#               index.i <- letters[l.i]
+#             }
+#             else {
+#               index.i <- letters[which(testings == m)[1]]
+#             }
+#           } else {
+#             index.i <- c()
+#           }
+#           p_list <- p.cont(
+#             dat[[i]],
+#             group,
+#             paired = paired,
+#             is.ordered = is.ordered(dat[[i]]),
+#             nonparametric = nonparametric[i],
+#             t.log = t.log[i],
+#             var.equal = var.equal,
+#             index = index.i,
+#             create = create
+#           )
+#           pv <- p_list$pv.formatted
+#           index_var[i] <- T
+#         } else {
+#           index_var[i] <- F
+#           pv <- "--"
+#           p_list <-
+#             list(
+#               p.value = "--",
+#               test.value = "--",
+#               test.name = "--"
+#             )
+#         }
+#         if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
+#           ab <- cbind(ab,
+#                       c("", pv, rep(
+#                         "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#                       )))
+#           ab <- ab[-2, ]
+#         } else {
+#           ab <- cbind(ab,
+#                       c("", pv, rep(
+#                         "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#                       )))
+#         }
+#       }
+#       else {
+#         p_list <- list(
+#           p.value = "--",
+#           test.value = "--",
+#           test.name = "--"
+#         )
+#       }
+#
+#       if (!("miss" %in% n.or.miss) & !("n" %in% n.or.miss)) {
+#         ab <- cbind(
+#           ab,
+#           c("", p_list$p.value, rep(
+#             "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#           )),
+#           c("", p_list$test.value, rep(
+#             "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#           )),
+#           c("", p_list$test.name, rep(
+#             "", 5 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#           ))
+#         )
+#         ab <- ab[-2, ]
+#       } else {
+#         ab <- cbind(
+#           ab,
+#           c("", p_list$p.value, rep(
+#             "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#           )),
+#           c("", p_list$test.value, rep(
+#             "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#           )),
+#           c("", p_list$test.name, rep(
+#             "", 6 + ("n" %in% n.or.miss & "miss" %in% n.or.miss)
+#           ))
+#         )
+#       }
+#     }
+#     names(ab) <- 1:length(ab)
+#
+#     if (i == 1) {
+#       ab1 <- ab
+#     } else {
+#       ab1 <- rbind(ab1, ab)
+#     }
+#
+#     pos.i.alt <- pos.i
+#     pos.i <- nrow(ab1)
+#
+#     if (!silent) {
+#       print(list(
+#         "i" = i,
+#         "pos.i" = pos.i,
+#         "ab1" = ab1
+#       ))
+#     }
+#     if (landscape == F) {
+#       if (is.null(pos.pagebr)) {
+#         pos.pagebr <- 50
+#       }
+#     } else {
+#       if (is.null(pos.pagebr)) {
+#         pos.pagebr <- 30
+#       }
+#     }
+#     if (pos.i > pos.pagebr * pos.mult & i <= ncol(dat)) {
+#       pos <- c(pos, pos.i.alt)
+#       pos.mult <- pos.mult + 1
+#     }
+#   }
+#   return(
+#     list(
+#       "descr" = ab1,
+#       "pos" = pos,
+#       "pos.pagebr" = pos.pagebr,
+#       "testings" = testings,
+#       "pvalues_var" = pvalues_var
+#     )
+#   )
+# }
