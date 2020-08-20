@@ -476,7 +476,8 @@ create_subtable.cont_summary_character <-
       tot[[name]] <- formatC(tot[[name]])
     }
 
-    display_names <- names(tot) %>% paste("  -", .) %>% c(var_name, .)
+    # display_names <- names(tot) %>% paste("  -", .) %>% c(var_name, .)
+    display_names <- names(tot)  %>% c(var_name, .)
 
     tibl <- bind_cols(Variables = display_names)
     length_tibl <- length(display_names)
@@ -658,6 +659,27 @@ test_cont <- function(var, group, ...) {
 }
 
 iris_test <- iris %>% bind_cols(cat_var = c("a", "b") %>% sample(150, T) ) %>% as_tibble()
+abc <- descr(iris_test, "Species")
+bb <- create_subtable.cont_summary_character(abc$variables$Sepal.Length, "Sepal.Length")
+
+
+absanitize_latex <- function(str_vec){
+  str_replace_all(str_vec,  "^\\s\\s\\-", fixed("\\\\vphantom{padding} \\\\vphantom{padding} -"))
+}
+
+bb %>% xtable::xtable() %>% print(include.rownames=F, tabular.environment = "longtable", floating=F, sanitize.text.function=sanitize_latex)
+bb %>% kable(format="latex", longtable=T)
+
+
+
+
+bb %>% kbl(format="latex", longtable = T, booktabs = T, linesep = "") %>% kable_styling() %>%  footnote(alphabet = c("test", "yo")) %>%
+  pack_rows(index=c(" " = 0, "Group 1" = 4, "Group 2" = 2))
+
+
+
+
+
 
 
 #
