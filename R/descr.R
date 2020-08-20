@@ -204,49 +204,37 @@ descr <-
 #' @export
 #'
 #' @examples
-descr_cat <- function(var, group) {
-  erg <- list()
-  var_levels <- levels(var)
+descr_cat <-
+  function(var, group) {
+    erg <- list()
+    var_levels <- levels(var)
 
-  for (group_name in levels(group)) {
-    # Subset values for the respective group
-    var_grp <- var[where(group == group_name)]
-    group_list <- list()
-    for (cat_name in var_levels) {
+    for (group_name in levels(group)) {
+      # Subset values for the respective group
+      var_grp <- var[where(group == group_name)]
+      group_list <- list()
       cat_list <- list()
-      for (summary_stat in cat_summary_stats_vertical) {
-        summary_stat_name <-
-          summary_stat %>% substitute() %>% as.character()
-
-        cat_list[[summary_stat]] <- summary_stat(var_grp)
+      for (cat_name in var_levels) {
+        cat_list[[cat_name]] <- sum(var_grp == cat_name)
       }
-      group_list[[cat_name]] <- cat_list
+      erg[[group_name]] <- group_list
     }
-    erg[[group_name]] <- group_list
-  }
 
-  # Caclulate summary for whole cohort
-  {
-    group_list <- list()
+
+    # Caclulate summary for whole cohort
+    cat_list <- list()
     for (cat_name in var_levels) {
-      cat_list <- list()
-      for (summary_stat in cat_summary_stats_vertical) {
-        summary_stat_name <-
-          summary_stat %>% substitute() %>% as.character()
-
-        cat_list[[summary_stat]] <- summary_stat(var)
-      }
-      group_list[[cat_name]] <- cat_list
+      cat_list[[cat_name]] <- sum(var == cat_name)
     }
     erg[["Total"]] <- group_list
+
+
+    # Calculate test
+    erg[["test_list"]] <- test_cat(var, group, ...)
+
+    attr(erg, "class") <- c("cat_summary", "list")
+    erg
   }
-
-  # Calculate test
-  erg[["test_list"]] <- test_cat(var, group, ...)
-
-  attr(erg, "class") <- c("cat_summary", "list")
-  erg
-}
 
 
 #' Create descriptive statistics for a continuous variable
@@ -258,43 +246,46 @@ descr_cat <- function(var, group) {
 #' @export
 #'
 #' @examples
-descr_cont <- function(var, group, cont_summary_stats=c(sum, mean, )) {
-  erg <- list()
-  var_levels <- levels(var)
+descr_cont <-
+  function(var,
+           group,
+           cont_summary_stats = c(sum, mean)) {
+    erg <- list()
+    var_levels <- levels(var)
 
-  for (group_name in levels(group)) {
-    # Subset values for the respective group
-    var_grp <- var[where(group == group_name)]
-    group_list <- list()
+    for (group_name in levels(group)) {
+      # Subset values for the respective group
+      var_grp <- var[where(group == group_name)]
+      group_list <- list()
 
-    for (summary_stat in cat_summary_stats_vertical) {
-      summary_stat_name <-
-        summary_stat %>% substitute() %>% as.character()
+      for (summary_stat in cat_summary_stats_vertical) {
+        summary_stat_name <-
+          summary_stat %>% substitute() %>% as.character()
 
 
-      group_list[[summary_stat_name]] <- summary_stat(var, group)
+        group_list[[summary_stat_name]] <-
+          summary_stat(var, group)
+      }
+      erg[[group_name]] <- group_list
     }
-    erg[[group_name]] <- group_list
-  }
 
-  # Calculate summary for whole cohort
-  {
-    group_list <- list()
-    for (summary_stat in cat_summary_stats_vertical) {
-      summary_stat_name <-
-        summary_stat %>% substitute() %>% as.character()
-
-      group_list[[summary_stat_name]] <- cat_list
+    # Calculate summary for whole cohort
+    {
+      group_list <- list()
+      for (summary_stat in cat_summary_stats_vertical) {
+        summary_stat_name <-
+          summary_stat %>% substitute() %>% as.character()
+        group_list[[summary_stat_name]] <- cat_list
+      }
+      erg[["Total"]] <- group_list
     }
-    erg[["Total"]] <- group_list
+
+    # Calculate test
+    erg[["test_list"]] <- test_cont(var, group, ...)
+
+    attr(erg, "class") <- c("cont_summary", "list")
+    erg
   }
-
-  # Calculate test
-  erg[["test_list"]] <- test_cont(var, group, ...)
-
-  attr(erg, "class") <- c("cont_summary", "list")
-  erg
-}
 
 
 #' S3 override for print function for DescrList objects
@@ -306,29 +297,28 @@ descr_cont <- function(var, group, cont_summary_stats=c(sum, mean, )) {
 #'
 #' @examples
 #' @importFrom tibble
-print.DescrList <- function(DescrListObj, printFormat = options("DescrTabFormat")){
+print.DescrList <-
+  function(DescrListObj,
+           printFormat = options("DescrTabFormat")) {
+    var_names <- names(DescrListObj)
+    group_names <- c(DescrListObj$group %>% levels(),
+                     "Total")
 
-  var_names <- names(DescrListObj)
-  group_names <- c(DescrListObj$group %>% levels(),
-                   "Total")
+    tbl <- bind_cols(Variable = character())
+    for (group_name in group_names) {
+      tbl %<>% bind_cols(!!group_name := numeric())
+    }
+    tbl %<>% bind_cols(p = numeric(),
+                       Test = character())
 
-  tbl <- bind_cols(Variable=character())
-  for (group_name in group_names){
-    tbl %<>% bind_cols(!!group_name := numeric())
+    for (var_name in var_names) {
+      sub_tbl <- DescrListObj[[var_name]] %>% create_subtable()
+      tbl %<>% bind_rows(sub_tbl)
+    }
   }
-  tbl %<>% bind_cols(p = numeric(),
-                     Test=character())
 
 
-  for (var_name in var_names){
-    sub_tbl <- DescrListObj[[var_name]] %>% create_subtable()
-    tbl %<>% bind_rows(sub_tbl)
-  }
-}
-
-
-
-#' S3 dispatcher
+#' S3 dispatcher for subtable creation
 #'
 #' @param DescrVarObj
 #' @param var_name
@@ -337,11 +327,11 @@ print.DescrList <- function(DescrListObj, printFormat = options("DescrTabFormat"
 #' @export
 #'
 #' @examples
-create_subtable <- function(DescrVarObj, var_name){
+create_subtable <- function(DescrVarObj, var_name) {
   UseMethod("create_subtable", DescrVarObj, var_name)
 }
 
-#' Create subtables which will comprise the output table
+#' Create subtables for categorical variables which will comprise the output table
 #'
 #' @param DescrVarObj
 #' @param var_name
@@ -350,18 +340,18 @@ create_subtable <- function(DescrVarObj, var_name){
 #' @export
 #'
 #' @examples
-create_subtable.cat_summary <- function(DescrVarObj, var_name){
+create_subtable.cat_summary <- function(DescrVarObj, var_name) {
   tot <- DescrVarObj["Total"]
   tot[sapply(tot, is.null)] <- NA
   tot <- c(NA_real_, unlist(tot))
 
-  tbl <- tibble(Variable=c(var_name,
-                           names(tot)))
+  tbl <- tibble(Variable = c(var_name,
+                             names(tot)))
   length_tbl <- nrow(tbl)
 
   groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
 
-  for (group in groups){
+  for (group in groups) {
     tmp <- DescrVarObj[group]
     tmp[sapply(tmp, is.null)] <- NA
     tmp <- c(NA_real_, unlist(tmp))
@@ -369,15 +359,17 @@ create_subtable.cat_summary <- function(DescrVarObj, var_name){
   }
   tbl %<>% bind_cols(Total = tot)
 
-  p <- c(DescrVarObj["test_list"]$p, rep(NA_real_, length_tbl-1))
+  p <-
+    c(DescrVarObj["test_list"]$p, rep(NA_real_, length_tbl - 1))
   tbl %<>% bind_cols(p = p)
 
-  test_name <- c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl-1))
+  test_name <-
+    c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl - 1))
   tbl %<>% bind_cols(Test = test_name)
 }
 
 
-#' Create subtables which will comprise the output table
+#' Create subtables for continuous variables which will comprise the output table
 #'
 #' @param DescrVarObj
 #' @param var_name
@@ -386,33 +378,34 @@ create_subtable.cat_summary <- function(DescrVarObj, var_name){
 #' @export
 #'
 #' @examples
-create_subtable.cont_summary <- function(DescrVarObj, var_name){
-  tot <- DescrVarObj["Total"]
-  tot[sapply(tot, is.null)] <- NA
-  tot <- c(NA_real_, unlist(tot))
+create_subtable.cont_summary <-
+  function(DescrVarObj, var_name) {
+    tot <- DescrVarObj["Total"]
+    tot[sapply(tot, is.null)] <- NA
+    tot <- c(NA_real_, unlist(tot))
 
-  tbl <- tibble(Variable=c(var_name,
-                           names(tot)))
-  length_tbl <- nrow(tbl)
+    tbl <- tibble(Variable = c(var_name,
+                               names(tot)))
+    length_tbl <- nrow(tbl)
 
-  groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
+    groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
 
-  for (group in groups){
-    tmp <- DescrVarObj[group]
-    tmp[sapply(tmp, is.null)] <- NA
-    tmp <- c(NA_real_, unlist(tmp))
-    tbl %<>% bind_cols(!!group := tmp)
+    for (group in groups) {
+      tmp <- DescrVarObj[group]
+      tmp[sapply(tmp, is.null)] <- NA
+      tmp <- c(NA_real_, unlist(tmp))
+      tbl %<>% bind_cols(!!group := tmp)
+    }
+    tbl %<>% bind_cols(Total = tot)
+
+    p <-
+      c(DescrVarObj["test_list"]$p, rep(NA_real_, length_tbl - 1))
+    tbl %<>% bind_cols(p = p)
+
+    test_name <-
+      c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl - 1))
+    tbl %<>% bind_cols(Test = test_name)
   }
-  tbl %<>% bind_cols(Total = tot)
-
-  p <- c(DescrVarObj["test_list"]$p, rep(NA_real_, length_tbl-1))
-  tbl %<>% bind_cols(p = p)
-
-  test_name <- c(DescrVarObj["test_list"]$test_name, rep(NA_real_, length_tbl-1))
-  tbl %<>% bind_cols(Test = test_name)
-}
-
-
 
 
 
@@ -424,8 +417,8 @@ create_subtable.cont_summary <- function(DescrVarObj, var_name){
 #' @export
 #'
 #' @examples
-test_cat <- function(...){
-  return(list(p=0.5, test_name="t.test"))
+test_cat <- function(...) {
+  return(list(p = 0.5, test_name = "t.test"))
 }
 
 #' Test continuous variables
@@ -436,8 +429,8 @@ test_cat <- function(...){
 #' @export
 #'
 #' @examples
-test_cont <- function(...){
-  return(list(p=0.5, test_name="t.test"))
+test_cont <- function(...) {
+  return(list(p = 0.5, test_name = "t.test"))
 }
 
 
