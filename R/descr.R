@@ -179,11 +179,13 @@ descr <-
         # Analyze categorical variable
         var_descr <- descr_cat(var,
                                group_var,
+                               var_name,
                                ...)
       } else if (is.numeric(var)) {
         # Analyze continuous variable
         var_descr <- descr_cont(var,
                                 group_var,
+                                var_name,
                                 ...)
       } else{
         stop("Somehow, you have variables which are neither factors nor numerical.")
@@ -207,7 +209,7 @@ descr <-
 #'
 #' @examples
 descr_cat <-
-  function(var, group) {
+  function(var, group, var_name) {
     erg <- list()
     var_levels <- levels(var)
 
@@ -234,6 +236,7 @@ descr_cat <-
 
     # Calculate test
     erg[["test_list"]] <- test_cat(var, group)
+    erg[["variable_name"]] <- var_name
 
     attr(erg, "class") <- c("cat_summary", "list")
     erg
@@ -252,6 +255,7 @@ descr_cat <-
 descr_cont <-
   function(var,
            group,
+           var_name,
            summary_stats = c(
              N = .N,
              Nmiss = .Nmiss,
@@ -289,6 +293,7 @@ descr_cont <-
 
     # Calculate test
     erg[["test_list"]] <- test_cont(var, group)
+    erg[["variable_name"]] <- var_name
 
     attr(erg, "class") <- c("cont_summary", "list")
     erg
@@ -298,6 +303,9 @@ descr_cont <-
 #' S3 override for print function for DescrList objects
 #'
 #' @param DescrListObj
+#' @param printFormat
+#' Possible values: "console" (default), "tex", "html", "word", "numeric"
+#' @param ...
 #'
 #' @return
 #' @export
@@ -307,41 +315,78 @@ descr_cont <-
 print.DescrList <-  function(DescrListObj,
                              printFormat = options("DescrTabFormat")[[1]],
                              ...) {
-
   if (is.null(printFormat)) {
     printFormat <- "console"
   }
-  switch(
+
+  DescrPrintObj <- create_printObj(DescrListObj, printFormat)
+
+  ret <- switch(
     printFormat,
-    tex = print_tex(),
-    flex = print_flex(),
-    print_console(DescrListObj, ...)
+    tex = print_tex(DescrPrintObj),
+    html = print_html(DescrPrintObj),
+    word = print_word(DescrPrintObj),
+    numeric = print_numeric(DescrPrintObj),
+    print_console(DescrPrintObj, ...)
   )
+
+  invisible(ret)
 }
 
-print_console <- function(DescrListObj,
-                          n = NULL,
-                          width = NULL,
-                          n_extra = NULL,
-                          print_red_NA = F) {
+
+create_printObj <- function(DescrListObj, printFormat) {
+  create_subtable <- switch (printFormat,
+                             numeric = create_numeric_subtable,
+                             create_character_subtable)
+
   var_names <- names(DescrListObj[["variables"]])
   group_names <- c(DescrListObj[["group"]][["var"]] %>% levels(),
                    "Total")
 
-  tibl <- bind_cols(Variable = character())
-  for (group_name in group_names) {
-    tibl %<>% bind_cols(!!group_name := numeric())
-  }
-  tibl %<>% bind_cols(p = numeric(),
-                     Test = character())
+  print_list <- list()
 
   for (var_name in var_names) {
-    sub_tibl <-
+    print_list[[var_name]] <-
       DescrListObj[["variables"]][[var_name]] %>% create_subtable(., var_name)
-    tibl %<>% bind_rows(sub_tibl)
   }
 
-  print_format <- format(tibl,
+  printObj <- list()
+  printObj[["variables"]] <- list()
+  printObj[["lengths"]] <- list()
+  printObj[["group_names"]] <- group_names
+  tibl <- tibble()
+
+  for (var_name in var_names) {
+    printObj[["variables"]][[var_name]] <-
+      print_list[[var_name]][["summary_list"]]
+    printObj[["lengths"]][[var_name]] <-
+      print_list[[var_name]][["length"]]
+    tibl %<>%  bind_rows(print_list[[var_name]][["tibble"]])
+  }
+  printObj[["tibble"]] <- tibl
+  attr(printObj, "class") <- c("printObj", "list")
+  printObj
+}
+
+
+#' Title
+#'
+#' @param DescrListObj
+#' @param n
+#' @param width
+#' @param n_extra
+#' @param print_red_NA
+#'
+#' @return
+#' @export
+#'
+#' @examples
+print_numeric <- function(DescrPrintObj,
+                          n = NULL,
+                          width = NULL,
+                          n_extra = NULL,
+                          print_red_NA = F) {
+  print_format <- format(DescrPrintObj[["tibble"]],
                          n = n,
                          width = width,
                          n_extra = n_extra)
@@ -351,9 +396,101 @@ print_console <- function(DescrListObj,
     print_format %>% str_replace_all(pattern = fixed("\033[31mNA\033[39m"),
                                      fixed("\033[31m  \033[39m")) %>%  cli::cat_line()
   }
-
-  invisible(tibl)
+  invisible(DescrPrintObj)
 }
+
+
+#' Title
+#'
+#' @param DescrListObj
+#' @param n
+#' @param width
+#' @param n_extra
+#' @param print_red_NA
+#'
+#' @return
+#' @export
+#'
+#' @examples
+print_console <- function(DescrPrintObj,
+                          n = NULL,
+                          width = NULL,
+                          n_extra = NULL,
+                          print_red_NA = F) {
+  tibl <- DescrPrintObj[["tibble"]]
+  var_names <- names(DescrPrintObj[["variables"]])
+
+  c1 <- tibl %>% pull(1)
+
+  c1 <- ifelse(c1 %in% var_names, c1, paste0("  -", c1))
+  tibl[, 1] <- c1
+
+  print_format <- format(tibl,
+                         n = n,
+                         width = width,
+                         n_extra = n_extra)
+
+  print_format %>% .[-c(1, 3)] %>%
+    str_replace_all(pattern = fixed('"'), fixed(' ')) %>%
+    cli::cat_line()
+
+  invisible(DescrPrintObj)
+}
+
+#' Title
+#'
+#' @param DescrListObj
+#' @param n
+#' @param width
+#' @param n_extra
+#' @param print_red_NA
+#'
+#' @return
+#' @export
+#'
+#' @examples
+print_tex <- function(DescrPrintObj) {
+
+  tibl <- DescrPrintObj[["tibble"]]
+  var_names <- names(DescrPrintObj[["variables"]])
+  lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
+  names(lengths) <- c(var_names)
+
+  c1 <- tibl %>% pull(1)
+  indx_varnames <- c1 %in% var_names
+
+
+  tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
+  p_vec <- tibl %>% pull(p)
+  p_indx <- which(p_vec != "")
+
+  for (idx in p_indx) {
+    tibl[idx, "p"] %<>% paste0("\\textsuperscript{", letters[match(tibl[idx, "Test"], tests)]  , "}")
+  }
+
+  tibl %<>% select(-Test)
+  alig <- paste0(c("l",rep("c", ncol(tibl)-1)), collapse = "")
+
+  tibl[!indx_varnames, ] %>%
+    kbl(
+      format = "latex",
+      longtable = T,
+      booktabs = T,
+      linesep = "",
+      align= alig,
+      escape = F
+    ) %>%
+    kable_styling() %>%
+    kableExtra::footnote(alphabet = c(tests)) %>%
+    pack_rows(index =lengths) %>%
+    cat()
+
+  invisible(DescrPrintObj)
+}
+
+
+
+
 
 
 #' S3 dispatcher for subtable creation
@@ -365,9 +502,24 @@ print_console <- function(DescrListObj,
 #' @export
 #'
 #' @examples
-create_subtable <- function(DescrVarObj, ...) {
-  UseMethod("create_subtable")
+create_numeric_subtable <- function(DescrVarObj, ...) {
+  UseMethod("create_numeric_subtable")
 }
+
+#' S3 dispatcher for subtable creation
+#'
+#' @param DescrVarObj
+#' @param var_name
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_character_subtable <- function(DescrVarObj, ...) {
+  UseMethod("create_character_subtable")
+}
+
+
 
 #' Create subtables for categorical variables which will comprise the output table
 #'
@@ -378,35 +530,42 @@ create_subtable <- function(DescrVarObj, ...) {
 #' @export
 #'
 #' @examples
-create_subtable.cat_summary <- function(DescrVarObj, var_name) {
-  tot <- DescrVarObj[["Total"]]
-  summary_stat_names <- names(tot)
-  tot[sapply(tot, is.null)] <- NA
-  tot <- c(NA_real_, unlist(tot))
+create_numeric_subtable.cat_summary <-
+  function(DescrVarObj, var_name) {
+    summary_stat_names <- names(DescrVarObj[["Total"]])
+    DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
+      NA
+    tot <- c(NA_real_, unlist(DescrVarObj[["Total"]]))
 
-  tibl <- tibble(Variable = c(var_name,
-                             summary_stat_names))
-  length_tibl <- nrow(tibl)
+    tibl <- tibble(Variable = c(var_name,
+                                summary_stat_names))
+    length_tibl <- nrow(tibl)
 
-  groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
+    groups <-
+      setdiff(names(DescrVarObj),
+              c("Total", "test_list", "variable_name"))
 
-  for (group in groups) {
-    tmp <- DescrVarObj[[group]]
-    tmp[sapply(tmp, is.null)] <- NA
-    tmp <- c(NA_real_, unlist(tmp))
-    tibl %<>% bind_cols(!!group := tmp)
+    for (group in groups) {
+      DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
+      tmp <- c(NA_real_, unlist(DescrVarObj[[group]]))
+      tibl %<>% bind_cols(!!group := tmp)
+    }
+    tibl %<>% bind_cols(Total = tot)
+
+    p <-
+      c(DescrVarObj[["test_list"]]$p, rep(NA_real_, length_tibl - 1))
+    tibl %<>% bind_cols(p = p)
+
+    test_name <-
+      c(DescrVarObj[["test_list"]]$test_name, rep(NA_real_, length_tibl - 1))
+    tibl %<>% bind_cols(Test = test_name)
+
+    return(list(
+      summary_list = DescrVarObj,
+      length = length_tibl,
+      tibble = tibl
+    ))
   }
-  tibl %<>% bind_cols(Total = tot)
-
-  p <-
-    c(DescrVarObj[["test_list"]]$p, rep(NA_real_, length_tibl - 1))
-  tibl %<>% bind_cols(p = p)
-
-  test_name <-
-    c(DescrVarObj[["test_list"]]$test_name, rep(NA_real_, length_tibl - 1))
-  tibl %<>% bind_cols(Test = test_name)
-  tibl
-}
 
 
 #' Create subtables for continuous variables which will comprise the output table
@@ -418,23 +577,25 @@ create_subtable.cat_summary <- function(DescrVarObj, var_name) {
 #' @export
 #'
 #' @examples
-create_subtable.cont_summary <-
+create_numeric_subtable.cont_summary <-
   function(DescrVarObj, var_name) {
-    tot <- DescrVarObj[["Total"]]
-    summary_stat_names <- names(tot)
-    tot[sapply(tot, is.null)] <- NA
-    tot <- c(NA_real_, unlist(tot))
+    summary_stat_names <- names(DescrVarObj[["Total"]])
+
+    DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
+      NA
+    tot <- c(NA_real_, unlist(DescrVarObj[["Total"]]))
 
     tibl <- tibble(Variable = c(var_name,
-                               summary_stat_names))
-    length_tibl <- nrow(tibl)
+                                summary_stat_names))
 
-    groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
+    length_tibl <- nrow(tibl)
+    groups <-
+      setdiff(names(DescrVarObj),
+              c("Total", "test_list", "variable_name"))
 
     for (group in groups) {
-      tmp <- DescrVarObj[group]
-      tmp[sapply(tmp, is.null)] <- NA
-      tmp <- c(NA_real_, unlist(tmp))
+      DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
+      tmp <- c(NA_real_, unlist(DescrVarObj[[group]]))
       tibl %<>% bind_cols(!!group := tmp)
     }
     tibl %<>% bind_cols(Total = tot)
@@ -444,11 +605,16 @@ create_subtable.cont_summary <-
 
     test_name <-
       c(DescrVarObj[["test_list"]]$test_name, rep(NA_real_, length_tibl - 1))
+
     tibl %<>% bind_cols(Test = test_name)
-    tibl
+
+    return(list(
+      summary_list = DescrVarObj,
+      length = length_tibl,
+      tibble = tibl
+    ))
+
   }
-
-
 
 #' Create subtables for continuous variables which will comprise the output table
 #'
@@ -459,55 +625,71 @@ create_subtable.cont_summary <-
 #' @export
 #'
 #' @examples
-create_subtable.cont_summary_character <-
+create_character_subtable.cont_summary <-
   function(DescrVarObj, var_name) {
+    summary_stat_names <- names(DescrVarObj[["Total"]])
+    DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
+      NA
 
+    DescrVarObj[["Total"]] <-
+      combine_two_elements_of_list(DescrVarObj[["Total"]], "Q1", "Q3")
+    DescrVarObj[["Total"]] <-
+      combine_two_elements_of_list(DescrVarObj[["Total"]], "min", "max")
 
-
-    tot <- DescrVarObj[["Total"]]
-    summary_stat_names <- names(tot)
-    tot[sapply(tot, is.null)] <- NA
-
-    tot <- combine_two_elements_of_list(tot, "Q1", "Q3")
-    tot <- combine_two_elements_of_list(tot, "min", "max")
-
-
-    for (name in names(tot)){
-      tot[[name]] <- formatC(tot[[name]])
+    for (name in names(DescrVarObj[["Total"]])) {
+      DescrVarObj[["Total"]][[name]] <-
+        formatC(DescrVarObj[["Total"]][[name]])
     }
+    tot <- DescrVarObj[["Total"]]
 
     # display_names <- names(tot) %>% paste("  -", .) %>% c(var_name, .)
-    display_names <- names(tot)  %>% c(var_name, .)
+    display_names <-
+      names(DescrVarObj[["Total"]])  %>% c(var_name, .)
 
     tibl <- bind_cols(Variables = display_names)
     length_tibl <- length(display_names)
 
     # Remember: You may not have a group which contains "Total" or "test_list" as a level.
-    groups <- setdiff(names(DescrVarObj), c("Total", "test_list"))
+    groups <-
+      setdiff(names(DescrVarObj),
+              c("Total", "test_list", "variable_name"))
     grp_vars <- DescrVarObj[groups]
 
     for (group in groups) {
-      grp_vars[[group]][sapply(grp_vars[[group]], is.null)] <- NA
-      grp_vars[[group]] <- combine_two_elements_of_list(grp_vars[[group]], "Q1", "Q3")
-      grp_vars[[group]] <- combine_two_elements_of_list(grp_vars[[group]], "min", "max")
-      for (name in names(grp_vars[[group]])){
-        grp_vars[[group]][[name]] <- formatC(grp_vars[[group]][[name]])
+      DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
+      DescrVarObj[[group]] <-
+        combine_two_elements_of_list(DescrVarObj[[group]], "Q1", "Q3")
+      DescrVarObj[[group]] <-
+        combine_two_elements_of_list(DescrVarObj[[group]], "min", "max")
+      for (name in names(DescrVarObj[[group]])) {
+        DescrVarObj[[group]][[name]] <-
+          formatC(DescrVarObj[[group]][[name]])
       }
-      tibl %<>% bind_cols(!!group := c("", unlist(grp_vars[[group]]) ))
+      tibl %<>% bind_cols(!!group := c("", unlist(DescrVarObj[[group]])))
     }
 
-    tibl %<>% bind_cols(Total = c("", unlist(tot)  ))
-    tibl %<>% bind_cols(p =  c(formatC(DescrVarObj[["test_list"]]$p), rep("", length_tibl-1)))
-    tibl %<>% bind_cols(Test = c(formatC(DescrVarObj[["test_list"]]$test_name), rep("", length_tibl-1)))
+    tibl %<>% bind_cols(Total = c("", unlist(tot)))
+    tibl %<>% bind_cols(p =  c("", formatC(DescrVarObj[["test_list"]]$p), rep("", length_tibl -
+                                                                            2)))
+    tibl %<>% bind_cols(Test = c("", formatC(DescrVarObj[["test_list"]]$test_name), rep("", length_tibl -
+                                                                                      2)))
 
-
-    ## TODO: put this in right place
-    tibl %>% format() %>% .[-c(1,3)] %>%  str_replace_all(pattern = fixed('"'),
-                                       fixed(' ')) %>%  cli::cat_line()
-
-    invisible(tibl)
+    return(list(
+      summary_list = DescrVarObj,
+      length = length_tibl,
+      tibble = tibl
+    ))
   }
 
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+create_character_subtable.cat_summary <- function() {
+
+}
 
 
 #' Does what the function name says
@@ -520,21 +702,17 @@ create_subtable.cont_summary_character <-
 #' @export
 #'
 #' @examples
-combine_two_elements_of_list <- function(lst, elem1, elem2){
-  if (c(elem1, elem2) %in% names(lst) %>% all()){
-    lst[[elem1]] <- paste0(formatC(lst[[elem1]]), " -- ", formatC(lst[[elem2]]))
-    names(lst)[names(lst)==elem1] <- paste0(elem1, " - ", elem2)
+combine_two_elements_of_list <- function(lst, elem1, elem2) {
+  if (c(elem1, elem2) %in% names(lst) %>% all()) {
+    lst[[elem1]] <-
+      paste0(formatC(lst[[elem1]]), " -- ", formatC(lst[[elem2]]))
+    names(lst)[names(lst) == elem1] <- paste0(elem1, " - ", elem2)
     lst <- lst[setdiff(names(lst), elem2)]
   }
   else{
     return(lst)
   }
 }
-
-
-
-
-
 
 
 
@@ -658,23 +836,44 @@ test_cont <- function(var, group, ...) {
   max(var, na.rm = T)
 }
 
-iris_test <- iris %>% bind_cols(cat_var = c("a", "b") %>% sample(150, T) ) %>% as_tibble()
-abc <- descr(iris_test, "Species")
-bb <- create_subtable.cont_summary_character(abc$variables$Sepal.Length, "Sepal.Length")
+# iris_test <-
+#   iris %>% bind_cols(cat_var = c("a", "b") %>% sample(150, T)) %>% as_tibble()
+# abc <- descr(iris_test, "Species")
+# bb <-
+#   create_subtable.cont_summary_character(abc$variables$Sepal.Length, "Sepal.Length")
 
 
-absanitize_latex <- function(str_vec){
-  str_replace_all(str_vec,  "^\\s\\s\\-", fixed("\\\\vphantom{padding} \\\\vphantom{padding} -"))
+sanitize_latex <- function(str_vec) {
+  str_replace_all(str_vec,
+                  "^\\s\\s\\-",
+                  fixed("\\\\vphantom{padding} \\\\vphantom{padding} -"))
 }
 
-bb %>% xtable::xtable() %>% print(include.rownames=F, tabular.environment = "longtable", floating=F, sanitize.text.function=sanitize_latex)
-bb %>% kable(format="latex", longtable=T)
 
 
+# bb %>% xtable::xtable() %>% print(
+#   include.rownames = F,
+#   tabular.environment = "longtable",
+#   floating = F,
+#   sanitize.text.function = sanitize_latex
+# )
+# bb %>% kable(format = "latex", longtable = T)
+#
+#
+#
+#
+# bb %>% kbl(
+#   format = "latex",
+#   longtable = T,
+#   booktabs = T,
+#   linesep = ""
+# ) %>% kable_styling() %>%  footnote(alphabet = c("test", "yo")) %>%
+#   pack_rows(index = c(
+#     " " = 0,
+#     "Group 1" = 4,
+#     "Group 2" = 2
+#   ))
 
-
-bb %>% kbl(format="latex", longtable = T, booktabs = T, linesep = "") %>% kable_styling() %>%  footnote(alphabet = c("test", "yo")) %>%
-  pack_rows(index=c(" " = 0, "Group 1" = 4, "Group 2" = 2))
 
 
 
