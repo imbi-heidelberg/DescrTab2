@@ -1,0 +1,28 @@
+---
+title: "test"
+output:
+  pdf_document:
+    toc: true
+  header-includes::
+    - \usepackage{longtable}
+    - \usepackage{booktabs}
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(magrittr)
+library(kableExtra)
+```
+
+
+
+```{r cars, echo=F, results='asis'}
+source("../R/descr.R")
+options(DescrTabFormat="tex")
+iris_test <- iris %>% bind_cols(cat_var=c("a", "b") %>% sample(150, T))
+iris_test %>% descr("Species") %>% print()
+
+```
+

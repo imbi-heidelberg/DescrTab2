@@ -1,24 +1,23 @@
 ---
-title: "test_word"
-output: word_document
+title: "test_html"
+output: html_document
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(magrittr)
 library(kableExtra)
-library(flextable)
-library(knitr)
 ```
 
 
 
-```{r cars, echo=T}
+```{r cars, results='asis'}
 source("../R/descr.R")
-options(DescrTabFormat="word")
+options(DescrTabFormat="html")
 iris_test <- iris %>% bind_cols(cat_var=c("a", "b") %>% sample(150, T))
-iris_test %>% descr("Species") %>% print(printFormat="word") %>% .$ft %>% knit_print()
+iris_test %>% descr("Species") %>% print()
 
 ```
 
