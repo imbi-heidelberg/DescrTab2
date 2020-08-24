@@ -369,7 +369,7 @@ summary {
 <pre class="r"><code>source(&quot;../R/descr.R&quot;)
 options(DescrTabFormat=&quot;html&quot;)
 iris_test &lt;- iris %&gt;% bind_cols(cat_var=c(&quot;a&quot;, &quot;b&quot;) %&gt;% sample(150, T))
-iris_test %&gt;% descr(&quot;Species&quot;) %&gt;% print()</code></pre>
+iris_test %&gt;% descr(&quot;Species&quot;, var_options=list(Sepal.Length=list(label=&quot;Sepal Length&quot;))) %&gt;% print()</code></pre>
 <pre><code>## Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
 ## Please use the `.name_repair` argument instead.
 ## This warning is displayed once every 8 hours.
@@ -437,7 +437,7 @@ p
 <tbody>
 <tr grouplength="7">
 <td colspan="6" style="border-bottom: 1px solid;">
-<strong>Sepal.Length</strong>
+<strong>Sepal Length</strong>
 </td>
 </tr>
 <tr>
@@ -1013,7 +1013,7 @@ N
 150
 </td>
 <td style="text-align:center;">
-0.373<sup>chi</sup>
+0.829<sup>chi</sup>
 </td>
 </tr>
 <tr>
@@ -1040,7 +1040,7 @@ NaN
 a
 </td>
 <td style="text-align:center;">
-21 (42%)
+26 (52%)
 </td>
 <td style="text-align:center;">
 25 (50%)
@@ -1049,7 +1049,7 @@ a
 28 (56%)
 </td>
 <td style="text-align:center;">
-74 (49%)
+79 (53%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1059,7 +1059,7 @@ a
 b
 </td>
 <td style="text-align:center;">
-29 (58%)
+24 (48%)
 </td>
 <td style="text-align:center;">
 25 (50%)
@@ -1068,7 +1068,7 @@ b
 22 (44%)
 </td>
 <td style="text-align:center;">
-76 (51%)
+71 (47%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1082,7 +1082,7 @@ b
 </tr>
 <tr>
 <td style="padding: 0; border: 0;" colspan="100%">
-<sup>chi</sup> Chisq
+<sup>chi</sup> Chi-squared test
 </td>
 </tr>
 </tfoot>

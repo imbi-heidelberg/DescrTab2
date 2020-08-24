@@ -17,7 +17,7 @@ library(kableExtra)
 source("../R/descr.R")
 options(DescrTabFormat="html")
 iris_test <- iris %>% bind_cols(cat_var=c("a", "b") %>% sample(150, T))
-iris_test %>% descr("Species") %>% print()
+iris_test %>% descr("Species", var_options=list(Sepal.Length=list(label="Sepal Length"))) %>% print()
 
 ```
 
