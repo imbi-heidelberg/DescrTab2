@@ -124,8 +124,47 @@ descr <-
            group = NULL,
            var_options = list(),
            group_labels = list(),
-           format_pvalue = scales::pvalue_format(),
-           format_summary_stats = formatC,
+
+           summary_stats_cont = list(
+             N = .N,
+             Nmiss = .Nmiss,
+             mean = .mean,
+             sd = .sd,
+             median = .median,
+             Q1 = .Q1,
+             Q3 = .Q3,
+             min = .min,
+             max = .max
+           ),
+
+           summary_stats_cat = list(),
+
+           format_p = scales::pvalue_format(),
+
+           format_summary_stats = list(
+             N = function(x)
+               format(x, digits = 2, scientific = 3),
+             Nmiss = function(x)
+               format(x, digits = 2, scientific = 3),
+             mean = function(x)
+               format(x, digits = 2, scientific = 3),
+             sd = function(x)
+               format(x, digits = 2, scientific = 3),
+             median = function(x)
+               format(x, digits = 2, scientific = 3),
+             Q = function(x)
+               format(x, digits = 2, scientific = 3),
+             minmax = function(x)
+               format(x, digits = 2, scientific = 3)
+           ),
+
+           format_options = list(
+             omit_Nmiss_if_0 = T,
+             print_p = T,
+             omit_missings_in_group = F,
+             make_missing_a_category = F
+           ),
+
            percent.vertical = T,
            data.names = T,
            nonparametric = c(),
@@ -157,7 +196,7 @@ descr <-
     # Coerce dataset to tibble
     dat %<>% as_tibble(dat)
 
-    # Coerce option lists to list if they were passed in the wrong format
+    # If options lists were passed as named named vectors, coerce to list
     var_options = lapply(var_options, as.list)
     group_labels = lapply(group_labels, as.list)
 
@@ -180,7 +219,6 @@ descr <-
     ergs[["group"]][["var"]] <- group_var
     ergs[["group"]][["name"]] <- group
 
-
     # Loop over all variables
     for (var_name in names(dat)) {
       var <- dat %>% pull(var_name)
@@ -191,6 +229,7 @@ descr <-
         var_descr <- descr_cat(var,
                                group_var,
                                var_name,
+                               summary_stats_cat,
                                var_options = var_options[[var_name]],
                                ...)
       } else if (is.numeric(var)) {
@@ -198,6 +237,7 @@ descr <-
         var_descr <- descr_cont(var,
                                 group_var,
                                 var_name,
+                                summary_stats_cont,
                                 var_options = var_options[[var_name]],
                                 ...)
       } else{
@@ -206,11 +246,13 @@ descr <-
       # Append result of analysis to list
       ergs[["variables"]][[var_name]] <- var_descr
     }
+
+    # Save formatting options for printing later
     ergs[["var_options"]] <- var_options
     ergs[["group_labels"]] <- group_labels
-
-    ergs[["format_fn"]][["p"]] <- format_pvalue
-    ergs[["format_fn"]][["summary_stats"]] <- format_summary_stats
+    ergs[["format"]][["p"]] <- format_p
+    ergs[["format"]][["summary_stats"]] <- format_summary_stats
+    ergs[["format"]][["options"]] <- format_options
 
     # Make result a "DescrList" object and return
     attr(ergs, "class") <- c("DescrList", "list")
@@ -231,10 +273,15 @@ descr_cat <-
   function(var,
            group,
            var_name,
-           summary_stats = c(N = .N, mean = .factormean),
+           summary_stats = c(),
            var_options = list()) {
     erg <- list()
     var_levels <- levels(var)
+
+    # Summary stats choice: Special variable summary stats have precendence over global summary stats
+    if (!is.null(var_options[["summary_stats"]])) {
+      summary_stats <- var_options[["summary_stats"]]
+    }
 
 
     for (group_name in levels(group)) {
@@ -264,9 +311,10 @@ descr_cat <-
     }
     erg[["Total"]] <- cat_list
 
-
+    # Check if a specific test is requested for this variable
+    test <- var_options[["test"]]
     # Calculate test
-    erg[["test_list"]] <- test_cat(var, group)
+    erg[["test_list"]] <- test_cat(var, group, test = test)
     erg[["variable_name"]] <- var_name
     erg[["variable_levels"]] <- var_levels
     erg[["variable_options"]] <- var_options
@@ -289,19 +337,16 @@ descr_cont <-
   function(var,
            group,
            var_name,
-           summary_stats = c(
-             N = .N,
-             Nmiss = .Nmiss,
-             mean = .mean,
-             sd = .sd,
-             median = .median,
-             Q1 = .Q1,
-             Q3 = .Q3,
-             min = .min,
-             max = .max
-           ),
+           summary_stats = c(),
            var_options = list()) {
     erg <- list()
+
+    # Summary stats choice: Special variable summary stats have precendence over global summary stats which in turn have precedence over
+    # the default summary stats (which are N, Nmiss, mean, sd, median, Q1, Q3, min and max).
+    # Summary stats choice: Special variable summary stats have precendence over global summary stats
+    if (!is.null(var_options[["summary_stats"]])) {
+      summary_stats <- var_options[["summary_stats"]]
+    }
 
     for (group_name in levels(group)) {
       # Subset values for the respective group
@@ -324,8 +369,10 @@ descr_cont <-
     }
     erg[["Total"]] <- tot_list
 
+    # Check if a specific test is requested for this variable
+    test <- var_options[["test"]]
     # Calculate test
-    erg[["test_list"]] <- test_cont(var, group)
+    erg[["test_list"]] <- test_cont(var, group, test = test)
     erg[["variable_name"]] <- var_name
     erg[["variable_options"]] <- var_options
 
@@ -348,13 +395,45 @@ descr_cont <-
 #' @importFrom tibble
 print.DescrList <-  function(DescrListObj,
                              printFormat = options("DescrTabFormat")[[1]],
+
+                             var_options = list(),
+                             group_labels = list(),
+
+                             format_p = NULL,
+                             format_summary_stats = list(),
+                             format_options = list(),
                              ...) {
+  # Overwrite formatting options if they were resupplied in the print step function call
+  if (length(var_options) > 0) {
+    DescrListObj[["var_options"]] <- var_options
+  }
+  if (length(group_labels) > 0) {
+    DescrListObj[["group_labels"]] <- group_labels
+  }
+  if (!is.null(format_p)) {
+    DescrListObj[["format"]][["p"]] <- format_p
+  }
+  if (length(format_summary_stats) > 0) {
+    DescrListObj[["format"]][["summary_stats"]] <- format_summary_stats
+  }
+  if (length(format_options) > 0) {
+    DescrListObj[["format"]][["options"]] <- format_options
+  }
+
+  # if no printing format was set, print to console
   if (is.null(printFormat)) {
     printFormat <- "console"
   }
 
+  # Preprocessing of the DescrListObj for printing.
+  # In this step, formatting rules are applied.
   DescrPrintObj <- create_printObj(DescrListObj, printFormat)
 
+  # Depending on the selected printing format, appropriate post-processing of the PrintObject is performed and the result is printed.
+  # For "tex" & "html" output is created by kableExtra and the functions are nearly identical. The difference is that in tex, some characters have to
+  # escaped to be rendered properly (i.e. \\ has to be insereted before).
+  # "word" tables are printed using flextable.
+  # "numeric" and "console" tables are printed similarily as tibbles would be printed to the console.
   ret <- switch(
     printFormat,
     tex = print_tex(DescrPrintObj),
@@ -376,15 +455,22 @@ create_printObj <- function(DescrListObj, printFormat) {
   group_names <- c(DescrListObj[["group"]][["var"]] %>% levels(),
                    "Total")
 
-  format_summary_stats <- DescrListObj[["format_fn"]][["summary_stats"]]
-  format_p <- DescrListObj[["format_fn"]][["p"]]
+
+  format_summary_stats <-
+    DescrListObj[["format"]][["summary_stats"]]
+  format_p <- DescrListObj[["format"]][["p"]]
+  format_options <- DescrListObj[["format"]][["options"]]
 
   print_list <- list()
 
   for (var_name in var_names) {
     print_list[[var_name]] <-
       # TODO: remove var_name dependency
-      DescrListObj[["variables"]][[var_name]] %>% create_subtable(., var_name, format_summary_stats, format_p)
+      DescrListObj[["variables"]][[var_name]] %>% create_subtable(.,
+                                                                  var_name,
+                                                                  format_options,
+                                                                  format_summary_stats,
+                                                                  format_p)
   }
 
   printObj <- list()
@@ -447,14 +533,23 @@ create_printObj <- function(DescrListObj, printFormat) {
 #'
 #' @examples
 print_numeric <- function(DescrPrintObj,
-                          n = NULL,
+                          n = 1000,
                           width = NULL,
                           n_extra = NULL,
                           print_red_NA = F) {
-  print_format <- format(DescrPrintObj[["tibble"]],
+  tibl <- DescrPrintObj[["tibble"]]
+
+
+  labels <- unlist(unlist(DescrPrintObj[["labels"]]))
+  c1 <- tibl %>% pull(1)
+  c1 <- ifelse(c1 %in% labels, c1, paste0("  ", c1))
+  tibl[, 1] <- c1
+
+  print_format <- format(tibl,
                          n = n,
                          width = width,
-                         n_extra = n_extra)
+                         n_extra = n_extra) %>%  str_replace_all(pattern = fixed('"'), fixed(' '))
+
   if (print_red_NA) {
     print_format %>% cli::cat_line()
   } else{
@@ -478,16 +573,15 @@ print_numeric <- function(DescrPrintObj,
 #'
 #' @examples
 print_console <- function(DescrPrintObj,
-                          n = NULL,
+                          n = 1000,
                           width = NULL,
                           n_extra = NULL,
                           print_red_NA = F) {
   tibl <- DescrPrintObj[["tibble"]]
-  var_names <- names(DescrPrintObj[["variables"]])
 
+  labels <- unlist(unlist(DescrPrintObj[["labels"]]))
   c1 <- tibl %>% pull(1)
-
-  c1 <- ifelse(c1 %in% var_names, c1, paste0("  -", c1))
+  c1 <- ifelse(c1 %in% labels, c1, paste0("  ", c1))
   tibl[, 1] <- c1
 
   print_format <- format(tibl,
@@ -739,7 +833,11 @@ create_numeric_subtable <- function(DescrVarObj, ...) {
 #'
 #' @examples
 create_numeric_subtable.cat_summary <-
-  function(DescrVarObj, var_name, format_summary_stats, format_p) {
+  function(DescrVarObj,
+           var_name,
+           format_options,
+           format_summary_stats,
+           format_p) {
     ## Remember: Category levels may not be names "N"
     cat_names <- DescrVarObj[["variable_levels"]]
     summary_stat_names <-
@@ -799,7 +897,11 @@ create_numeric_subtable.cat_summary <-
 #'
 #' @examples
 create_numeric_subtable.cont_summary <-
-  function(DescrVarObj, var_name, format_summary_stats, format_p) {
+  function(DescrVarObj,
+           var_name,
+           format_options,
+           format_summary_stats,
+           format_p) {
     summary_stat_names <- names(DescrVarObj[["Total"]])
 
     DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
@@ -843,8 +945,6 @@ create_numeric_subtable.cont_summary <-
   }
 
 
-
-
 #' S3 dispatcher for subtable creation
 #'
 #' @param DescrVarObj
@@ -869,23 +969,26 @@ create_character_subtable <- function(DescrVarObj, ...) {
 #'
 #' @examples
 create_character_subtable.cont_summary <-
-  function(DescrVarObj, var_name, format_summary_stats, format_pvalue) {
-    summary_stat_names <- names(DescrVarObj[["Total"]])
-    DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
-      NA_character_
+  function(DescrVarObj,
+           var_name,
+           format_options,
+           format_summary_stats,
+           format_p) {
+    # Remember: You may not have a group which contains "Total" or "test_list" as a level.
+    groups <- get_groupNames(DescrVarObj)
 
 
+    if (format_options[["omit_Nmiss_if_0"]] == T) {
+      if (isTRUE(DescrVarObj[["Total"]][["Nmiss"]] == 0)) {
+        DescrVarObj[["Total"]] <-
+          DescrVarObj[["Total"]][setdiff(names(DescrVarObj[["Total"]]), "Nmiss")]
 
-    DescrVarObj[["Total"]] <-
-      combine_two_elements_of_list(DescrVarObj[["Total"]], "Q1", "Q3", format_summary_stats)
-    DescrVarObj[["Total"]] <-
-      combine_two_elements_of_list(DescrVarObj[["Total"]], "min", "max", format_summary_stats)
-
-    for (name in names(DescrVarObj[["Total"]])) {
-      DescrVarObj[["Total"]][[name]] <-
-        format_summary_stats(DescrVarObj[["Total"]][[name]])
+        for (group in groups) {
+          DescrVarObj[[group]] <-
+            DescrVarObj[["Total"]][setdiff(names(DescrVarObj[[group]]), "Nmiss")]
+        }
+      }
     }
-    tot <- DescrVarObj[["Total"]]
 
     if (!is.null(DescrVarObj[["variable_options"]][["label"]])) {
       label <- DescrVarObj[["variable_options"]][["label"]]
@@ -894,41 +997,81 @@ create_character_subtable.cont_summary <-
     }
     DescrVarObj[["label"]] <- label
 
-    display_names <-
-      names(DescrVarObj[["Total"]])  %>% c(label, .)
 
-    tibl <- bind_cols(Variables = display_names)
-    length_tibl <- length(display_names)
-
-    # Remember: You may not have a group which contains "Total" or "test_list" as a level.
-    groups <- get_groupNames(DescrVarObj)
-
-    grp_vars <- DescrVarObj[groups]
-
-    for (group in groups) {
-      DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
-      DescrVarObj[[group]] <-
-        combine_two_elements_of_list(DescrVarObj[[group]], "Q1", "Q3", format_summary_stats)
-      DescrVarObj[[group]] <-
-        combine_two_elements_of_list(DescrVarObj[[group]], "min", "max", format_summary_stats)
-      for (name in names(DescrVarObj[[group]])) {
-        DescrVarObj[[group]][[name]] <-
-          format_summary_stats(DescrVarObj[[group]][[name]])
+    all_summary_stats_missing <- T
+    for (summary_stat in names(DescrVarObj[["Total"]])) {
+      if (!is.na(DescrVarObj[["Total"]][[summary_stat]])) {
+        all_summary_stats_missing <- F
       }
-      tibl %<>% bind_cols(!!group := c("", unlist(DescrVarObj[[group]])))
     }
 
-    tibl %<>% bind_cols(Total = c("", unlist(tot)))
-    tibl %<>% bind_cols(p =  c("",
-                               format_pvalue(DescrVarObj[["test_list"]]$p),
-                               rep("", length_tibl -
-                                     2)))
-    tibl %<>% bind_cols(Test = c(
-      "",
-      format_summary_stats(DescrVarObj[["test_list"]]$test_name),
-      rep("", length_tibl -
-            2)
-    ))
+    if (all_summary_stats_missing) {
+      length_tibl <- 2
+      tibl <- bind_cols(Variables = c(label, "-"))
+
+      for (group in groups) {
+        tibl %<>% bind_cols(!!group := c("", "-"))
+      }
+
+      tibl %<>% bind_cols(Total = c("", "All entries NA"))
+      tibl %<>% bind_cols(p =  c("", "-"))
+      tibl %<>% bind_cols(Test = c("", "-"))
+
+    } else{
+      summary_stat_names <-
+        setdiff(names(DescrVarObj[["Total"]]), c("Q1", "Q3", "min", "max"))
+
+      DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
+        NA_character_
+
+      DescrVarObj[["Total"]] <-
+        combine_two_elements_of_list(DescrVarObj[["Total"]], "Q1", "Q3", format_summary_stats[["Q"]])
+      DescrVarObj[["Total"]] <-
+        combine_two_elements_of_list(DescrVarObj[["Total"]], "min", "max", format_summary_stats[["minmax"]])
+
+      for (summary_stat in summary_stat_names) {
+        DescrVarObj[["Total"]][[summary_stat]] <-
+          format_summary_stats[[summary_stat]](DescrVarObj[["Total"]][[summary_stat]])
+      }
+      tot <- DescrVarObj[["Total"]]
+
+
+      display_names <-
+        names(DescrVarObj[["Total"]])  %>% c(label, .)
+
+
+      tibl <- bind_cols(Variables = display_names)
+      length_tibl <- length(display_names)
+
+
+
+
+      for (group in groups) {
+        DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
+        DescrVarObj[[group]] <-
+          combine_two_elements_of_list(DescrVarObj[[group]], "Q1", "Q3", format_summary_stats[["Q"]])
+        DescrVarObj[[group]] <-
+          combine_two_elements_of_list(DescrVarObj[[group]], "min", "max", format_summary_stats[["minmax"]])
+        for (summary_stat in summary_stat_names) {
+          DescrVarObj[[group]][[summary_stat]] <-
+            format_summary_stats[[summary_stat]](DescrVarObj[[group]][[summary_stat]])
+        }
+        tibl %<>% bind_cols(!!group := c("", unlist(DescrVarObj[[group]])))
+      }
+
+      tibl %<>% bind_cols(Total = c("", unlist(tot)))
+      tibl %<>% bind_cols(p =  c("",
+                                 format_p(DescrVarObj[["test_list"]]$p),
+                                 rep("", length_tibl -
+                                       2)))
+      tibl %<>% bind_cols(Test = c("",
+                                   DescrVarObj[["test_list"]]$test_name,
+                                   rep("", length_tibl -
+                                         2)))
+    }
+
+
+
 
     return(list(
       summary_list = DescrVarObj,
@@ -944,27 +1087,46 @@ create_character_subtable.cont_summary <-
 #'
 #' @examples
 create_character_subtable.cat_summary <-
-  function(DescrVarObj, var_name, format_summary_stats, format_pvalue) {
+  function(DescrVarObj,
+           var_name,
+           format_options,
+           format_summary_stats,
+           format_p) {
     ## Remember: Category levels may not be names "N"
     cat_names <- DescrVarObj[["variable_levels"]]
+    cat_names_nonmissing <- setdiff(cat_names, "(Missing)")
     summary_stat_names <-
       setdiff(names(DescrVarObj[["Total"]]), cat_names)
     DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
       "0 (0%)"
 
-    N_tot <- DescrVarObj[["Total"]][[1]]
+    N_total <- sum(unlist(DescrVarObj[["Total"]][cat_names]))
+
+    if (format_options[["make_missing_a_category"]] == T) {
+      N_nonmissing <- N_total
+    } else{
+      N_nonmissing <-
+        sum(unlist(DescrVarObj[["Total"]][cat_names_nonmissing]))
+    }
 
     for (summary_stat in summary_stat_names) {
       DescrVarObj[["Total"]][[summary_stat]] <-
-        format_summary_stats(DescrVarObj[["Total"]][[summary_stat]])
+        format_summary_stats[[summary_stat]](DescrVarObj[["Total"]][[summary_stat]])
     }
 
-
-    for (summary_stat in cat_names) {
+    for (summary_stat in cat_names_nonmissing) {
       DescrVarObj[["Total"]][[summary_stat]] <-
         paste0(DescrVarObj[["Total"]][[summary_stat]],
                " (",
-               scales::label_percent()(DescrVarObj[["Total"]][[summary_stat]] / N_tot)  ,
+               scales::label_percent()(DescrVarObj[["Total"]][[summary_stat]] / N_nonmissing)  ,
+               ")")
+    }
+
+    if ("(Missing)" %in% cat_names) {
+      DescrVarObj[["Total"]][["(Missing)"]] <-
+        paste0(DescrVarObj[["Total"]][["(Missing)"]],
+               " (",
+               scales::label_percent()(DescrVarObj[["Total"]][[summary_stat]] / N_total)  ,
                ")")
     }
 
@@ -987,20 +1149,43 @@ create_character_subtable.cat_summary <-
       DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <-
         "0 (0%)"
 
-      N_grp <- DescrVarObj[[group]][[1]]
+
+      N_group_total <-
+        sum(unlist(DescrVarObj[[group]][cat_names]))
+
+      if (format_options[["make_missing_a_category"]] == T) {
+        N_group_nonmissing <- N_group_total
+      } else{
+        N_group_nonmissing <-
+          sum(unlist(DescrVarObj[[group]][cat_names_nonmissing]))
+      }
+
 
       for (summary_stat in summary_stat_names) {
         DescrVarObj[[group]][[summary_stat]] <-
-          format_summary_stats(DescrVarObj[[group]][[summary_stat]])
+          format_summary_stats[[summary_stat]](DescrVarObj[[group]][[summary_stat]])
       }
 
-      for (summary_stat in cat_names) {
+      for (summary_stat in cat_names_nonmissing) {
         DescrVarObj[[group]][[summary_stat]] <-
-          paste0(DescrVarObj[[group]][[summary_stat]],
-                 " (",
-                 scales::label_percent()(DescrVarObj[[group]][[summary_stat]] / N_grp)  ,
-                 ")")
+          paste0(
+            DescrVarObj[[group]][[summary_stat]],
+            " (",
+            scales::label_percent()(DescrVarObj[[group]][[summary_stat]] / N_group_nonmissing),
+            ")"
+          )
       }
+
+      if ("(Missing)" %in% cat_names) {
+        DescrVarObj[[group]][["(Missing)"]] <-
+          paste0(
+            DescrVarObj[[group]][["(Missing)"]],
+            " (",
+            scales::label_percent()(DescrVarObj[[group]][["(Missing)"]] / N_group_total)  ,
+            ")"
+          )
+      }
+
       tmp <- c("", unlist(DescrVarObj[[group]]))
       tibl %<>% bind_cols(!!group := tmp)
     }
@@ -1008,15 +1193,13 @@ create_character_subtable.cat_summary <-
 
 
     tibl %<>% bind_cols(p =  c("",
-                               format_pvalue(DescrVarObj[["test_list"]]$p),
+                               format_p(DescrVarObj[["test_list"]]$p),
                                rep("", length_tibl -
                                      2)))
-    tibl %<>% bind_cols(Test = c(
-      "",
-      format_summary_stats(DescrVarObj[["test_list"]]$test_name),
-      rep("", length_tibl -
-            2)
-    ))
+    tibl %<>% bind_cols(Test = c("",
+                                 DescrVarObj[["test_list"]]$test_name,
+                                 rep("", length_tibl -
+                                       2)))
 
     return(list(
       summary_list = DescrVarObj,
@@ -1036,19 +1219,20 @@ create_character_subtable.cat_summary <-
 #' @export
 #'
 #' @examples
-combine_two_elements_of_list <- function(lst, elem1, elem2, format_summary_stats) {
-  if (c(elem1, elem2) %in% names(lst) %>% all()) {
-    lst[[elem1]] <-
-      paste0(format_summary_stats(lst[[elem1]]),
-             " -- ",
-             format_summary_stats(lst[[elem2]]))
-    names(lst)[names(lst) == elem1] <- paste0(elem1, " - ", elem2)
-    lst <- lst[setdiff(names(lst), elem2)]
+combine_two_elements_of_list <-
+  function(lst, elem1, elem2, format_summary_stats) {
+    if (c(elem1, elem2) %in% names(lst) %>% all()) {
+      lst[[elem1]] <-
+        paste0(format_summary_stats(lst[[elem1]]),
+               " -- ",
+               format_summary_stats(lst[[elem2]]))
+      names(lst)[names(lst) == elem1] <- paste0(elem1, " - ", elem2)
+      lst <- lst[setdiff(names(lst), elem2)]
+    }
+    else{
+      return(lst)
+    }
   }
-  else{
-    return(lst)
-  }
-}
 
 #' Title
 #'
@@ -1070,7 +1254,6 @@ get_groupNames <- function(DescrVarObj) {
       "label"
     )
   )
-
 }
 
 
@@ -1210,8 +1393,6 @@ sanitize_latex <- function(str_vec) {
 }
 
 
-
-
 #' p-value calculator for continous variables
 #'
 #' Calculate the p-value for continous variables.
@@ -1279,14 +1460,13 @@ test_cont <-
   function(var,
            group,
            paired = F,
-           is.ordered = F,
+           index = c(),
            nonparametric = F,
            t.log = F,
            var.equal = F,
-           index = c()) {
+           test = NULL) {
     if (!is.null(group)) {
       group <- droplevels(group)
-
       if (length(levels(group)) == 2) {
         if (nonparametric) {
           test.name <- "Mann–Whitney U test"
@@ -1295,7 +1475,7 @@ test_cont <-
           test.value <- tl$statistic
         } else {
           if (t.log) {
-            test.name <- "log-t-test"
+            test.name <- "Students t-test on logarithm of variable"
             var <- log(var)
           }
           test.name <- "Students t-test"
@@ -1312,13 +1492,13 @@ test_cont <-
           if (nonparametric) {
             var.ind <-
               rep(1:(length(var) / length(levels(group))), length(levels(group)))
-            test.name <- "Friedman"
+            test.name <- "Friedman test"
 
             tl <- stats::friedman.test(var ~ group | var.ind)
             pv <- tl$p.value
             test.value <- tl$statistic
           } else {
-            test.name <- "paired_lme_F-test(dont_really_know_what_happens_here)"
+            test.name <- "Mixed model ANOVA, subject ID as random effect"
             fit <- nlme::lme(var ~ group, random = ~ 1 | var.ind)
             # pv <- car::Anova(fit, type = "III")[2, 3]
             tl <- nlme::anova.lme(fit)
@@ -1327,12 +1507,12 @@ test_cont <-
           }
         } else {
           if (nonparametric) {
-            test.name <- "Kruskal"
+            test.name <- "Kruskal–Wallis one-way ANOVA"
             tl <- stats::kruskal.test(var ~ group)
             pv <- tl$p.value
             test.value <- tl$statistic
           } else {
-            test.name <- "F-test"
+            test.name <- "F-test (ANOVA)"
             tl <- summary(stats::aov(var ~ group))[[1]]
             pv <- tl$`Pr(>F)`[1]
             test.value <- tl$`F value`[1]
@@ -1348,15 +1528,10 @@ test_cont <-
     }
 
 
-
-
-
     list(p = pv,
          test_value = test.value,
          test_name = test.name)
   }
-
-
 
 
 
@@ -1414,16 +1589,21 @@ test_cat <-
   function(var,
            group,
            paired = F,
-           is.ordered = F,
            correct.cat = F,
            correct.wilcox = T,
            index = c(),
-           create = "tex",
-           default.unordered.unpaired.test = "Chi-squared test") {
+           exact = F,
+           test = NULL) {
+    is_ordered <- is.ordered(var)
+
     if (!is.null(group)) {
       group <- droplevels(group)
       var <- droplevels(var)
-      if (is.ordered) {
+      group <- droplevels(group)
+
+
+
+      if (is_ordered) {
         if (length(levels(group)) == 2) {
           test.name <- "Mann–Whitney U test"
           tl <-
@@ -1452,21 +1632,14 @@ test_cat <-
             pv <- tl$p.value
             test.value <- tl$statistic
           }
-        } else {
-          if (default.unordered.unpaired.test == "Chi-squared test") {
-            test.name <- "Chi-squared test"
-            tl <-
-              stats::chisq.test(var, group, correct = correct.cat)
-            pv <- tl$p.value
-            test.value <- tl$statistic
-          }
-          else if (default.unordered.unpaired.test == "Boschloos test") {
+        } else{
+          if (exact) {
             if ((nrow(table(var, group)) != 2) |
                 (ncol(table(var, group)) != 2)) {
               warning(
-                "Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fisher_exact."
+                "Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fishers exact test."
               )
-              test.name <- "Fisher_exact"
+              test.name <- "Fishers exact test"
               tl <- stats::fisher.test(var, group)
               pv <- tl$p.value
               test.value <- 0
@@ -1481,11 +1654,12 @@ test_cat <-
               test.value <- tl$statistic
             }
           }
-          else if (default.unordered.unpaired.test == "Fishers exact test") {
-            test.name <- "Fishers exact test"
-            tl <- stats::fisher.test(var, group)
+          else{
+            test.name <- "Chi-squared test"
+            tl <-
+              stats::chisq.test(var, group, correct = correct.cat)
             pv <- tl$p.value
-            test.value <- 0
+            test.value <- tl$statistic
           }
         }
       }
@@ -1497,28 +1671,41 @@ test_cat <-
       test.value <- tl$statistic
     }
 
-
     list(p = pv,
          test_value = test.value,
          test_name = test.name)
   }
 
 
-
+#' Title
+#'
+#' @param test_names
+#'
+#' @return
+#' @export
+#'
+#' @examples
 create_test_abbreviations <- function(test_names) {
   erg <- character()
   for (test in test_names) {
     abbrev <- switch(
       test,
       `Students t-test` = "t",
-      `F-test` = "F",
+      `F-test (ANOVA)` = "F",
       `Chi-squared test` = "chi",
       `Mann–Whitney U test` = "MWU",
-      `Chi-squared goodness-of-fit test` ="gof",
-      `Students one-sample t-test` = "t1",
+      `Kruskal–Wallis one-way ANOVA` = "KW",
+      `McNemars test` = "McN",
+      `Cochrans Q test` = "CoQ",
+      `Boschloos test` = "Bo",
+      `Fishers exact test` = "Fsh",
+      `Mixed model ANOVA, subject ID as random effect` = "Mix",
+      `Friedman test` = "Fri",
+      `Students t-test on logarithm of variable` = "tl",
+      `Students one-sample t-test` = "t",
+      `chi` = "Chi-squared goodness-of-fit test",
 
-      # TODO: fix this.
-      "addRestLater"
+      "Unknown test"
     )
 
     erg <- c(erg, abbrev)
