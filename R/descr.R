@@ -165,6 +165,13 @@ descr <-
              make_missing_a_category = F
            ),
 
+           test_options = list(
+             paired = F,
+             nonparametric = F,
+             exact = F,
+             indices = c()
+           ),
+
            percent.vertical = T,
            data.names = T,
            nonparametric = c(),
@@ -636,14 +643,14 @@ print_tex <- function(DescrPrintObj) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group_n"]], ")") , "")
 
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames, ] %>%
+  tex <- tibl[!indx_varnames,] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -712,12 +719,12 @@ print_html <- function(DescrPrintObj) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group_n"]], ")") , "")
 
 
-  tibl[!indx_varnames, ] %>%
+  tibl[!indx_varnames,] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -780,7 +787,7 @@ print_word <- function(DescrPrintObj) {
     padding(j = 1,
             i = !indx_varnames,
             padding.left = 20) %>%
-    add_header(top = F, values = N_numbers,) %>%
+    add_header(top = F, values = N_numbers, ) %>%
     border_inner(part = "header", border = officer::fp_border(width = 0)) %>%
     hline_bottom(part = "header", border = officer::fp_border(width = 2)) %>%
     align(j = which(names(tibl2) != "Variables"),
@@ -1523,8 +1530,8 @@ test_cont <-
       test.name <- "Students one-sample t-test"
       tl <-
         stats::t.test(var)
-      pv <- tl$p.value
-      test.value <- tl$statistic
+      pv <- tl$p.value ?
+        test.value <- tl$statistic
     }
 
 
@@ -1712,3 +1719,255 @@ create_test_abbreviations <- function(test_names) {
   }
   erg
 }
+
+test_names <- c(
+  "Cochrans Q test",
+  "McNemars test",
+  "Chi-squared goodness-of-fit test",
+  "Pearsons chi-squared test",
+  "Exact McNemars test",
+  "Boschloos test",
+  "Friedman test",
+  "Wilcoxon two-sample signed-rank test",
+  "Wilcoxon one-sample signed-rank test",
+  "Mann–Whitney U test",
+  "Kruskal–Wallis one-way ANOVA",
+  "Students paired t-test",
+  "Mixed model ANOVA",
+  "Students one-sample t-test",
+  "Students two-sample t-test",
+  "F-test (ANOVA)"
+)
+
+
+test_cat <-
+  function(var, group, test_options, test = NULL) {
+
+    # decide how to handle missings
+    if (!is.null(group)){
+      tibl <- tibble(var = var, group = group)
+      if (!test_options[["include_groups_missings_in_test"]]) {
+        tibl %<>% filter(group != "(Missing)")
+      }
+      if (!test_options[["include_categorical_missings_in_test"]]) {
+        tibl %<>% filter(var != "(Missing)")
+      }
+      var <- tibl %>% pull(var)
+      group <- tibl %>% pull(group)
+
+      n_levels_group <- length(levels(group))
+      n_levels_var <- length(levels(var))
+    } else{
+      tibl <- tibble(var = var)
+
+      if (!test_options[["include_categorical_missings_in_test"]]) {
+        tibl %<>% filter(var != "(Missing)")
+      }
+
+      var <- tibl %>% pull(var)
+
+      n_levels_group <- 1
+      n_levels_var <- length(levels(var))
+    }
+
+
+    # if test is not supplied, determine test
+    if (is.null(test)) {
+      if (is.ordinal(var)) {
+        # ordinal variable
+        if (!isTRUE(test_options[["paired"]] == T)) {
+          # ordinal variable, paired test
+          if (is.null(test_options("indices"))) {
+            stop(
+              "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+            )
+          } else{
+            if (n_levels_group == 2) {
+              test <- "Wilcoxon two-sample signed-rank test"
+            } else if (n_levels_group >= 2) {
+              test <- "Friedman test"
+            }
+          }
+        } else{
+          # ordinal variable, independent test
+          if (n_levels_group == 1) {
+            test <- "Wilcoxon one-sample signed-rank test"
+          } else if (n_levels_group == 2) {
+            test <- "Mann–Whitney U test"
+          } else if (n_levels_group >= 2) {
+            test <- "Kruskal–Wallis one-way ANOVA"
+          }
+        }
+      } else{
+        # nominal variable
+        if (!isTRUE(test_options[["exact"]] == F)) {
+          # nominal variable, exact test
+          if (!isTRUE(test_options[["paired"]] == T)) {
+            # nominal variable, exact paired test
+            if (n_levels_group == 2 & n_levels_var == 2) {
+              test <- "Exact McNemars test"
+            } else{
+              test <- "No appropriate test available."
+            }
+          } else{
+            # nominal variable, exact independent test
+            if (n_levels_group == 2 & n_levels_var == 2) {
+              test <- "Boschloos test"
+            } else{
+              test <- "No appropriate test available."
+            }
+          }
+        } else{
+          # nominal variable, asymptotic test
+          if (!isTRUE(test_options[["paired"]] == T)) {
+            # nominal variable, asymptotic paired test
+            if (n_levels_group == 2 & n_levels_var == 2) {
+              test <- "McNemars test"
+            } else if (n_levels_group >= 3 & n_levels_var == 2) {
+              if (is.null(test_options("indices"))) {
+                stop(
+                  "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+                )
+              } else{
+                test <- "Cochrans Q test"
+              }
+            } else{
+              test <- "No appropriate test available."
+            }
+          } else{
+            # nominal variable, asymptotic independent test
+            if (is.null(group) | n_levels_group==1) {
+              test <- "Chi-squared goodness-of-fit test"
+            }
+            else if (n_levels_group >= 2) {
+              test <- "Pearsons chi-squared test"
+            }
+          }
+        }
+      }
+    }
+
+    erg <-
+      switch(
+        test,
+        `Wilcoxon two-sample signed-rank test` = {
+          tibl <- tibble(var=var, group=group, id=test_options[["indices"]])
+          level1 <- levels(group)[1]
+          level2 <- levels(group)[2]
+
+          x <- tibl %>% filter(group==level1) %>% arrange(id) %>% pull(var)
+          y <- tibl %>% filter(group==level2) %>% arrange(id) %>% pull(var)
+
+          list(p = stats::wilcox.test(x,y, paired = T)$p.value)
+        },
+        `Friedman test` = {
+          list(p = stats::friedman.test(var ~ group |
+                                          test_options[["indices"]])$p.value)
+        },
+        `Wilcoxon one-sample signed-rank test` = {
+          list(p = stats::wilcox.test(as.numeric(as.character(var)))$p.value)
+        },
+        `Mann–Whitney U test` = {
+          list(p = stats::wilcox.test(as.numeric(as.character(var)) ~ group)$p.value)
+        },
+        `Kruskal–Wallis one-way ANOVA` = {
+          list(p = stats::kruskal.test(as.numeric(as.character(var)) ~ group)$p.value)
+        },
+        `Exact McNemars test` = {
+          list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+        },
+        `Boschloos test` = {
+          tabl <- table(var, group)
+          x1 <- tabl[1,1]
+          n1 <- sum(tabl[,1])
+          x2 <- tabl[1,2]
+          n2 <- sum(tabl[,2])
+          list(p = exact2x2::boschloo(x1, n1, x2, n2)$p.value)
+        },
+        `McNemars test` = {
+          list(p = mcnemar.test(var, group)$p.value)
+        }
+        `Cochrans Q test` = {
+          list(p = DescTools::CochranQTest(var ~ group | test_options[["indices"]])$p.value)
+        },
+        `Chi-squared goodness-of-fit test` = {
+          list(p = chisq.test(var)$p.value)
+        },
+        `Pearsons chi-squared test` = {
+          list(p = chisq.test(var, group)$p.value)
+        },
+        list(p=NA_real_)
+      )
+
+    erg[["test_name"]] <- test
+    erg
+  }
+
+
+
+
+determine_test_cont <-
+  function(var, group, test_options, test = NULL) {
+
+
+    # decide how to handle missings
+    if(!is.null(group)){
+      tibl <- tibble(var = var, group = group)
+      if (!test_options[["include_groups_missings_in_test"]]) {
+        tibl %<>% filter(group != "(Missing)")
+      }
+
+      var <- tibl %>% pull(var)
+      group <- tibl %>% pull(group)
+
+      n_levels_group <- length(levels(group))
+    } else{
+
+      n_levels_group <- 1
+    }
+
+
+    # if test is not supplied, determine test
+    if (is.null(test)) {
+      if (!isTRUE(test_options[["nonparametric"]] == F)) {
+        # ordinal variable
+        if (!isTRUE(test_options[["paired"]] == F)) {
+          # ordinal variable, paired test
+          if (n_levels_group == 2) {
+            test <- "Wilcoxon two-sample signed-rank test"
+          } else if (n_levels_group >= 2) {
+            test <- "Friedman test"
+          }
+        } else{
+          # ordinal variable, independent test
+          if (is.null(group)) {
+            test <- "Wilcoxon one-sample signed-rank test"
+          } else if (n_levels_group == 2) {
+            test <- "Mann–Whitney U test"
+          } else if (n_levels_group >= 2) {
+            test <- "Kruskal–Wallis one-way ANOVA"
+          }
+        }
+      } else{
+        # continuous variable
+        if (!isTRUE(test_options[["paired"]] == F)) {
+          # continuous variable, paired test
+          if (n_levels_group == 2) {
+            test <- "Students paired t-test"
+          } else{
+            test <- "Mixed model ANOVA"
+          }
+        } else{
+          # continuous variable, independent test
+          if (n_levels_group == 1) {
+            test <- "Students one-sample t-test"
+          } else if (n_levels_group == 2) {
+            test <- "Students two-sample t-test"
+          } else if (n_levels_group >= 3) {
+            test <- "F-test (ANOVA)"
+          }
+        }
+      }
+    }
+    switch(test)
+  }
