@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.7) (preloaded format=pdflatex 2020.8.24)  26 AUG 2020 14:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.7) (preloaded format=pdflatex 2020.8.24)  26 AUG 2020 17:45
 entering extended mode
 **./test_choice_tree.tex
 (test_choice_tree.tex
@@ -599,7 +599,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 87.
 
-Overfull \hbox (132.99913pt too wide) in paragraph at lines 84--95
+Overfull \hbox (141.21254pt too wide) in paragraph at lines 84--95
 []  [] 
  []
 
@@ -608,13 +608,13 @@ Overfull \hbox (132.99913pt too wide) in paragraph at lines 84--95
 {C:/Users/z7a/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
 (test_choice_tree.aux) ) 
 Here is how much of TeX's memory you used:
- 15595 strings out of 481212
- 312012 string characters out of 2915733
- 572468 words of memory out of 3000000
- 30896 multiletter control sequences out of 15000+200000
+ 15596 strings out of 481212
+ 312033 string characters out of 2915733
+ 571499 words of memory out of 3000000
+ 30897 multiletter control sequences out of 15000+200000
  543902 words of font info for 48 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,19n,94p,2492b,1006s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 60i,19n,94p,2501b,1006s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\z7a\AppData\Local\MiKTeX\fonts/pk/ljfour/jkn
 appen/ec/dpi525\ectt0800.pk> <C:\Users\z7a\AppData\Local\MiKTeX\fonts/pk/ljfour
 /jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\z7a\AppData\Local\MiKTeX\fonts/pk/lj
@@ -622,7 +622,7 @@ four/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\z7a\AppData\Local\MiKTeX\fonts/p
 k/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\z7a\AppData\Local\MiKTeX\fon
 ts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk><C:/Program Files/MiKTeX/fonts/type
 1/public/amsfonts/cm/cmsy10.pfb>
-Output written on test_choice_tree.pdf (1 page, 64155 bytes).
+Output written on test_choice_tree.pdf (1 page, 64183 bytes).
 PDF statistics:
  185 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
