@@ -10,82 +10,16 @@ library(kableExtra)
 #' @param dat
 #' Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
 #' @param group
+#' @param var_options
+#' @param group_labels
+#' @param summary_stats_cont
+#' @param summary_stats_cat
+#' @param format_p
+#' @param format_summary_stats
+#' @param format_options
+#' @param test_options
+#' @param ...
 #' Vector of the grouping variable.
-#' @param var.names
-#' Optional. Vector of names to be used in the table for the analyzed variables.
-#' @param percent.vertical
-#' Logical. Should "vertical" percentages for categorical variables be provided?
-#' @param data.names
-#' Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?
-#' @param nonparametric
-#' Logical or vector of indices. If logical / vector of indices then all / only
-#' these continuous variables will be tested using non-parametric methods.
-#' @param landscape
-#' Logical. Should the table be in landscape? Only useful if you want create a
-#'  "pdf"- or "knitr"-document in the following. (see \code{pos.pagebr})
-#' @param pos.pagebr
-#' Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy.
-#' It is the number of lines after a pagebreak should be done.\cr
-#' If it is not specified, 45 will be used for "\code{landscape=FALSE}" and
-#' 30 will be used for "\code{landscape=TURE}".\cr
-#' Only useful if you want know the number for a pagebreak when you create
-#' a "pdf"- or "knitr"-document in the following.
-#' @param paired
-#' Logical. Should paired tests be applied? The groups must have the same length.
-#' @param var.equal
-#' Logical. Should variances be assumed to be equal when applying t-tests?
-#' @param correct.cat
-#' Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})
-#' @param correct.wilcox
-#' Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})
-#' @param silent
-#' Logical. Should intermediate stages be shown (more for technical reasons)?
-#' @param p.values
-#' Logical. Should calculate p-values? If you won't p-values \code{index} were set to \code{FALSE}.
-#' @param group.min.size
-#' For each variable, a p-value is only calculated if each non-empty group contains
-#'  at least \code{group.min.size} observations for that variable.
-#' @param group.non.empty
-#' For each variable, a p-value is only calculated if each group contains
-#' at least one observation for that variable.
-#' @param cat.non.empty
-#' For categorical variables a p-value is only calculated if each category is non-empty.
-#' @param n.or.miss
-#' Should the number of observations, missings for continuous variables, and/or
-#' missings for categorical variables be provided ("n", "miss", "miss.cat")?
-#' Combinations are allowed.
-#' @param adaptive.miss
-#' Should the missing row be automatically omitted if there are not missings?
-#' @param group.miss
-#' Logical. Schould add a column for the Missings in group?
-#' @param t.log
-#' Vector of indices: The variables for which the log of the original data should
-#' be used when testing for a difference between the groups.
-#' @param index
-#' Logical. Should the tests used be labeled by footnotes? Only usefull if
-#' "p-values" in \code{which.col}.
-#' @param create
-#' Which output document should be produced in the following step
-#' (one of "pdf", "tex", "knitr", "word" or "R").
-#' @param digits.m
-#' Number of digits for presentation in the table: For mean.
-#' @param digits.sd
-#' Number of digits for presentation in the table: For standard deviation.
-#' @param digits.qu
-#' Vector of numbers of digits for presentation in the table: For quantiles
-#' (if no value is specified it will be tried to provide a reasonable presentation).
-#' @param digits.minmax
-#' Number of digits for presentation in the table: For minimum and maximum.
-#' @param digits.p
-#' Vector with numbers of digits for presentation in the table: For percentages.
-#' First vector element is number of digits for the first variable,
-#' second element for second variable and so on.
-#' @param q.type
-#' Integer between 1 and 9 that selects a quantile algorithm.
-#' @param default.unordered.unpaired.test
-#' Any of c("Chisq", "Fisher_exact", "Fisher_boschloo").
-#' Chooses the default test for categorical, unordered, unpaired variables.
-#'
 #' @return
 #' Depending on the value of the create parameter either pdf, word, tex, R
 #' or an file optimized for use in connection with knitr will be created containing
@@ -93,7 +27,7 @@ library(kableExtra)
 #' For example you choose \code{create="pdf"} then the table is written in \code{TeX}-Code.
 #' Attention: the table has no caption and numbers of observations per group.
 #'
-#' @author Lorenz Uhlmann, Csilla van Lunteren, Jan Meis
+#' @author Jan Meis, Lorenz Uhlmann, Csilla van Lunteren
 #'
 #' @seealso
 #' \code{\link{med.new}}\cr
@@ -138,9 +72,7 @@ descr <-
            ),
 
            summary_stats_cat = list(),
-
            format_p = scales::pvalue_format(),
-
            format_summary_stats = list(
              N = function(x)
                format(x, digits = 2, scientific = 3),
@@ -157,48 +89,20 @@ descr <-
              minmax = function(x)
                format(x, digits = 2, scientific = 3)
            ),
-
            format_options = list(
              omit_Nmiss_if_0 = T,
              print_p = T,
              omit_missings_in_group = F,
              make_missing_a_category = F
            ),
-
            test_options = list(
              paired = F,
              nonparametric = F,
              exact = F,
-             indices = c()
+             indices = c(),
+             include_group_missings_in_test = F,
+             include_categorical_missings_in_test = F
            ),
-
-           percent.vertical = T,
-           data.names = T,
-           nonparametric = c(),
-           landscape = F,
-           pos.pagebr = NULL,
-           paired = F,
-           var.equal = T,
-           correct.cat = F,
-           correct.wilcox = T,
-           silent = T,
-           p.values = T,
-           group.min.size = F,
-           group.non.empty = F,
-           cat.non.empty = F,
-           n.or.miss = "n",
-           adaptive.miss = T,
-           group.miss = F,
-           t.log = c(),
-           index = T,
-           create = "knitr",
-           digits.m = 1,
-           digits.sd = 2,
-           digits.qu = c(),
-           digits.minmax = 1,
-           digits.p = c(1),
-           q.type = 2,
-           default.unordered.unpaired.test = "Chisq",
            ...) {
     # Coerce dataset to tibble
     dat %<>% as_tibble(dat)
@@ -238,7 +142,7 @@ descr <-
                                var_name,
                                summary_stats_cat,
                                var_options = var_options[[var_name]],
-                               ...)
+                               test_options)
       } else if (is.numeric(var)) {
         # Analyze continuous variable
         var_descr <- descr_cont(var,
@@ -246,7 +150,7 @@ descr <-
                                 var_name,
                                 summary_stats_cont,
                                 var_options = var_options[[var_name]],
-                                ...)
+                                test_options)
       } else{
         stop("Somehow, you have variables which are neither factors nor numerical.")
       }
@@ -281,7 +185,8 @@ descr_cat <-
            group,
            var_name,
            summary_stats = c(),
-           var_options = list()) {
+           var_options = list(),
+           test_options = list()) {
     erg <- list()
     var_levels <- levels(var)
 
@@ -321,7 +226,7 @@ descr_cat <-
     # Check if a specific test is requested for this variable
     test <- var_options[["test"]]
     # Calculate test
-    erg[["test_list"]] <- test_cat(var, group, test = test)
+    erg[["test_list"]] <- test_cat(var, group, test_options, test)
     erg[["variable_name"]] <- var_name
     erg[["variable_levels"]] <- var_levels
     erg[["variable_options"]] <- var_options
@@ -345,7 +250,8 @@ descr_cont <-
            group,
            var_name,
            summary_stats = c(),
-           var_options = list()) {
+           var_options = list(),
+           test_options = list()) {
     erg <- list()
 
     # Summary stats choice: Special variable summary stats have precendence over global summary stats which in turn have precedence over
@@ -379,7 +285,7 @@ descr_cont <-
     # Check if a specific test is requested for this variable
     test <- var_options[["test"]]
     # Calculate test
-    erg[["test_list"]] <- test_cont(var, group, test = test)
+    erg[["test_list"]] <- test_cont(var, group, test_options, test)
     erg[["variable_name"]] <- var_name
     erg[["variable_options"]] <- var_options
 
@@ -1400,290 +1306,6 @@ sanitize_latex <- function(str_vec) {
 }
 
 
-#' p-value calculator for continous variables
-#'
-#' Calculate the p-value for continous variables.
-#' The decision which test to use is equal to \code{\link{m.cont}}.
-#' The p-value is calculated using one of the four tests:
-#' Wilcoxon-Test, t-Test, Kruskal-Test, Anova.
-#'
-#' @param x
-#' Vector of the continous variable.
-#' @param group
-#' Vector of the grouping variable.
-#' @param paired
-#' Logical. Is the categorial Variable paired?
-#' @param is.ordered
-#' Logical. Is the categorial Variable ordered?
-#' @param nonparametric
-#' Logical. Should the continuous variable tested by using non-parametric methods.
-#' @param t.log
-#' Logical. Should be used the log of the original data.
-#' @param var.equal
-#' Logical. Should variances be assumed to be equal when applying t-tests?
-#' @param index
-#' Optional. Label for the footnote.
-#' The footnotes aren't produced in this function.
-#' @param create
-#' Which output document should be produced in the following step (one of "pdf", "tex", "knitr", or "word").
-#'
-#' @details
-#' Wilcoxon Test: A nonparametric Test for a comparison of 2 dependent samples.
-#' (see \code{\link{wilcox.test}}).
-#' Mann-Whitney-U Test: A nonparametric Test for a comparison of 2 independent samples. (
-#' see \code{\link{wilcox.test}}).
-#' t-Test: A parametric Test for a comparison of 2 (in)dependent samples.
-#' (see \code{\link{t.test}}).
-#' Friedman-Test: A nonparametric Test for a comparison of more than 2 dependent samples.
-#' (see \code{\link{friedman.test}}).
-#' Anova Type III: A parametric Test for a comparison of more than 2 dependent samples.
-#' (see \code{\link[car]{Anova}} with \code{}).
-#' Kruskal-Wallis-Test: A nonparametric Test for a comparison of more than 2 independent samples.
-#' (see \code{\link{kruskal.test}}).
-#' Anova: A parametric Test for a comparison of more than 2 independent samples.
-#' (see \code{\link{aov}}).
-#'
-#' @return
-#' The p-value with index which test is ussed is returned.
-#' author
-#' Lorenz Uhlmann, Csilla van Lunteren
-#'
-#' @seealso
-#' \link[nlme]{lme}\cr
-#' \link[car]{Anova}\cr
-#'
-#' @examples
-#' \dontrun{
-#' p.cont(x = rnorm(100, 0, 1), group = rep(1:4, 25))
-#' }
-#'
-#' @import lme4
-#' @import SparseM
-#' @importFrom MatrixModels model.Matrix
-#' @importFrom  nlme lme
-#' @importFrom car Anova
-#'
-test_cont <-
-  function(var,
-           group,
-           paired = F,
-           index = c(),
-           nonparametric = F,
-           t.log = F,
-           var.equal = F,
-           test = NULL) {
-    if (!is.null(group)) {
-      group <- droplevels(group)
-      if (length(levels(group)) == 2) {
-        if (nonparametric) {
-          test.name <- "Mann–Whitney U test"
-          tl <- stats::wilcox.test(var ~ group, paired = paired)
-          pv <- tl$p.value
-          test.value <- tl$statistic
-        } else {
-          if (t.log) {
-            test.name <- "Students t-test on logarithm of variable"
-            var <- log(var)
-          }
-          test.name <- "Students t-test"
-          tl <-
-            stats::t.test(var ~ group, paired = paired, var.equal = var.equal)
-          pv <- tl$p.value
-          test.value <- tl$statistic
-        }
-      } else {
-        if (paired) {
-          # Annahme: Beobachtungen stehen pro "Gruppe" jeweils in derselben Reihenfolge untereinander!
-          var.ind <-
-            rep(1:(length(var) / length(levels(group))), length(levels(group)))
-          if (nonparametric) {
-            var.ind <-
-              rep(1:(length(var) / length(levels(group))), length(levels(group)))
-            test.name <- "Friedman test"
-
-            tl <- stats::friedman.test(var ~ group | var.ind)
-            pv <- tl$p.value
-            test.value <- tl$statistic
-          } else {
-            test.name <- "Mixed model ANOVA, subject ID as random effect"
-            fit <- nlme::lme(var ~ group, random = ~ 1 | var.ind)
-            # pv <- car::Anova(fit, type = "III")[2, 3]
-            tl <- nlme::anova.lme(fit)
-            pv <- tl$`p-value`[2]
-            test.value <- tl$`F-value`[2]
-          }
-        } else {
-          if (nonparametric) {
-            test.name <- "Kruskal–Wallis one-way ANOVA"
-            tl <- stats::kruskal.test(var ~ group)
-            pv <- tl$p.value
-            test.value <- tl$statistic
-          } else {
-            test.name <- "F-test (ANOVA)"
-            tl <- summary(stats::aov(var ~ group))[[1]]
-            pv <- tl$`Pr(>F)`[1]
-            test.value <- tl$`F value`[1]
-          }
-        }
-      }
-    } else{
-      test.name <- "Students one-sample t-test"
-      tl <-
-        stats::t.test(var)
-      pv <- tl$p.value ?
-        test.value <- tl$statistic
-    }
-
-
-    list(p = pv,
-         test_value = test.value,
-         test_name = test.name)
-  }
-
-
-
-#' p-value calculator for categorical variables
-#'
-#' Calculate the p-value for categorial variables.
-#' The decision which test to use is equal to \code{\link{m.cat}}.
-#' The p-value is calculated using one of the three tests:
-#' Wilcoxon-Test, McNemar-Test, Chi-Squared-Test.
-#'
-#' @param x
-#' Vector of the categorial variable.
-#' @param group
-#' Vector of the grouping variable.
-#' @param paired
-#' Logical. Is the categorial Variable paired?
-#' @param is.ordered
-#' Logical. Is the categorial Variable ordered?
-#' @param correct.cat
-#' Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})
-#' @param correct.wilcox
-#' Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})
-#' @param index
-#' Optional. Label for the footnote.
-#' The footnotes aren't produced in this function.
-#' @param create
-#' Which output document should be produced in the following step
-#' (one of "pdf", "tex", "knitr", or "word").
-#' Only usefull if \code{index} is not \code{NULL}.
-#'
-#' @details
-#' Wilcoxon-Test: A Test for a comparison of 2 (in)dependent, ordered samples.
-#' (see \code{\link{wilcox.test}}).
-#' Kruskal_wallis-Test: A Test for a comparison of more than 2 (in)dependent,
-#' ordered samples. (see \code{\link{kruskal.test}}).
-#' McNemar Test: A Test for a comparison of 2 dependent,
-#' not ordered samples. (see \code{\link{mcnemar.test}}).
-#' Chi-Squared Test: A Test for a comparison of 2 or more than 2 independent,
-#' not ordered samples. (see \code{\link[DescTools]{CochranQTest}}).
-#' Cochran's Q Test: A test for a comparison of 2 or more than 2 dependent,
-#' not ordered samples. (see \code{\link{chisq.test}}).
-#'
-#' @return
-#' The p-value with index which test is ussed is returned.
-#'
-#' @author
-#' Lorenz Uhlmann, Csilla van Lunteren
-#'
-#' @examples
-#' \dontrun{
-#' p.cat(x = rep(1:5, 20), group = rep(1:4, 25))
-#' }
-#'
-test_cat <-
-  function(var,
-           group,
-           paired = F,
-           correct.cat = F,
-           correct.wilcox = T,
-           index = c(),
-           exact = F,
-           test = NULL) {
-    is_ordered <- is.ordered(var)
-
-    if (!is.null(group)) {
-      group <- droplevels(group)
-      var <- droplevels(var)
-      group <- droplevels(group)
-
-
-
-      if (is_ordered) {
-        if (length(levels(group)) == 2) {
-          test.name <- "Mann–Whitney U test"
-          tl <-
-            stats::wilcox.test(as.numeric(var) ~ group, paired = paired)
-          pv <- tl$p.value
-          test.value <- tl$statistic
-        } else {
-          test.name <- "Kruskal–Wallis one-way ANOVA"
-          tl <- stats::kruskal.test(var ~ group)
-          pv <- tl$p.value
-          test.value <- tl$statistic
-        }
-      } else {
-        if (paired) {
-          if (length(levels(group)) == 2) {
-            test.name <- "McNemars test"
-            tl <-
-              stats::mcnemar.test(table(var, group), correct = correct.cat)
-            pv <- tl$p.value
-            test.value <- tl$statistic
-          } else {
-            var.ind <-
-              rep(1:(length(var) / length(levels(group))), length(levels(group)))
-            test.name <- "Cochrans Q test"
-            tl <- DescTools::CochranQTest(var ~ group | var.ind)
-            pv <- tl$p.value
-            test.value <- tl$statistic
-          }
-        } else{
-          if (exact) {
-            if ((nrow(table(var, group)) != 2) |
-                (ncol(table(var, group)) != 2)) {
-              warning(
-                "Fisher_boschloo test not implemented for non-2x2 tables. Defaulting to Fishers exact test."
-              )
-              test.name <- "Fishers exact test"
-              tl <- stats::fisher.test(var, group)
-              pv <- tl$p.value
-              test.value <- 0
-            }
-            else {
-              test.name <- "Boschloos test"
-              tl <-
-                Exact::exact.test(table(group, var),
-                                  method = "boschloo",
-                                  to.plot = F)
-              pv <- tl$p.value
-              test.value <- tl$statistic
-            }
-          }
-          else{
-            test.name <- "Chi-squared test"
-            tl <-
-              stats::chisq.test(var, group, correct = correct.cat)
-            pv <- tl$p.value
-            test.value <- tl$statistic
-          }
-        }
-      }
-    } else{
-      test.name <- "Chi-squared goodness-of-fit test"
-      tl <-
-        stats::chisq.test(table(var))
-      pv <- tl$p.value
-      test.value <- tl$statistic
-    }
-
-    list(p = pv,
-         test_value = test.value,
-         test_name = test.name)
-  }
-
-
 #' Title
 #'
 #' @param test_names
@@ -1697,21 +1319,22 @@ create_test_abbreviations <- function(test_names) {
   for (test in test_names) {
     abbrev <- switch(
       test,
-      `Students t-test` = "t",
-      `F-test (ANOVA)` = "F",
-      `Chi-squared test` = "chi",
+      `Cochrans Q test` = "CocQ",
+      `McNemars test` = "McN",
+      `Chi-squared goodness-of-fit test` = "chi1",
+      `Pearsons chi-squared test` = "chi2",
+      `Exact McNemars test` = "eMcN",
+      `Boschloos test` = "Bolo",
+      `Friedman test` = "Frie",
+      `Wilcoxon two-sample signed-rank test` = "Wil2",
+      `Wilcoxon one-sample signed-rank test` = "Wil1",
       `Mann–Whitney U test` = "MWU",
       `Kruskal–Wallis one-way ANOVA` = "KW",
-      `McNemars test` = "McN",
-      `Cochrans Q test` = "CoQ",
-      `Boschloos test` = "Bo",
-      `Fishers exact test` = "Fsh",
-      `Mixed model ANOVA, subject ID as random effect` = "Mix",
-      `Friedman test` = "Fri",
-      `Students t-test on logarithm of variable` = "tl",
-      `Students one-sample t-test` = "t",
-      `chi` = "Chi-squared goodness-of-fit test",
-
+      `Students paired t-test` = "tpar",
+      `Mixed model ANOVA` = "MiAn",
+      `Students one-sample t-test` = "tt1",
+      `Welchs two-sample t-test` = "tt2",
+      `F-test (ANOVA)` = "F",
       "Unknown test"
     )
 
@@ -1735,21 +1358,170 @@ test_names <- c(
   "Students paired t-test",
   "Mixed model ANOVA",
   "Students one-sample t-test",
-  "Students two-sample t-test",
+  "Welchs two-sample t-test",
   "F-test (ANOVA)"
 )
 
 
-test_cat <-
-  function(var, group, test_options, test = NULL) {
 
+#' Title
+#'
+#' @param var
+#' @param group
+#' @param test_options
+#' @param test
+#'
+#' @return
+#' @export
+#'
+#' @examples
+test_cont <-
+  function(var, group, test_options, test = NULL) {
     # decide how to handle missings
-    if (!is.null(group)){
+    if (!is.null(group)) {
       tibl <- tibble(var = var, group = group)
-      if (!test_options[["include_groups_missings_in_test"]]) {
+      if (!test_options[["include_group_missings_in_test"]]) {
         tibl %<>% filter(group != "(Missing)")
       }
-      if (!test_options[["include_categorical_missings_in_test"]]) {
+
+      var <- tibl %>% pull(var)
+      group <- tibl %>% pull(group)
+
+      n_levels_group <- length(levels(group))
+    } else{
+      n_levels_group <- 1
+    }
+
+    # if test is not supplied, determine test
+    if (is.null(test)) {
+      if (isTRUE(test_options[["nonparametric"]] == T)) {
+        # ordinal variable
+        if (isTRUE(test_options[["paired"]] == T)) {
+          # ordinal variable, paired test
+          if (n_levels_group == 2) {
+            test <- "Wilcoxon two-sample signed-rank test"
+          } else if (n_levels_group >= 2) {
+            test <- "Friedman test"
+          }
+        } else{
+          # ordinal variable, independent test
+          if (is.null(group)) {
+            test <- "Wilcoxon one-sample signed-rank test"
+          } else if (n_levels_group == 2) {
+            test <- "Mann–Whitney U test"
+          } else if (n_levels_group >= 2) {
+            test <- "Kruskal–Wallis one-way ANOVA"
+          }
+        }
+      } else{
+        # continuous variable
+        if (isTRUE(test_options[["paired"]] == T)) {
+          # continuous variable, paired test
+          if (n_levels_group == 2) {
+            test <- "Students paired t-test"
+          } else{
+            test <- "Mixed model ANOVA"
+          }
+        } else{
+          # continuous variable, independent test
+          if (n_levels_group == 1) {
+            test <- "Students one-sample t-test"
+          } else if (n_levels_group == 2) {
+            test <- "Welchs two-sample t-test"
+          } else if (n_levels_group >= 3) {
+            test <- "F-test (ANOVA)"
+          }
+        }
+      }
+    }
+    erg <- switch(
+      test,
+      `Wilcoxon two-sample signed-rank test` = {
+        tibl <- tibble(var = var,
+                       group = group,
+                       id = test_options[["indices"]])
+        level1 <- levels(group)[1]
+        level2 <- levels(group)[2]
+
+        x <-
+          tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
+        y <-
+          tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
+
+        list(p = stats::wilcox.test(x, y, paired = T)$p.value)
+      },
+      `Friedman test` = {
+        list(p = stats::friedman.test(var ~ group |
+                                        test_options[["indices"]])$p.value)
+      },
+      `Wilcoxon one-sample signed-rank test` = {
+        list(p = stats::wilcox.test(var)$p.value)
+      },
+      `Mann–Whitney U test` = {
+        list(p = stats::wilcox.test(var ~ group)$p.value)
+      },
+      `Kruskal–Wallis one-way ANOVA` = {
+        list(p = stats::kruskal.test(var ~ group)$p.value)
+      },
+      `Students paired t-test` = {
+        tibl <- tibble(var = var,
+                       group = group,
+                       id = test_options[["indices"]])
+        level1 <- levels(group)[1]
+        level2 <- levels(group)[2]
+
+        x <-
+          tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
+        y <-
+          tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
+
+        list(p = stats::t.test(x, y, paired = T)$p.value)
+      },
+      `Mixed model ANOVA` = {
+        fit <- nlme::lme(var ~ group, random = ~ 1 | var.ind)
+        tl <- nlme::anova.lme(fit)
+        pv <- tl$`p-value`[2]
+        list(p = pv)
+      },
+      `Students one-sample t-test` = {
+        list(p = stats::t.test(var)$p.value)
+      },
+      `Welchs two-sample t-test` = {
+        list(p = stats::t.test(var ~ group)$p.value,
+             val.equal = F)
+      },
+      `F-test (ANOVA)` = {
+        tl <- summary(stats::aov(var ~ group))[[1]]
+        pv <- tl$`Pr(>F)`[1]
+        list(p = pv)
+      },
+      list(p = NA_real_)
+    )
+    erg[["test_name"]] <- test
+    erg
+  }
+
+
+#' Title
+#'
+#' @param var
+#' @param group
+#' @param test_options
+#' @param test
+#'
+#' @return
+#' @export
+#'
+#' @examples
+test_cat <-
+  function(var, group, test_options, test = NULL) {
+    # decide how to handle missings
+    if (!is.null(group)) {
+      tibl <- tibble(var = var, group = group)
+      if (!isTRUE(test_options[["include_group_missings_in_test"]])) {
+        tibl %<>% filter(group != "(Missing)")
+      }
+      if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
         tibl %<>% filter(var != "(Missing)")
       }
       var <- tibl %>% pull(var)
@@ -1760,7 +1532,7 @@ test_cat <-
     } else{
       tibl <- tibble(var = var)
 
-      if (!test_options[["include_categorical_missings_in_test"]]) {
+      if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
         tibl %<>% filter(var != "(Missing)")
       }
 
@@ -1773,9 +1545,9 @@ test_cat <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if (is.ordinal(var)) {
+      if (is.ordered(var)) {
         # ordinal variable
-        if (!isTRUE(test_options[["paired"]] == T)) {
+        if (isTRUE(test_options[["paired"]] == T)) {
           # ordinal variable, paired test
           if (is.null(test_options("indices"))) {
             stop(
@@ -1800,9 +1572,9 @@ test_cat <-
         }
       } else{
         # nominal variable
-        if (!isTRUE(test_options[["exact"]] == F)) {
+        if (isTRUE(test_options[["exact"]] == T)) {
           # nominal variable, exact test
-          if (!isTRUE(test_options[["paired"]] == T)) {
+          if (isTRUE(test_options[["paired"]] == T)) {
             # nominal variable, exact paired test
             if (n_levels_group == 2 & n_levels_var == 2) {
               test <- "Exact McNemars test"
@@ -1819,7 +1591,7 @@ test_cat <-
           }
         } else{
           # nominal variable, asymptotic test
-          if (!isTRUE(test_options[["paired"]] == T)) {
+          if (isTRUE(test_options[["paired"]] == T)) {
             # nominal variable, asymptotic paired test
             if (n_levels_group == 2 & n_levels_var == 2) {
               test <- "McNemars test"
@@ -1836,7 +1608,7 @@ test_cat <-
             }
           } else{
             # nominal variable, asymptotic independent test
-            if (is.null(group) | n_levels_group==1) {
+            if (is.null(group) | n_levels_group == 1) {
               test <- "Chi-squared goodness-of-fit test"
             }
             else if (n_levels_group >= 2) {
@@ -1851,17 +1623,22 @@ test_cat <-
       switch(
         test,
         `Wilcoxon two-sample signed-rank test` = {
-          tibl <- tibble(var=var, group=group, id=test_options[["indices"]])
+          tibl <- tibble(var = as.numeric(as.character(var)),
+                         group = group,
+                         id = test_options[["indices"]])
+
           level1 <- levels(group)[1]
           level2 <- levels(group)[2]
+          x <-
+            tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
 
-          x <- tibl %>% filter(group==level1) %>% arrange(id) %>% pull(var)
-          y <- tibl %>% filter(group==level2) %>% arrange(id) %>% pull(var)
+          y <-
+            tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
 
-          list(p = stats::wilcox.test(x,y, paired = T)$p.value)
+          list(p = stats::wilcox.test(x, y, paired = T)$p.value)
         },
         `Friedman test` = {
-          list(p = stats::friedman.test(var ~ group |
+          list(p = stats::friedman.test(as.numeric(as.character(var)) ~ group |
                                           test_options[["indices"]])$p.value)
         },
         `Wilcoxon one-sample signed-rank test` = {
@@ -1878,96 +1655,28 @@ test_cat <-
         },
         `Boschloos test` = {
           tabl <- table(var, group)
-          x1 <- tabl[1,1]
-          n1 <- sum(tabl[,1])
-          x2 <- tabl[1,2]
-          n2 <- sum(tabl[,2])
+          x1 <- tabl[1, 1]
+          n1 <- sum(tabl[, 1])
+          x2 <- tabl[1, 2]
+          n2 <- sum(tabl[, 2])
           list(p = exact2x2::boschloo(x1, n1, x2, n2)$p.value)
         },
         `McNemars test` = {
           list(p = mcnemar.test(var, group)$p.value)
-        }
+        },
         `Cochrans Q test` = {
-          list(p = DescTools::CochranQTest(var ~ group | test_options[["indices"]])$p.value)
+          list(p = DescTools::CochranQTest(var ~ group |
+                                             test_options[["indices"]])$p.value)
         },
         `Chi-squared goodness-of-fit test` = {
-          list(p = chisq.test(var)$p.value)
+          list(p = chisq.test(table(var))$p.value)
         },
         `Pearsons chi-squared test` = {
           list(p = chisq.test(var, group)$p.value)
         },
-        list(p=NA_real_)
+        list(p = NA_real_)
       )
 
     erg[["test_name"]] <- test
     erg
-  }
-
-
-
-
-determine_test_cont <-
-  function(var, group, test_options, test = NULL) {
-
-
-    # decide how to handle missings
-    if(!is.null(group)){
-      tibl <- tibble(var = var, group = group)
-      if (!test_options[["include_groups_missings_in_test"]]) {
-        tibl %<>% filter(group != "(Missing)")
-      }
-
-      var <- tibl %>% pull(var)
-      group <- tibl %>% pull(group)
-
-      n_levels_group <- length(levels(group))
-    } else{
-
-      n_levels_group <- 1
-    }
-
-
-    # if test is not supplied, determine test
-    if (is.null(test)) {
-      if (!isTRUE(test_options[["nonparametric"]] == F)) {
-        # ordinal variable
-        if (!isTRUE(test_options[["paired"]] == F)) {
-          # ordinal variable, paired test
-          if (n_levels_group == 2) {
-            test <- "Wilcoxon two-sample signed-rank test"
-          } else if (n_levels_group >= 2) {
-            test <- "Friedman test"
-          }
-        } else{
-          # ordinal variable, independent test
-          if (is.null(group)) {
-            test <- "Wilcoxon one-sample signed-rank test"
-          } else if (n_levels_group == 2) {
-            test <- "Mann–Whitney U test"
-          } else if (n_levels_group >= 2) {
-            test <- "Kruskal–Wallis one-way ANOVA"
-          }
-        }
-      } else{
-        # continuous variable
-        if (!isTRUE(test_options[["paired"]] == F)) {
-          # continuous variable, paired test
-          if (n_levels_group == 2) {
-            test <- "Students paired t-test"
-          } else{
-            test <- "Mixed model ANOVA"
-          }
-        } else{
-          # continuous variable, independent test
-          if (n_levels_group == 1) {
-            test <- "Students one-sample t-test"
-          } else if (n_levels_group == 2) {
-            test <- "Students two-sample t-test"
-          } else if (n_levels_group >= 3) {
-            test <- "F-test (ANOVA)"
-          }
-        }
-      }
-    }
-    switch(test)
   }
