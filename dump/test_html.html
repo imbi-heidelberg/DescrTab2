@@ -366,10 +366,16 @@ summary {
 </div>
 
 
+<!-- ```{r cars, results='asis'} -->
+<!-- source("../R/descr.R") -->
+<!-- options(DescrTabFormat="html") -->
+<!-- iris_test <- iris %>% bind_cols(cat_var=c("a", "b") %>% sample(150, T)) -->
+<!-- iris_test %>% descr("Species", var_options=list(Sepal.Length=list(label="Sepal Length"))) %>% print() -->
+<!-- ``` -->
 <pre class="r"><code>source(&quot;../R/descr.R&quot;)
-options(DescrTabFormat=&quot;html&quot;)
-iris_test &lt;- iris %&gt;% bind_cols(cat_var=c(&quot;a&quot;, &quot;b&quot;) %&gt;% sample(150, T))
-iris_test %&gt;% descr(&quot;Species&quot;, var_options=list(Sepal.Length=list(label=&quot;Sepal Length&quot;))) %&gt;% print()</code></pre>
+options(DescrTabFormat = &quot;html&quot;)
+# descr(iris) %&gt;% capture.output(print(.)) %&gt;% knitr::raw_html()
+descr(iris) %&gt;% print()</code></pre>
 <pre><code>## Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
 ## Please use the `.name_repair` argument instead.
 ## This warning is displayed once every 8 hours.
@@ -384,7 +390,355 @@ Variables
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style>
+Total
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style>
+p
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+(N=150)
+</th>
+<th style="text-align:center;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="6">
+<td colspan="3" style="border-bottom: 1px solid;">
+<strong>Sepal.Length</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+N
+</td>
+<td style="text-align:center;">
+150
+</td>
+<td style="text-align:center;">
+&lt;0.001<sup>tt1</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+mean
+</td>
+<td style="text-align:center;">
+5.8
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+sd
+</td>
+<td style="text-align:center;">
+0.83
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+median
+</td>
+<td style="text-align:center;">
+5.8
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Q1 - Q3
+</td>
+<td style="text-align:center;">
+5.1 – 6.4
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+min - max
+</td>
+<td style="text-align:center;">
+4.3 – 7.9
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="3" style="border-bottom: 1px solid;">
+<strong>Sepal.Width</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+N
+</td>
+<td style="text-align:center;">
+150
+</td>
+<td style="text-align:center;">
+&lt;0.001<sup>tt1</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+mean
+</td>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+sd
+</td>
+<td style="text-align:center;">
+0.44
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+median
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Q1 - Q3
+</td>
+<td style="text-align:center;">
+2.8 – 3.3
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+min - max
+</td>
+<td style="text-align:center;">
+2 – 4.4
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="3" style="border-bottom: 1px solid;">
+<strong>Petal.Length</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+N
+</td>
+<td style="text-align:center;">
+150
+</td>
+<td style="text-align:center;">
+&lt;0.001<sup>tt1</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+mean
+</td>
+<td style="text-align:center;">
+3.8
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+sd
+</td>
+<td style="text-align:center;">
+1.8
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+median
+</td>
+<td style="text-align:center;">
+4.3
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Q1 - Q3
+</td>
+<td style="text-align:center;">
+1.6 – 5.1
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+min - max
+</td>
+<td style="text-align:center;">
+1 – 6.9
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr grouplength="6">
+<td colspan="3" style="border-bottom: 1px solid;">
+<strong>Petal.Width</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+N
+</td>
+<td style="text-align:center;">
+150
+</td>
+<td style="text-align:center;">
+&lt;0.001<sup>tt1</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+mean
+</td>
+<td style="text-align:center;">
+1.2
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+sd
+</td>
+<td style="text-align:center;">
+0.76
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+median
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+Q1 - Q3
+</td>
+<td style="text-align:center;">
+0.3 – 1.8
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+min - max
+</td>
+<td style="text-align:center;">
+0.1 – 2.5
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="3" style="border-bottom: 1px solid;">
+<strong>Species</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
 setosa
+</td>
+<td style="text-align:center;">
+50 (33%)
+</td>
+<td style="text-align:center;">
+&gt;0.999<sup>chi1</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+versicolor
+</td>
+<td style="text-align:center;">
+50 (33%)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+virginica
+</td>
+<td style="text-align:center;">
+50 (33%)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup>tt1</sup> Students one-sample t-test
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup>chi1</sup> Chi-squared goodness-of-fit test
+</td>
+</tr>
+</tfoot>
+</table>
+<pre class="r"><code>descr(iris, &quot;Species&quot;, group_labels=list(setosa=&quot;My custom group label&quot;), var_options = list(Sepal.Length = list(label=&quot;My custom variable label&quot;)))</code></pre>
+<pre><code>## Warning: The `value` argument of ``names&lt;-`()` must be a character vector as of tibble 3.0.0.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1">
+<div style>
+Variables
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style>
+My custom group label
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -430,7 +784,7 @@ p
 <tbody>
 <tr grouplength="6">
 <td colspan="6" style="border-bottom: 1px solid;">
-<strong>Sepal Length</strong>
+<strong>My custom variable label</strong>
 </td>
 </tr>
 <tr>
@@ -908,60 +1262,11 @@ min - max
 <td style="text-align:center;">
 </td>
 </tr>
-<tr grouplength="2">
-<td colspan="6" style="border-bottom: 1px solid;">
-<strong>cat_var</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
-b
-</td>
-<td style="text-align:center;">
-21 (42%)
-</td>
-<td style="text-align:center;">
-29 (58%)
-</td>
-<td style="text-align:center;">
-27 (54%)
-</td>
-<td style="text-align:center;">
-77 (51%)
-</td>
-<td style="text-align:center;">
-0.250<sup>chi2</sup>
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
-a
-</td>
-<td style="text-align:center;">
-29 (58%)
-</td>
-<td style="text-align:center;">
-21 (42%)
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-73 (49%)
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
 </tbody>
 <tfoot>
 <tr>
 <td style="padding: 0; border: 0;" colspan="100%">
 <sup>F</sup> F-test (ANOVA)
-</td>
-</tr>
-<tr>
-<td style="padding: 0; border: 0;" colspan="100%">
-<sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
 </tfoot>

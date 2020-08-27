@@ -1,7 +1,3 @@
-library(tidyverse)
-library(magrittr)
-library(kableExtra)
-
 #' Create a descriptive statistics table
 #'
 #' Generate a table of descriptive statistics with p-values obtained in tests
@@ -29,29 +25,19 @@ library(kableExtra)
 #'
 #' @author Jan Meis, Lorenz Uhlmann, Csilla van Lunteren
 #'
-#' @seealso
-#' \code{\link{med.new}}\cr
-#' \code{\link{inqur}}\cr
-#' \code{\link{minmax}}\cr
-#' \code{\link{f.r}}\cr
-#' \code{\link{formatr}}\cr
-#' \code{\link{m.cat}}\cr
-#' \code{\link{m.cont}}\cr
-#' \code{\link{p.cat}}\cr
-#' \code{\link{p.cont}}\cr
-#'
 #' @examples
 #' \dontrun{
 #' }
 #'
-#' @importFrom dplyr select
-#' @importFrom magrittr `%<>%`
-#' @importFrom tibble as_tibble
-#' @importFrom forcats as_factor
+#' @export
 #'
-#'
-#' @importFrom flextable autofit
-#' @importFrom flextable flextable
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 #'
 descr <-
   function(dat,
@@ -87,11 +73,14 @@ descr <-
              Q = function(x)
                format(x, digits = 2, scientific = 3),
              minmax = function(x)
+               format(x, digits = 2, scientific = 3),
+             CI = function(x)
                format(x, digits = 2, scientific = 3)
            ),
            format_options = list(
-             omit_Nmiss_if_0 = T,
              print_p = T,
+             print_CI = T,
+             omit_Nmiss_if_0 = T,
              omit_missings_in_group = F,
              make_missing_a_category = F
            ),
@@ -164,6 +153,7 @@ descr <-
     ergs[["format"]][["p"]] <- format_p
     ergs[["format"]][["summary_stats"]] <- format_summary_stats
     ergs[["format"]][["options"]] <- format_options
+    ergs[["input_facts"]] <- list(nrow = nrow(dat), ncol= ncol(dat))
 
     # Make result a "DescrList" object and return
     attr(ergs, "class") <- c("DescrList", "list")
@@ -180,6 +170,14 @@ descr <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 descr_cat <-
   function(var,
            group,
@@ -245,6 +243,14 @@ descr_cat <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 descr_cont <-
   function(var,
            group,
@@ -305,7 +311,14 @@ descr_cont <-
 #' @export
 #'
 #' @examples
-#' @importFrom tibble
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 print.DescrList <-  function(DescrListObj,
                              printFormat = options("DescrTabFormat")[[1]],
 
@@ -395,9 +408,13 @@ create_printObj <- function(DescrListObj, printFormat) {
   for (lvl in levels(DescrListObj[["group"]][["var"]])) {
     group_n <- c(group_n, sum(DescrListObj[["group"]][["var"]] == lvl))
   }
-
   ## Reminder: Add option to exclude Missings
-  group_n <- c(group_n, sum(group_n))
+  if (is.null(DescrListObj[["group"]])){
+    group_n <- DescrListObj[["input_facts"]][["nrow"]]
+  } else{
+    group_n <- c(group_n, sum(group_n))
+  }
+
 
   printObj[["group_n"]] <- group_n
   printObj[["group_names"]] <- group_names
@@ -426,6 +443,15 @@ create_printObj <- function(DescrListObj, printFormat) {
     tibl %<>%  bind_rows(print_list[[var_name]][["tibble"]])
   }
 
+  if (isTRUE(DescrListObj[["format"]][["options"]][["print_p"]] == F)) {
+    tibl %<>% select(-p)
+    tibl %<>% select(-Test)
+  }
+
+  if (isTRUE(DescrListObj[["format"]][["options"]][["print_CI"]] == F)) {
+    tibl %<>% select(-CI)
+  }
+
   names(tibl)[names(tibl) %in% group_names] <- group_labels
   printObj[["tibble"]] <- tibl
   attr(printObj, "class") <- c("printObj", "list")
@@ -443,15 +469,21 @@ create_printObj <- function(DescrListObj, printFormat) {
 #'
 #' @return
 #' @export
-#'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 print_numeric <- function(DescrPrintObj,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
                           print_red_NA = F) {
   tibl <- DescrPrintObj[["tibble"]]
-
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
   c1 <- tibl %>% pull(1)
@@ -485,6 +517,14 @@ print_numeric <- function(DescrPrintObj,
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 print_console <- function(DescrPrintObj,
                           n = 1000,
                           width = NULL,
@@ -521,6 +561,14 @@ print_console <- function(DescrPrintObj,
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 print_tex <- function(DescrPrintObj) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
@@ -534,24 +582,29 @@ print_tex <- function(DescrPrintObj) {
   indx_varnames <- c1 %in% labels
 
 
-  tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
-  p_vec <- tibl %>% pull(p)
-  p_indx <- which(p_vec != "")
-
-  test_abbrev <- create_test_abbreviations(tests)
-
-
-  for (idx in p_indx) {
-    tibl[idx, "p"] %<>% paste0("\\textsuperscript{", test_abbrev[match(tibl[idx, "Test"], tests)]  , "}")
+  if ("p" %in% names(tibl)) {
+    print_footnotes <- T
+    tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
+    p_vec <- tibl %>% pull(p)
+    p_indx <- which(p_vec != "")
+    test_abbrev <- create_test_abbreviations(tests)
+    for (idx in p_indx) {
+      tibl[idx, "p"] %<>% paste0("\\textsuperscript{", test_abbrev[match(tibl[idx, "Test"], tests)]  , "}")
+    }
+  } else{
+    print_footnotes <- F
   }
 
-  tibl %<>% select(-Test)
 
+  tibl %<>% select(-Test)
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
   actual_colnames <- names(tibl[!indx_varnames,])
+
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group_n"]], ")") , "")
+    c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
+  pad_N <- ncol(tibl) - length(N_numbers)
+  N_numbers <- c(N_numbers, rep("", pad_N))
 
   tibl <- escape_latex_symbols(tibl)
 
@@ -567,7 +620,11 @@ print_tex <- function(DescrPrintObj) {
       col.names = N_numbers
     ) %>%
     kable_styling() %>%
-    kableExtra::footnote(symbol = c(tests), symbol_manual = test_abbrev) %>%
+    `if`(
+      print_footnotes,
+      kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
+      .
+    ) %>%
     pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = F, align = alig2) %>%
     capture.output()
@@ -575,12 +632,20 @@ print_tex <- function(DescrPrintObj) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(pagebreak_indices) > 0) {
-    tex[pagebreak_indices - 2] %<>% str_replace_all(fixed("\\\\*"), fixed("\\\\"))
+  if (length(head(pagebreak_indices,-1)) > 0) {
+    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
-
+  if (length(tail(pagebreak_indices, 1))) {
+    tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
+      fixed("\\\\*"),
+      fixed(
+        "\\\\ \\noalign{\\vskip 0pt plus 12pt} \\noalign{\\penalty-5000}"
+      )
+    )
+  }
+  tex <- c("\\needspace{2cm}", tex)
   cli::cat_line(tex)
-
   invisible(DescrPrintObj)
 }
 
@@ -597,6 +662,14 @@ print_tex <- function(DescrPrintObj) {
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 print_html <- function(DescrPrintObj) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
@@ -609,25 +682,33 @@ print_html <- function(DescrPrintObj) {
   c1 <- tibl %>% pull(1)
   indx_varnames <- c1 %in% labels
 
-
-  tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
-  p_vec <- tibl %>% pull(p)
-  p_indx <- which(p_vec != "")
-
-  test_abbrev <- create_test_abbreviations(tests)
-
-  for (idx in p_indx) {
-    tibl[idx, "p"] %<>% paste0("^", test_abbrev[match(tibl[idx, "Test"], tests)]  , "^")
+  if ("p" %in% names(tibl)) {
+    print_footnotes <- T
+    tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
+    p_vec <- tibl %>% pull(p)
+    p_indx <- which(p_vec != "")
+    test_abbrev <- create_test_abbreviations(tests)
+    for (idx in p_indx) {
+      tibl[idx, "p"] %<>% paste0("<sup>", test_abbrev[match(tibl[idx, "Test"], tests)]  , "</sup>")
+    }
+  } else{
+    print_footnotes <- F
   }
 
-  tibl %<>% select(-Test)
+
+  if ("Test" %in% names(tibl)) {
+    tibl %<>% select(-Test)
+  }
+
 
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
   actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group_n"]], ")") , "")
+    c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
+  pad_N <- ncol(tibl) - length(N_numbers)
+  N_numbers <- c(N_numbers, rep("", pad_N))
 
 
   tibl[!indx_varnames,] %>%
@@ -641,10 +722,15 @@ print_html <- function(DescrPrintObj) {
       col.names = N_numbers
     ) %>%
     kable_styling() %>%
-    kableExtra::footnote(symbol = tests, symbol_manual = test_abbrev) %>%
+    `if`(
+      print_footnotes,
+      kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
+      .
+    ) %>%
     pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = F, align = alig2) %>%
-    cat()
+    cat() %>%
+    knitr::raw_html()
 
   invisible(DescrPrintObj)
 }
@@ -663,7 +749,13 @@ print_html <- function(DescrPrintObj) {
 #'
 #' @examples
 #'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
 #' @import flextable
+#' @import kableExtra
 print_word <- function(DescrPrintObj) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
@@ -673,14 +765,22 @@ print_word <- function(DescrPrintObj) {
   c1 <- tibl %>% pull(1)
   indx_varnames <- c1 %in% var_names
 
+  if ("p" %in% names(tibl)) {
+    print_footnotes <- T
+    tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
+    p_vec <- tibl %>% pull(p)
+    p_indx <- which(p_vec != "")
+    test_abbrev <- create_test_abbreviations(tests)
+  } else{
+    print_footnotes <- F
+  }
 
-  tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
-  p_vec <- tibl %>% pull(p)
-  p_indx <- which(p_vec != "")
+  if ("Test" %in% names(tibl)) {
+    tibl2 <- tibl %>%  select(-Test)
+  } else{
+    tibl2 <- tibl
+  }
 
-
-  tibl2 <- tibl %>% select(-Test)
-  # tibl2[,1 ] <- ifelse(!indx_varnames, paste0("  ", tibl2 %>% pull(1)), tibl2 %>% pull(1))
 
   actual_colnames <- DescrPrintObj[["group_names"]]
   N_numbers <- c(paste0("(N=", DescrPrintObj[["group_n"]], ")"))
@@ -702,18 +802,18 @@ print_word <- function(DescrPrintObj) {
     align(j = 1, part = "all",
           align = "left")
 
-
-  test_abbrev <- create_test_abbreviations(tests)
-
-  for (test in tests) {
-    ft %<>%  footnote(
-      i =  which((tibl %>% pull(Test)) %in% test),
-      j =  which(names(tibl2) == "p"),
-      value = as_paragraph(c(test)),
-      ref_symbols = c(test_abbrev[match(test, tests)]),
-      part = "body"
-    )
+  if (print_footnotes) {
+    for (test in tests) {
+      ft %<>%  flextable::footnote(
+        i =  which((tibl %>% pull(Test)) %in% test),
+        j =  which(names(tibl2) == "p"),
+        value = as_paragraph(c(test)),
+        ref_symbols = c(test_abbrev[match(test, tests)]),
+        part = "body"
+      )
+    }
   }
+
   ft <- ft %>%
     autofit()
 
@@ -731,6 +831,14 @@ print_word <- function(DescrPrintObj) {
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_numeric_subtable <- function(DescrVarObj, ...) {
   UseMethod("create_numeric_subtable")
 }
@@ -745,6 +853,14 @@ create_numeric_subtable <- function(DescrVarObj, ...) {
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_numeric_subtable.cat_summary <-
   function(DescrVarObj,
            var_name,
@@ -774,7 +890,6 @@ create_numeric_subtable.cat_summary <-
                                 all_names))
 
     length_tibl <- nrow(tibl)
-
     groups <- get_groupNames(DescrVarObj)
 
     for (group in groups) {
@@ -791,6 +906,26 @@ create_numeric_subtable.cat_summary <-
     test_name <-
       c(DescrVarObj[["test_list"]]$test_name, rep(NA_real_, length_tibl - 1))
     tibl %<>% bind_cols(Test = test_name)
+
+    if (length(groups) == 2) {
+      if (length(cat_names) == 2) {
+        CI_upper <-
+          c(DescrVarObj[["test_list"]]$CI[1], rep(NA_real_, length_tibl - 1))
+        CI_lower <-
+          c(DescrVarObj[["test_list"]]$CI[2], rep(NA_real_, length_tibl - 1))
+
+        tibl %<>% bind_cols(CI_upper = CI_upper, CI_lower = CI_lower)
+      } else{
+        tibl %<>% bind_cols(
+          CI_upper = rep(NA_real_, length_tibl),
+          CI_lower = rep(NA_real_, length_tibl)
+        )
+      }
+    }
+
+
+
+
 
     return(list(
       summary_list = DescrVarObj,
@@ -809,6 +944,14 @@ create_numeric_subtable.cat_summary <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_numeric_subtable.cont_summary <-
   function(DescrVarObj,
            var_name,
@@ -849,6 +992,15 @@ create_numeric_subtable.cont_summary <-
 
     tibl %<>% bind_cols(Test = test_name)
 
+    if (length(groups) == 2) {
+      CI_upper <-
+        c(DescrVarObj[["test_list"]]$CI[1], rep(NA_real_, length_tibl - 1))
+      CI_lower <-
+        c(DescrVarObj[["test_list"]]$CI[2], rep(NA_real_, length_tibl - 1))
+
+      tibl %<>% bind_cols(CI_upper = CI_upper, CI_lower = CI_lower)
+    }
+
     return(list(
       summary_list = DescrVarObj,
       length = length_tibl,
@@ -867,6 +1019,14 @@ create_numeric_subtable.cont_summary <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_character_subtable <- function(DescrVarObj, ...) {
   UseMethod("create_character_subtable")
 }
@@ -881,6 +1041,14 @@ create_character_subtable <- function(DescrVarObj, ...) {
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_character_subtable.cont_summary <-
   function(DescrVarObj,
            var_name,
@@ -929,6 +1097,10 @@ create_character_subtable.cont_summary <-
       tibl %<>% bind_cols(Total = c("", "All entries NA"))
       tibl %<>% bind_cols(p =  c("", "-"))
       tibl %<>% bind_cols(Test = c("", "-"))
+
+      if (length(groups) == 2) {
+        tibl %<>% bind_cols(CI = c("", "-"))
+      }
 
     } else{
       summary_stat_names <-
@@ -981,10 +1153,29 @@ create_character_subtable.cont_summary <-
                                    DescrVarObj[["test_list"]]$test_name,
                                    rep("", length_tibl -
                                          2)))
+
+      if (length(groups) == 2) {
+        if (is.null(DescrVarObj[["test_list"]][["CI"]])) {
+          CI_name <- ""
+          CI <- ""
+        } else{
+          CI_name <- DescrVarObj[["test_list"]][["CI_name"]]
+          CI <-
+            paste0(
+              "[",
+              format_summary_stats[["CI"]](DescrVarObj[["test_list"]][["CI"]][1]),
+              ", ",
+              format_summary_stats[["CI"]](DescrVarObj[["test_list"]][["CI"]][2]),
+              "]"
+            )
+        }
+        tibl %<>% bind_cols(CI = c("",
+                                   CI_name,
+                                   CI,
+                                   rep("", length_tibl -
+                                         3)))
+      }
     }
-
-
-
 
     return(list(
       summary_list = DescrVarObj,
@@ -999,6 +1190,14 @@ create_character_subtable.cont_summary <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_character_subtable.cat_summary <-
   function(DescrVarObj,
            var_name,
@@ -1094,7 +1293,7 @@ create_character_subtable.cat_summary <-
           paste0(
             DescrVarObj[[group]][["(Missing)"]],
             " (",
-            scales::label_percent()(DescrVarObj[[group]][["(Missing)"]] / N_group_total)  ,
+            scales::label_percent()(DescrVarObj[[group]][["(Missing)"]] / N_group_total),
             ")"
           )
       }
@@ -1104,7 +1303,6 @@ create_character_subtable.cat_summary <-
     }
     tibl %<>% bind_cols(Total = tot)
 
-
     tibl %<>% bind_cols(p =  c("",
                                format_p(DescrVarObj[["test_list"]]$p),
                                rep("", length_tibl -
@@ -1113,6 +1311,31 @@ create_character_subtable.cat_summary <-
                                  DescrVarObj[["test_list"]]$test_name,
                                  rep("", length_tibl -
                                        2)))
+
+
+    if (length(groups) == 2) {
+      if (is.null(DescrVarObj[["test_list"]][["CI"]])) {
+        CI_name <- ""
+        CI <- ""
+      } else{
+        CI_name <- DescrVarObj[["test_list"]][["CI_name"]]
+        CI <-
+          paste0(
+            "[",
+            format_summary_stats[["CI"]](DescrVarObj[["test_list"]][["CI"]][1]),
+            ", ",
+            format_summary_stats[["CI"]](DescrVarObj[["test_list"]][["CI"]][2]),
+            "]"
+          )
+      }
+      tibl %<>% bind_cols(CI = c("",
+                                 CI_name,
+                                 CI,
+                                 rep("", length_tibl -
+                                       3)))
+    }
+
+
 
     return(list(
       summary_list = DescrVarObj,
@@ -1132,6 +1355,14 @@ create_character_subtable.cat_summary <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 combine_two_elements_of_list <-
   function(lst, elem1, elem2, format_summary_stats) {
     if (c(elem1, elem2) %in% names(lst) %>% all()) {
@@ -1155,6 +1386,14 @@ combine_two_elements_of_list <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 get_groupNames <- function(DescrVarObj) {
   setdiff(
     names(DescrVarObj),
@@ -1194,7 +1433,6 @@ get_groupNames <- function(DescrVarObj) {
 .Nmiss <- function(var) {
   sum(is.na(var))
 }
-
 
 #' Title
 #'
@@ -1314,6 +1552,14 @@ sanitize_latex <- function(str_vec) {
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 create_test_abbreviations <- function(test_names) {
   erg <- character()
   for (test in test_names) {
@@ -1375,6 +1621,14 @@ test_names <- c(
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 test_cont <-
   function(var, group, test_options, test = NULL) {
     # decide how to handle missings
@@ -1458,7 +1712,10 @@ test_cont <-
         list(p = stats::wilcox.test(var)$p.value)
       },
       `Mann–Whitney U test` = {
-        list(p = stats::wilcox.test(var ~ group)$p.value)
+        tl <- stats::wilcox.test(var ~ group, conf.int = T)
+        list(p = tl$p.value,
+             CI = tl$conf.int,
+             CI_name = "HL CI")
       },
       `Kruskal–Wallis one-way ANOVA` = {
         list(p = stats::kruskal.test(var ~ group)$p.value)
@@ -1475,7 +1732,11 @@ test_cont <-
         y <-
           tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
 
-        list(p = stats::t.test(x, y, paired = T)$p.value)
+        tl <- stats::t.test(x, y, paired = T)
+
+        list(p = tl$p.value,
+             CI = tl$conf.int,
+             CI_name = "Mean dif. CI")
       },
       `Mixed model ANOVA` = {
         fit <- nlme::lme(var ~ group, random = ~ 1 | var.ind)
@@ -1487,8 +1748,10 @@ test_cont <-
         list(p = stats::t.test(var)$p.value)
       },
       `Welchs two-sample t-test` = {
-        list(p = stats::t.test(var ~ group)$p.value,
-             val.equal = F)
+        tl <- stats::t.test(var ~ group, var.equal = F)
+        list(p = tl$p.value,
+             CI = tl$conf.int,
+             CI_name = "Mean dif. CI")
       },
       `F-test (ANOVA)` = {
         tl <- summary(stats::aov(var ~ group))[[1]]
@@ -1513,6 +1776,14 @@ test_cont <-
 #' @export
 #'
 #' @examples
+#'
+#' @import dplyr
+#' @import magrittr
+#' @import tibble
+#' @import forcats
+#' @import stringr
+#' @import flextable
+#' @import kableExtra
 test_cat <-
   function(var, group, test_options, test = NULL) {
     # decide how to handle missings
@@ -1645,7 +1916,11 @@ test_cat <-
           list(p = stats::wilcox.test(as.numeric(as.character(var)))$p.value)
         },
         `Mann–Whitney U test` = {
-          list(p = stats::wilcox.test(as.numeric(as.character(var)) ~ group)$p.value)
+          tl <-
+            stats::wilcox.test(as.numeric(as.character(var)) ~ group, conf.int = T)
+          list(p = tl$p.value,
+               CI = tl$conf.int,
+               CI_name = "HL CI")
         },
         `Kruskal–Wallis one-way ANOVA` = {
           list(p = stats::kruskal.test(as.numeric(as.character(var)) ~ group)$p.value)
@@ -1659,10 +1934,18 @@ test_cat <-
           n1 <- sum(tabl[, 1])
           x2 <- tabl[1, 2]
           n2 <- sum(tabl[, 2])
-          list(p = exact2x2::boschloo(x1, n1, x2, n2)$p.value)
+          list(
+            p = exact2x2::boschloo(x1, n1, x2, n2)$p.value,
+            CI = prop.test(table(var, group))$conf.int,
+            CI_name = "Prop. dif. CI"
+          )
         },
         `McNemars test` = {
-          list(p = mcnemar.test(var, group)$p.value)
+          list(
+            p = mcnemar.test(var, group)$p.value,
+            CI = prop.test(table(var, group))$conf.int,
+            CI_name = "Prop. dif. CI"
+          )
         },
         `Cochrans Q test` = {
           list(p = DescTools::CochranQTest(var ~ group |
@@ -1672,7 +1955,15 @@ test_cat <-
           list(p = chisq.test(table(var))$p.value)
         },
         `Pearsons chi-squared test` = {
-          list(p = chisq.test(var, group)$p.value)
+          if (n_levels_group == 2 & n_levels_var == 2) {
+            list(
+              p = chisq.test(var, group)$p.value,
+              CI = prop.test(table(var, group))$conf.int,
+              CI_name = "Prop. dif. CI"
+            )
+          } else{
+            list(p = chisq.test(var, group)$p.value)
+          }
         },
         list(p = NA_real_)
       )
@@ -1680,3 +1971,4 @@ test_cat <-
     erg[["test_name"]] <- test
     erg
   }
+

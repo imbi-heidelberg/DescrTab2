@@ -1,12 +1,14 @@
 ---
 title: "test"
+header-includes:
+   - \usepackage{needspace}
+   - \usepackage{longtable}
+   - \usepackage{booktabs}
 output:
   pdf_document:
     toc: true
-  header-includes::
-    - \usepackage{longtable}
-    - \usepackage{booktabs}
-  
+    keep_tex: true
+
 ---
 
 ```{r setup, include=FALSE}
@@ -18,12 +20,45 @@ library(kableExtra)
 
 
 
-```{r cars, echo=F, results='asis'}
+<!-- ```{r cars, echo=F, results='asis'} -->
+<!-- source("../R/descr.R") -->
+<!-- options(DescrTabFormat = "tex") -->
+<!-- iris_test <- -->
+<!--   iris %>% bind_cols(cat_var = c("a", "b") %>% sample(150, T)) -->
+<!-- iris_test %>% descr( -->
+<!--   "Species", -->
+<!--   var_options = list(Sepal.Length = c(label = "Sepal Length")), -->
+<!--   group_labels = c(virginica = "Virgi") -->
+<!-- ) %>% print() -->
+
+<!-- iris_test %>% descr(var_options = list(Sepal.Length = c(label = "Sepal Length"))) %>% print() -->
+
+<!-- iris2 <- -->
+<!--   iris %>% filter(Species != "setosa") %>% mutate(Species = droplevels(Species)) %>%  bind_cols(cat_var = -->
+<!--                                                                                                   c("a", "b") %>% sample(100, T)) -->
+<!-- descr(iris2, "Species") %>% print() -->
+
+<!-- ``` -->
+
+
+
+```{r}
 source("../R/descr.R")
-options(DescrTabFormat="tex")
-iris_test <- iris %>% bind_cols(cat_var=c("a", "b") %>% sample(150, T))
-iris_test %>% descr("Species", var_options=list(Sepal.Length=c(label="Sepal Length")), group_labels = c(virginica = "Virgi")) %>% print()
+options(DescrTabFormat = "tex")
+capture.output(descr(iris)) %>% knitr::raw_latex()
 
-iris_test %>% descr( var_options=list(Sepal.Length=c(label="Sepal Length"))) %>% print()
-
+my_table <- descr(iris)
 ```
+
+`r my_table$`
+
+
+
+
+
+
+
+
+
+
+

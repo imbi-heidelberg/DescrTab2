@@ -1,0 +1,128 @@
+---
+title: "DescrTab2 usage guidance"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+`DescrTab2` is the replacement of the `DescrTab` package.
+It supports a variety of different customization options and can be used
+in .Rmd files in conjunction with knitr.
+
+## Preamble settings
+
+### imbi_report
+You're all set. Everything is already included.
+
+### pdf_document
+Here is what you need to include in the yaml header to use `DescrTab2` inside .Rmd file with pdf_document output:
+
+````markdown
+---
+title: "DescrTab2 tutorial"
+header-includes:
+   - \usepackage{needspace}
+   - \usepackage{longtable}
+   - \usepackage{booktabs}
+output: pdf_document
+---
+````
+
+### html & word_document
+No special preamble needed. Make sure you have pandoc version >= 2.0 installed on your system.
+
+## Global printFormat option
+In order for `DescrTab2` to work properly with your document type of choice, you need to set the `printFormat` options, preferably right at the start of your document. You can do this by typing:
+
+```{r, echo=TRUE, message=FALSE}
+options(DescrTabFormat = "html") # or = "word" or "tex", depending on your document type
+
+```
+
+
+## Getting started
+
+Make sure you include the DescrTab library by typing 
+
+
+```{r, echo=TRUE}
+# library(DescrTab2)
+```
+
+
+somewhere in the document before you use it. You are now ready to go! Producing beautiful descriptive tables in html and tex is now as easy as typing:
+
+````markdown
+`r ''````{r, results='asis'}
+descr(iris)
+`r ''````
+````
+
+Note the chunk option `results='asis'`. `DescrTab2` produces raw LaTeX or hmtl code. To get pandoc to render this properly, the `results='asis'` option is required. An alternative will be described later.
+
+
+To produce descriptive tables for a word document, a bit more typing is required:
+
+````markdown
+`r ''````{r}
+descr(iris) %>% print() %>% .$ft %>% knitr::knit_print()
+`r ''````
+````
+
+When producing word tables in this fashion, you must *not* have the `results='asis'` chunk option set.
+
+Note that `DescrTab2` can also produce console output! In fact, this is the default setting (i.e. if the global `DescrTabFormat` is not specified)
+
+
+## Accessing table elements
+
+The object returned from the `descr` function is basically just a named list. You may be interested in referencing certain summary statistics from the table in your document. To do this, you can save the list returned by `descr`:
+
+```{r}
+# my_table <- descr(iris)
+```
+
+You can then access the elements of the list using the `$` operator.
+
+```{r}
+# my_table$variables$Sepal.Length$Total$mean
+```
+
+Rstudios autocomplete suggestions are very helpful when navigating this list.
+
+The `print` function returns a formatted version of this list, which you can also save and access using the same syntax.
+
+```{r}
+# my_table <- descr(iris) %>% print()
+```
+
+
+## Specifying a group
+Use the `group` option to specify the name of a grouping variable in your data:
+
+```{r, results='asis'}
+# descr(iris, "Species")
+```
+
+## Assigning labels
+Use the `group_labels` option to assign group labels and the `var_options` option to assign variable labels:
+
+```{r, results='asis'}
+# descr(iris, "Species", group_labels=list(setosa="My custom group label"), var_options = list(Sepal.Length = list(label="My custom variable label")))
+```
+
+
+
