@@ -1,14 +1,14 @@
-#' DescrTab: A package to create descriptive statistics tables.
+#' DescrTab2: A package to create descriptive statistics tables.
 #'
 #' The packages creates descriptive statistics such as mean, standard
 #' deviation or relative and absolute frequencies grouped by a factor and also
 #' provides p-values obtained from testing for differences between the groups.
 #'
 #' @section Want to learn?:
-#' Type in vignette(package="DescrTab")
+#' Type in vignette(package="DescrTab2")
 #'
 #' @docType package
-#' @name DescrTab
+#' @name DescrTab2
 NULL
 
 
