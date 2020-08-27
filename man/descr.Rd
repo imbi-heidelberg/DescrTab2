@@ -6,115 +6,30 @@
 \usage{
 descr(
   dat,
-  group,
-  var.names,
-  percent.vertical = T,
-  data.names = T,
-  nonparametric = c(),
-  landscape = F,
-  pos.pagebr = NULL,
-  paired = F,
-  var.equal = T,
-  correct.cat = F,
-  correct.wilcox = T,
-  silent = T,
-  p.values = T,
-  group.min.size = F,
-  group.non.empty = F,
-  cat.non.empty = F,
-  n.or.miss = "n",
-  adaptive.miss = T,
-  group.miss = F,
-  t.log = c(),
-  index = T,
-  create = "knitr",
-  digits.m = 1,
-  digits.sd = 2,
-  digits.qu = c(),
-  digits.minmax = 1,
-  digits.p = c(1),
-  q.type = 2,
-  default.unordered.unpaired.test = "Chisq"
+  group = NULL,
+  var_options = list(),
+  group_labels = list(),
+  summary_stats_cont = list(N = .N, Nmiss = .Nmiss, mean = .mean, sd = .sd, median =
+    .median, Q1 = .Q1, Q3 = .Q3, min = .min, max = .max),
+  summary_stats_cat = list(),
+  format_p = scales::pvalue_format(),
+  format_summary_stats = list(N = function(x) format(x, digits = 2, scientific = 3),
+    Nmiss = function(x) format(x, digits = 2, scientific = 3), mean = function(x)
+    format(x, digits = 2, scientific = 3), sd = function(x) format(x, digits = 2,
+    scientific = 3), median = function(x) format(x, digits = 2, scientific = 3), Q =
+    function(x) format(x, digits = 2, scientific = 3), minmax = function(x) format(x,
+    digits = 2, scientific = 3), CI = function(x) format(x, digits = 2, scientific = 3)),
+  format_options = list(print_p = T, print_CI = T, omit_Nmiss_if_0 = T,
+    omit_missings_in_group = F, make_missing_a_category = F),
+  test_options = list(paired = F, nonparametric = F, exact = F, indices = c(),
+    include_group_missings_in_test = F, include_categorical_missings_in_test = F),
+  ...
 )
 }
 \arguments{
-\item{dat}{Data frame. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
+\item{dat}{Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
 
-\item{group}{Vector of the grouping variable.}
-
-\item{var.names}{Optional. Vector of names to be used in the table for the analyzed variables.}
-
-\item{percent.vertical}{Logical. Should "vertical" percentages for categorical variables be provided?}
-
-\item{data.names}{Logical. If \code{var.names} are specified, should names as saved in \code{dat} be added in brackets?}
-
-\item{nonparametric}{Logical or vector of indices. If logical / vector of indices then all / only
-these continuous variables will be tested using non-parametric methods.}
-
-\item{landscape}{Logical. Should the table be in landscape? Only useful if you want create a
-"pdf"- or "knitr"-document in the following. (see \code{pos.pagebr})}
-
-\item{pos.pagebr}{Vector of positions of the pagebreak in tex (or pdf). This is a bit fuzzy.
-It is the number of lines after a pagebreak should be done.\cr
-If it is not specified, 45 will be used for "\code{landscape=FALSE}" and
-30 will be used for "\code{landscape=TURE}".\cr
-Only useful if you want know the number for a pagebreak when you create
-a "pdf"- or "knitr"-document in the following.}
-
-\item{paired}{Logical. Should paired tests be applied? The groups must have the same length.}
-
-\item{var.equal}{Logical. Should variances be assumed to be equal when applying t-tests?}
-
-\item{correct.cat}{Logical. Should correction be used in chi-sqared tests (see \code{\link{chisq.test}})}
-
-\item{correct.wilcox}{Logical. Should correction be used in wilcoxon tests (see \code{\link{wilcox.test}})}
-
-\item{silent}{Logical. Should intermediate stages be shown (more for technical reasons)?}
-
-\item{p.values}{Logical. Should calculate p-values? If you won't p-values \code{index} were set to \code{FALSE}.}
-
-\item{group.min.size}{For each variable, a p-value is only calculated if each non-empty group contains
-at least \code{group.min.size} observations for that variable.}
-
-\item{group.non.empty}{For each variable, a p-value is only calculated if each group contains
-at least one observation for that variable.}
-
-\item{cat.non.empty}{For categorical variables a p-value is only calculated if each category is non-empty.}
-
-\item{n.or.miss}{Should the number of observations, missings for continuous variables, and/or
-missings for categorical variables be provided ("n", "miss", "miss.cat")?
-Combinations are allowed.}
-
-\item{adaptive.miss}{Should the missing row be automatically omitted if there are not missings?}
-
-\item{group.miss}{Logical. Schould add a column for the Missings in group?}
-
-\item{t.log}{Vector of indices: The variables for which the log of the original data should
-be used when testing for a difference between the groups.}
-
-\item{index}{Logical. Should the tests used be labeled by footnotes? Only usefull if
-"p-values" in \code{which.col}.}
-
-\item{create}{Which output document should be produced in the following step
-(one of "pdf", "tex", "knitr", "word" or "R").}
-
-\item{digits.m}{Number of digits for presentation in the table: For mean.}
-
-\item{digits.sd}{Number of digits for presentation in the table: For standard deviation.}
-
-\item{digits.qu}{Vector of numbers of digits for presentation in the table: For quantiles
-(if no value is specified it will be tried to provide a reasonable presentation).}
-
-\item{digits.minmax}{Number of digits for presentation in the table: For minimum and maximum.}
-
-\item{digits.p}{Vector with numbers of digits for presentation in the table: For percentages.
-First vector element is number of digits for the first variable,
-second element for second variable and so on.}
-
-\item{q.type}{Integer between 1 and 9 that selects a quantile algorithm.}
-
-\item{default.unordered.unpaired.test}{Any of c("Chisq", "Fisher_exact", "Fisher_boschloo").
-Chooses the default test for categorical, unordered, unpaired variables.}
+\item{...}{Vector of the grouping variable.}
 }
 \value{
 Depending on the value of the create parameter either pdf, word, tex, R
@@ -129,68 +44,9 @@ for difference between the groups.
 }
 \examples{
 \dontrun{
-##Dataset with two groups
-infert
-attach(infert)
-
-#is.factor(education)
-#is.factor(age)
-#is.factor(parity)
-#is.factor(induced)
-#is.factor(case)
-#infert$case<-as.factor(case)
-#case<-as.factor(case)
-
-#is.factor(spontaneous)
-#is.factor(stratum)
-#is.factor(pooled.stratum)
-
-#we use case as Grouping variable
-
-#Version 1
-descr(dat = infert, group = case,
-var.names = c("education", "age", "parity", "induced", "spontaneous", "stratum", "pooled.stratum"),
-create = "word")
-#Version 2
-group <- case
-dat <- infert[,-5]
-descr(dat = dat, group = group,
-var.names = c("education", "age", "parity", "induced", "spontaneous", "stratum", "pooled.stratum"),
-create = "word")
-
-
-##Dataset with more then two groups
-
-ChickWeight
-attach(ChickWeight)
-#is.factor(weight)
-#is.factor(Time)
-#is.factor(Chick)
-#is.factor(Diet)
-
-#we use Diet as Grouping variable
-
-#Version 1
-descr(dat = ChickWeight, group = Diet, var.names = c("weight", "Time", "Chick"), create = "word")
-
-#Version 4
-group <- Diet
-dat <- ChickWeight[,-4]
-descr(dat = dat, group = group, var.names = c("weight", "Time", "Chick"), create = "word")
 }
 
-}
-\seealso{
-\code{\link{med.new}}\cr
-\code{\link{inqur}}\cr
-\code{\link{minmax}}\cr
-\code{\link{f.r}}\cr
-\code{\link{formatr}}\cr
-\code{\link{m.cat}}\cr
-\code{\link{m.cont}}\cr
-\code{\link{p.cat}}\cr
-\code{\link{p.cont}}\cr
 }
 \author{
-Lorenz Uhlmann, Csilla van Lunteren
+Jan Meis, Lorenz Uhlmann, Csilla van Lunteren
 }

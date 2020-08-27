@@ -1,0 +1,55 @@
+---
+title: "DescrTab2 maintenance guidance"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Maintenance guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Intoduction
+`DescrTab2` is a powerful package with vast customization options. With this, unfortunately, comes code that has to deal with quite a bit of special cases an exceptions. This document aims to describe the flow of control of the `DescrTab2` package, so that future generations may continue development and successfully fix potential bugs.
+
+## Flow of control
+### descr
+The user interfaces mostly with the `descr` function. `descr` does all the calculations, i.e. the evaluation of the summary statistics on the data (mean, sd, median, etc. for continuous variables and counts for categorical variables) and the calculation of statistical tests. For this `descr` calls the `descr_cat` and `descr_cont` functions, which evaluate the list of summary statistics on the data. `descr_cat` then calls `test_cat` and `descr_cont` calls `test_cont`, which calculate appropriate statistical tests. A detailed description for the choice of test can be read in the "Test choice" vignette.
+
+`descr` returns a `DescrList` object, which is basically a named list containing all calculation results and the formatting options.
+
+### print
+
+To turn a `DescrList` object into pretty output, the object has to be passed to the print function. `print` is a generic function. This means that if a `DescrList` object is passed to `print`, the specialized `print.DescrList` function will be invoked automatically.
+
+#### Preprocessing
+
+Since the proper output format is highly document type dependent, `print.DescrList` creates output in two steps.
+The first step is independent of the output format: The creation of a `DescrPrintObj` by calling the `create_printObj` function.
+
+In this function, proper formatting is applied to the results in the `DescrList` and the formatted values are saved inside a tibble. Formatting in this case means converting numbers to characters, reducing the number of decimal digits, combining variables like "Q1" and "Q3" into "Q1 - Q3", formatting small p values to display as "<0.001" and adding "%" values to categorical variables.
+
+Somewhat of an exception is the case `printFormat="numeric"`. Here, numbers are not converted characters and consequently very little formatting can be applied.
+
+The formatting in `create_printObj` is done by iterating over all variables in the `DescrList` object and creating an appropriate sub-table by calling one of `create_numeric_subtable.cat_summary`, `create_numeric_subtable.cont_summary`, `create_character_subtable.cat_summary` or `create_character_subtable.cont_summary`. Whether `create_numeric_subtable` or `create_character_subtable` is called is determined by the `printFormat` option (all options lead to `create_character_subtable` except `printFormat="numeric`). Whether `.cat_summary` or `.cont_summary` is called depends on the type of variable.
+The sub-tables are then concatenated to a master table.
+
+#### Postprocessing
+
+The `DescrPintObj` is the transformed into appropriate output format by calling one of `print_tex`, `print_html`, `print_word`, `print_console` or `print_numeric`.
+
+`print_console` basically prints the tibble that is produces by `create_printObj` using a slightly modified version of the default method for printing tibbles.
+
+`print_numeric` basically prints the tibble produces by `create_printObj` if `printFormat="numeric"` was specified.
+
+`print_tex` and `print_html` use kableExtra to convert the tibble from `create_printObj` into raw tex or html output. Some special formatting has to be applied to these outputs to accomodate for superscripts and to escape special LaTeX characters.
+
+`print_word` produces a flextable object from the tibble returned by `create_printObj`. flextables play relatively nicely with word.
+
+
