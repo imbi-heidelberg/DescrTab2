@@ -2,18 +2,20 @@
 % Please edit documentation in R/descr.R
 \name{print_word}
 \alias{print_word}
-\title{Title}
+\title{Print descriptive statistics table with character entries in word format}
 \usage{
-print_word(DescrPrintObj)
+print_word(DescrPrintObj, silent = F)
 }
 \arguments{
-\item{print_red_NA}{}
+\item{DescrPrintObj}{A \code{printObj} object returned from \code{\link{create_printObj}}.}
+
+\item{silent}{if TRUE, suppressed stdout output}
 }
 \value{
 
 }
 \description{
-Title
+Print descriptive statistics table with character entries in word format
 }
 \examples{
 

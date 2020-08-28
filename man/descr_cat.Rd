@@ -14,10 +14,20 @@ descr_cat(
 )
 }
 \arguments{
-\item{group}{}
+\item{var}{The variable to be analyzed (a vector).}
+
+\item{group}{A vector of the same length as var containing the group assignment for the values in var.}
+
+\item{var_name}{The name of the variable to be analyzed.}
+
+\item{summary_stats}{named list of summary statistic functions.}
+
+\item{var_options}{named list of calculation, testing and formatting options}
+
+\item{test_options}{named list of test options.}
 }
 \value{
-
+A list of summary values
 }
 \description{
 Create descriptive statistics for a categorical variable

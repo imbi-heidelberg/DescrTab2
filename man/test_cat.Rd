@@ -2,18 +2,24 @@
 % Please edit documentation in R/descr.R
 \name{test_cat}
 \alias{test_cat}
-\title{Title}
+\title{calculate a statistical test for a numerical variable.}
 \usage{
 test_cat(var, group, test_options, test = NULL)
 }
 \arguments{
-\item{test}{}
+\item{var}{A variable (a vector).}
+
+\item{group}{A variable containing the grouping information.}
+
+\item{test_options}{Named list containing test options.}
+
+\item{test}{Name of a statistical test.}
 }
 \value{
 
 }
 \description{
-Title
+calculate a statistical test for a numerical variable.
 }
 \examples{
 

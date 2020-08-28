@@ -1,4 +1,4 @@
 library(testthat)
-library(DescrTab)
+library(DescrTab2)
 
-test_check("DescrTab")
+test_check("DescrTab2")

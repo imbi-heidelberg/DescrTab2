@@ -3,32 +3,36 @@ Type: Package
 Title: Creates a table with descriptive statistics
 Version: 2.0
 Date: 2020-08-27
-Author: person("Jan", "Meis", 
-    role = c("aut", "cre")), person("Lorenz", "Uhlmann", role = c("aut", "cre")), person("Csilla",
-    "van Lunteren", role = c("aut", "cre")), person("Jan", "Meis", 
-    role = c("aut"))
-Maintainer: Lorenz Uhlmann <uhlmann@imbi.uni-heidelberg.de>
+Author: person("Jan", "Meis", role = c("aut", "cre")), person("Lorenz", "Uhlmann", role = c("aut", "cre")), person("Csilla",
+    "van Lunteren", role = c("aut", "cre"))
+Maintainer: Jan Meis <meis@imbi.uni-heidelberg.de>
 Description: The packages creates descriptive statistics such as mean, standard
     deviation or relative and absolute frequencies grouped by a factor and also
     provides p-values obtained from testint for differences between the groups.
 Depends:
-    R  (>= 4.0.2)
+    R (>= 4.0.0)
 Suggests:
     testthat,
     covr,
     knitr
 Imports:
-    dplyr,
-    stringr,
+    stats,
+    utils,
     nlme,
-    flextable,
-    officer,
     lme4,
-    SparseM,
-    MatrixModels,
-    car,
     exact2x2,
-    tools
+    DescTools,
+    dplyr,
+    rlang,
+    tibble,
+    stringr,
+    forcats,
+    magrittr,
+    scales,
+    cli,
+    kableExtra,
+    flextable,
+    officer
 VignetteBuilder: knitr
 License: GPL
 LazyLoad: true

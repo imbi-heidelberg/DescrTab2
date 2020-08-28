@@ -13,7 +13,15 @@
 )
 }
 \arguments{
-\item{var_name}{}
+\item{DescrVarObj}{An object returned from \code{\link{descr_cat}}.}
+
+\item{var_name}{The name of the variable to be analyzed.}
+
+\item{format_options}{b}
+
+\item{format_summary_stats}{c}
+
+\item{format_p}{d}
 }
 \value{
 

@@ -2,16 +2,19 @@
 % Please edit documentation in R/descr.R
 \name{.min}
 \alias{.min}
-\title{Title}
+\title{Calculate minimum of nonmissing values}
 \usage{
 .min(var)
 }
 \arguments{
-\item{x}{}
+\item{var}{A variable (a vector).}
 }
 \value{
 
 }
 \description{
-Title
+Calculate minimum of nonmissing values
+}
+\examples{
+
 }

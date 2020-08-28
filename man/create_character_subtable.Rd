@@ -4,10 +4,24 @@
 \alias{create_character_subtable}
 \title{S3 dispatcher for subtable creation}
 \usage{
-create_character_subtable(DescrVarObj, ...)
+create_character_subtable(
+  DescrVarObj,
+  var_name,
+  format_options,
+  format_summary_stats,
+  format_p
+)
 }
 \arguments{
-\item{var_name}{}
+\item{DescrVarObj}{An object}
+
+\item{var_name}{a}
+
+\item{format_options}{b}
+
+\item{format_summary_stats}{c}
+
+\item{format_p}{d}
 }
 \value{
 

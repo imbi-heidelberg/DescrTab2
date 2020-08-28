@@ -5,20 +5,35 @@
 \title{S3 override for print function for DescrList objects}
 \usage{
 \method{print}{DescrList}(
-  DescrListObj,
+  x,
   printFormat = options("DescrTabFormat")[[1]],
   var_options = list(),
   group_labels = list(),
   format_p = NULL,
   format_summary_stats = list(),
   format_options = list(),
+  silent = F,
   ...
 )
 }
 \arguments{
 \item{printFormat}{Possible values: "console" (default), "tex", "html", "word", "numeric"}
 
-\item{...}{}
+\item{var_options}{named list of calculation, testing and formatting options for each variable in dat}
+
+\item{group_labels}{named list of labels for the levels of the group variable in dat}
+
+\item{format_p}{formatting function for p-values}
+
+\item{format_summary_stats}{named list of formatting functions for summary statistics}
+
+\item{format_options}{named list of formatting options}
+
+\item{silent}{I TRUE, suppresses output to stdout.}
+
+\item{...}{further argument passed along}
+
+\item{DescrListObj}{A \code{DescrList} object returned from \code{\link{descr}}.}
 }
 \value{
 

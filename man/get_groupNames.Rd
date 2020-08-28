@@ -2,18 +2,18 @@
 % Please edit documentation in R/descr.R
 \name{get_groupNames}
 \alias{get_groupNames}
-\title{Title}
+\title{Extract group names from cat_summary or cont_summary object}
 \usage{
 get_groupNames(DescrVarObj)
 }
 \arguments{
-\item{DescrVarObj}{}
+\item{DescrVarObj}{A DescrVarObj}
 }
 \value{
 
 }
 \description{
-Title
+Extract group names from cat_summary or cont_summary object
 }
 \examples{
 

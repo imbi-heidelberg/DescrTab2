@@ -2,7 +2,7 @@
 % Please edit documentation in R/descr.R
 \name{create_numeric_subtable.cont_summary}
 \alias{create_numeric_subtable.cont_summary}
-\title{Create subtables for continuous variables which will comprise the output table}
+\title{Create sub-tables for numerical variables which will comprise the output table.}
 \usage{
 \method{create_numeric_subtable}{cont_summary}(
   DescrVarObj,
@@ -13,13 +13,21 @@
 )
 }
 \arguments{
-\item{var_name}{}
+\item{DescrVarObj}{An object returned from \code{\link{descr_cont}}.}
+
+\item{var_name}{The name of the variable to be analyzed.}
+
+\item{format_options}{b}
+
+\item{format_summary_stats}{c}
+
+\item{format_p}{d}
 }
 \value{
 
 }
 \description{
-Create subtables for continuous variables which will comprise the output table
+Create sub-tables for numerical variables which will comprise the output table.
 }
 \examples{
 

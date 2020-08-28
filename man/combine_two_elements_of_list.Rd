@@ -2,18 +2,22 @@
 % Please edit documentation in R/descr.R
 \name{combine_two_elements_of_list}
 \alias{combine_two_elements_of_list}
-\title{Does what the function name says}
+\title{Combines to summary statistics into one}
 \usage{
 combine_two_elements_of_list(lst, elem1, elem2, format_summary_stats)
 }
 \arguments{
-\item{elem2}{}
+\item{lst}{A DescrVar object}
+
+\item{elem1, elem2}{Names of  summary statistics.}
+
+\item{format_summary_stats}{Formatting options.}
 }
 \value{
 
 }
 \description{
-Does what the function name says
+Combines to summary statistics into one
 }
 \examples{
 

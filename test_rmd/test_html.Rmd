@@ -29,3 +29,7 @@ descr(iris) %>% print()
 descr(iris, "Species", group_labels=list(setosa="My custom group label"), var_options = list(Sepal.Length = list(label="My custom variable label")))
 ```
 
+```{r}
+# descr(iris) %>% capture.output(print(.)) %>% knitr::raw_html()
+descr(iris) %>% capture.output(print(.)) %>%   knitr::raw_html()
+```

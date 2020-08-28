@@ -2,16 +2,19 @@
 % Please edit documentation in R/descr.R
 \name{.mean}
 \alias{.mean}
-\title{Title}
+\title{Calculate mean of nonmissing values.}
 \usage{
 .mean(var)
 }
 \arguments{
-\item{var}{}
+\item{var}{A variable (a vector).}
 }
 \value{
 
 }
 \description{
-Title
+Calculate mean of nonmissing values.
+}
+\examples{
+
 }

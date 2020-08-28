@@ -1,43 +1,41 @@
-#' Create a descriptive statistics table
+#' Calculate descriptive statistics
 #'
-#' Generate a table of descriptive statistics with p-values obtained in tests
+#' Generate a list of descriptive statistics with p-values obtained in tests
 #' for difference between the groups.
 #'
 #' @param dat
 #' Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
-#' @param group
-#' @param var_options
-#' @param group_labels
-#' @param summary_stats_cont
-#' @param summary_stats_cat
-#' @param format_p
-#' @param format_summary_stats
-#' @param format_options
-#' @param test_options
-#' @param ...
-#' Vector of the grouping variable.
+#' @param group name (as character) of the group variable in dat
+#' @param var_options named list of calculation, testing and formatting options for each variable in dat
+#' @param group_labels named list of labels for the levels of the group variable in dat
+#' @param summary_stats_cont named list of summary stats to be used for numeric variables
+#' @param summary_stats_cat named list of summary stats to be used for categorical variables
+#' @param format_p formatting function for p-values
+#' @param format_summary_stats named list of formatting functions for summary statistics
+#' @param format_options named list of formatting options
+#' @param test_options named list of test options
+#' @param ... further argument passed along
 #' @return
-#' Depending on the value of the create parameter either pdf, word, tex, R
-#' or an file optimized for use in connection with knitr will be created containing
-#' the descriptive statistics table with the speak for the document to create in the following.
-#' For example you choose \code{create="pdf"} then the table is written in \code{TeX}-Code.
-#' Attention: the table has no caption and numbers of observations per group.
+#' Returns a A \code{DescrList} object, which is a named list of descriptive statistics
+#' which can be passed along to the print function to create
+#' pretty summary tables.
+#'
 #'
 #' @author Jan Meis, Lorenz Uhlmann, Csilla van Lunteren
 #'
 #' @examples
 #' \dontrun{
+#' descr(iris)
 #' }
 #'
 #' @export
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import scales
 #'
 descr <-
   function(dat,
@@ -153,7 +151,8 @@ descr <-
     ergs[["format"]][["p"]] <- format_p
     ergs[["format"]][["summary_stats"]] <- format_summary_stats
     ergs[["format"]][["options"]] <- format_options
-    ergs[["input_facts"]] <- list(nrow = nrow(dat), ncol= ncol(dat))
+    ergs[["input_facts"]] <-
+      list(nrow = nrow(dat), ncol = ncol(dat))
 
     # Make result a "DescrList" object and return
     attr(ergs, "class") <- c("DescrList", "list")
@@ -163,21 +162,23 @@ descr <-
 
 #' Create descriptive statistics for a categorical variable
 #'
-#' @param var
-#' @param group
+#' @param var The variable to be analyzed (a vector).
+#' @param group A vector of the same length as var containing the group assignment for the values in var.
+#' @param var_name The name of the variable to be analyzed.
+#' @param summary_stats named list of summary statistic functions.
+#' @param var_options named list of calculation, testing and formatting options
+#' @param test_options named list of test options.
 #'
-#' @return
+#' @return A list of summary values
 #' @export
 #'
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
 descr_cat <-
   function(var,
            group,
@@ -236,8 +237,7 @@ descr_cat <-
 
 #' Create descriptive statistics for a continuous variable
 #'
-#' @param var
-#' @param group
+#' @inheritParams descr_cat
 #'
 #' @return
 #' @export
@@ -245,12 +245,10 @@ descr_cat <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
 descr_cont <-
   function(var,
            group,
@@ -299,13 +297,13 @@ descr_cont <-
     erg
   }
 
-
 #' S3 override for print function for DescrList objects
 #'
-#' @param DescrListObj
+#' @param DescrListObj A \code{DescrList} object returned from \code{\link{descr}}.
 #' @param printFormat
 #' Possible values: "console" (default), "tex", "html", "word", "numeric"
-#' @param ...
+#' @param silent I TRUE, suppresses output to stdout.
+#' @inheritParams descr
 #'
 #' @return
 #' @export
@@ -313,13 +311,11 @@ descr_cont <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
-print.DescrList <-  function(DescrListObj,
+print.DescrList <-  function(x,
                              printFormat = options("DescrTabFormat")[[1]],
 
                              var_options = list(),
@@ -328,7 +324,10 @@ print.DescrList <-  function(DescrListObj,
                              format_p = NULL,
                              format_summary_stats = list(),
                              format_options = list(),
+                             silent = F,
                              ...) {
+
+  DescrListObj <- x
   # Overwrite formatting options if they were resupplied in the print step function call
   if (length(var_options) > 0) {
     DescrListObj[["var_options"]] <- var_options
@@ -362,16 +361,31 @@ print.DescrList <-  function(DescrListObj,
   # "numeric" and "console" tables are printed similarily as tibbles would be printed to the console.
   ret <- switch(
     printFormat,
-    tex = print_tex(DescrPrintObj),
-    html = print_html(DescrPrintObj),
-    word = print_word(DescrPrintObj),
-    numeric = print_numeric(DescrPrintObj, ...),
-    print_console(DescrPrintObj, ...)
+    tex = print_tex(DescrPrintObj, silent),
+    html = print_html(DescrPrintObj, silent),
+    word = print_word(DescrPrintObj, silent),
+    numeric = print_numeric(DescrPrintObj, silent, ...),
+    print_console(DescrPrintObj, silent, ...)
   )
 
   invisible(ret)
 }
 
+#' Create a DescrPrintObj which can be printed in the appropriate format by the appropriate method
+#'
+#' @param DescrListObj A list obj.
+#' @param printFormat What format?
+#'
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+#' @import rlang
+#' @import dplyr
+#' @importFrom magrittr `%<>%`
+#' @import tibble
 create_printObj <- function(DescrListObj, printFormat) {
   create_subtable <- switch (printFormat,
                              numeric = create_numeric_subtable,
@@ -409,7 +423,7 @@ create_printObj <- function(DescrListObj, printFormat) {
     group_n <- c(group_n, sum(DescrListObj[["group"]][["var"]] == lvl))
   }
   ## Reminder: Add option to exclude Missings
-  if (is.null(DescrListObj[["group"]])){
+  if (is.null(DescrListObj[["group"]])) {
     group_n <- DescrListObj[["input_facts"]][["nrow"]]
   } else{
     group_n <- c(group_n, sum(group_n))
@@ -449,7 +463,7 @@ create_printObj <- function(DescrListObj, printFormat) {
   }
 
   if (isTRUE(DescrListObj[["format"]][["options"]][["print_CI"]] == F)) {
-    tibl %<>% select(-CI)
+    tibl %<>% select(-"CI")
   }
 
   names(tibl)[names(tibl) %in% group_names] <- group_labels
@@ -459,26 +473,27 @@ create_printObj <- function(DescrListObj, printFormat) {
 }
 
 
-#' Title
+#' Print descriptive statistics table with numeric entries to console
 #'
-#' @param DescrListObj
-#' @param n
-#' @param width
-#' @param n_extra
-#' @param print_red_NA
+#' @param DescrPrintObj A \code{printObj} object returned from \code{\link{create_printObj}}.
+#' @param silent if TRUE, suppressed stdout output
+#' @param n tibble printing option
+#' @param width tibble printing option
+#' @param n_extra tibble printing option
+#' @param print_red_NA if TRUE, prints red text for NA values in console
 #'
 #' @return
 #' @export
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import cli
 print_numeric <- function(DescrPrintObj,
+                          silent = F,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
@@ -495,23 +510,26 @@ print_numeric <- function(DescrPrintObj,
                          width = width,
                          n_extra = n_extra) %>%  str_replace_all(pattern = fixed('"'), fixed(' '))
 
-  if (print_red_NA) {
-    print_format %>% cli::cat_line()
-  } else{
-    print_format %>% str_replace_all(pattern = fixed("\033[31mNA\033[39m"),
-                                     fixed("\033[31m  \033[39m")) %>%  cli::cat_line()
+  if (!silent) {
+    if (print_red_NA) {
+      print_format %>% cli::cat_line()
+    } else{
+      print_format %>% str_replace_all(pattern = fixed("\033[31mNA\033[39m"),
+                                       fixed("\033[31m  \033[39m")) %>%  cli::cat_line()
+    }
   }
   invisible(DescrPrintObj)
 }
 
 
-#' Title
+#' Print descriptive statistics table with character entries to console
 #'
-#' @param DescrListObj
-#' @param n
-#' @param width
-#' @param n_extra
-#' @param print_red_NA
+#' @param DescrPrintObj A \code{printObj} object returned from \code{\link{create_printObj}}.
+#' @param silent if TRUE, suppressed stdout output
+#' @param n tibble printing option
+#' @param width tibble printing option
+#' @param n_extra tibble printing option
+#' @param print_red_NA if TRUE, prints red text for NA values in console
 #'
 #' @return
 #' @export
@@ -519,13 +537,13 @@ print_numeric <- function(DescrPrintObj,
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import cli
 print_console <- function(DescrPrintObj,
+                          silent = F,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
@@ -540,22 +558,21 @@ print_console <- function(DescrPrintObj,
   print_format <- format(tibl,
                          n = n,
                          width = width,
-                         n_extra = n_extra)
+                         n_extra = n_extra) %>%
+    .[-c(1, 3)] %>%
+    str_replace_all(pattern = fixed('"'), fixed(' '))
 
-  print_format %>% .[-c(1, 3)] %>%
-    str_replace_all(pattern = fixed('"'), fixed(' ')) %>%
-    cli::cat_line()
+  if (!silent) {
+    cli::cat_line(print_format)
+  }
 
   invisible(DescrPrintObj)
 }
 
-#' Title
+#' Print descriptive statistics table with character entries in LaTeX format
 #'
-#' @param DescrListObj
-#' @param n
-#' @param width
-#' @param n_extra
-#' @param print_red_NA
+#' @param DescrPrintObj A \code{printObj} object returned from \code{\link{create_printObj}}.
+#' @param silent if TRUE, suppressed stdout output
 #'
 #' @return
 #' @export
@@ -563,13 +580,14 @@ print_console <- function(DescrPrintObj,
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
-print_tex <- function(DescrPrintObj) {
+#' @import cli
+#' @importFrom kableExtra kbl kable_styling add_header_above
+#' @importFrom utils capture.output head tail
+print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -584,8 +602,8 @@ print_tex <- function(DescrPrintObj) {
 
   if ("p" %in% names(tibl)) {
     print_footnotes <- T
-    tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
-    p_vec <- tibl %>% pull(p)
+    tests <- tibl %>% filter("Test" != "") %>% pull("Test") %>% unique()
+    p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
     test_abbrev <- create_test_abbreviations(tests)
     for (idx in p_indx) {
@@ -625,7 +643,7 @@ print_tex <- function(DescrPrintObj) {
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
       .
     ) %>%
-    pack_rows(index = lengths) %>%
+    kableExtra::pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = F, align = alig2) %>%
     capture.output()
 
@@ -645,18 +663,20 @@ print_tex <- function(DescrPrintObj) {
     )
   }
   tex <- c("\\needspace{2cm}", tex)
-  cli::cat_line(tex)
+  if (!silent) {
+    cli::cat_line(tex)
+  }
+
+  DescrPrintObj[["tex"]] <- tex
+
   invisible(DescrPrintObj)
 }
 
 
-#' Title
+#' Print descriptive statistics table with character entries in html format
 #'
-#' @param DescrListObj
-#' @param n
-#' @param width
-#' @param n_extra
-#' @param print_red_NA
+#' @param DescrPrintObj A \code{printObj} object returned from \code{\link{create_printObj}}.
+#' @param silent if TRUE, suppressed stdout output
 #'
 #' @return
 #' @export
@@ -664,13 +684,14 @@ print_tex <- function(DescrPrintObj) {
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
-print_html <- function(DescrPrintObj) {
+#' @import cli
+#' @importFrom kableExtra kbl kable_styling add_header_above
+#' @importFrom utils capture.output head tail
+print_html <- function(DescrPrintObj, silent = F) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -684,8 +705,8 @@ print_html <- function(DescrPrintObj) {
 
   if ("p" %in% names(tibl)) {
     print_footnotes <- T
-    tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
-    p_vec <- tibl %>% pull(p)
+    tests <- tibl %>% filter(get("Test") != "") %>% pull("Test") %>% unique()
+    p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
     test_abbrev <- create_test_abbreviations(tests)
     for (idx in p_indx) {
@@ -695,12 +716,9 @@ print_html <- function(DescrPrintObj) {
     print_footnotes <- F
   }
 
-
   if ("Test" %in% names(tibl)) {
     tibl %<>% select(-Test)
   }
-
-
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
@@ -711,7 +729,7 @@ print_html <- function(DescrPrintObj) {
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  tibl[!indx_varnames,] %>%
+  html <- tibl[!indx_varnames,] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -727,22 +745,23 @@ print_html <- function(DescrPrintObj) {
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
       .
     ) %>%
-    pack_rows(index = lengths) %>%
-    add_header_above(actual_colnames, line = F, align = alig2) %>%
-    cat() %>%
-    knitr::raw_html()
+    kableExtra::pack_rows(index = lengths) %>%
+    add_header_above(actual_colnames, line = F, align = alig2)
+
+  if (!silent) {
+    cli::cat_line(html)
+  }
+
+  DescrPrintObj[["html"]] <- html
 
   invisible(DescrPrintObj)
 }
 
 
-#' Title
+#' Print descriptive statistics table with character entries in word format
 #'
-#' @param DescrListObj
-#' @param n
-#' @param width
-#' @param n_extra
-#' @param print_red_NA
+#' @param DescrPrintObj A \code{printObj} object returned from \code{\link{create_printObj}}.
+#' @param silent if TRUE, suppressed stdout output
 #'
 #' @return
 #' @export
@@ -750,13 +769,14 @@ print_html <- function(DescrPrintObj) {
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
-print_word <- function(DescrPrintObj) {
+#' @importFrom flextable flextable bold padding add_header border_inner align autofit
+#' @importFrom officer fp_border
+#' @importFrom utils capture.output head tail
+print_word <- function(DescrPrintObj, silent = F) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -767,8 +787,8 @@ print_word <- function(DescrPrintObj) {
 
   if ("p" %in% names(tibl)) {
     print_footnotes <- T
-    tests <- tibl %>% filter(Test != "") %>% pull(Test) %>% unique()
-    p_vec <- tibl %>% pull(p)
+    tests <- tibl %>% filter(get("Test") != "") %>% pull("Test") %>% unique()
+    p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
     test_abbrev <- create_test_abbreviations(tests)
   } else{
@@ -794,8 +814,8 @@ print_word <- function(DescrPrintObj) {
             i = !indx_varnames,
             padding.left = 20) %>%
     add_header(top = F, values = N_numbers, ) %>%
-    border_inner(part = "header", border = officer::fp_border(width = 0)) %>%
-    hline_bottom(part = "header", border = officer::fp_border(width = 2)) %>%
+    flextable::border_inner(part = "header", border = officer::fp_border(width = 0)) %>%
+    flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) %>%
     align(j = which(names(tibl2) != "Variables"),
           part = "all",
           align = "center") %>%
@@ -805,9 +825,9 @@ print_word <- function(DescrPrintObj) {
   if (print_footnotes) {
     for (test in tests) {
       ft %<>%  flextable::footnote(
-        i =  which((tibl %>% pull(Test)) %in% test),
+        i =  which((tibl %>% pull("Test")) %in% test),
         j =  which(names(tibl2) == "p"),
-        value = as_paragraph(c(test)),
+        value = flextable::as_paragraph(c(test)),
         ref_symbols = c(test_abbrev[match(test, tests)]),
         part = "body"
       )
@@ -818,14 +838,23 @@ print_word <- function(DescrPrintObj) {
     autofit()
 
   DescrPrintObj[["ft"]] <- ft
-  return(DescrPrintObj)
+
+  if (!silent) {
+    return(ft)
+  } else{
+    return(DescrPrintObj)
+  }
 }
 
 
-#' S3 dispatcher for subtable creation
+#' S3 dispatcher for sub-table creation.
 #'
-#' @param DescrVarObj
-#' @param var_name
+#' @param DescrVarObj A \code{cont_summary} or \code{cat_summary} object returned
+#' from \code{\link{descr_cont}} or \code{\link{descr_cat}}
+#' @param var_name a
+#' @param format_options b
+#' @param format_summary_stats c
+#' @param format_p d
 #'
 #' @return
 #' @export
@@ -833,21 +862,25 @@ print_word <- function(DescrPrintObj) {
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
-create_numeric_subtable <- function(DescrVarObj, ...) {
+create_numeric_subtable <- function(DescrVarObj,
+                                    var_name,
+                                    format_options,
+                                    format_summary_stats,
+                                    format_p) {
   UseMethod("create_numeric_subtable")
 }
 
 
-#' Create subtables for categorical variables which will comprise the output table
+#' Create sub-tables for categorical variables which will comprise the output table.
 #'
-#' @param DescrVarObj
-#' @param var_name
+#'
+#' @inheritParams descr_cat
+#' @param DescrVarObj An object returned from \code{\link{descr_cat}}.
+#' @inheritParams create_numeric_subtable
 #'
 #' @return
 #' @export
@@ -855,12 +888,11 @@ create_numeric_subtable <- function(DescrVarObj, ...) {
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import rlang
 create_numeric_subtable.cat_summary <-
   function(DescrVarObj,
            var_name,
@@ -923,10 +955,6 @@ create_numeric_subtable.cat_summary <-
       }
     }
 
-
-
-
-
     return(list(
       summary_list = DescrVarObj,
       length = length_tibl,
@@ -935,10 +963,12 @@ create_numeric_subtable.cat_summary <-
   }
 
 
-#' Create subtables for continuous variables which will comprise the output table
+#' Create sub-tables for numerical variables which will comprise the output table.
 #'
-#' @param DescrVarObj
-#' @param var_name
+#'
+#' @inheritParams descr_cat
+#' @param DescrVarObj An object returned from \code{\link{descr_cont}}.
+#' @inheritParams create_numeric_subtable
 #'
 #' @return
 #' @export
@@ -946,12 +976,11 @@ create_numeric_subtable.cat_summary <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import rlang
 create_numeric_subtable.cont_summary <-
   function(DescrVarObj,
            var_name,
@@ -1012,8 +1041,11 @@ create_numeric_subtable.cont_summary <-
 
 #' S3 dispatcher for subtable creation
 #'
-#' @param DescrVarObj
-#' @param var_name
+#' @param DescrVarObj An object
+#' @param var_name a
+#' @param format_options b
+#' @param format_summary_stats c
+#' @param format_p d
 #'
 #' @return
 #' @export
@@ -1021,21 +1053,24 @@ create_numeric_subtable.cont_summary <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
-create_character_subtable <- function(DescrVarObj, ...) {
+create_character_subtable <- function(DescrVarObj,
+                                      var_name,
+                                      format_options,
+                                      format_summary_stats,
+                                      format_p) {
   UseMethod("create_character_subtable")
 }
 
 
 #' Create subtables for continuous variables which will comprise the output table
 #'
-#' @param DescrVarObj
-#' @param var_name
+#' @inheritParams descr_cat
+#' @param DescrVarObj An object returned from \code{\link{descr_cat}}.
+#' @inheritParams create_character_subtable
 #'
 #' @return
 #' @export
@@ -1043,12 +1078,11 @@ create_character_subtable <- function(DescrVarObj, ...) {
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import rlang
 create_character_subtable.cont_summary <-
   function(DescrVarObj,
            var_name,
@@ -1184,7 +1218,12 @@ create_character_subtable.cont_summary <-
     ))
   }
 
-#' Title
+#' Create sub-tables for categorical variables which will comprise the output table.
+#'
+#'
+#' @inheritParams descr_cat
+#' @param DescrVarObj An object returned from \code{\link{descr_cat}}.
+#' @param format_p A function to format p-values.
 #'
 #' @return
 #' @export
@@ -1192,12 +1231,11 @@ create_character_subtable.cont_summary <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import rlang
 create_character_subtable.cat_summary <-
   function(DescrVarObj,
            var_name,
@@ -1345,24 +1383,23 @@ create_character_subtable.cat_summary <-
   }
 
 
-#' Does what the function name says
+#' Combines to summary statistics into one
 #'
-#' @param list
-#' @param elem1
-#' @param elem2
+#' @param elem1,elem2  Names of  summary statistics.
+#' @param lst A DescrVar object
+#' @param format_summary_stats Formatting options.
+#'
 #'
 #' @return
-#' @export
 #'
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @import rlang
 combine_two_elements_of_list <-
   function(lst, elem1, elem2, format_summary_stats) {
     if (c(elem1, elem2) %in% names(lst) %>% all()) {
@@ -1378,9 +1415,9 @@ combine_two_elements_of_list <-
     }
   }
 
-#' Title
+#' Extract group names from cat_summary or cont_summary object
 #'
-#' @param DescrVarObj
+#' @param DescrVarObj A DescrVarObj
 #'
 #' @return
 #' @export
@@ -1388,12 +1425,10 @@ combine_two_elements_of_list <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
 get_groupNames <- function(DescrVarObj) {
   setdiff(
     names(DescrVarObj),
@@ -1410,107 +1445,149 @@ get_groupNames <- function(DescrVarObj) {
 
 
 
-#' Title
+#' Calculate number of nonmissing values.
 #'
-#' @param var
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .N <- function(var) {
   sum(!is.na(var))
 }
 
-#' Title
+#' Calculate number of missing values.
 #'
-#' @param var
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .Nmiss <- function(var) {
   sum(is.na(var))
 }
 
-#' Title
+#' Calculate mean of nonmissing values.
 #'
-#' @param var
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .mean <- function(var) {
   mean(var, na.rm = T)
 }
 
+#' Calculate standard deviation of nonmissing values.
+#'
+#' @param var A variable (a vector).
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 .sd <- function(var) {
-  sd(var, na.rm = T)
+  stats::sd(var, na.rm = T)
 }
 
+#' Calculate median of nonmissing values.
+#'
+#' @param var A variable (a vector).
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 .median <- function(var) {
-  median(var, na.rm = T)
+  stats::median(var, na.rm = T)
 }
 
-#' Title
+#' Calculate first quantile of nonmissing values.
 #'
-#' @param var
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .Q1 <- function(var) {
-  quantile(var, probs = 0.25, na.rm = T)
+  stats::quantile(var, probs = 0.25, na.rm = T, type =2)
 }
 
-#' Title
+#' Calculate third quantile of nonmissing values.
 #'
-#' @param var
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .Q3 <- function(var) {
-  quantile(var, probs = 0.75, na.rm = T)
+  stats::quantile(var, probs = 0.75, na.rm = T, type =2)
 }
 
 
 
-#' Title
+#' Calculate minimum of nonmissing values
 #'
-#' @param x
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .min <- function(var) {
   min(var, na.rm = T)
 }
 
 
-#' Title
+#' Calculate maximum of nonmissing values
 #'
-#' @param x
+#' @param var A variable (a vector).
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#'
 .max <- function(var) {
   max(var, na.rm = T)
 }
 
 
+#' Calculate mean of nonmissing values after coercing factor to numeric
+#'
+#' @param var A variable (a vector).
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 .factormean <- function(var) {
   var %>% as.character() %>% as.numeric() %>% mean(na.rm = T)
 }
 
 
+#' Escape special characters in a  tibble containing LaTeX code
+#'
+#' @param tibl A tibble containing LaTeX code.
+#'
+#' @return
+#'
+#' @examples
+#'
 escape_latex_symbols <- function(tibl) {
   for (i in 1:nrow(tibl)) {
     for (j in 1:ncol(tibl)) {
@@ -1524,42 +1601,19 @@ escape_latex_symbols <- function(tibl) {
 }
 
 
-suggest_good_pagebreaks <- function(tibl) {
-  for (i in 1:nrow(tibl)) {
-    for (j in 1:ncol(tibl)) {
-      tibl[i, j] <- str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("$"), fixed("\\$"))
-      # tibl[i,j] <- str_replace_all(tibl[i,j], fixed("_"), fixed("\\_"))
-    }
-  }
-  tibl
-}
-
-
-sanitize_latex <- function(str_vec) {
-  str_replace_all(str_vec,
-                  "^\\s\\s\\-",
-                  fixed("\\\\vphantom{padding} \\\\vphantom{padding} -"))
-}
-
-
-#' Title
+#' Converts a string containing the name of a test to an abbreviation of that name
 #'
-#' @param test_names
+#' @param test_names Name of a statistical test.
 #'
 #' @return
-#' @export
 #'
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
 create_test_abbreviations <- function(test_names) {
   erg <- character()
   for (test in test_names) {
@@ -1574,8 +1628,8 @@ create_test_abbreviations <- function(test_names) {
       `Friedman test` = "Frie",
       `Wilcoxon two-sample signed-rank test` = "Wil2",
       `Wilcoxon one-sample signed-rank test` = "Wil1",
-      `Mann–Whitney U test` = "MWU",
-      `Kruskal–Wallis one-way ANOVA` = "KW",
+      `Mann-Whitney U test` = "MWU",
+      `Kruskal-Wallis one-way ANOVA` = "KW",
       `Students paired t-test` = "tpar",
       `Mixed model ANOVA` = "MiAn",
       `Students one-sample t-test` = "tt1",
@@ -1599,8 +1653,8 @@ test_names <- c(
   "Friedman test",
   "Wilcoxon two-sample signed-rank test",
   "Wilcoxon one-sample signed-rank test",
-  "Mann–Whitney U test",
-  "Kruskal–Wallis one-way ANOVA",
+  "Mann-Whitney U test",
+  "Kruskal-Wallis one-way ANOVA",
   "Students paired t-test",
   "Mixed model ANOVA",
   "Students one-sample t-test",
@@ -1610,12 +1664,12 @@ test_names <- c(
 
 
 
-#' Title
+#' calculate a statistical test for a numerical variable.
 #'
-#' @param var
-#' @param group
-#' @param test_options
-#' @param test
+#' @param var A variable (a vector).
+#' @param group A variable containing the grouping information.
+#' @param test_options Named list containing test options.
+#' @param test Name of a statistical test.
 #'
 #' @return
 #' @export
@@ -1623,12 +1677,10 @@ test_names <- c(
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
 test_cont <-
   function(var, group, test_options, test = NULL) {
     # decide how to handle missings
@@ -1662,9 +1714,9 @@ test_cont <-
           if (is.null(group)) {
             test <- "Wilcoxon one-sample signed-rank test"
           } else if (n_levels_group == 2) {
-            test <- "Mann–Whitney U test"
+            test <- "Mann-Whitney U test"
           } else if (n_levels_group >= 2) {
-            test <- "Kruskal–Wallis one-way ANOVA"
+            test <- "Kruskal-Wallis one-way ANOVA"
           }
         }
       } else{
@@ -1711,13 +1763,13 @@ test_cont <-
       `Wilcoxon one-sample signed-rank test` = {
         list(p = stats::wilcox.test(var)$p.value)
       },
-      `Mann–Whitney U test` = {
+      `Mann-Whitney U test` = {
         tl <- stats::wilcox.test(var ~ group, conf.int = T)
         list(p = tl$p.value,
              CI = tl$conf.int,
              CI_name = "HL CI")
       },
-      `Kruskal–Wallis one-way ANOVA` = {
+      `Kruskal-Wallis one-way ANOVA` = {
         list(p = stats::kruskal.test(var ~ group)$p.value)
       },
       `Students paired t-test` = {
@@ -1765,12 +1817,12 @@ test_cont <-
   }
 
 
-#' Title
+#' calculate a statistical test for a numerical variable.
 #'
-#' @param var
-#' @param group
-#' @param test_options
-#' @param test
+#' @param var A variable (a vector).
+#' @param group A variable containing the grouping information.
+#' @param test_options Named list containing test options.
+#' @param test Name of a statistical test.
 #'
 #' @return
 #' @export
@@ -1778,12 +1830,11 @@ test_cont <-
 #' @examples
 #'
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr `%<>%`
 #' @import tibble
 #' @import forcats
 #' @import stringr
-#' @import flextable
-#' @import kableExtra
+#' @importFrom DescTools CochranQTest
 test_cat <-
   function(var, group, test_options, test = NULL) {
     # decide how to handle missings
@@ -1836,9 +1887,9 @@ test_cat <-
           if (n_levels_group == 1) {
             test <- "Wilcoxon one-sample signed-rank test"
           } else if (n_levels_group == 2) {
-            test <- "Mann–Whitney U test"
+            test <- "Mann-Whitney U test"
           } else if (n_levels_group >= 2) {
-            test <- "Kruskal–Wallis one-way ANOVA"
+            test <- "Kruskal-Wallis one-way ANOVA"
           }
         }
       } else{
@@ -1915,14 +1966,14 @@ test_cat <-
         `Wilcoxon one-sample signed-rank test` = {
           list(p = stats::wilcox.test(as.numeric(as.character(var)))$p.value)
         },
-        `Mann–Whitney U test` = {
+        `Mann-Whitney U test` = {
           tl <-
             stats::wilcox.test(as.numeric(as.character(var)) ~ group, conf.int = T)
           list(p = tl$p.value,
                CI = tl$conf.int,
                CI_name = "HL CI")
         },
-        `Kruskal–Wallis one-way ANOVA` = {
+        `Kruskal-Wallis one-way ANOVA` = {
           list(p = stats::kruskal.test(as.numeric(as.character(var)) ~ group)$p.value)
         },
         `Exact McNemars test` = {
@@ -1936,14 +1987,14 @@ test_cat <-
           n2 <- sum(tabl[, 2])
           list(
             p = exact2x2::boschloo(x1, n1, x2, n2)$p.value,
-            CI = prop.test(table(var, group))$conf.int,
+            CI = stats::prop.test(table(var, group))$conf.int,
             CI_name = "Prop. dif. CI"
           )
         },
         `McNemars test` = {
           list(
-            p = mcnemar.test(var, group)$p.value,
-            CI = prop.test(table(var, group))$conf.int,
+            p = stats::mcnemar.test(var, group)$p.value,
+            CI = stats::prop.test(table(var, group))$conf.int,
             CI_name = "Prop. dif. CI"
           )
         },
@@ -1952,17 +2003,17 @@ test_cat <-
                                              test_options[["indices"]])$p.value)
         },
         `Chi-squared goodness-of-fit test` = {
-          list(p = chisq.test(table(var))$p.value)
+          list(p = stats::chisq.test(table(var))$p.value)
         },
         `Pearsons chi-squared test` = {
           if (n_levels_group == 2 & n_levels_var == 2) {
             list(
-              p = chisq.test(var, group)$p.value,
-              CI = prop.test(table(var, group))$conf.int,
+              p = stats::chisq.test(var, group)$p.value,
+              CI = stats::prop.test(table(var, group))$conf.int,
               CI_name = "Prop. dif. CI"
             )
           } else{
-            list(p = chisq.test(var, group)$p.value)
+            list(p = stats::chisq.test(var, group)$p.value)
           }
         },
         list(p = NA_real_)
@@ -1971,4 +2022,3 @@ test_cat <-
     erg[["test_name"]] <- test
     erg
   }
-

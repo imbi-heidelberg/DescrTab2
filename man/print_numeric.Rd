@@ -2,10 +2,11 @@
 % Please edit documentation in R/descr.R
 \name{print_numeric}
 \alias{print_numeric}
-\title{Title}
+\title{Print descriptive statistics table with numeric entries to console}
 \usage{
 print_numeric(
   DescrPrintObj,
+  silent = F,
   n = 1000,
   width = NULL,
   n_extra = NULL,
@@ -13,13 +14,23 @@ print_numeric(
 )
 }
 \arguments{
-\item{print_red_NA}{}
+\item{DescrPrintObj}{A \code{printObj} object returned from \code{\link{create_printObj}}.}
+
+\item{silent}{if TRUE, suppressed stdout output}
+
+\item{n}{tibble printing option}
+
+\item{width}{tibble printing option}
+
+\item{n_extra}{tibble printing option}
+
+\item{print_red_NA}{if TRUE, prints red text for NA values in console}
 }
 \value{
 
 }
 \description{
-Title
+Print descriptive statistics table with numeric entries to console
 }
 \examples{
 

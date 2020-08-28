@@ -2,7 +2,7 @@
 % Please edit documentation in R/descr.R
 \name{descr}
 \alias{descr}
-\title{Create a descriptive statistics table}
+\title{Calculate descriptive statistics}
 \usage{
 descr(
   dat,
@@ -29,21 +29,38 @@ descr(
 \arguments{
 \item{dat}{Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
 
-\item{...}{Vector of the grouping variable.}
+\item{group}{name (as character) of the group variable in dat}
+
+\item{var_options}{named list of calculation, testing and formatting options for each variable in dat}
+
+\item{group_labels}{named list of labels for the levels of the group variable in dat}
+
+\item{summary_stats_cont}{named list of summary stats to be used for numeric variables}
+
+\item{summary_stats_cat}{named list of summary stats to be used for categorical variables}
+
+\item{format_p}{formatting function for p-values}
+
+\item{format_summary_stats}{named list of formatting functions for summary statistics}
+
+\item{format_options}{named list of formatting options}
+
+\item{test_options}{named list of test options}
+
+\item{...}{further argument passed along}
 }
 \value{
-Depending on the value of the create parameter either pdf, word, tex, R
-or an file optimized for use in connection with knitr will be created containing
-the descriptive statistics table with the speak for the document to create in the following.
-For example you choose \code{create="pdf"} then the table is written in \code{TeX}-Code.
-Attention: the table has no caption and numbers of observations per group.
+Returns a A \code{DescrList} object, which is a named list of descriptive statistics
+which can be passed along to the print function to create
+pretty summary tables.
 }
 \description{
-Generate a table of descriptive statistics with p-values obtained in tests
+Generate a list of descriptive statistics with p-values obtained in tests
 for difference between the groups.
 }
 \examples{
 \dontrun{
+descr(iris)
 }
 
 }

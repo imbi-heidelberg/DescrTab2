@@ -2,18 +2,18 @@
 % Please edit documentation in R/descr.R
 \name{create_test_abbreviations}
 \alias{create_test_abbreviations}
-\title{Title}
+\title{Converts a string containing the name of a test to an abbreviation of that name}
 \usage{
 create_test_abbreviations(test_names)
 }
 \arguments{
-\item{test_names}{}
+\item{test_names}{Name of a statistical test.}
 }
 \value{
 
 }
 \description{
-Title
+Converts a string containing the name of a test to an abbreviation of that name
 }
 \examples{
 

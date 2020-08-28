@@ -2,18 +2,33 @@
 % Please edit documentation in R/descr.R
 \name{create_numeric_subtable}
 \alias{create_numeric_subtable}
-\title{S3 dispatcher for subtable creation}
+\title{S3 dispatcher for sub-table creation.}
 \usage{
-create_numeric_subtable(DescrVarObj, ...)
+create_numeric_subtable(
+  DescrVarObj,
+  var_name,
+  format_options,
+  format_summary_stats,
+  format_p
+)
 }
 \arguments{
-\item{var_name}{}
+\item{DescrVarObj}{A \code{cont_summary} or \code{cat_summary} object returned
+from \code{\link{descr_cont}} or \code{\link{descr_cat}}}
+
+\item{var_name}{a}
+
+\item{format_options}{b}
+
+\item{format_summary_stats}{c}
+
+\item{format_p}{d}
 }
 \value{
 
 }
 \description{
-S3 dispatcher for subtable creation
+S3 dispatcher for sub-table creation.
 }
 \examples{
 

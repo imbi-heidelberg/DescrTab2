@@ -2,16 +2,19 @@
 % Please edit documentation in R/descr.R
 \name{.Nmiss}
 \alias{.Nmiss}
-\title{Title}
+\title{Calculate number of missing values.}
 \usage{
 .Nmiss(var)
 }
 \arguments{
-\item{var}{}
+\item{var}{A variable (a vector).}
 }
 \value{
 
 }
 \description{
-Title
+Calculate number of missing values.
+}
+\examples{
+
 }

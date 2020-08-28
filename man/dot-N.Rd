@@ -2,16 +2,19 @@
 % Please edit documentation in R/descr.R
 \name{.N}
 \alias{.N}
-\title{Title}
+\title{Calculate number of nonmissing values.}
 \usage{
 .N(var)
 }
 \arguments{
-\item{var}{}
+\item{var}{A variable (a vector).}
 }
 \value{
 
 }
 \description{
-Title
+Calculate number of nonmissing values.
+}
+\examples{
+
 }

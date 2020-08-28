@@ -2,16 +2,19 @@
 % Please edit documentation in R/descr.R
 \name{.Q3}
 \alias{.Q3}
-\title{Title}
+\title{Calculate third quantile of nonmissing values.}
 \usage{
 .Q3(var)
 }
 \arguments{
-\item{var}{}
+\item{var}{A variable (a vector).}
 }
 \value{
 
 }
 \description{
-Title
+Calculate third quantile of nonmissing values.
+}
+\examples{
+
 }
