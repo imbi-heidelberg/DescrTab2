@@ -599,10 +599,10 @@ print_tex <- function(DescrPrintObj, silent = F) {
   c1 <- tibl %>% pull(1)
   indx_varnames <- c1 %in% labels
 
-
+browser()
   if ("p" %in% names(tibl)) {
     print_footnotes <- T
-    tests <- tibl %>% filter("Test" != "") %>% pull("Test") %>% unique()
+    tests <- tibl %>% filter(get("Test") != "") %>% pull("Test") %>% unique()
     p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
     test_abbrev <- create_test_abbreviations(tests)
@@ -666,6 +666,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   if (!silent) {
     cli::cat_line(tex)
   }
+  browser()
 
   DescrPrintObj[["tex"]] <- tex
 

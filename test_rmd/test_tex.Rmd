@@ -20,37 +20,35 @@ library(kableExtra)
 
 
 
-<!-- ```{r cars, echo=F, results='asis'} -->
-<!-- source("../R/descr.R") -->
-<!-- options(DescrTabFormat = "tex") -->
-<!-- iris_test <- -->
-<!--   iris %>% bind_cols(cat_var = c("a", "b") %>% sample(150, T)) -->
-<!-- iris_test %>% descr( -->
-<!--   "Species", -->
-<!--   var_options = list(Sepal.Length = c(label = "Sepal Length")), -->
-<!--   group_labels = c(virginica = "Virgi") -->
-<!-- ) %>% print() -->
-
-<!-- iris_test %>% descr(var_options = list(Sepal.Length = c(label = "Sepal Length"))) %>% print() -->
-
-<!-- iris2 <- -->
-<!--   iris %>% filter(Species != "setosa") %>% mutate(Species = droplevels(Species)) %>%  bind_cols(cat_var = -->
-<!--                                                                                                   c("a", "b") %>% sample(100, T)) -->
-<!-- descr(iris2, "Species") %>% print() -->
-
-<!-- ``` -->
-
-
-
-```{r}
+```{r cars, echo=F, results='asis'}
 source("../R/descr.R")
 options(DescrTabFormat = "tex")
-capture.output(descr(iris)) %>% knitr::raw_latex()
+iris_test <-
+  iris %>% bind_cols(cat_var = c("a", "b") %>% sample(150, T))
+iris_test %>% descr(
+  "Species",
+  var_options = list(Sepal.Length = c(label = "Sepal Length")),
+  group_labels = c(virginica = "Virgi")
+) %>% print()
 
-my_table <- descr(iris)
+iris_test %>% descr(var_options = list(Sepal.Length = c(label = "Sepal Length"))) %>% print()
+
+iris2 <-
+  iris %>% filter(Species != "setosa") %>% mutate(Species = droplevels(Species)) %>%  bind_cols(cat_var =
+                                                                                                  c("a", "b") %>% sample(100, T))
+descr(iris2, "Species") %>% print()
+
 ```
 
-`r my_table$`
+
+
+<!-- ```{r} -->
+<!-- source("../R/descr.R") -->
+<!-- options(DescrTabFormat = "tex") -->
+<!-- capture.output(descr(iris)) %>% knitr::raw_latex() -->
+
+<!-- my_table <- descr(iris) -->
+<!-- ``` -->
 
 
 

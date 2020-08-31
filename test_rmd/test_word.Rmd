@@ -18,6 +18,6 @@ library(knitr)
 source("../R/descr.R")
 options(DescrTabFormat="word")
 iris_test <- iris %>% bind_cols(cat_var=c("a", "b") %>% sample(150, T))
-iris_test %>% descr("Species") %>% print(printFormat="word") %>% .$ft %>% knit_print()
+iris_test %>% descr("Species") %>% print(printFormat="word") %>%  knit_print()
 
 ```

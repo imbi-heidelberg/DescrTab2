@@ -41,46 +41,6 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -126,14 +86,6 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{source}\NormalTok{(}\StringTok{"../R/descr.R"}\NormalTok{)}
-\KeywordTok{options}\NormalTok{(}\DataTypeTok{DescrTabFormat =} \StringTok{"tex"}\NormalTok{)}
-\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{descr}\NormalTok{(iris)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{raw_latex}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
 ## Please use the `.name_repair` argument instead.
@@ -141,15 +93,69 @@
 ## Call `lifecycle::last_warnings()` to see where this warning was generated.
 \end{verbatim}
 
+\begin{verbatim}
+## Warning: The `value` argument of ``names<-`()` must be a character vector as of tibble 3.0.0.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+\needspace{2cm}
+
+\begin{longtable}[t]{lccccc}
+\toprule
+\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{setosa} & \multicolumn{1}{c}{versicolor} & \multicolumn{1}{c}{Virgi} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
+ & (N=50) & (N=50) & (N=50) & (N=150) & \\*
+\midrule
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Sepal Length}}\\*
+\hspace{1em}N & 150 & 150 & 150 & 150 & \vphantom{3}<0.001\textsuperscript{F}\\*
+\hspace{1em}mean & 5.8 & 5.8 & 5.8 & 5.8 & \\*
+\hspace{1em}sd & 0.83 & 0.83 & 0.83 & 0.83 & \\*
+\hspace{1em}median & 5.8 & 5.8 & 5.8 & 5.8 & \\*
+\hspace{1em}Q1 - Q3 & 5.1 -- 6.4 & 5.1 -- 6.4 & 5.1 -- 6.4 & 5.1 -- 6.4 & \\*
+\hspace{1em}min - max & 4.3 -- 7.9 & 4.3 -- 7.9 & 4.3 -- 7.9 & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Sepal.Width}}\\*
+\hspace{1em}N & 150 & 150 & 150 & 150 & \vphantom{2}<0.001\textsuperscript{F}\\*
+\hspace{1em}mean & 3.1 & 3.1 & 3.1 & 3.1 & \\*
+\hspace{1em}sd & 0.44 & 0.44 & 0.44 & 0.44 & \\*
+\hspace{1em}median & 3 & 3 & 3 & 3 & \\*
+\hspace{1em}Q1 - Q3 & 2.8 -- 3.3 & 2.8 -- 3.3 & 2.8 -- 3.3 & 2.8 -- 3.3 & \\*
+\hspace{1em}min - max & 2 -- 4.4 & 2 -- 4.4 & 2 -- 4.4 & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Petal.Length}}\\*
+\hspace{1em}N & 150 & 150 & 150 & 150 & \vphantom{1}<0.001\textsuperscript{F}\\*
+\hspace{1em}mean & 3.8 & 3.8 & 3.8 & 3.8 & \\*
+\hspace{1em}sd & 1.8 & 1.8 & 1.8 & 1.8 & \\*
+\hspace{1em}median & 4.3 & 4.3 & 4.3 & 4.3 & \\*
+\hspace{1em}Q1 - Q3 & 1.6 -- 5.1 & 1.6 -- 5.1 & 1.6 -- 5.1 & 1.6 -- 5.1 & \\*
+\hspace{1em}min - max & 1 -- 6.9 & 1 -- 6.9 & 1 -- 6.9 & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Petal.Width}}\\*
+\hspace{1em}N & 150 & 150 & 150 & 150 & <0.001\textsuperscript{F}\\*
+\hspace{1em}mean & 1.2 & 1.2 & 1.2 & 1.2 & \\*
+\hspace{1em}sd & 0.76 & 0.76 & 0.76 & 0.76 & \\*
+\hspace{1em}median & 1.3 & 1.3 & 1.3 & 1.3 & \\*
+\hspace{1em}Q1 - Q3 & 0.3 -- 1.8 & 0.3 -- 1.8 & 0.3 -- 1.8 & 0.3 -- 1.8 & \\*
+\hspace{1em}min - max & 0.1 -- 2.5 & 0.1 -- 2.5 & 0.1 -- 2.5 & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{cat\_var}}\\*
+\hspace{1em}b & 26 (52\%) & 23 (46\%) & 28 (56\%) & 77 (51\%) & 0.602\textsuperscript{chi2}\\*
+\hspace{1em}a & 24 (48\%) & 27 (54\%) & 22 (44\%) & 73 (49\%) & \\*
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{Unknown test} }\\*
+\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{F} F-test (ANOVA)}\\*
+\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{chi2} Pearsons chi-squared test}\\*
+\end{longtable}
 \needspace{2cm}
 
 \begin{longtable}[t]{lcc}
 \toprule
 \multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=0) & \\*
+ & (N=150) & \\*
 \midrule
 \addlinespace[0.3em]
-\multicolumn{3}{l}{\textbf{Sepal.Length}}\\*
+\multicolumn{3}{l}{\textbf{Sepal Length}}\\*
 \hspace{1em}N & 150 & \vphantom{3}<0.001\textsuperscript{tt1}\\*
 \hspace{1em}mean & 5.8 & \\*
 \hspace{1em}sd & 0.83 & \\*
@@ -179,15 +185,68 @@
 \hspace{1em}sd & 0.76 & \\*
 \hspace{1em}median & 1.3 & \\*
 \hspace{1em}Q1 - Q3 & 0.3 -- 1.8 & \\*
-\hspace{1em}min - max & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
+\hspace{1em}min - max & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt}
 \addlinespace[0.3em]
 \multicolumn{3}{l}{\textbf{Species}}\\*
 \hspace{1em}setosa & 50 (33\%) & >0.999\textsuperscript{chi1}\\*
 \hspace{1em}versicolor & 50 (33\%) & \\*
-\hspace{1em}virginica & 50 (33\%) & \\*
+\hspace{1em}virginica & 50 (33\%) & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
+\addlinespace[0.3em]
+\multicolumn{3}{l}{\textbf{cat\_var}}\\*
+\hspace{1em}b & 77 (51\%) & 0.744\textsuperscript{chi1}\\*
+\hspace{1em}a & 73 (49\%) & \\*
 \bottomrule
+\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{Unknown test} }\\*
 \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
 \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
+\end{longtable}
+\needspace{2cm}
+
+\begin{longtable}[t]{lccccc}
+\toprule
+\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{versicolor} & \multicolumn{1}{c}{virginica} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} & \multicolumn{1}{c}{CI} \\*
+ & (N=50) & (N=50) & (N=100) &  & \\*
+\midrule
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Sepal.Length}}\\*
+\hspace{1em}N & 100 & 100 & 100 & <0.001\textsuperscript{tt2} & Mean dif. \vphantom{2}CI\\*
+\hspace{1em}mean & 6.3 & 6.3 & 6.3 &  & [-0.88, -0.42]\\*
+\hspace{1em}sd & 0.66 & 0.66 & 0.66 &  & \\*
+\hspace{1em}median & 6.3 & 6.3 & 6.3 &  & \\*
+\hspace{1em}Q1 - Q3 & 5.8 -- 6.7 & 5.8 -- 6.7 & 5.8 -- 6.7 &  & \\*
+\hspace{1em}min - max & 4.9 -- 7.9 & 4.9 -- 7.9 & 4.9 -- 7.9 &  & \\ \noalign{\vskip 0pt plus 12pt}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Sepal.Width}}\\*
+\hspace{1em}N & 100 & 100 & 100 & 0.002\textsuperscript{tt2} & Mean dif. CI\\*
+\hspace{1em}mean & 2.9 & 2.9 & 2.9 &  & [-0.33, -0.078]\\*
+\hspace{1em}sd & 0.33 & 0.33 & 0.33 &  & \\*
+\hspace{1em}median & 2.9 & 2.9 & 2.9 &  & \\*
+\hspace{1em}Q1 - Q3 & 2.7 -- 3 & 2.7 -- 3 & 2.7 -- 3 &  & \\*
+\hspace{1em}min - max & 2 -- 3.8 & 2 -- 3.8 & 2 -- 3.8 &  & \\ \noalign{\vskip 0pt plus 12pt}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Petal.Length}}\\*
+\hspace{1em}N & 100 & 100 & 100 & <0.001\textsuperscript{tt2} & Mean dif. \vphantom{1}CI\\*
+\hspace{1em}mean & 4.9 & 4.9 & 4.9 &  & [-1.5, -1.1]\\*
+\hspace{1em}sd & 0.83 & 0.83 & 0.83 &  & \\*
+\hspace{1em}median & 4.9 & 4.9 & 4.9 &  & \\*
+\hspace{1em}Q1 - Q3 & 4.3 -- 5.5 & 4.3 -- 5.5 & 4.3 -- 5.5 &  & \\*
+\hspace{1em}min - max & 3 -- 6.9 & 3 -- 6.9 & 3 -- 6.9 &  & \\ \noalign{\vskip 0pt plus 12pt}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{Petal.Width}}\\*
+\hspace{1em}N & 100 & 100 & 100 & <0.001\textsuperscript{tt2} & Mean dif. CI\\*
+\hspace{1em}mean & 1.7 & 1.7 & 1.7 &  & [-0.8, -0.6]\\*
+\hspace{1em}sd & 0.42 & 0.42 & 0.42 &  & \\*
+\hspace{1em}median & 1.6 & 1.6 & 1.6 &  & \\*
+\hspace{1em}Q1 - Q3 & 1.3 -- 2 & 1.3 -- 2 & 1.3 -- 2 &  & \\*
+\hspace{1em}min - max & 1 -- 2.5 & 1 -- 2.5 & 1 -- 2.5 &  & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
+\addlinespace[0.3em]
+\multicolumn{6}{l}{\textbf{cat\_var}}\\*
+\hspace{1em}b & 25 (50\%) & 26 (52\%) & 51 (51\%) & >0.999\textsuperscript{chi2} & Prop. dif. CI\\*
+\hspace{1em}a & 25 (50\%) & 24 (48\%) & 49 (49\%) &  & [-0.24, 0.2]\\*
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{Unknown test} }\\*
+\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{tt2} Welchs two-sample t-test}\\*
+\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{chi2} Pearsons chi-squared test}\\*
 \end{longtable}
 
 \end{document}
