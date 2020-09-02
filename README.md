@@ -1,5 +1,5 @@
 [![Travis build status](https://travis-ci.com/imbi-heidelberg/DescrTab2.svg?branch=master)
-[![Codecov test coverage]([![codecov](https://codecov.io/gh/imbi-heidelberg/DescrTab2/branch/master/graph/badge.svg)](https://codecov.io/gh/imbi-heidelberg/DescrTab2)
+[![codecov](https://codecov.io/gh/imbi-heidelberg/DescrTab2/branch/master/graph/badge.svg)](https://codecov.io/gh/imbi-heidelberg/DescrTab2)
 
 # DescrTab
 ## Create or print an output of a descriptive statistics table
