@@ -15,7 +15,8 @@ Suggests:
     testthat,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+	tidyverse
 Imports:
     stats,
     utils,
