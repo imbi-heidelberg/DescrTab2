@@ -1,4 +1,4 @@
-[![Travis build status](https://travis-ci.com/imbi-heidelberg/DescrTab2.svg?branch=master)
+![Travis build status](https://travis-ci.com/imbi-heidelberg/DescrTab2.svg?branch=master)
 [![codecov](https://codecov.io/gh/imbi-heidelberg/DescrTab2/branch/master/graph/badge.svg)](https://codecov.io/gh/imbi-heidelberg/DescrTab2)
 
 # DescrTab
