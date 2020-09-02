@@ -1,3 +1,2 @@
-* linguist-vendored
-*.html linguist-vendored=false
-*.tex linguist-vendored=false
+*.html linguist-detectable=false
+*.tex linguist-detectable=false
