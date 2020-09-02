@@ -1,0 +1,36 @@
+---
+title: "test_word"
+output: word_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(magrittr)
+library(kableExtra)
+library(DescrTab2)
+library(flextable)
+library(knitr)
+options(DescrTabFormat="word")
+```
+
+
+
+
+
+
+```{r with silent}
+
+descr(iris) %>% print() %>% knit_print()
+descr(
+  iris,
+  "Species",
+  group_labels = list(setosa = "My custom group label"),
+  var_options = list(Sepal.Length = list(label = "My custom variable label"))
+) %>% print() %>%  knit_print()
+```
+
+```{r without silent}
+descr(iris) %>% print(silent=T) %>% .$ft %>% knit_print()
+```

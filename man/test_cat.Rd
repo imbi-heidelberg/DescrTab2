@@ -4,7 +4,7 @@
 \alias{test_cat}
 \title{calculate a statistical test for a numerical variable.}
 \usage{
-test_cat(var, group, test_options, test = NULL)
+test_cat(var, group = NULL, test_options = NULL, test = NULL)
 }
 \arguments{
 \item{var}{A variable (a vector).}
@@ -16,11 +16,13 @@ test_cat(var, group, test_options, test = NULL)
 \item{test}{Name of a statistical test.}
 }
 \value{
-
+A list of test test results.
 }
 \description{
 calculate a statistical test for a numerical variable.
 }
 \examples{
+cat_var <- factor(c("a", "b", "c"))
+test_cat(cat_var)
 
 }

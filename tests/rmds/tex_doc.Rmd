@@ -1,0 +1,36 @@
+---
+title: "test_tex"
+header-includes:
+   - \usepackage{needspace}
+   - \usepackage{longtable}
+   - \usepackage{booktabs}
+output:
+  pdf_document:
+    toc: true
+    keep_tex: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(magrittr)
+library(kableExtra)
+library(DescrTab2)
+options(DescrTabFormat = "tex")
+```
+
+
+```{r with results asis, results='asis'}
+
+descr(iris)
+descr(
+  iris,
+  "Species",
+  group_labels = list(setosa = "My custom group label"),
+  var_options = list(Sepal.Length = list(label = "My custom variable label"))
+)
+```
+
+```{r without results asis}
+descr(iris) %>% capture.output(print(.)) %>% knitr::raw_latex()
+```

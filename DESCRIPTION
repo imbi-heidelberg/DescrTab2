@@ -14,7 +14,8 @@ Depends:
 Suggests:
     testthat,
     covr,
-    knitr
+    knitr,
+    rmarkdown
 Imports:
     stats,
     utils,
@@ -28,6 +29,7 @@ Imports:
     stringr,
     forcats,
     magrittr,
+    tidyselect,
     scales,
     cli,
     kableExtra,

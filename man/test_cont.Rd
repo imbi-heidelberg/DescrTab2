@@ -4,7 +4,7 @@
 \alias{test_cont}
 \title{calculate a statistical test for a numerical variable.}
 \usage{
-test_cont(var, group, test_options, test = NULL)
+test_cont(var, group = NULL, test_options = NULL, test = NULL)
 }
 \arguments{
 \item{var}{A variable (a vector).}
@@ -16,11 +16,13 @@ test_cont(var, group, test_options, test = NULL)
 \item{test}{Name of a statistical test.}
 }
 \value{
-
+A list of test test results.
 }
 \description{
 calculate a statistical test for a numerical variable.
 }
 \examples{
+cont_var <- c(1,2,3)
+test_cont(cont_var)
 
 }
