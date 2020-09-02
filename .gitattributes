@@ -1,9 +1,2 @@
-<<<<<<< HEAD
 *.html linguist-detectable=false
 *.tex linguist-detectable=false
-=======
-* linguist-vendored
-*.html linguist-vendored=true
-*.tex linguist-vendored=true
-*.R linguist-vendored=false
->>>>>>> eb6f94a9816953d1355c9d2f5b7002a6a3adc039
