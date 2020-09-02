@@ -153,6 +153,7 @@ descr <-
     # Save formatting options for printing later
     ergs[["var_options"]] <- var_options
     ergs[["group_labels"]] <- group_labels
+    ergs[["format"]] <- list()
     ergs[["format"]][["p"]] <- format_p
     ergs[["format"]][["summary_stats"]] <- format_summary_stats
     ergs[["format"]][["options"]] <- format_options
