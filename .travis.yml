@@ -7,6 +7,10 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
+r_check_args: "--no-build-vignettes --ignore-vignettes"
+r_build_args: "--no-build-vignettes --ignore-vignettes"
+
+
 r_packages:
   - covr
   - devtools
@@ -15,4 +19,3 @@ after_success:
     - Rscript -e 'covr::codecov()'
     - Rscript -e 'library(covr); covr::codecov()'
 
-r_check_args: "--no-build-vignettes --ignore-vignettes"
