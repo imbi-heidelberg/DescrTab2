@@ -2,8 +2,3 @@
 .Rhistory
 .RData
 .Ruserdata
-
-
-* linguist-vendored
-*.html linguist-vendored=false
-*.tex linguist-vendored=false
