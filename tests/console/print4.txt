@@ -4,8 +4,6 @@
 Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
 Please use the `.name_repair` argument instead.
 
-Warning: The `value` argument of ``names<-`()` must be a character vector as of tibble 3.0.0.
-
 # A tibble: 40 x 7
    Variable     `My custom group ~ versicolor virginica   Total         p Test  
    <chr>                     <dbl>      <dbl>     <dbl>   <dbl>     <dbl> <chr> 

@@ -9,7 +9,8 @@ utils::globalVariables(".")
 #' @param dat
 #' Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
 #' @param group name (as character) of the group variable in dat
-#' @param var_options named list of calculation, testing and formatting options for each variable in dat
+#' @param var_options named list of calculation, testing and formatting options for each variable in dat.
+#' @param var_labels named list of variable labels.
 #' @param group_labels named list of labels for the levels of the group variable in dat
 #' @param summary_stats_cont named list of summary stats to be used for numeric variables
 #' @param summary_stats_cat named list of summary stats to be used for categorical variables
@@ -18,6 +19,7 @@ utils::globalVariables(".")
 #' @param format_options named list of formatting options
 #' @param test_options named list of test options
 #' @param ... further argument passed along
+#'
 #' @return
 #' Returns a A \code{DescrList} object, which is a named list of descriptive statistics
 #' which can be passed along to the print function to create
@@ -44,8 +46,9 @@ utils::globalVariables(".")
 descr <-
   function(dat,
            group = NULL,
-           var_options = list(),
            group_labels = list(),
+           var_labels = list(),
+           var_options = list(),
 
            summary_stats_cont = list(
              N = DescrTab2:::.N,
@@ -99,22 +102,86 @@ descr <-
     # Coerce dataset to tibble
     dat %<>% as_tibble(dat)
 
-    # If options lists were passed as named named vectors, coerce to list
-    var_options = lapply(var_options, as.list)
-    group_labels = lapply(group_labels, as.list)
-
     # Remove group column from dataset & coerce group to factor
     if (!is.null(group)) {
       group_var <-
         dat %>% pull(all_of(group)) %>% as_factor() %>% fct_explicit_na()
       dat %<>% select(-all_of(group))
+
+      group_levels <- levels(group_var)
     } else{
       group_var <- NULL
+      group_levels <- NULL
     }
+    var_names <- names(dat)
 
     # Coerce all non-numeric columns to factors
     dat %<>% mutate(across(-where(is.numeric), function(x)
       x %>% as_factor() %>% fct_explicit_na()))
+
+    # Input option cleaning
+    ## If options lists were passed as named named vectors, coerce to list
+    group_labels %<>% as.list()
+    var_labels %<>% as.list()
+    var_options <- lapply(var_options, as.list)
+    format_options %<>% as.list()
+    test_options %<>% as.list()
+
+
+    ## Check if input was specified correctly
+    ### Is dat empty?
+    if (nrow(dat) == 0 | ncol(dat) == 0) {
+      stop("dat has 0 rows or 0 columns.")
+    }
+    ### Is group either null or a length one character or numeric?
+    if (!is.null(group) &
+        !((is.character(group) |
+           is.numeric(group)) & length(group) == 1)) {
+      stop(
+        "group has to be either NULL or a character specifiying the name of the group variable,
+        or a length one numeric specifying the column number of the group variable"
+      )
+    }
+    ### Does var_labels contain labels for variables not in the dataset?
+    if (!all(names(var_labels) %in% var_names)) {
+      warning("Not all variables from var_labels are present in dat.")
+    }
+    ### Does var_options contain options for variables not in the dataset?
+    if (!all(names(var_options) %in% var_names)) {
+      warning("Not all variable names from var_options are present in dat.")
+    }
+    ### is summary_stats_cont a list of functions?
+    if (!is.list(summary_stats_cont) |
+        !all(sapply(summary_stats_cont, is.function))) {
+      stop("summary_stats_cont must be a list of functions.")
+    }
+    ### is summary_stats_cat a list of functions?
+    if ((length(summary_stats_cat) > 0) &
+        (!is.list(summary_stats_cont) |
+         !all(sapply(summary_stats_cont, is.function)))) {
+      stop("summary_stats_cat must be a list of functions.")
+    }
+    ### is format_p a function?
+    if (!is.function(format_p)){
+      stop("format_p must be a function.")
+    }
+    ### is format_summary_stats a list of functions?
+    if (!is.list(format_summary_stats) |
+        !all(sapply(format_summary_stats, is.function))) {
+      stop("format_summary_stats must be a list of functions.")
+    }
+    ### do all summary_stats have a corresponding format function?
+    tmp_names <- names(format_summary_stats)
+    if ("Q" %in% tmp_names){
+      tmp_names <- c(tmp_names, "Q1", "Q3")
+    }
+    if ("minmax" %in% tmp_names){
+      tmp_names <- c(tmp_names, "min", "max")
+    }
+    if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)){
+      stop("All summary stats must have a corresponding summary stat. ")
+    }
+
 
     # Create list where all results will be saved
     ergs <- list()
@@ -151,6 +218,7 @@ descr <-
     }
 
     # Save formatting options for printing later
+    ergs[["var_names"]] <- var_names
     ergs[["var_options"]] <- var_options
     ergs[["group_labels"]] <- group_labels
     ergs[["format"]] <- list()
@@ -586,7 +654,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
@@ -596,7 +664,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames,] %>%
+  tex <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -619,9 +687,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices,-1)) > 0) {
-    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices, -1)) > 0) {
+    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -675,14 +743,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames,] %>%
+  html <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1376,7 +1444,10 @@ test_names <- c(
 #' @import forcats
 #' @import stringr
 test_cont <-
-  function(var, group=NULL, test_options=NULL, test = NULL) {
+  function(var,
+           group = NULL,
+           test_options = NULL,
+           test = NULL) {
     # decide how to handle missings
     if (!is.null(group)) {
       tibl <- tibble(var = var, group = group)
@@ -1533,7 +1604,10 @@ test_cont <-
 #' @import stringr
 #' @importFrom DescTools CochranQTest
 test_cat <-
-  function(var, group=NULL, test_options=NULL, test = NULL) {
+  function(var,
+           group = NULL,
+           test_options = NULL,
+           test = NULL) {
     # decide how to handle missings
     if (!is.null(group)) {
       tibl <- tibble(var = var, group = group)
