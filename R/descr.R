@@ -1092,7 +1092,6 @@ create_character_subtable.cont_summary <-
     # Remember: You may not have a group which contains "Total" or "test_list" as a level.
     groups <- get_groupNames(DescrVarObj)
 
-
     if (format_options[["omit_Nmiss_if_0"]] == T) {
       if (isTRUE(DescrVarObj[["Total"]][["Nmiss"]] == 0)) {
         DescrVarObj[["Total"]] <-
@@ -1100,7 +1099,7 @@ create_character_subtable.cont_summary <-
 
         for (group in groups) {
           DescrVarObj[[group]] <-
-            DescrVarObj[["Total"]][setdiff(names(DescrVarObj[[group]]), "Nmiss")]
+            DescrVarObj[[group]][setdiff(names(DescrVarObj[[group]]), "Nmiss")]
         }
       }
     }
@@ -1163,8 +1162,6 @@ create_character_subtable.cont_summary <-
       length_tibl <- length(display_names)
 
 
-
-
       for (group in groups) {
         DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
         DescrVarObj[[group]] <-
@@ -1175,6 +1172,8 @@ create_character_subtable.cont_summary <-
           DescrVarObj[[group]][[summary_stat]] <-
             format_summary_stats[[summary_stat]](DescrVarObj[[group]][[summary_stat]])
         }
+
+
         tibl %<>% bind_cols(!!group := c("", unlist(DescrVarObj[[group]])))
       }
 
@@ -1264,19 +1263,20 @@ create_character_subtable.cat_summary <-
         format_summary_stats[[summary_stat]](DescrVarObj[["Total"]][[summary_stat]])
     }
 
-    for (summary_stat in cat_names_nonmissing) {
-      DescrVarObj[["Total"]][[summary_stat]] <-
-        paste0(DescrVarObj[["Total"]][[summary_stat]],
+    for (cat_name in cat_names_nonmissing) {
+      DescrVarObj[["Total"]][[cat_name]] <-
+        paste0(DescrVarObj[["Total"]][[cat_name]],
                " (",
-               scales::label_percent()(DescrVarObj[["Total"]][[summary_stat]] / N_nonmissing)  ,
+               scales::label_percent()(DescrVarObj[["Total"]][[cat_name]] / N_nonmissing)  ,
                ")")
     }
+
 
     if ("(Missing)" %in% cat_names) {
       DescrVarObj[["Total"]][["(Missing)"]] <-
         paste0(DescrVarObj[["Total"]][["(Missing)"]],
                " (",
-               scales::label_percent()(DescrVarObj[["Total"]][[summary_stat]] / N_total)  ,
+               scales::label_percent()(DescrVarObj[["Total"]][["(Missing)"]] / N_total)  ,
                ")")
     }
 
