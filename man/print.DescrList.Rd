@@ -23,15 +23,16 @@
 
 \item{silent}{I TRUE, suppresses output to stdout.}
 
-\item{var_options}{named list of calculation, testing and formatting options for each variable in dat}
+\item{var_options}{A named list of named lists. For each variable, you can have special options that apply only to that variable.
+These options are specified in this argument. See the details and examples for more explanation.}
 
-\item{group_labels}{named list of labels for the levels of the group variable in dat}
+\item{group_labels}{named list of labels for the levels of the group variable in dat.}
 
-\item{format_p}{formatting function for p-values}
+\item{format_p}{formatting function for p-values.}
 
-\item{format_summary_stats}{named list of formatting functions for summary statistics}
+\item{format_summary_stats}{named list of formatting functions for summary statistics.}
 
-\item{format_options}{named list of formatting options}
+\item{format_options}{named list of formatting options.}
 
 \item{...}{further arguments to be passed along to print method}
 }

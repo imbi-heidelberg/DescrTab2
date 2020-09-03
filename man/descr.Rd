@@ -7,8 +7,9 @@
 descr(
   dat,
   group = NULL,
-  var_options = list(),
   group_labels = list(),
+  var_labels = list(),
+  var_options = list(),
   summary_stats_cont = list(N = DescrTab2:::.N, Nmiss = DescrTab2:::.Nmiss, mean =
     DescrTab2:::.mean, sd = DescrTab2:::.sd, median = DescrTab2:::.median, Q1 =
     DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
@@ -22,7 +23,9 @@ descr(
     function(x) format(x, digits = 2, scientific = 3), minmax = function(x) format(x,
     digits = 2, scientific = 3), CI = function(x) format(x, digits = 2, scientific = 3)),
   format_options = list(print_p = T, print_CI = T, omit_Nmiss_if_0 = T,
-    omit_missings_in_group = F, make_missing_a_category = F),
+    omit_missings_in_group = T, categorical_missing_percent_mode =
+    c("no_missing_percent", "missing_as_regular_category",
+    "missing_as_separate_category")),
   test_options = list(paired = F, nonparametric = F, exact = F, indices = c(),
     include_group_missings_in_test = F, include_categorical_missings_in_test = F),
   ...
@@ -31,25 +34,28 @@ descr(
 \arguments{
 \item{dat}{Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.}
 
-\item{group}{name (as character) of the group variable in dat}
+\item{group}{name (as character) of the group variable in dat.}
 
-\item{var_options}{named list of calculation, testing and formatting options for each variable in dat}
+\item{group_labels}{named list of labels for the levels of the group variable in dat.}
 
-\item{group_labels}{named list of labels for the levels of the group variable in dat}
+\item{var_labels}{named list of variable labels.}
 
-\item{summary_stats_cont}{named list of summary stats to be used for numeric variables}
+\item{var_options}{A named list of named lists. For each variable, you can have special options that apply only to that variable.
+These options are specified in this argument. See the details and examples for more explanation.}
 
-\item{summary_stats_cat}{named list of summary stats to be used for categorical variables}
+\item{summary_stats_cont}{named list of summary statistic functions to be used for numeric variables.}
 
-\item{format_p}{formatting function for p-values}
+\item{summary_stats_cat}{named list of summary statistic function to be used for categorical variables.}
 
-\item{format_summary_stats}{named list of formatting functions for summary statistics}
+\item{format_p}{formatting function for p-values.}
 
-\item{format_options}{named list of formatting options}
+\item{format_summary_stats}{named list of formatting functions for summary statistics.}
 
-\item{test_options}{named list of test options}
+\item{format_options}{named list of formatting options.}
 
-\item{...}{further argument passed along}
+\item{test_options}{named list of test options.}
+
+\item{...}{further argument to be passed along}
 }
 \value{
 Returns a A \code{DescrList} object, which is a named list of descriptive statistics
@@ -59,6 +65,25 @@ pretty summary tables.
 \description{
 Generate a list of descriptive statistics with p-values obtained in tests
 for difference between the groups.
+}
+\details{
+\code{group_labels} and \code{var_labels} need to be named lists. The names of the list elements have to match the variable
+names in your dataset. The values of the list elements are the labels that will be assigned to these variables when printing.
+
+
+\code{summary_stats_cont} and \code{summary_stats_cat} are both named lists of functions. The names of the list elements is
+what will be displayed in the leftmost column of the descriptive table. These functions should take a vector and return
+a value. Each summary statistic has to have an associated formatting function in the \code{format_summary_stats} list.
+The functions in \code{format_summary_stats} take a numeric value and convert it to a character string, e.g. 0.2531235 -> "0.2".
+The \code{format_p} function converts p-values to character strings, e.g. 0.05 -> "0.05" or 0.000001 -> "<0.001".
+
+
+Further formatting options can be specified in the \code{format_options} list. It contains the following members:
+\code{print_p} controls whether to print the p-value column.
+\code{print_CI} controls whether to print the confidence intervals for group-differences.
+\code{omit_Nmiss_if_0} controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.
+\code{omit_missings_in_group} controls whether to omit all observations where the group variable is missing.
+\code{count_missing_category_as_regular_category} controls whether to omit all observations where the group variable is missing.
 }
 \examples{
 descr(iris)

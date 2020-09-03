@@ -8,17 +8,38 @@ utils::globalVariables(".")
 #'
 #' @param dat
 #' Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
-#' @param group name (as character) of the group variable in dat
-#' @param var_options named list of calculation, testing and formatting options for each variable in dat.
+#' @param group name (as character) of the group variable in dat.
+#' @param group_labels named list of labels for the levels of the group variable in dat.
 #' @param var_labels named list of variable labels.
-#' @param group_labels named list of labels for the levels of the group variable in dat
-#' @param summary_stats_cont named list of summary stats to be used for numeric variables
-#' @param summary_stats_cat named list of summary stats to be used for categorical variables
-#' @param format_p formatting function for p-values
-#' @param format_summary_stats named list of formatting functions for summary statistics
-#' @param format_options named list of formatting options
-#' @param test_options named list of test options
-#' @param ... further argument passed along
+#' @param var_options A named list of named lists. For each variable, you can have special options that apply only to that variable.
+#' These options are specified in this argument. See the details and examples for more explanation.
+#' @param summary_stats_cont named list of summary statistic functions to be used for numeric variables.
+#' @param summary_stats_cat named list of summary statistic function to be used for categorical variables.
+#' @param format_p formatting function for p-values.
+#' @param format_summary_stats named list of formatting functions for summary statistics.
+#' @param format_options named list of formatting options.
+#' @param test_options named list of test options.
+#' @param ... further argument to be passed along
+#'
+#' @details
+#' \code{group_labels} and \code{var_labels} need to be named lists. The names of the list elements have to match the variable
+#' names in your dataset. The values of the list elements are the labels that will be assigned to these variables when printing.
+#'
+#'
+#' \code{summary_stats_cont} and \code{summary_stats_cat} are both named lists of functions. The names of the list elements is
+#' what will be displayed in the leftmost column of the descriptive table. These functions should take a vector and return
+#' a value. Each summary statistic has to have an associated formatting function in the \code{format_summary_stats} list.
+#' The functions in \code{format_summary_stats} take a numeric value and convert it to a character string, e.g. 0.2531235 -> "0.2".
+#' The \code{format_p} function converts p-values to character strings, e.g. 0.05 -> "0.05" or 0.000001 -> "<0.001".
+#'
+#'
+#' Further formatting options can be specified in the \code{format_options} list. It contains the following members:
+#' \code{print_p} controls whether to print the p-value column.
+#' \code{print_CI} controls whether to print the confidence intervals for group-differences.
+#' \code{omit_Nmiss_if_0} controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.
+#' \code{omit_missings_in_group} controls whether to omit all observations where the group variable is missing.
+#' \code{count_missing_category_as_regular_category} controls whether to omit all observations where the group variable is missing.
+#'
 #'
 #' @return
 #' Returns a A \code{DescrList} object, which is a named list of descriptive statistics
@@ -86,8 +107,12 @@ descr <-
              print_p = T,
              print_CI = T,
              omit_Nmiss_if_0 = T,
-             omit_missings_in_group = F,
-             make_missing_a_category = F
+             omit_missings_in_group = T,
+             categorical_missing_percent_mode = c(
+               "no_missing_percent",
+               "missing_as_regular_category",
+               "missing_as_separate_category"
+             )
            ),
 
            test_options = list(
@@ -104,16 +129,29 @@ descr <-
 
     # Remove group column from dataset & coerce group to factor
     if (!is.null(group)) {
+      if (isTRUE(test_options[["omit_missings_in_group"]])) {
+        if (dat %>% pull(all_of(group)) %>% is.na() %>% any()) {
+          warning(
+            "Observations with missings in the group variable were dropped. To include them as a separate category, specify
+            format_options = list(ommit_missings_in_group=F)"
+          )
+          dat %<>% filter(!is.na(get(group)))
+        }
+      }
+
       group_var <-
-        dat %>% pull(all_of(group)) %>% as_factor() %>% fct_explicit_na()
+        dat %>% pull(all_of(group)) %>% as_factor() %>%  fct_explicit_na()
+
       dat %<>% select(-all_of(group))
 
       group_levels <- levels(group_var)
+      names(group_levels) <- group_levels
     } else{
       group_var <- NULL
       group_levels <- NULL
     }
     var_names <- names(dat)
+    names(var_names) <- var_names
 
     # Coerce all non-numeric columns to factors
     dat %<>% mutate(across(-where(is.numeric), function(x)
@@ -162,7 +200,7 @@ descr <-
       stop("summary_stats_cat must be a list of functions.")
     }
     ### is format_p a function?
-    if (!is.function(format_p)){
+    if (!is.function(format_p)) {
       stop("format_p must be a function.")
     }
     ### is format_summary_stats a list of functions?
@@ -172,15 +210,35 @@ descr <-
     }
     ### do all summary_stats have a corresponding format function?
     tmp_names <- names(format_summary_stats)
-    if ("Q" %in% tmp_names){
+    if ("Q" %in% tmp_names) {
       tmp_names <- c(tmp_names, "Q1", "Q3")
     }
-    if ("minmax" %in% tmp_names){
+    if ("minmax" %in% tmp_names) {
       tmp_names <- c(tmp_names, "min", "max")
     }
-    if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)){
-      stop("All summary stats must have a corresponding summary stat. ")
+    if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)) {
+      stop("All summary stats must have a corresponding formatting function.")
     }
+    ## Fill incomplete input lists with default parameters
+    if (!is.null(group)) {
+      tmp_names <- setdiff(names(group_labels), group_levels)
+      group_labels[tmp_names] <- group_levels[tmp_names]
+    }
+
+    tmp_names <- setdiff(var_names, names(var_labels))
+    var_labels[tmp_names] <- var_names[tmp_names]
+    for (var_name in var_names) {
+      var_options[[var_name]][["label"]] <- var_labels[[var_name]]
+    }
+
+    summary_stats_cont <-
+      fill_list_with_default_arguments(summary_stats_cont, descr, "summary_stats_cont")
+    format_summary_stats <-
+      fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
+    format_options <-
+      fill_list_with_default_arguments(format_options, descr, "format_options")
+    test_options <-
+      fill_list_with_default_arguments(test_options, descr, "test_options")
 
 
     # Create list where all results will be saved
@@ -284,6 +342,7 @@ descr_cat <-
     erg[["variable_name"]] <- var_name
     erg[["variable_levels"]] <- var_levels
     erg[["variable_options"]] <- var_options
+    erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
 
     attr(erg, "class") <- c("cat_summary", "list")
     erg
@@ -333,10 +392,56 @@ descr_cont <-
     erg[["test_list"]] <- test_cont(var, group, test_options, test)
     erg[["variable_name"]] <- var_name
     erg[["variable_options"]] <- var_options
+    erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
 
     attr(erg, "class") <- c("cont_summary", "list")
     erg
   }
+
+fill_list_with_default_arguments <-
+  function(lst, fn, default_arg_name) {
+    default_arg <- eval(formals(fn)[[default_arg_name]])
+    name_difference <- setdiff(names(default_arg), names(lst))
+    lst[name_difference] <- default_arg[name_difference]
+    lst
+  }
+
+
+calc_variable_lengths <- function(var, group) {
+  if (is.numeric(var)) {
+    erg <- list()
+    erg[["Total"]] <- list()
+    erg[["Total"]][["N"]] <- length(var)
+    erg[["Total"]][["Nmiss"]] <- sum(is.na(var))
+
+    if (!is.null(group)) {
+      for (group_name in levels(group)) {
+        erg[[group_name]] <- list()
+        erg[[group_name]][["N"]] <- length(var[group == group_name])
+        erg[[group_name]][["Nmiss"]] <-
+          sum(is.na(var[group == group_name]))
+      }
+    }
+    return(erg)
+  } else{
+    erg <- list()
+    erg[["Total"]] <- list()
+    erg[["Total"]][["N"]] <- length(var)
+    erg[["Total"]][["Nmiss"]] <- sum(var == "(Missing)")
+
+    if (!is.null(group)) {
+      for (group_name in levels(group)) {
+        erg[[group_name]] <- list()
+        erg[[group_name]][["N"]] <- length(var[group == group_name])
+        erg[[group_name]][["Nmiss"]] <-
+          sum(var[group == group_name] == "(Missing)")
+      }
+    }
+    return(erg)
+  }
+
+}
+
 
 #' S3 override for print function for DescrList objects.
 #'
@@ -654,7 +759,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
@@ -664,7 +769,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames, ] %>%
+  tex <- tibl[!indx_varnames,] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -687,9 +792,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices, -1)) > 0) {
-    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices,-1)) > 0) {
+    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -743,14 +848,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames, ] %>%
+  html <- tibl[!indx_varnames,] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1064,12 +1169,21 @@ create_character_subtable.cont_summary <-
       DescrVarObj[["Total"]] <-
         combine_two_elements_of_list(DescrVarObj[["Total"]], "min", "max", format_summary_stats[["minmax"]])
 
-      for (summary_stat in summary_stat_names) {
+      if (!is.null(DescrVarObj[["Total"]][["Nmiss"]])) {
+        DescrVarObj[["Total"]][["Nmiss"]] <-
+          paste0(
+            DescrVarObj[["Total"]][["Nmiss"]],
+            " (",
+            scales::label_percent()(DescrVarObj[["Total"]][["Nmiss"]] / DescrVarObj[["variable_lengths"]][["Total"]][["N"]]),
+            ")"
+          )
+      }
+
+      for (summary_stat in setdiff(summary_stat_names, "Nmiss")) {
         DescrVarObj[["Total"]][[summary_stat]] <-
           format_summary_stats[[summary_stat]](DescrVarObj[["Total"]][[summary_stat]])
       }
       tot <- DescrVarObj[["Total"]]
-
 
       display_names <-
         names(DescrVarObj[["Total"]]) %>% c(label, .)
@@ -1085,6 +1199,17 @@ create_character_subtable.cont_summary <-
           combine_two_elements_of_list(DescrVarObj[[group]], "Q1", "Q3", format_summary_stats[["Q"]])
         DescrVarObj[[group]] <-
           combine_two_elements_of_list(DescrVarObj[[group]], "min", "max", format_summary_stats[["minmax"]])
+
+        if (!is.null(DescrVarObj[[group]][["Nmiss"]])) {
+          DescrVarObj[[group]][["Nmiss"]] <-
+            paste0(
+              DescrVarObj[[group]][["Nmiss"]],
+              " (",
+              scales::label_percent()(DescrVarObj[[group]][["Nmiss"]] / DescrVarObj[["variable_lengths"]][[group]][["N"]]),
+              ")"
+            )
+        }
+
         for (summary_stat in summary_stat_names) {
           DescrVarObj[[group]][[summary_stat]] <-
             format_summary_stats[[summary_stat]](DescrVarObj[[group]][[summary_stat]])
@@ -1151,7 +1276,7 @@ create_character_subtable.cat_summary <-
 
     N_total <- sum(unlist(DescrVarObj[["Total"]][cat_names]))
 
-    if (format_options[["make_missing_a_category"]] == T) {
+    if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category")) {
       N_nonmissing <- N_total
     } else{
       N_nonmissing <-
@@ -1173,11 +1298,17 @@ create_character_subtable.cat_summary <-
 
 
     if ("(Missing)" %in% cat_names) {
-      DescrVarObj[["Total"]][["(Missing)"]] <-
-        paste0(DescrVarObj[["Total"]][["(Missing)"]],
-               " (",
-               scales::label_percent()(DescrVarObj[["Total"]][["(Missing)"]] / N_total)  ,
-               ")")
+      if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
+        DescrVarObj[["Total"]][["(Missing)"]] <-
+          as.character(DescrVarObj[["Total"]][["(Missing)"]])
+
+      } else{
+        DescrVarObj[["Total"]][["(Missing)"]] <-
+          paste0(DescrVarObj[["Total"]][["(Missing)"]],
+                 " (",
+                 scales::label_percent()(DescrVarObj[["Total"]][["(Missing)"]] / N_total)  ,
+                 ")")
+      }
     }
 
 
@@ -1203,7 +1334,7 @@ create_character_subtable.cat_summary <-
       N_group_total <-
         sum(unlist(DescrVarObj[[group]][cat_names]))
 
-      if (format_options[["make_missing_a_category"]] == T) {
+      if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category")) {
         N_group_nonmissing <- N_group_total
       } else{
         N_group_nonmissing <-
@@ -1216,24 +1347,28 @@ create_character_subtable.cat_summary <-
           format_summary_stats[[summary_stat]](DescrVarObj[[group]][[summary_stat]])
       }
 
-      for (summary_stat in cat_names_nonmissing) {
-        DescrVarObj[[group]][[summary_stat]] <-
+      for (cat_name in cat_names_nonmissing) {
+        DescrVarObj[[group]][[cat_name]] <-
           paste0(
-            DescrVarObj[[group]][[summary_stat]],
+            DescrVarObj[[group]][[cat_name]],
             " (",
-            scales::label_percent()(DescrVarObj[[group]][[summary_stat]] / N_group_nonmissing),
+            scales::label_percent()(DescrVarObj[[group]][[cat_name]] / N_group_nonmissing),
             ")"
           )
       }
 
       if ("(Missing)" %in% cat_names) {
-        DescrVarObj[[group]][["(Missing)"]] <-
-          paste0(
-            DescrVarObj[[group]][["(Missing)"]],
-            " (",
-            scales::label_percent()(DescrVarObj[[group]][["(Missing)"]] / N_group_total),
-            ")"
-          )
+        if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
+          DescrVarObj[[group]][["(Missing)"]] <-
+            as.character(DescrVarObj[[group]][["(Missing)"]])
+
+        } else{
+          DescrVarObj[[group]][["(Missing)"]] <-
+            paste0(DescrVarObj[[group]][["(Missing)"]],
+                   " (",
+                   scales::label_percent()(DescrVarObj[[group]][["(Missing)"]] / N_total)  ,
+                   ")")
+        }
       }
 
       tmp <- c("", unlist(DescrVarObj[[group]]))
@@ -1308,7 +1443,8 @@ get_groupNames <- function(DescrVarObj) {
       "variable_name",
       "variable_levels",
       "variable_options",
-      "label"
+      "label",
+      "variable_lengths"
     )
   )
 }
