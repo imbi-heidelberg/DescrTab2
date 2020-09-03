@@ -2,22 +2,26 @@
 % Please edit documentation in R/descr.R
 \name{print.DescrList}
 \alias{print.DescrList}
-\title{S3 override for print function for DescrList objects}
+\title{S3 override for print function for DescrList objects.}
 \usage{
 \method{print}{DescrList}(
   x,
   printFormat = options("DescrTabFormat")[[1]],
+  silent = F,
   var_options = list(),
   group_labels = list(),
   format_p = NULL,
   format_summary_stats = list(),
   format_options = list(),
-  silent = F,
   ...
 )
 }
 \arguments{
+\item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}
+
 \item{printFormat}{Possible values: "console" (default), "tex", "html", "word", "numeric"}
+
+\item{silent}{I TRUE, suppresses output to stdout.}
 
 \item{var_options}{named list of calculation, testing and formatting options for each variable in dat}
 
@@ -29,18 +33,24 @@
 
 \item{format_options}{named list of formatting options}
 
-\item{silent}{I TRUE, suppresses output to stdout.}
-
-\item{...}{further argument passed along}
-
-\item{DescrListObj}{A \code{DescrList} object returned from \code{\link{descr}}.}
+\item{...}{further arguments to be passed along to print method}
 }
 \value{
-
+A DescrPrint object which can be printed in various formats.
 }
 \description{
-S3 override for print function for DescrList objects
+This function takes a DescrList object and converts it to eihter a DescrPrintCharacter or DescrPrintNumeric object,
+depending on the printFormat option. This object is then printed in an appropriate format.
+}
+\details{
+There is no way to convert between DescrPrintCharacter and DescrPrintNumeric objects. The first type is for
+what you would usually want, the second type is mostly for debugging purposes. A DescrPrintCharacter object can
+be printed as html, tex code, as a flextable object or simply to the console.
 }
 \examples{
+descr(iris)
+DescrPrint <- print(descr(iris))
+DescrPrint$variables$Sepal.Length$Total$mean
+print(DescrPrint)
 
 }
