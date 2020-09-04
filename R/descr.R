@@ -48,8 +48,8 @@ utils::globalVariables(".")
 #' observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
 #' and "(Missing)" with 10 counts, they will become "A": 10 (50%), "B": 10 (50%), "(Missing)": 10 (33%)
 #'
-#' \code{test_options} is a named list with test options. It's members \paired{paired},  \paired{nonparametric}, and
-#' \paired{exact} control which test in the corresponding situation. For details, check out vignette
+#' \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
+#' \code{exact} control which test in the corresponding situation. For details, check out vignette
 #'
 #'
 #' @return

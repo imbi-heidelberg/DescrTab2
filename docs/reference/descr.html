@@ -96,10 +96,13 @@ for difference between the groups." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/maintenance_guide.html">DescrTab2 maintenance guidance</a>
+      <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
     </li>
     <li>
-      <a href="../articles/usage_guide.html">DescrTab2 usage guidance</a>
+      <a href="../articles/test_choice_tree_html.html">Test choice</a>
+    </li>
+    <li>
+      <a href="../articles/usage_guide.html">Usage guidance</a>
     </li>
     <li>
       <a href="../articles/validation_report.html">Validation report</a>
@@ -108,7 +111,12 @@ for difference between the groups." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/imbi-heidelberg/DescrTab2/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -123,7 +131,7 @@ for difference between the groups." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate descriptive statistics</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
     <div class="hidden name"><code>descr.Rd</code></div>
     </div>
 
@@ -234,7 +242,17 @@ The <code>format_p</code> function converts p-values to character strings, e.g. 
 <code>print_CI</code> controls whether to print the confidence intervals for group-differences.
 <code>omit_Nmiss_if_0</code> controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.
 <code>omit_missings_in_group</code> controls whether to omit all observations where the group variable is missing.
-<code>count_missing_category_as_regular_category</code> controls whether to omit all observations where the group variable is missing.</p>
+<code>categorical_missing_percent_mode</code> controls how to display percentages in categorical variables with a (Missing) category.
+<code>categorical_missing_percent_mode="no_missing_percent"</code> omits a percentage in the missing category entirely.
+<code>categorical_missing_percent_mode="missing_as_regular_category"</code> treats (Missing) as a regular category for <!-- %-calculation -->
+This means that if You have three categories: "A" with 10 counts, "B" with 10 counts and "(Missing)" with 10 counts,
+they will become "A": 10 (33<!-- %), "B": 10 (33%), "(Missing)": 10 (33%' purposes. ) -->
+<code>categorical_missing_percent_mode="missing_as_separat_category"</code> calculates (Missing) percentages with respect to
+all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
+observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
+and "(Missing)" with 10 counts, they will become "A": 10 (50<!-- %), "B": 10 (50%), "(Missing)": 10 (33%) --></p>
+<p><code>test_options</code> is a named list with test options. It's members <code>paired</code>,  <code>nonparametric</code>, and
+<code>exact</code> control which test in the corresponding situation. For details, check out vignette</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>descr</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt;    Variables      Total        p        Test                              
@@ -315,7 +333,7 @@ The <code>format_p</code> function converts p-values to character strings, e.g. 
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis.</p>
+  <p>Developed by Jan Meis, Luaks Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
 </div>
 
 <div class="pkgdown">

@@ -1,9 +1,9 @@
 ---
-title: "DescrTab2 usage guidance"
+title: "Usage guidance"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage guide}
+  %\VignetteIndexEntry{Usage guidance}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

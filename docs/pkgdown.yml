@@ -3,7 +3,8 @@ pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   maintenance_guide: maintenance_guide.html
+  test_choice_tree_html: test_choice_tree_html.html
   usage_guide: usage_guide.html
   validation_report: validation_report.html
-last_built: 2020-09-04T07:46Z
+last_built: 2020-09-04T11:15Z
 

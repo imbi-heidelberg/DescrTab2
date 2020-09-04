@@ -1,9 +1,9 @@
 ---
-title: "DescrTab2 maintenance guidance"
+title: "Maintenance guidance"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Maintenance guide}
+  %\VignetteIndexEntry{Maintenance guidance}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
