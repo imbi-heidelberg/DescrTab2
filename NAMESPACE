@@ -3,6 +3,7 @@
 S3method(print,DescrList)
 S3method(print,DescrPrint)
 export(descr)
+export(print_test_names)
 export(test_cat)
 export(test_cont)
 import(dplyr)

@@ -16,7 +16,7 @@ library(tidyverse)
 library(magrittr)
 library(kableExtra)
 library(DescrTab2)
-options(DescrTabFormat = "html")
+options(print_format = "html")
 ```
 
 

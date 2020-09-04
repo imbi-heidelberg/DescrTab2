@@ -15,13 +15,13 @@ descr(
     DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
     DescrTab2:::.max),
   summary_stats_cat = list(),
-  format_p = scales::pvalue_format(),
   format_summary_stats = list(N = function(x) format(x, digits = 2, scientific = 3),
     Nmiss = function(x) format(x, digits = 2, scientific = 3), mean = function(x)
     format(x, digits = 2, scientific = 3), sd = function(x) format(x, digits = 2,
     scientific = 3), median = function(x) format(x, digits = 2, scientific = 3), Q =
     function(x) format(x, digits = 2, scientific = 3), minmax = function(x) format(x,
     digits = 2, scientific = 3), CI = function(x) format(x, digits = 2, scientific = 3)),
+  format_p = scales::pvalue_format(),
   format_options = list(print_p = T, print_CI = T, omit_Nmiss_if_0 = T,
     omit_missings_in_group = T, categorical_missing_percent_mode =
     c("no_missing_percent", "missing_as_regular_category",
@@ -47,9 +47,9 @@ These options are specified in this argument. See the details and examples for m
 
 \item{summary_stats_cat}{named list of summary statistic function to be used for categorical variables.}
 
-\item{format_p}{formatting function for p-values.}
-
 \item{format_summary_stats}{named list of formatting functions for summary statistics.}
+
+\item{format_p}{formatting function for p-values.}
 
 \item{format_options}{named list of formatting options.}
 
@@ -63,46 +63,103 @@ which can be passed along to the print function to create
 pretty summary tables.
 }
 \description{
-Generate a list of descriptive statistics with p-values obtained in tests
-for difference between the groups.
+Generate a list of descriptive statistics. By default, the function calculates summary statistics such as mean,
+standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
+for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
+For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell.
 }
-\details{
-\code{group_labels} and \code{var_labels} need to be named lists. The names of the list elements have to match the variable
+\section{Labels}{
+
+\code{group_labels} and \code{var_labels} need to be named lists of character elements. The names of the list elements have to match the variable
 names in your dataset. The values of the list elements are the labels that will be assigned to these variables when printing.
+}
 
+\section{Custom summary statistics}{
 
-\code{summary_stats_cont} and \code{summary_stats_cat} are both named lists of functions. The names of the list elements is
+\code{summary_stats_cont} and \code{summary_stats_cat} are both named lists of functions. The names of the list elements are
 what will be displayed in the leftmost column of the descriptive table. These functions should take a vector and return
-a value. Each summary statistic has to have an associated formatting function in the \code{format_summary_stats} list.
-The functions in \code{format_summary_stats} take a numeric value and convert it to a character string, e.g. 0.2531235 -> "0.2".
+a value. \cr
+Each summary statistic has to have an associated formatting function in the \code{format_summary_stats} list.
+The functions in \code{format_summary_stats} take a numeric value and convert it to a character string, e.g. 0.2531235 -> "0.2". \cr
 The \code{format_p} function converts p-values to character strings, e.g. 0.05 -> "0.05" or 0.000001 -> "<0.001".
+}
 
+\section{Formatting options}{
 
 Further formatting options can be specified in the \code{format_options} list. It contains the following members:
-\code{print_p} controls whether to print the p-value column.
-\code{print_CI} controls whether to print the confidence intervals for group-differences.
-\code{omit_Nmiss_if_0} controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.
-\code{omit_missings_in_group} controls whether to omit all observations where the group variable is missing.
-\code{categorical_missing_percent_mode} controls how to display percentages in categorical variables with a (Missing) category.
-\code{categorical_missing_percent_mode="no_missing_percent"} omits a percentage in the missing category entirely.
-\code{categorical_missing_percent_mode="missing_as_regular_category"} treats (Missing) as a regular category for %-calculation
+\itemize{
+\item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
+\item{\code{print_CI}}{ (logical)  controls whether to print the confidence intervals for group-differences.}
+\item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
+\item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
+\item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
+It may be set to one of the following options:
+\itemize{
+\item{\code{"no_missing_percent"}}{ omits a percentage in the missing category entirely.}
+\item{\code{"missing_as_regular_category"}}{ treats (Missing) as a regular category for \%-calculation
 This means that if You have three categories: "A" with 10 counts, "B" with 10 counts and "(Missing)" with 10 counts,
-they will become "A": 10 (33%), "B": 10 (33%), "(Missing)": 10 (33%' purposes. )
-\code{categorical_missing_percent_mode="missing_as_separat_category"} calculates (Missing) percentages with respect to
+they will become "A": 10 (33\%), "B": 10 (33\%), "(Missing)": 10 (33\% purposes.)}
+
+\item{\code{"missing_as_separat_category"}}{ calculates (Missing) percentages with respect to
 all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
 observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
-and "(Missing)" with 10 counts, they will become "A": 10 (50%), "B": 10 (50%), "(Missing)": 10 (33%)
+and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%), "(Missing)": 10 (33\%)}
+  }
+ }
+}
+}
+
+\section{Test options}{
 
 \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
-\code{exact} control which test in the corresponding situation. For details, check out vignette
+\code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
+\code{vignette("test_choice_tree", "DescrTab2")}.
 }
+
+\section{Customization for single variables}{
+
+The \code{var_options} list can be used to conduct customizations that should only apply to a single variable and leave
+the rest of the table unchanged. \cr
+\code{var_options} is a list of named lists. This means that each member of \code{var_options} is itself a list again.
+The names of the list elements of \code{var_options} determine the variables to which the options will apply.
+Let's say you have an \code{age} variable in your dataset. To change descr options only for \code{age}, you will need to pass
+a list of the form \code{var_options = list(age = list(<Your options here>))}. \cr
+You can replace \code{<Your options here>} with the following options:
+\itemize{
+\item{\code{label}}{ a character string containing the label for the variable}
+\item{\code{summary_stats}}{ a list of summary statistics. See section "Custom summary statistics"}
+\item{\code{format_summary_stats}}{ a list of formatting functions for summary statistics. See section "Custom summary statistics"}
+\item{\code{format_p}}{ a function to format p-values. See section "Custom summary statistics"}
+\item{\code{format_options}}{ a list of formatting options. See section "Formatting options"}
+\item{\code{test_options}}{ a list of test options. See section "Test options"}
+\item{\code{test_override}}{ manually specify the name of the test you want to apply. You can see a list of choices
+by typing \code{print_test_names()}. Possible choices are:
+\itemize{
+\item{\code{"Cochrans Q test"}}{ }
+\item{\code{"McNemars test"}}{ }
+\item{\code{"Chi-squared goodness-of-fit test"}}{ }
+\item{\code{"Pearsons chi-squared test"}}{ }
+\item{\code{"Exact McNemars test"}}{ }
+\item{\code{"Boschloos test"}}{ }
+\item{\code{"Wilcoxon one-sample signed-rank test"}}{ }
+\item{\code{"Mann-Whitney U test"}}{ }
+\item{\code{"Kruskal-Wallis one-way ANOVA"}}{ }
+\item{\code{"Students paired t-test"}}{ }
+\item{\code{"Mixed model ANOVA"}}{ }
+\item{\code{"Students one-sample t-test"}}{ }
+\item{\code{"Welchs two-sample t-test"}}{ }
+\item{\code{"F-test (ANOVA)"}}{ }
+  }
+ }
+}
+}
+
 \examples{
 descr(iris)
 DescrList <- descr(iris)
-DescrList$variables$Sepal.Length$Total$mean
+DescrList$variables$results$Sepal.Length$Total$mean
 print(DescrList)
+descr(iris, "Species")
 
-}
-\author{
-Jan Meis, Lorenz Uhlmann, Csilla van Lunteren
+
 }

@@ -48,7 +48,7 @@ No special preamble needed. Make sure you have pandoc version >= 2.0 installed o
 In order for `DescrTab2` to work properly with your document type of choice, you need to set the `printFormat` options, preferably right at the start of your document. You can do this by typing:
 
 ```{r, echo=TRUE, message=FALSE}
-options(DescrTabFormat = "html") # or = "word" or "tex", depending on your document type
+options(print_format = "html") # or = "word" or "tex", depending on your document type
 
 ```
 

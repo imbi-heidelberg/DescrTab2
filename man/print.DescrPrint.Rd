@@ -4,12 +4,12 @@
 \alias{print.DescrPrint}
 \title{S3 override for print function for DescrPrint objects}
 \usage{
-\method{print}{DescrPrint}(x, printFormat = options("DescrTabFormat")[[1]], silent = F, ...)
+\method{print}{DescrPrint}(x, print_format = options("print_format")[[1]], silent = F, ...)
 }
 \arguments{
 \item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}
 
-\item{printFormat}{Possible values: "console" (default), "tex", "html", "word", "numeric"}
+\item{print_format}{Possible values: "console" (default), "tex", "html", "word", "numeric"}
 
 \item{silent}{I TRUE, suppresses output to stdout.}
 
@@ -24,7 +24,8 @@ S3 override for print function for DescrPrint objects
 \examples{
 descr(iris)
 DescrPrint <- print(descr(iris))
-DescrPrint$variables$Sepal.Length$Total$mean
+DescrPrint$variables$results$Sepal.Length$Total$mean
 print(DescrPrint)
 
 }
+\keyword{internal}

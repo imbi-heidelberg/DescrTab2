@@ -4,44 +4,28 @@
 \alias{print.DescrList}
 \title{S3 override for print function for DescrList objects.}
 \usage{
-\method{print}{DescrList}(
-  x,
-  printFormat = options("DescrTabFormat")[[1]],
-  silent = F,
-  var_options = list(),
-  group_labels = list(),
-  format_p = NULL,
-  format_summary_stats = list(),
-  format_options = list(),
-  ...
-)
+\method{print}{DescrList}(x, print_format = options("print_format")[[1]], silent = F, ...)
 }
 \arguments{
 \item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}
 
-\item{printFormat}{Possible values: "console" (default), "tex", "html", "word", "numeric"}
+\item{print_format}{Possible values: "console" (default), "tex", "html", "word", "numeric"}
 
 \item{silent}{I TRUE, suppresses output to stdout.}
-
-\item{var_options}{A named list of named lists. For each variable, you can have special options that apply only to that variable.
-These options are specified in this argument. See the details and examples for more explanation.}
-
-\item{group_labels}{named list of labels for the levels of the group variable in dat.}
-
-\item{format_p}{formatting function for p-values.}
-
-\item{format_summary_stats}{named list of formatting functions for summary statistics.}
-
-\item{format_options}{named list of formatting options.}
 
 \item{...}{further arguments to be passed along to print method}
 }
 \value{
 A DescrPrint object which can be printed in various formats.
+
+You can use the \code{print_format} option to control the output type. If you use DescrTab2 inside an .Rmd document,
+you can set the clobal option \code{option(print_format="tex")} or \code{option(print_format="html")} or
+\code{option(print_format="word")} depending on your document type. This way, all your tables will be printed in the
+right format by default inside this document.
 }
 \description{
-This function takes a DescrList object and converts it to eihter a DescrPrintCharacter or DescrPrintNumeric object,
-depending on the printFormat option. This object is then printed in an appropriate format.
+This function takes a DescrList object and converts it to either a DescrPrintCharacter or DescrPrintNumeric object,
+depending on the print_format option. This object is then printed in an appropriate format.
 }
 \details{
 There is no way to convert between DescrPrintCharacter and DescrPrintNumeric objects. The first type is for
@@ -49,9 +33,17 @@ what you would usually want, the second type is mostly for debugging purposes. A
 be printed as html, tex code, as a flextable object or simply to the console.
 }
 \examples{
+print(descr(iris), print_format="console")
+print(descr(iris), print_format="tex")
+print(descr(iris), print_format="html")
+print(descr(iris), print_format="word")
+print(descr(iris), print_format="numeric")
+options(print_format="tex")
+descr(iris)
+options(print_format="console")
 descr(iris)
 DescrPrint <- print(descr(iris))
-DescrPrint$variables$Sepal.Length$Total$mean
+DescrPrint$variables$results$Sepal.Length$Total$mean
 print(DescrPrint)
 
 }

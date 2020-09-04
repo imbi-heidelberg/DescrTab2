@@ -12,7 +12,7 @@ library(kableExtra)
 library(DescrTab2)
 library(flextable)
 library(knitr)
-options(DescrTabFormat="word")
+options(print_format="word")
 ```
 
 
