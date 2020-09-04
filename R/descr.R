@@ -38,7 +38,18 @@ utils::globalVariables(".")
 #' \code{print_CI} controls whether to print the confidence intervals for group-differences.
 #' \code{omit_Nmiss_if_0} controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.
 #' \code{omit_missings_in_group} controls whether to omit all observations where the group variable is missing.
-#' \code{count_missing_category_as_regular_category} controls whether to omit all observations where the group variable is missing.
+#' \code{categorical_missing_percent_mode} controls how to display percentages in categorical variables with a (Missing) category.
+#' \code{categorical_missing_percent_mode="no_missing_percent"} omits a percentage in the missing category entirely.
+#' \code{categorical_missing_percent_mode="missing_as_regular_category"} treats (Missing) as a regular category for %-calculation
+#' This means that if You have three categories: "A" with 10 counts, "B" with 10 counts and "(Missing)" with 10 counts,
+#' they will become "A": 10 (33%), "B": 10 (33%), "(Missing)": 10 (33%' purposes. )
+#' \code{categorical_missing_percent_mode="missing_as_separat_category"} calculates (Missing) percentages with respect to
+#' all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
+#' observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
+#' and "(Missing)" with 10 counts, they will become "A": 10 (50%), "B": 10 (50%), "(Missing)": 10 (33%)
+#'
+#' \code{test_options} is a named list with test options. It's members \paired{paired},  \paired{nonparametric}, and
+#' \paired{exact} control which test in the corresponding situation. For details, check out vignette
 #'
 #'
 #' @return

@@ -3,3 +3,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 index.Rmd
+^doc$
+^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
