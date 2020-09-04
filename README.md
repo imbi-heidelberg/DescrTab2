@@ -12,4 +12,6 @@ devtools::install_github("https://github.com/imbi-heidelberg/DescrTab2")
 ```
 into your R console.
 
-For usage instructions and detailed documentation, check out our documentation page: https://imbi-heidelberg.github.io/DescrTab2/
+For usage instructions and detailed documentation, check out our documentation page:
+
+https://imbi-heidelberg.github.io/DescrTab2/
