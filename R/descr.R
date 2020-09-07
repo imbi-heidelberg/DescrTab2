@@ -183,11 +183,26 @@ descr <-
            ),
            ...) {
     # Coerce dataset to tibble
-    dat %<>% as_tibble(dat)
+    dat %<>% as_tibble()
+
+    # Format options have to be cleaned first, because the next data cleaning step depends on them
+    format_options %<>% as.list()
+    format_options <-
+      fill_list_with_default_arguments(format_options, descr, "format_options")
+
+    test_options %<>% as.list()
+    if (is.character(test_options[["indices"]]) &&
+        length(test_options[["indices"]]) == 1 &&
+        test_options[["indices"]] %in% names(dat)) {
+
+      idx_name <- test_options[["indices"]]
+      test_options[["indices"]] <- dat %>% pull(all_of(idx_name))
+      dat %<>% select(-all_of(idx_name))
+    }
 
     # Remove group column from dataset & coerce group to factor
     if (!is.null(group)) {
-      if (isTRUE(test_options[["omit_missings_in_group"]])) {
+      if (isTRUE(format_options[["omit_missings_in_group"]])) {
         if (dat %>% pull(all_of(group)) %>% is.na() %>% any()) {
           warning(
             "Observations with missings in the group variable were dropped. To include them as a separate category, specify
@@ -215,14 +230,12 @@ descr <-
     dat %<>% mutate(across(-where(is.numeric), function(x)
       x %>% as_factor() %>% fct_explicit_na()))
 
-    # Input option cleaning
+
+    # Input option cleaning (except format_options, which were cleaned in the beginning)
     ## If options lists were passed as named named vectors, coerce to list
     group_labels %<>% as.list()
     var_labels %<>% as.list()
     var_options <- lapply(var_options, as.list)
-    format_options %<>% as.list()
-    test_options %<>% as.list()
-
 
     ## Check if input was specified correctly
     ### Is dat empty?
@@ -291,8 +304,6 @@ descr <-
 
     format_summary_stats <-
       fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
-    format_options <-
-      fill_list_with_default_arguments(format_options, descr, "format_options")
     test_options <-
       fill_list_with_default_arguments(test_options, descr, "test_options")
 
@@ -332,7 +343,7 @@ descr <-
         var_options[[var_option_name]][["test_options"]][name_diff] <-
           test_options[test_options]
       }
-      if (!is.null(var_options[[var_option_name]][["test_override"]])){
+      if (!is.null(var_options[[var_option_name]][["test_override"]])) {
         if (var_options[[var_option_name]][["test_override"]] %in% print_test_names()) {
           stop(paste0("test_override has to be one of: ", print_test_names()))
         }
@@ -343,11 +354,30 @@ descr <-
 
     # Create list where all results will be saved
     ergs <- list()
-    ergs[["variables"]] <- list()
+    ergs[["input_facts"]] <-
+      list(nrow = nrow(dat), ncol = ncol(dat))
+    ergs[["group"]] <- list()
     ergs[["group"]][["var"]] <- group_var
     ergs[["group"]][["name"]] <- group
     ergs[["group"]][["labels"]] <- group_labels
     ergs[["group"]][["levels"]] <- group_levels
+
+    group_n <- c()
+    for (lvl in levels(ergs[["group"]][["var"]])) {
+      group_n <- c(group_n, sum(ergs[["group"]][["var"]] == lvl))
+    }
+
+    ## Reminder: Add option to exclude Missings
+    if (is.null(ergs[["group"]][["var"]])) {
+      group_n <- ergs[["input_facts"]][["nrow"]]
+    } else{
+      group_n <- c(group_n, sum(group_n))
+    }
+    names(group_n) <- c(group_levels, "Total")
+    ergs[["group"]][["lengths"]] <- group_n
+
+
+    ergs[["variables"]] <- list()
 
     # Loop over all variables
     for (var_name in names(dat)) {
@@ -384,8 +414,6 @@ descr <-
     ergs[["format"]][["p"]] <- format_p
     ergs[["format"]][["summary_stats"]] <- format_summary_stats
     ergs[["format"]][["options"]] <- format_options
-    ergs[["input_facts"]] <-
-      list(nrow = nrow(dat), ncol = ncol(dat))
 
     # Make result a "DescrList" object and return
     attr(ergs, "class") <- c("DescrList", "list")
@@ -740,19 +768,8 @@ create_DescrPrint <- function(DescrListObj, print_format) {
   printObj[["lengths"]] <- list()
   printObj[["group"]] <- DescrListObj[["group"]]
 
-  group_n <- c()
-  for (lvl in levels(DescrListObj[["group"]][["var"]])) {
-    group_n <- c(group_n, sum(DescrListObj[["group"]][["var"]] == lvl))
-  }
-  ## Reminder: Add option to exclude Missings
-  if (is.null(DescrListObj[["group"]])) {
-    group_n <- DescrListObj[["input_facts"]][["nrow"]]
-  } else{
-    group_n <- c(group_n, sum(group_n))
-  }
-
-  printObj[["group_n"]] <- group_n
   printObj[["group_names"]] <- group_names
+
 
   group_labels <- c()
   for (name in group_names) {
@@ -889,17 +906,17 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
 
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
+    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames,] %>%
+  tex <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -922,9 +939,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices,-1)) > 0) {
-    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices, -1)) > 0) {
+    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -978,14 +995,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group_n"]], ")"))
+    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames,] %>%
+  html <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1044,7 +1061,8 @@ print_word <- function(DescrPrintObj, silent = F) {
 
 
   actual_colnames <- DescrPrintObj[["group_names"]]
-  N_numbers <- c(paste0("(N=", DescrPrintObj[["group_n"]], ")"))
+  N_numbers <-
+    c(paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   names(N_numbers) <- unlist(DescrPrintObj[["group_labels"]])
 
   ft <- tibl2 %>%
@@ -1452,7 +1470,7 @@ create_character_subtable.cat_summary <-
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
     for (group in groups) {
-      DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <-
+      DescrVarObj[["results"]][[group]][["categories"]][sapply(DescrVarObj[["results"]][[group]][["categories"]], is.null)] <-
         "0 (0%)"
 
 
@@ -1779,8 +1797,12 @@ test_cont <-
         list(p = stats::wilcox.test(x, y, paired = T)$p.value)
       },
       `Friedman test` = {
+        tmp <-
+          tibble(var = var,
+                 group = group,
+                 idx = test_options[["indices"]])
         list(p = stats::friedman.test(var ~ group |
-                                        test_options[["indices"]])$p.value)
+                                        idx, dat = tmp)$p.value)
       },
       `Wilcoxon one-sample signed-rank test` = {
         list(p = stats::wilcox.test(var)$p.value)
@@ -1813,9 +1835,13 @@ test_cont <-
              CI_name = "Mean dif. CI")
       },
       `Mixed model ANOVA` = {
-        fit <- nlme::lme(var ~ group, random = ~ 1 | var.ind)
-        tl <- nlme::anova.lme(fit)
-        pv <- tl$`p-value`[2]
+        tmp <- tibble(var = var,
+                      group = group,
+                      idx = test_options[["indices"]])
+
+        fit <- nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
+        tl <- car::Anova(fit, type = "III")
+        pv <- tl$`Pr(>Chisq)`[2]
         list(p = pv)
       },
       `Students one-sample t-test` = {
@@ -1899,7 +1925,7 @@ test_cat <-
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == T)) {
           # ordinal variable, paired test
-          if (is.null(test_options("indices"))) {
+          if (is.null(test_options[["indices"]])) {
             stop(
               "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
             )
@@ -1946,7 +1972,7 @@ test_cat <-
             if (n_levels_group == 2 & n_levels_var == 2) {
               test <- "McNemars test"
             } else if (n_levels_group >= 3 & n_levels_var == 2) {
-              if (is.null(test_options("indices"))) {
+              if (is.null(test_options[["indices"]])) {
                 stop(
                   "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
                 )
@@ -1988,8 +2014,12 @@ test_cat <-
           list(p = stats::wilcox.test(x, y, paired = T)$p.value)
         },
         `Friedman test` = {
-          list(p = stats::friedman.test(as.numeric(as.character(var)) ~ group |
-                                          test_options[["indices"]])$p.value)
+          tmp <-
+            tibble(var = as.numeric(as.character(var)),
+                   group = group,
+                   idx = test_options[["indices"]])
+          list(p = stats::friedman.test(var ~ group |
+                                          idx, tmp)$p.value)
         },
         `Wilcoxon one-sample signed-rank test` = {
           list(p = stats::wilcox.test(as.numeric(as.character(var)))$p.value)
@@ -2005,7 +2035,18 @@ test_cat <-
           list(p = stats::kruskal.test(as.numeric(as.character(var)) ~ group)$p.value)
         },
         `Exact McNemars test` = {
-          list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+          # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+          list(
+            p = exact2x2::exact2x2(
+              var,
+              group,
+              alternative = "two.sided",
+              tsmethod = "central",
+              paired = TRUE
+            )$p.value,
+            CI = stats::prop.test(table(var, group))$conf.int,
+            CI_name = "Prop. dif. CI"
+          )
         },
         `Boschloos test` = {
           tabl <- table(var, group)
@@ -2027,8 +2068,11 @@ test_cat <-
           )
         },
         `Cochrans Q test` = {
-          list(p = DescTools::CochranQTest(var ~ group |
-                                             test_options[["indices"]])$p.value)
+          tmp <- tibble(var = var,
+                        group = group,
+                        idx = test_options[["indices"]])
+          list(p = DescTools::CochranQTest(var ~ group | idx,
+                                           tmp)$p.value)
         },
         `Chi-squared goodness-of-fit test` = {
           list(p = stats::chisq.test(table(var))$p.value)

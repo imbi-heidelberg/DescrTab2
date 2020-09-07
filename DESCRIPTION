@@ -22,11 +22,14 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-	tidyverse
+	tidyverse,
+	here,
+	shiny
 Imports:
     stats,
     utils,
     nlme,
+    car,
     lme4,
     exact2x2,
     DescTools,

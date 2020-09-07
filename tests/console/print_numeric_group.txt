@@ -1,0 +1,47 @@
+> descr(iris, "Species", group_labels = list(setosa = "My custom group label"),
++ var_options = list(Sepal.Length = list(label = "My custom variable label"))) %>%
++   print(print_format = "numeric")
+# A tibble: 40 x 7
+   Variable   `My custom group l~ versicolor virginica   Total         p Test   
+   <chr>                    <dbl>      <dbl>     <dbl>   <dbl>     <dbl> <chr>  
+ 1  Sepal.Le~              NA         NA        NA      NA      1.67e-31 F-test~
+ 2    N                    50         50        50     150     NA        <NA>   
+ 3    Nmiss                 0          0         0       0     NA        <NA>   
+ 4    mean                  5.01       5.94      6.59    5.84  NA        <NA>   
+ 5    sd                    0.352      0.516     0.636   0.828 NA        <NA>   
+ 6    median                5          5.9       6.5     5.8   NA        <NA>   
+ 7    Q1                    4.8        5.6       6.2     5.1   NA        <NA>   
+ 8    Q3                    5.2        6.3       6.9     6.4   NA        <NA>   
+ 9    min                   4.3        4.9       4.9     4.3   NA        <NA>   
+10    max                   5.8        7         7.9     7.9   NA        <NA>   
+11  Sepal.Wi~              NA         NA        NA      NA      4.49e-17 F-test~
+12    N                    50         50        50     150     NA        <NA>   
+13    Nmiss                 0          0         0       0     NA        <NA>   
+14    mean                  3.43       2.77      2.97    3.06  NA        <NA>   
+15    sd                    0.379      0.314     0.322   0.436 NA        <NA>   
+16    median                3.4        2.8       3       3     NA        <NA>   
+17    Q1                    3.2        2.5       2.8     2.8   NA        <NA>   
+18    Q3                    3.7        3         3.2     3.3   NA        <NA>   
+19    min                   2.3        2         2.2     2     NA        <NA>   
+20    max                   4.4        3.4       3.8     4.4   NA        <NA>   
+21  Petal.Le~              NA         NA        NA      NA      2.86e-91 F-test~
+22    N                    50         50        50     150     NA        <NA>   
+23    Nmiss                 0          0         0       0     NA        <NA>   
+24    mean                  1.46       4.26      5.55    3.76  NA        <NA>   
+25    sd                    0.174      0.470     0.552   1.77  NA        <NA>   
+26    median                1.5        4.35      5.55    4.35  NA        <NA>   
+27    Q1                    1.4        4         5.1     1.6   NA        <NA>   
+28    Q3                    1.6        4.6       5.9     5.1   NA        <NA>   
+29    min                   1          3         4.5     1     NA        <NA>   
+30    max                   1.9        5.1       6.9     6.9   NA        <NA>   
+31  Petal.Wi~              NA         NA        NA      NA      4.17e-85 F-test~
+32    N                    50         50        50     150     NA        <NA>   
+33    Nmiss                 0          0         0       0     NA        <NA>   
+34    mean                  0.246      1.33      2.03    1.20  NA        <NA>   
+35    sd                    0.105      0.198     0.275   0.762 NA        <NA>   
+36    median                0.2        1.3       2       1.3   NA        <NA>   
+37    Q1                    0.2        1.2       1.8     0.3   NA        <NA>   
+38    Q3                    0.3        1.5       2.3     1.8   NA        <NA>   
+39    min                   0.1        1         1.4     0.1   NA        <NA>   
+40    max                   0.6        1.8       2.5     2.5   NA        <NA>   
+

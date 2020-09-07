@@ -1,0 +1,10 @@
+> descr(dat_kruskal.test, "group", test_options = c(nonparametric = T)) %>% print()
+  Variables    Trt       Ctrl      Placebo    Total    p      Test              
+1  var                                                                          
+2    N          5         4         5          14       0.68~  Kruskal-Wallis o~
+3    mean       2.8       3.2       2.8        2.9                              
+4    sd         0.29      0.79      0.74       0.61                             
+5    median     2.9       3.2       2.8        2.8                              
+6    Q1 - Q3    2.6 -- ~  2.5 -- ~  2.2 -- 3~  2.5 --~                          
+7    min - ma~  2.5 -- ~  2.4 -- ~  2 -- 3.7   2 -- 4                           
+

@@ -9,5 +9,5 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-![](./test_choice_tree.pdf){height=900px width=1200px}
+![](./pdfs/test_choice_tree.pdf){height=900px width=1200px}
 

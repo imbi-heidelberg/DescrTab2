@@ -367,8 +367,6 @@ summary {
 
 
 <pre class="r"><code>descr(iris)</code></pre>
-<pre><code>## Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
-## Please use the `.name_repair` argument instead.</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -392,7 +390,7 @@ p
 <th style="text-align:left;">
 </th>
 <th style="text-align:center;">
-(N=0)
+(N=150)
 </th>
 <th style="text-align:center;">
 </th>
@@ -719,8 +717,6 @@ virginica
   group_labels = list(setosa = &quot;My custom group label&quot;),
   var_options = list(Sepal.Length = list(label = &quot;My custom variable label&quot;))
 )</code></pre>
-<pre><code>## Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
-## Please use the `.name_repair` argument instead.</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1265,8 +1261,6 @@ min - max
 </tfoot>
 </table>
 <pre class="r"><code>descr(iris) %&gt;% capture.output(print(.)) %&gt;%   knitr::raw_html()</code></pre>
-<pre><code>## Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
-## Please use the `.name_repair` argument instead.</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
  <thead>
 <tr>
@@ -1276,7 +1270,7 @@ min - max
 </tr>
   <tr>
    <th style="text-align:left;">  </th>
-   <th style="text-align:center;"> (N=0) </th>
+   <th style="text-align:center;"> (N=150) </th>
    <th style="text-align:center;">  </th>
   </tr>
  </thead>
@@ -1438,7 +1432,7 @@ min - max
 </tr>
   <tr>
    <th style="text-align:left;">  </th>
-   <th style="text-align:center;"> (N=0) </th>
+   <th style="text-align:center;"> (N=150) </th>
    <th style="text-align:center;">  </th>
   </tr>
  </thead>

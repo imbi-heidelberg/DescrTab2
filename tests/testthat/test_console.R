@@ -1,15 +1,31 @@
 context("Output tables to the console")
 library(magrittr)
 
-verify_output("../console/print1.txt",
-              descr(iris) %>% print(printFormat = "console"))
+
+test_that("numeric output does not produce errors.", {
+  expect_error(descr(iris) %>% print(silent=T, print_format = "console"), NA)
+  expect_error(
+    descr(
+      iris,
+      "Species",
+      group_labels = list(setosa = "My custom group label"),
+      var_options = list(Sepal.Length = list(label = "My custom variable label"))
+    ) %>% print(silent=T, print_format = "console"),
+    NA
+  )
+})
+
 
 verify_output(
-  "../console/print2.txt",
+  "../console/print_console_single.txt",
+  descr(iris) %>% print(print_format = "console")
+)
+verify_output(
+  "../console/print_console_group.txt",
   descr(
     iris,
     "Species",
     group_labels = list(setosa = "My custom group label"),
     var_options = list(Sepal.Length = list(label = "My custom variable label"))
-  ) %>% print(printFormat = "console")
+  ) %>% print(print_format = "console")
 )

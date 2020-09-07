@@ -1,0 +1,10 @@
+> descr(dat, test_options = c(nonparametric = T)) %>% print()
+  Variables     Total          p       Test                                  
+1  diff                                                                      
+2    N           9              0.039   Wilcoxon one-sample signed-rank test 
+3    mean        0.43                                                        
+4    sd          0.43                                                        
+5    median      0.49                                                        
+6    Q1 - Q3     0.01 -- 0.62                                                
+7    min - max   -0.15 -- 1                                                  
+
