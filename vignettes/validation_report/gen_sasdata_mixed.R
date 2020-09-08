@@ -9,9 +9,10 @@ dat_list <- list()
 dat <- nlme::Orthodont
 dat2 <- nlme::Orthodont[1:64,]
 dat2$Sex <- "Divers"
+dat2$distance <- dat2$distance + c(rep(0.1*c(1,4,3,2), 10), 0.1*rep(c(0.4,2,1.5, 2.3), 6) )
 dat2$Subject <- str_replace_all(dat2$Subject, "M", "D")
 dat <- bind_rows(dat, dat2)
-dat <- as.tibble(dat)
+dat <- as_tibble(dat)
 
 
 require(foreign)

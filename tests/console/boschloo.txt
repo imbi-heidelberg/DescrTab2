@@ -1,0 +1,6 @@
+> descr(dat, "gender", test_options = c(exact = T)) %>% print()
+  Variables F          M          Total      p      Test           CI           
+1  party                                                                        
+2    A       12 (60%)   8 (33%)    20 (45%)   0.08~  Boschloos te~  Prop. dif. ~
+3    B       8 (40%)    16 (67%)   24 (55%)                         [-0.065, 0.~
+

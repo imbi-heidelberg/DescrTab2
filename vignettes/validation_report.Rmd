@@ -328,9 +328,11 @@ if(file.exists(sas_html)){
 dat <- nlme::Orthodont
 dat2 <- nlme::Orthodont[1:64,]
 dat2$Sex <- "Divers"
+dat2$distance <- dat2$distance + c(rep(0.1*c(1,4,3,2), 10), 0.1*rep(c(0.4,2,1.5, 2.3), 6) )
 dat2$Subject <- str_replace_all(dat2$Subject, "M", "D")
 dat <- bind_rows(dat, dat2)
-dat <- as.tibble(dat)
+dat <- as_tibble(dat)
+
 
 descr(dat[, c("Sex", "distance")], "Sex", test_options = list(paired=T, indices=dat$Subject))
 
@@ -350,6 +352,23 @@ sas_html <- here::here(
 if(file.exists(sas_html)){
   shiny::includeHTML(sas_html)
 }
+```
+
+# Boschloos test
+
+DescrTab2 uses the exact2x2::boschloo with option `tsmethod=central`  to calculate p-values. There is no comparison for this option readily available.
+```{r boschloo1, results='asis'}
+dat <- tibble(gender=factor(c("M", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F")),
+              party=factor(c("A", "A", "B", "B", "B", "B", "A", "A", "A", "B", "B")))
+descr(dat, "gender", test_options = c(exact=T))
+exact2x2::boschloo(3, 5, 2, 6, tsmethod="central")
+```
+
+However, we can compare the exact2x2::boschloo with `tsmethod=minlike` to `Exact::exact.test`:
+
+```{r boschloo2}
+exact2x2::boschloo(3, 5, 2, 6, tsmethod="minlike")
+Exact::exact.test(table(dat), method="boschloo", to.plot = F)
 ```
 
 

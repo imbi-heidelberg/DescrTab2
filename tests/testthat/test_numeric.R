@@ -1,17 +1,25 @@
 context("Output tables to the console")
 library(magrittr)
 
+dat <- iris[iris$Species != "setosa",]
+dat$Species <- factor(as.character(dat$Species))
+
+
+
 test_that("numeric output does not produce errors.", {
-  expect_error(descr(iris) %>% print(silent=T, print_format = "numeric"), NA)
+  expect_error(descr(iris) %>% print(silent = T, print_format = "numeric"), NA)
   expect_error(
     descr(
       iris,
       "Species",
       group_labels = list(setosa = "My custom group label"),
       var_options = list(Sepal.Length = list(label = "My custom variable label"))
-    ) %>% print(silent=T, print_format = "numeric"),
+    ) %>% print(silent = T, print_format = "numeric"),
     NA
   )
+  expect_error(descr(dat,
+                     "Species") %>% print(silent = T, print_format = "numeric"),
+               NA)
 })
 
 verify_output(
@@ -27,3 +35,7 @@ verify_output(
     var_options = list(Sepal.Length = list(label = "My custom variable label"))
   ) %>% print(print_format = "numeric")
 )
+
+verify_output("../console/print_numeric_CI.txt",
+              descr(dat,
+                    "Species") %>% print( print_format = "numeric"))

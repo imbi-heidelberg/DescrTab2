@@ -1,6 +1,0 @@
-> descr(iris) %>% print(printFormat = "console")
-Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
-Please use the `.name_repair` argument instead.
-
-Error in print_console(x, silent, ...): unused argument (printFormat = "console")
-

@@ -1,0 +1,13 @@
+> descr(dat) %>% print()
+   Variables     Total          p        Test                              
+ 1  extra                                                                  
+ 2    N           20             0.003    Students one-sample t-test       
+ 3    mean        1.5                                                      
+ 4    sd          2                                                        
+ 5    median      0.95                                                     
+ 6    Q1 - Q3     -0.05 -- 3.4                                             
+ 7    min - max   -1.6 -- 5.5                                              
+ 8  group                                                                  
+ 9    1           10 (50%)       >0.999   Chi-squared goodness-of-fit test 
+10    2           10 (50%)                                                 
+

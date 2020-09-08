@@ -9,7 +9,7 @@ LENGTH
 
 INFILE  "C:/Users/z7a/Documents/DescrTab2/vignettes/validation_report/mixed/mixed_dat_1.csv" 
      DSD 
-     LRECL= 26 ;
+     LRECL= 27 ;
 INPUT
  distance
  age
@@ -20,15 +20,11 @@ RUN;
 
 ods graphics off;
 ods html file="mixed_example_1.html" path=".";
+ods select all;
 
-/*PROC UNIVARIATE data=rdata;*/
-/*VAR diff;*/
-/*RUN;*/
-
-/* Type the SAS example you want to calculate here, e.g.: */
-proc mixed data=rdata CONVG=0.0000000000001;
+proc mixed data=rdata;
    class Sex Subject;
-   model distance = Sex;
+   model distance = Sex / ddfm=satterth;
    random Intercept /subject=Subject;
 run;
 

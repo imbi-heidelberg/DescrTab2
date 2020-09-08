@@ -29,7 +29,7 @@
 27    Q1 - Q3      0.3 -- 1.8                                             
 28    min - max    0.1 -- 2.5                                             
 29  Species                                                               
-30    setosa        (33%)       >0.999   Chi-squared goodness-of-fit test 
-31    versicolor    (33%)                                                 
-32    virginica     (33%)                                                 
+30    setosa       50 (33%)     >0.999   Chi-squared goodness-of-fit test 
+31    versicolor   50 (33%)                                               
+32    virginica    50 (33%)                                               
 

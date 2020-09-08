@@ -1,33 +1,33 @@
 > descr(iris, "Species", group_labels = list(setosa = "My custom group label"),
 + var_options = list(Sepal.Length = list(label = "My custom variable label"))) %>%
 +   print(print_format = "console")
-   Variables   `My custom group l~ versicolor  virginica  Total   p     Test    
- 1  Sepal.Len~                                                                  
- 2    N         50                  50          50         150     <0.~  F-test~
- 3    mean      5                   5.9         6.6        5.8                  
- 4    sd        0.35                0.52        0.64       0.83                 
- 5    median    5                   5.9         6.5        5.8                  
- 6    Q1 - Q3   4.8 -- 5.2          5.6 -- 6.~  6.2 -- 6~  5.1 -~               
- 7    min - m~  4.3 -- 5.8          4.9 -- 7    4.9 -- 7~  4.3 -~               
- 8  Sepal.Wid~                                                                  
- 9    N         50                  50          50         150     <0.~  F-test~
-10    mean      3.4                 2.8         3          3.1                  
-11    sd        0.38                0.31        0.32       0.44                 
-12    median    3.4                 2.8         3          3                    
-13    Q1 - Q3   3.2 -- 3.7          2.5 -- 3    2.8 -- 3~  2.8 -~               
-14    min - m~  2.3 -- 4.4          2 -- 3.4    2.2 -- 3~  2 -- ~               
-15  Petal.Len~                                                                  
-16    N         50                  50          50         150     <0.~  F-test~
-17    mean      1.5                 4.3         5.6        3.8                  
-18    sd        0.17                0.47        0.55       1.8                  
-19    median    1.5                 4.3         5.5        4.3                  
-20    Q1 - Q3   1.4 -- 1.6          4 -- 4.6    5.1 -- 5~  1.6 -~               
-21    min - m~  1 -- 1.9            3 -- 5.1    4.5 -- 6~  1 -- ~               
-22  Petal.Wid~                                                                  
-23    N         50                  50          50         150     <0.~  F-test~
-24    mean      0.25                1.3         2          1.2                  
-25    sd        0.11                0.2         0.27       0.76                 
-26    median    0.2                 1.3         2          1.3                  
-27    Q1 - Q3   0.2 -- 0.3          1.2 -- 1.~  1.8 -- 2~  0.3 -~               
-28    min - m~  0.1 -- 0.6          1 -- 1.8    1.4 -- 2~  0.1 -~               
+   Variables      `My custom group ~ versicolor  virginica  Total  p     Test   
+ 1  My custom va~                                                               
+ 2    N            50                 50          50         150    <0.~  F-tes~
+ 3    mean         5                  5.9         6.6        5.8                
+ 4    sd           0.35               0.52        0.64       0.83               
+ 5    median       5                  5.9         6.5        5.8                
+ 6    Q1 - Q3      4.8 -- 5.2         5.6 -- 6.~  6.2 -- 6~  5.1 ~              
+ 7    min - max    4.3 -- 5.8         4.9 -- 7    4.9 -- 7~  4.3 ~              
+ 8  Sepal.Width                                                                 
+ 9    N            50                 50          50         150    <0.~  F-tes~
+10    mean         3.4                2.8         3          3.1                
+11    sd           0.38               0.31        0.32       0.44               
+12    median       3.4                2.8         3          3                  
+13    Q1 - Q3      3.2 -- 3.7         2.5 -- 3    2.8 -- 3~  2.8 ~              
+14    min - max    2.3 -- 4.4         2 -- 3.4    2.2 -- 3~  2 --~              
+15  Petal.Length                                                                
+16    N            50                 50          50         150    <0.~  F-tes~
+17    mean         1.5                4.3         5.6        3.8                
+18    sd           0.17               0.47        0.55       1.8                
+19    median       1.5                4.3         5.5        4.3                
+20    Q1 - Q3      1.4 -- 1.6         4 -- 4.6    5.1 -- 5~  1.6 ~              
+21    min - max    1 -- 1.9           3 -- 5.1    4.5 -- 6~  1 --~              
+22  Petal.Width                                                                 
+23    N            50                 50          50         150    <0.~  F-tes~
+24    mean         0.25               1.3         2          1.2                
+25    sd           0.11               0.2         0.27       0.76               
+26    median       0.2                1.3         2          1.3                
+27    Q1 - Q3      0.2 -- 0.3         1.2 -- 1.~  1.8 -- 2~  0.3 ~              
+28    min - max    0.1 -- 0.6         1 -- 1.8    1.4 -- 2~  0.1 ~              
 

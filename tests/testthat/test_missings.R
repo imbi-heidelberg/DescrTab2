@@ -1,0 +1,44 @@
+context("Test if missings are handled correctly.")
+
+library(dplyr)
+library(magrittr)
+
+dat1 <- iris
+dat1[1, "Sepal.Length"] <- NA
+dat1$cat_var <-  c("a", "b") %>% sample(150, T) %>% factor()
+
+dat1[1, "cat_var"] <- NA
+
+dat2 <- iris
+dat2$Sepal.Length <- NA_real_
+
+dat3 <- iris
+dat3[1, "Species"] <- NA
+
+
+test_that("Missings are handles properly", {
+  expect_error(descr(dat1, "Species"), NA)
+  expect_error( descr(
+    dat1,
+    "Species",
+    format_options = list(categorical_missing_percent_mode = "missing_as_regular_category")
+  ), NA)
+  expect_error( descr(
+    dat1,
+    "Species",
+    format_options = list(categorical_missing_percent_mode = "missing_as_separate_category")
+  ), NA)
+  expect_error( descr(dat2, "Species"), NA)
+  expect_error( descr(
+    dat2,
+    "Species",
+    format_options = list(categorical_missing_percent_mode = "missing_as_regular_category")
+  ), NA)
+  expect_error(descr(
+    dat2,
+    "Species",
+    format_options = list(categorical_missing_percent_mode = "missing_as_separate_category")
+  ) , NA)
+  expect_warning( descr(dat3, "Species"))
+  expect_error( descr(dat3, "Species", format_options = list(omit_missings_in_group = F)), NA)
+})

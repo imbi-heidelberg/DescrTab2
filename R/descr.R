@@ -194,7 +194,6 @@ descr <-
     if (is.character(test_options[["indices"]]) &&
         length(test_options[["indices"]]) == 1 &&
         test_options[["indices"]] %in% names(dat)) {
-
       idx_name <- test_options[["indices"]]
       test_options[["indices"]] <- dat %>% pull(all_of(idx_name))
       dat %<>% select(-all_of(idx_name))
@@ -279,6 +278,8 @@ descr <-
         !all(sapply(format_summary_stats, is.function))) {
       stop("format_summary_stats must be a list of functions.")
     }
+    format_summary_stats <-
+      fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
     ### do all summary_stats have a corresponding format function?
     tmp_names <- names(format_summary_stats)
     if ("Q" %in% tmp_names) {
@@ -299,11 +300,10 @@ descr <-
     tmp_names <- setdiff(var_names, names(var_labels))
     var_labels[tmp_names] <- var_names[tmp_names]
     for (var_name in var_names) {
-      var_options[[var_name]][["label"]] <- var_labels[[var_name]]
+      if (is.null(var_options[[var_name]][["label"]])) {
+        var_options[[var_name]][["label"]] <- var_labels[[var_name]]
+      }
     }
-
-    format_summary_stats <-
-      fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
     test_options <-
       fill_list_with_default_arguments(test_options, descr, "test_options")
 
@@ -317,9 +317,9 @@ descr <-
       }
       if (!is.null(var_options[[var_option_name]][["format_summary_stats"]])) {
         name_diff <-
-          setdiff(names(format_summary_stats), var_options[[var_option_name]][format_summary_stats])
+          setdiff(names(format_summary_stats), names(var_options[[var_option_name]][["format_summary_stats"]]))
         var_options[[var_option_name]][["format_summary_stats"]][name_diff] <-
-          format_summary_stats[format_summary_stats]
+          format_summary_stats[name_diff]
         if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% names(var_options[[var_option_name]][["format_summary_stats"]]))) {
           stop(
             "All summary stats in var_options must have a corresponding formatting function."
@@ -333,15 +333,15 @@ descr <-
       }
       if (!is.null(var_options[[var_option_name]][["format_options"]])) {
         name_diff <-
-          setdiff(names(format_options), var_options[[var_option_name]][["format_options"]])
+          setdiff(names(format_options), names(var_options[[var_option_name]][["format_options"]]))
         var_options[[var_option_name]][["format_options"]][name_diff] <-
-          format_options[format_options]
+          format_options[name_diff]
       }
       if (!is.null(var_options[[var_option_name]][["test_options"]])) {
         name_diff <-
-          setdiff(names(test_options), var_options[[var_option_name]][["test_options"]])
+          setdiff(names(test_options), names(var_options[[var_option_name]][["test_options"]]))
         var_options[[var_option_name]][["test_options"]][name_diff] <-
-          test_options[test_options]
+          test_options[name_diff]
       }
       if (!is.null(var_options[[var_option_name]][["test_override"]])) {
         if (var_options[[var_option_name]][["test_override"]] %in% print_test_names()) {
@@ -784,6 +784,7 @@ create_DescrPrint <- function(DescrListObj, print_format) {
 
   tibl <- tibble()
 
+
   for (var_name in var_names) {
     printObj[["variables"]][[var_name]] <-
       print_list[[var_name]][["summary_list"]]
@@ -906,7 +907,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
@@ -916,7 +917,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames, ] %>%
+  tex <- tibl[!indx_varnames,] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -939,9 +940,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices, -1)) > 0) {
-    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices,-1)) > 0) {
+    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -995,14 +996,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames, ] %>%
+  html <- tibl[!indx_varnames,] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1142,7 +1143,7 @@ create_numeric_subtable.cat_summary <-
                                 all_names))
 
     length_tibl <- nrow(tibl)
-    groups <- names(DescrVarObj[["results"]][["categories"]])
+    groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
     for (group in groups) {
       # DescrVarObj[[group]][sapply(DescrVarObj[[group]], is.null)] <- NA
@@ -1268,16 +1269,13 @@ create_character_subtable.cont_summary <-
       }
     }
 
-
     label <- DescrVarObj[["variable_options"]][["label"]]
     DescrVarObj[["label"]] <- label
 
-
-    all_summary_stats_missing <- T
-    for (summary_stat in names(DescrVarObj[["results"]][["Total"]])) {
-      if (!is.na(DescrVarObj[["results"]][["Total"]][[summary_stat]])) {
-        all_summary_stats_missing <- F
-      }
+    if (DescrVarObj[["variable_lengths"]][["Total"]][["Nmiss"]] == DescrVarObj[["variable_lengths"]][["Total"]][["N"]]) {
+      all_summary_stats_missing <- T
+    } else{
+      all_summary_stats_missing <- F
     }
 
     if (all_summary_stats_missing) {
@@ -1434,7 +1432,7 @@ create_character_subtable.cat_summary <-
     for (cat_name in cat_names_nonmissing) {
       DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] <-
         paste0(
-          DescrVarObj[["Total"]][[cat_name]],
+          DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
           " (",
           scales::label_percent()(DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] / N_nonmissing)  ,
           ")"
@@ -1615,11 +1613,19 @@ combine_two_elements_of_list <-
 
 
 .min <- function(var) {
-  min(var, na.rm = T)
+  if (any(!is.na(var))) {
+    min(var, na.rm = T)
+  } else{
+    NA_real_
+  }
 }
 
 .max <- function(var) {
-  max(var, na.rm = T)
+  if (any(!is.na(var))) {
+    max(var, na.rm = T)
+  } else{
+    NA_real_
+  }
 }
 
 .factormean <- function(var) {
@@ -1633,6 +1639,10 @@ escape_latex_symbols <- function(tibl) {
       tibl[i, j] <- str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("$"), fixed("\\$"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
       # tibl[i,j] <- str_replace_all(tibl[i,j], fixed("_"), fixed("\\_"))
     }
   }
@@ -1729,12 +1739,16 @@ test_cont <-
       if (!test_options[["include_group_missings_in_test"]]) {
         tibl %<>% filter(group != "(Missing)")
       }
+      tibl %<>% filter(!is.na(var))
 
       var <- tibl %>% pull(var)
       group <- tibl %>% pull(group)
 
       n_levels_group <- length(levels(group))
     } else{
+      tibl <- tibble(var = var)
+      tibl %<>% filter(!is.na(var))
+      var <- tibl %>% pull(var)
       n_levels_group <- 1
     }
 
@@ -1780,86 +1794,91 @@ test_cont <-
         }
       }
     }
-    erg <- switch(
-      test,
-      `Wilcoxon two-sample signed-rank test` = {
-        tibl <- tibble(var = var,
-                       group = group,
-                       id = test_options[["indices"]])
-        level1 <- levels(group)[1]
-        level2 <- levels(group)[2]
+    if (length(var) == 0) {
+      erg <- list(p = NA_real_)
+    } else{
+      erg <- switch(
+        test,
+        `Wilcoxon two-sample signed-rank test` = {
+          tibl <- tibble(var = var,
+                         group = group,
+                         id = test_options[["indices"]])
+          level1 <- levels(group)[1]
+          level2 <- levels(group)[2]
 
-        x <-
-          tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
-        y <-
-          tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
+          x <-
+            tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
+          y <-
+            tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
 
-        list(p = stats::wilcox.test(x, y, paired = T)$p.value)
-      },
-      `Friedman test` = {
-        tmp <-
-          tibble(var = var,
-                 group = group,
-                 idx = test_options[["indices"]])
-        list(p = stats::friedman.test(var ~ group |
-                                        idx, dat = tmp)$p.value)
-      },
-      `Wilcoxon one-sample signed-rank test` = {
-        list(p = stats::wilcox.test(var)$p.value)
-      },
-      `Mann-Whitney U test` = {
-        tl <- stats::wilcox.test(var ~ group, conf.int = T)
-        list(p = tl$p.value,
-             CI = tl$conf.int,
-             CI_name = "HL CI")
-      },
-      `Kruskal-Wallis one-way ANOVA` = {
-        list(p = stats::kruskal.test(var ~ group)$p.value)
-      },
-      `Students paired t-test` = {
-        tibl <- tibble(var = var,
-                       group = group,
-                       id = test_options[["indices"]])
-        level1 <- levels(group)[1]
-        level2 <- levels(group)[2]
+          list(p = stats::wilcox.test(x, y, paired = T)$p.value)
+        },
+        `Friedman test` = {
+          tmp <-
+            tibble(var = var,
+                   group = group,
+                   idx = test_options[["indices"]])
+          list(p = stats::friedman.test(var ~ group |
+                                          idx, dat = tmp)$p.value)
+        },
+        `Wilcoxon one-sample signed-rank test` = {
+          list(p = stats::wilcox.test(var)$p.value)
+        },
+        `Mann-Whitney U test` = {
+          tl <- stats::wilcox.test(var ~ group, conf.int = T)
+          list(p = tl$p.value,
+               CI = tl$conf.int,
+               CI_name = "HL CI")
+        },
+        `Kruskal-Wallis one-way ANOVA` = {
+          list(p = stats::kruskal.test(var ~ group)$p.value)
+        },
+        `Students paired t-test` = {
+          tibl <- tibble(var = var,
+                         group = group,
+                         id = test_options[["indices"]])
+          level1 <- levels(group)[1]
+          level2 <- levels(group)[2]
 
-        x <-
-          tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
-        y <-
-          tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
+          x <-
+            tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
+          y <-
+            tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
 
-        tl <- stats::t.test(x, y, paired = T)
+          tl <- stats::t.test(x, y, paired = T)
 
-        list(p = tl$p.value,
-             CI = tl$conf.int,
-             CI_name = "Mean dif. CI")
-      },
-      `Mixed model ANOVA` = {
-        tmp <- tibble(var = var,
-                      group = group,
-                      idx = test_options[["indices"]])
+          list(p = tl$p.value,
+               CI = tl$conf.int,
+               CI_name = "Mean dif. CI")
+        },
+        `Mixed model ANOVA` = {
+          tmp <- tibble(var = var,
+                        group = group,
+                        idx = test_options[["indices"]])
 
-        fit <- nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
-        tl <- car::Anova(fit, type = "III")
-        pv <- tl$`Pr(>Chisq)`[2]
-        list(p = pv)
-      },
-      `Students one-sample t-test` = {
-        list(p = stats::t.test(var)$p.value)
-      },
-      `Welchs two-sample t-test` = {
-        tl <- stats::t.test(var ~ group, var.equal = F)
-        list(p = tl$p.value,
-             CI = tl$conf.int,
-             CI_name = "Mean dif. CI")
-      },
-      `F-test (ANOVA)` = {
-        tl <- summary(stats::aov(var ~ group))[[1]]
-        pv <- tl$`Pr(>F)`[1]
-        list(p = pv)
-      },
-      list(p = NA_real_)
-    )
+          fit <-
+            nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
+          tl <- stats::anova(fit)
+          pv <- tl$`p-value`[2]
+          list(p = pv)
+        },
+        `Students one-sample t-test` = {
+          list(p = stats::t.test(var)$p.value)
+        },
+        `Welchs two-sample t-test` = {
+          tl <- stats::t.test(var ~ group, var.equal = F)
+          list(p = tl$p.value,
+               CI = tl$conf.int,
+               CI_name = "Mean dif. CI")
+        },
+        `F-test (ANOVA)` = {
+          tl <- summary(stats::aov(var ~ group))[[1]]
+          pv <- tl$`Pr(>F)`[1]
+          list(p = pv)
+        },
+        list(p = NA_real_)
+      )
+    }
     erg[["test_name"]] <- test
     erg
   }
@@ -1966,7 +1985,7 @@ test_cat <-
             }
           }
         } else{
-          # nominal variable, asymptotic test
+          # nominal variable, asymp <- ic test
           if (isTRUE(test_options[["paired"]] == T)) {
             # nominal variable, asymptotic paired test
             if (n_levels_group == 2 & n_levels_var == 2) {

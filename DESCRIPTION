@@ -4,7 +4,7 @@ Title: Publication quality descriptive statistics tables with R
 Version: 2.0
 Date: 2020-09-04
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de"),
-             person("Luaks", "Baumann", role = c("aut")),
+             person("Lukas", "Baumann", role = c("aut")),
              person("Maximilian", "Pilz", role = c("aut")),
              person("Lorenz", "Uhlmann", role = c("aut")),
              person("Csilla", "van Lunteren", role = c("aut")))
@@ -24,7 +24,8 @@ Suggests:
     rmarkdown,
 	tidyverse,
 	here,
-	shiny
+	shiny,
+	Exact
 Imports:
     stats,
     utils,

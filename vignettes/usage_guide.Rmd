@@ -10,6 +10,8 @@ vignette: >
 
 ```{r setup, include = FALSE}
 library(knitr)
+library(tidyverse)
+library(magrittr)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -44,22 +46,29 @@ output: pdf_document
 ### html & word_document
 No special preamble needed. Make sure you have pandoc version >= 2.0 installed on your system.
 
-## Global printFormat option
+## Global print_format option
 In order for `DescrTab2` to work properly with your document type of choice, you need to set the `printFormat` options, preferably right at the start of your document. You can do this by typing:
 
 ```{r, echo=TRUE, message=FALSE}
 options(print_format = "html") # or = "word" or "tex", depending on your document type
-
 ```
 
 
 ## Getting started
 
+For instructive purposes, we will use the following dataset:
+
+```{r}
+dat <- iris[, c("Species", "Sepal.Length")]
+dat %<>% mutate(animal= c("Mammal", "Fish") %>% rep(75) %>% factor())
+dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, T) %>% factor())
+```
+
+
 Make sure you include the DescrTab library by typing 
 
-
 ```{r, echo=TRUE}
-# library(DescrTab2)
+library(DescrTab2)
 ```
 
 
@@ -67,9 +76,14 @@ somewhere in the document before you use it. You are now ready to go! Producing 
 
 ````markdown
 `r ''````{r, results='asis'}
-descr(iris)
+descr(dat)
 `r ''````
 ````
+
+```{r, results='asis', echo=F}
+descr(dat)
+```
+
 
 Note the chunk option `results='asis'`. `DescrTab2` produces raw LaTeX or hmtl code. To get pandoc to render this properly, the `results='asis'` option is required. An alternative will be described later.
 
@@ -78,7 +92,7 @@ To produce descriptive tables for a word document, a bit more typing is required
 
 ````markdown
 `r ''````{r}
-descr(iris) %>% print() %>% .$ft %>% knitr::knit_print()
+descr(dat) %>% print() %>% knitr::knit_print()
 `r ''````
 ````
 
@@ -92,21 +106,21 @@ Note that `DescrTab2` can also produce console output! In fact, this is the defa
 The object returned from the `descr` function is basically just a named list. You may be interested in referencing certain summary statistics from the table in your document. To do this, you can save the list returned by `descr`:
 
 ```{r}
-# my_table <- descr(iris)
+my_table <- descr(dat)
 ```
 
 You can then access the elements of the list using the `$` operator.
 
 ```{r}
-# my_table$variables$Sepal.Length$Total$mean
+my_table$variables$Sepal.Length$results$Total$mean
 ```
 
 Rstudios autocomplete suggestions are very helpful when navigating this list.
 
 The `print` function returns a formatted version of this list, which you can also save and access using the same syntax.
 
-```{r}
-# my_table <- descr(iris) %>% print()
+```{r, results='asis'}
+my_table <- descr(dat) %>% print(silent=T)
 ```
 
 
@@ -114,15 +128,128 @@ The `print` function returns a formatted version of this list, which you can als
 Use the `group` option to specify the name of a grouping variable in your data:
 
 ```{r, results='asis'}
-# descr(iris, "Species")
+descr(dat, "Species")
 ```
 
 ## Assigning labels
-Use the `group_labels` option to assign group labels and the `var_options` option to assign variable labels:
+Use the `group_labels` option to assign group labels and the `var_labels` option to assign variable labels:
 
 ```{r, results='asis'}
-# descr(iris, "Species", group_labels=list(setosa="My custom group label"), var_options = list(Sepal.Length = list(label="My custom variable label")))
+descr(dat, "Species", group_labels=list(setosa="My custom group label"), var_labels = list(Sepal.Length = "My custom variable label"))
 ```
+
+## Confidence intervals for two group comparisons
+For 2-group comparisons, decrtab automatically calculates confidence intervals for differences in effect measures:
+
+```{r, results='asis'}
+descr(dat, "animal")
+```
+
+## Different tests
+There are a lot of different tests available. Check out the test_choice vignette for details: `vignette("test_choice_tree", "DescrTab2")`, or look at https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_html.html
+
+Here are some different tests in action:
+
+```{r, results='asis'}
+descr(dat %>% select(-"Species"), "animal", test_options = list(exact=T, nonparametric=T))
+```
+
+
+```{r, results='asis'}
+descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = list(nonparametric=T))
+```
+
+
+```{r, results='asis'}
+descr(dat %>% select(-"Species"), "animal", test_options = list(paired=T, indices=rep(1:50, 3)))
+```
+
+## Significant digits
+
+Every summary statistic in DescrTab2 is formatted by a corresponding formatting function. You can exchange these formatting functions as you please:
+
+```{r, results='asis'}
+descr(dat, "Species", format_summary_stats = list(mean=function(x)formatC(x, digits = 4)) )
+```
+
+
+## Omitting summary statistics
+
+Let's say you don't want to calculate quantiles for your numeric variables. You can specify the `summary_stats_cont` option to include all summary statistics but quantiles:
+
+```{r, results='asis'}
+descr(dat, "Species", summary_stats_cont = list(N = DescrTab2:::.N, Nmiss = DescrTab2:::.Nmiss, mean =
+    DescrTab2:::.mean, sd = DescrTab2:::.sd, median = DescrTab2:::.median, min = DescrTab2:::.min, max =
+    DescrTab2:::.max))
+```
+
+## Adding summary statistics
+Let's say you have a categorical variable, but for some reason it's levels are numerals and you want to calculate the mean. No problem:
+
+```{r, results='asis'}
+# Create example dataset
+dat2 <- iris
+dat2$cat_var <- c(1,2) %>% sample(150, T) %>% factor()
+dat2 <- dat2[, c("Species", "cat_var")]
+
+descr(dat2, "Species", summary_stats_cat=list(mean=DescrTab2:::.factormean))
+
+```
+
+
+## Omitting p values
+
+You can declare the `format_options = list(print_p = F)` option to omit p-values:
+
+```{r, results='asis'}
+descr(dat, "animal", format_options = list(print_p = F))
+```
+
+Similarily for Confidence intervals:
+
+```{r, results='asis'}
+descr(dat, "animal", format_options = list(print_CI = F))
+```
+
+
+## Printing without results='asis'
+
+Sometimes, e.g. if you have a loop inside your R-chunk and you want to plot graphics in between descriptive tables, it is necessary not to have the results='asis' option. You can still use DescrTab2 with the following commands:
+
+````markdown
+`r ''````{r}
+capture.output(print(descr(dat, "Species"))) %>%  knitr::raw_html() # or knitr::raw_tex() for tex
+`r ''````
+````
+
+```{r}
+capture.output(print(descr(dat, "Species"))) %>%  knitr::raw_html() # or knitr::raw_tex() for tex
+```
+
+In word documents this is irrelevant, because you never have to specify `results='asis'`
+
+
+## Controling options on a per-variable level
+You can use the `var_options` list to control formatting and test options on a per-variable basis.
+Let's say in the dataset `iris`, we want that only the `Sepal.Length` variable has more digits in the mean and a nonparametric test:
+
+
+```{r, results='asis'}
+descr(iris, "Species", var_options = list(Sepal.Length = list(
+  format_summary_stats = list(
+    mean = function(x)
+      formatC(x, digits = 4)
+  ),
+  test_options = c(nonparametric = T)
+)))
+```
+
+
+
+
+
+
+
 
 
 

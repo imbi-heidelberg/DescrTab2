@@ -1,8 +1,0 @@
-> descr(iris, "Species", group_labels = list(setosa = "My custom group label"),
-+ var_options = list(Sepal.Length = list(label = "My custom variable label"))) %>%
-+   print(printFormat = "console")
-Warning: The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
-Please use the `.name_repair` argument instead.
-
-Error in print_console(x, silent, ...): unused argument (printFormat = "console")
-

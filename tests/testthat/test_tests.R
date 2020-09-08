@@ -60,7 +60,7 @@ test_that("kruskal.test works",
 
 
 verify_output(
-  "../console/kruskal.test.txxt",
+  "../console/kruskal.test.txt",
   descr(dat_kruskal.test, "group", test_options = c(nonparametric = T)) %>% print()
 )
 
@@ -156,14 +156,32 @@ dat <-
   )
 
 
-descr(dat,
-      "group",
-      test_options = list(
-        nonparametric = T,
-        indices = idx,
-        paired = T
-      ))
 
+
+test_that("friedman.test works",
+          expect_error(descr(
+            dat,
+            "group",
+            test_options = list(
+              nonparametric = T,
+              indices = idx,
+              paired = T
+            )
+          ) %>%
+            print(silent = T),
+          NA))
+
+
+verify_output("../console/friedman.test.txt",
+              descr(
+                dat,
+                "group",
+                test_options = list(
+                  nonparametric = T,
+                  indices = idx,
+                  paired = T
+                )
+              ) %>% print())
 
 
 
@@ -188,8 +206,17 @@ idx <- d.long$id
 dat <-
   d.long[, 1:2] %>% mutate(time = as.character(time), resp = as.character(resp))
 
-descr(dat, "time", test_options = list(indices = idx, paired = T))
 
+test_that("CochranQTest works",
+          expect_error(descr(
+            dat, "time", test_options = list(indices = idx, paired = T)
+          ) %>%
+            print(silent = T),
+          NA))
+
+
+verify_output("../console/CochraneQTest.txt",
+              descr(dat, "time", test_options = list(indices = idx, paired = T)) %>% print())
 
 
 
@@ -204,9 +231,26 @@ dat <-
   ),
   group = c(rep("first", 1600), rep("second", 1600)))
 
-descr(dat, "group", test_options = list(paired = T))
-descr(dat, "group", test_options = list(paired = T, exact = T))
-mcnemar.test(dat$var, dat$group)
+test_that("mcnemar.test works",
+          expect_error(descr(dat, "group", test_options = list(paired = T)) %>%
+                         print(silent = T),
+                       NA))
+
+test_that("exact2x2 mcnemar test works",
+          expect_error(descr(
+            dat, "group", test_options = list(paired = T, exact = T)
+          ) %>%
+            print(silent = T),
+          NA))
+
+
+verify_output("../console/mcnemar.test.txt",
+              descr(dat, "group", test_options = list(paired = T)) %>% print())
+
+verify_output(
+  "../console/exact_mcnemar.test.txt",
+  descr(dat, "group", test_options = list(paired = T, exact = T)) %>% print()
+)
 
 
 
@@ -227,15 +271,25 @@ dat <-
     rep("Republican", 477)
   ))
 
-descr(dat, "gender")
-descr(dat)
-
-chisq.test(dat$gender, dat$party)
-chisq.test(table(dat$gender))
-chisq.test(table(dat$party))
 
 
+test_that("chisq.test 1 sample test works",
+          expect_error(descr(dat) %>%
+                         print(silent = T),
+                       NA))
 
+test_that("chisq.test more sample test works",
+          expect_error(descr(dat, "gender") %>%
+                         print(silent = T),
+                       NA))
+
+
+verify_output("../console/1_sample_chisq.test.txt",
+              descr(dat)
+              %>% print())
+
+verify_output("../console/more_sample_chisq.test.txt",
+              descr(dat, "gender") %>% print())
 
 
 ## ----t.test, results='asis'-------------------------------------------------------------------------
@@ -243,9 +297,38 @@ chisq.test(table(dat$party))
 dat <- sleep[, c("extra", "group")]
 
 
-descr(dat[, "extra"])
-descr(dat, "group")
-descr(dat, "group", test_options = list(paired = T, indices = rep(1:10, 2)))
+test_that("t.test 1 sample test works",
+          expect_error(descr(dat[, "extra"]) %>%
+                         print(silent = T),
+                       NA))
+
+test_that("t.test 2 sample test works",
+          expect_error(descr(dat, "group") %>%
+                         print(silent = T),
+                       NA))
+test_that("t.test paired 2 sample test works",
+          expect_error(descr(
+            dat, "group", test_options = list(paired = T, indices = rep(1:10, 2))
+          ) %>%
+            print(silent = T),
+          NA))
+
+
+verify_output("../console/1_sample_t.test.txt",
+              descr(dat)
+              %>% print())
+
+verify_output("../console/2_sample_t.test.txt",
+              descr(dat, "group")
+              %>% print())
+
+verify_output(
+  "../console/1_samplepaired_t.test.txt",
+  descr(dat, "group", test_options = list(
+    paired = T, indices = rep(1:10, 2)
+  ))
+  %>% print()
+)
 
 
 
@@ -258,8 +341,18 @@ dat <- data.frame(
   N = ordered(gl(3, 1, 9))
 )
 
-descr(dat[, c("y", "P")], "P")
-descr(dat[, c("y", "N")], "N")
+
+test_that("f.test test works",
+          expect_error(descr(dat[, c("y", "P")], "P") %>%
+                         print(silent = T),
+                       NA))
+
+
+verify_output("../console/f.test.txt",
+              descr(dat[, c("y", "P")], "P")
+              %>% print())
+
+
 
 
 
@@ -267,15 +360,48 @@ descr(dat[, c("y", "N")], "N")
 ## ----mixed, results='asis'--------------------------------------------------------------------------
 
 dat <- nlme::Orthodont
-dat2 <- nlme::Orthodont[1:64,]
+dat2 <- nlme::Orthodont[1:64, ]
 dat2$Sex <- "Divers"
+dat2$distance <-
+  dat2$distance + c(rep(0.1 * c(1, 4, 3, 2), 10), 0.1 * rep(c(0.4, 2, 1.5, 2.3), 6))
 dat2$Subject <- str_replace_all(dat2$Subject, "M", "D")
 dat <- bind_rows(dat, dat2)
 dat <- as_tibble(dat)
 
-descr(dat[, c("Sex", "distance")], "Sex", test_options = list(paired = T, indices =
-                                                                dat$Subject))
+
+test_that("mixed_model test works",
+          expect_error(descr(
+            dat[, c("Sex", "distance")],
+            "Sex",
+            test_options = list(paired = T, indices =
+                                  dat$Subject)
+          ) %>%
+            print(silent = T),
+          NA))
 
 
+verify_output("../console/mixed_model.txt",
+              descr(dat[, c("Sex", "distance")], "Sex", test_options = list(
+                paired = T, indices =
+                  dat$Subject
+              )) %>% print())
 
 
+dat <-
+  tibble(gender = factor(c(
+    "M", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F",
+   "M", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F"
+  )),
+  party = factor(c(
+    "A", "A", "B", "B", "B", "B", "A", "A", "A", "B", "B",  "A", "A", "B", "B", "B", "B", "A", "A", "A", "B", "B",
+    "A", "A", "B", "B", "B", "B", "A", "A", "A", "B", "B",  "A", "A", "B", "B", "B", "B", "A", "A", "A", "B", "B"
+  )))
+
+## boschloo
+
+test_that("boschloo test works",
+          expect_error(descr(dat, "gender", test_options = c(exact = T)) %>%
+                         print(silent = T),
+                       NA))
+verify_output("../console/boschloo.txt",
+              descr(dat, "gender", test_options = c(exact = T)) %>% print())

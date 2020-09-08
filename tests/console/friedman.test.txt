@@ -1,0 +1,11 @@
+> descr(dat, "group", test_options = list(nonparametric = T, indices = idx,
++   paired = T)) %>% print()
+  Variables   `Round Out`  `Narrow Angle` `Wide Angle` Total     p     Test     
+1  var                                                                          
+2    N         22           22             22           66        0.0~  Friedma~
+3    mean      5.5          5.5            5.5          5.5                     
+4    sd        0.27         0.26           0.27         0.27                    
+5    median    5.5          5.5            5.4          5.5                     
+6    Q1 - Q3   5.4 -- 5.6   5.4 -- 5.6     5.3 -- 5.5   5.4 -- ~                
+7    min - m~  5 -- 6.3     5 -- 6.3       5 -- 6.2     5 -- 6.~                
+
