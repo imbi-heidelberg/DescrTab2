@@ -90,7 +90,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Validation report</h1>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/validation_report.Rmd"><code>vignettes/validation_report.Rmd</code></a></small>
       <div class="hidden name"><code>validation_report.Rmd</code></div>
@@ -8047,7 +8047,7 @@ F
 16 (35%)
 </td>
 <td style="text-align:center;">
-(52%)
+72 (52%)
 </td>
 <td style="text-align:center;">
 0.014<sup>CocQ</sup>
@@ -8067,7 +8067,7 @@ U
 30 (65%)
 </td>
 <td style="text-align:center;">
-(48%)
+66 (48%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -8158,7 +8158,7 @@ Approve
 880 (55%)
 </td>
 <td style="text-align:center;">
-(57%)
+1824 (57%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>McN</sup>
@@ -8178,7 +8178,7 @@ Disapprove
 720 (45%)
 </td>
 <td style="text-align:center;">
-(43%)
+1376 (43%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -8265,7 +8265,7 @@ Approve
 880 (55%)
 </td>
 <td style="text-align:center;">
-(57%)
+1824 (57%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>eMcN</sup>
@@ -8285,7 +8285,7 @@ Disapprove
 720 (45%)
 </td>
 <td style="text-align:center;">
-(43%)
+1376 (43%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -10289,7 +10289,7 @@ Democrat
 484 (40%)
 </td>
 <td style="text-align:center;">
-(45%)
+1246 (45%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>chi2</sup>
@@ -10308,7 +10308,7 @@ Independent
 239 (20%)
 </td>
 <td style="text-align:center;">
-(21%)
+566 (21%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -10326,7 +10326,7 @@ Republican
 477 (40%)
 </td>
 <td style="text-align:center;">
-(34%)
+945 (34%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -10383,7 +10383,7 @@ p
 F
 </td>
 <td style="text-align:center;">
-(56%)
+1557 (56%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>chi1</sup>
@@ -10394,7 +10394,7 @@ F
 M
 </td>
 <td style="text-align:center;">
-(44%)
+1200 (44%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -10409,7 +10409,7 @@ M
 Democrat
 </td>
 <td style="text-align:center;">
-(45%)
+1246 (45%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>chi1</sup>
@@ -10420,7 +10420,7 @@ Democrat
 Independent
 </td>
 <td style="text-align:center;">
-(21%)
+566 (21%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -10430,7 +10430,7 @@ Independent
 Republican
 </td>
 <td style="text-align:center;">
-(34%)
+945 (34%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -17554,14 +17554,11 @@ var _ie64 = _info.indexOf("x64") > 0
 <span class="kw">dat</span> <span class="op">&lt;-</span> <span class="kw">nlme</span>::<span class="kw"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>
 <span class="kw">dat2</span> <span class="op">&lt;-</span> <span class="kw">nlme</span>::<span class="kw"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>[<span class="fl">1</span><span class="op">:</span><span class="fl">64</span>,]
 <span class="kw">dat2</span><span class="op">$</span><span class="kw">Sex</span> <span class="op">&lt;-</span> <span class="st">"Divers"</span>
+<span class="kw">dat2</span><span class="op">$</span><span class="kw">distance</span> <span class="op">&lt;-</span> <span class="kw">dat2</span><span class="op">$</span><span class="kw">distance</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">0.1</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">2</span>), <span class="fl">10</span>), <span class="fl">0.1</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.4</span>,<span class="fl">2</span>,<span class="fl">1.5</span>, <span class="fl">2.3</span>), <span class="fl">6</span>) )
 <span class="kw">dat2</span><span class="op">$</span><span class="kw">Subject</span> <span class="op">&lt;-</span> <span class="fu">str_replace_all</span>(<span class="kw">dat2</span><span class="op">$</span><span class="kw">Subject</span>, <span class="st">"M"</span>, <span class="st">"D"</span>)
 <span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span>(<span class="kw">dat</span>, <span class="kw">dat2</span>)
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">as.tibble</span>(<span class="kw">dat</span>)
-<span class="co">#&gt; Warning: `as.tibble()` is deprecated as of tibble 2.0.0.</span>
-<span class="co">#&gt; Please use `as_tibble()` instead.</span>
-<span class="co">#&gt; The signature and semantics have changed, see `?as_tibble`.</span>
-<span class="co">#&gt; This warning is displayed once every 8 hours.</span>
-<span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span>
+<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span>(<span class="kw">dat</span>)
+
 
 <span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sex"</span>, <span class="st">"distance"</span>)], <span class="st">"Sex"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(paired=<span class="kw">T</span>, indices=<span class="kw">dat</span><span class="op">$</span><span class="kw">Subject</span>))
 </pre></div>
@@ -17641,7 +17638,7 @@ N
 172
 </td>
 <td style="text-align:center;">
-0.002<sup>MiAn</sup>
+0.003<sup>MiAn</sup>
 </td>
 </tr>
 <tr>
@@ -17677,7 +17674,7 @@ sd
 2.9
 </td>
 <td style="text-align:center;">
-2.9
+3
 </td>
 <td style="text-align:center;">
 </td>
@@ -17712,7 +17709,7 @@ Q1 - Q3
 21 – 24
 </td>
 <td style="text-align:center;">
-23 – 26
+23 – 27
 </td>
 <td style="text-align:center;">
 22 – 26
@@ -19440,7 +19437,7 @@ var _ie64 = _info.indexOf("x64") > 0
 </tr>
 <tr>
 <th class="l rowheader" scope="row">Degrees of Freedom Method</th>
-<td class="l data">Containment</td>
+<td class="l data">Satterthwaite</td>
 </tr>
 </tbody>
 </table>
@@ -19569,13 +19566,13 @@ var _ie64 = _info.indexOf("x64") > 0
 <tr>
 <th class="r rowheader" scope="row">0</th>
 <td class="r data">1</td>
-<td class="r data">837.42936319</td>
+<td class="r data">838.60158118</td>
 <td class="r data"> </td>
 </tr>
 <tr>
 <th class="r rowheader" scope="row">1</th>
 <td class="r data">1</td>
-<td class="r data">821.90528501</td>
+<td class="r data">823.17375628</td>
 <td class="r data">0.00000000</td>
 </tr>
 </tbody>
@@ -19616,12 +19613,12 @@ var _ie64 = _info.indexOf("x64") > 0
 <tr>
 <th class="l rowheader" scope="row">Intercept</th>
 <th class="l data">Subject</th>
-<td class="r data">2.2043</td>
+<td class="r data">2.2123</td>
 </tr>
 <tr>
 <th class="l rowheader" scope="row">Residual</th>
 <th class="l data"> </th>
-<td class="r data">5.6478</td>
+<td class="r data">5.6941</td>
 </tr>
 </tbody>
 </table>
@@ -19641,19 +19638,19 @@ var _ie64 = _info.indexOf("x64") > 0
 <tbody>
 <tr>
 <th class="l rowheader" scope="row">-2 Res Log Likelihood</th>
-<td class="r data">821.9</td>
+<td class="r data">823.2</td>
 </tr>
 <tr>
 <th class="l rowheader" scope="row">AIC (Smaller is Better)</th>
-<td class="r data">825.9</td>
+<td class="r data">827.2</td>
 </tr>
 <tr>
 <th class="l rowheader" scope="row">AICC (Smaller is Better)</th>
-<td class="r data">826.0</td>
+<td class="r data">827.2</td>
 </tr>
 <tr>
 <th class="l rowheader" scope="row">BIC (Smaller is Better)</th>
-<td class="r data">829.4</td>
+<td class="r data">830.7</td>
 </tr>
 </tbody>
 </table>
@@ -19685,9 +19682,9 @@ var _ie64 = _info.indexOf("x64") > 0
 <tbody><tr>
 <th class="l rowheader" scope="row">Sex</th>
 <td class="r data">2</td>
-<td class="r data">129</td>
-<td class="r data">6.10</td>
-<td class="r data">0.0029</td>
+<td class="r data">40</td>
+<td class="r data">6.69</td>
+<td class="r data">0.0031</td>
 </tr></tbody>
 </table>
 </div>
@@ -19696,6 +19693,153 @@ var _ie64 = _info.indexOf("x64") > 0
 </div>
 
 
+</div>
+<div id="boschloos-test" class="section level1">
+<h1 class="hasAnchor">
+<a href="#boschloos-test" class="anchor"></a>Boschloos test</h1>
+<p>DescrTab2 uses the exact2x2::boschloo with option <code>tsmethod=central</code> to calculate p-values. There is no comparison for this option readily available.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(gender=<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>)),
+              party=<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>)))
+<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"gender"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(exact=<span class="kw">T</span>))
+<span class="co">#&gt; Warning in stats::prop.test(table(var, group)): Chi-squared approximation may be</span>
+<span class="co">#&gt; incorrect</span>
+</pre></div>
+<table class="table table">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1">
+<div style="">
+Variables
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+F
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+M
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+Total
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+p
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+CI
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+(N=5)
+</th>
+<th style="text-align:center;">
+(N=6)
+</th>
+<th style="text-align:center;">
+(N=11)
+</th>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="2">
+<td colspan="6" style="border-bottom: 1px solid;">
+<strong>party</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+A
+</td>
+<td style="text-align:center;">
+3 (60%)
+</td>
+<td style="text-align:center;">
+2 (33%)
+</td>
+<td style="text-align:center;">
+5 (45%)
+</td>
+<td style="text-align:center;">
+0.491<sup>Bolo</sup>
+</td>
+<td style="text-align:center;">
+Prop. dif. CI
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+B
+</td>
+<td style="text-align:center;">
+2 (40%)
+</td>
+<td style="text-align:center;">
+4 (67%)
+</td>
+<td style="text-align:center;">
+6 (55%)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+[-0.49, 1]
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup>Bolo</sup> Boschloos test
+</td>
+</tr></tfoot>
+</table>
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="kw">exact2x2</span>::<span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span>(<span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod=<span class="st">"central"</span>)
+</pre></div>
+<p>Boschloo’s test</p>
+<p>data: x1/n1=(3/5) and x2/n2= (2/6) proportion 1 = 0.6, proportion 2 = 0.33333, p-value = 0.4909 alternative hypothesis: true p2(1-p1)/[p1(1-p2)] is less than 1 percent confidence interval: NA NA sample estimates: p2(1-p1)/[p1(1-p2)] 0.3333333</p>
+<p>However, we can compare the exact2x2::boschloo with <code>tsmethod=minlike</code> to <code><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">Exact::exact.test</a></code>:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit">
+<span class="kw">exact2x2</span>::<span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span>(<span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod=<span class="st">"minlike"</span>)
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Boschloo's test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  x1/n1=(3/5) and x2/n2= (2/6)</span>
+<span class="co">#&gt; proportion 1 = 0.6, proportion 2 = 0.33333, p-value = 0.5488</span>
+<span class="co">#&gt; alternative hypothesis: true p2(1-p1)/[p1(1-p2)] is not equal to 1</span>
+<span class="co">#&gt; 95 percent confidence interval:</span>
+<span class="co">#&gt;  NA NA</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; p2(1-p1)/[p1(1-p2)] </span>
+<span class="co">#&gt;           0.3333333</span>
+<span class="kw">Exact</span>::<span class="fu"><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">exact.test</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">dat</span>), method=<span class="st">"boschloo"</span>, to.plot = <span class="kw">F</span>)
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Boschloo's Exact Test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  3 out of 5 vs. 2 out of 6</span>
+<span class="co">#&gt; test statistic = 0.5671, first sample size = 5, second sample size = 6,</span>
+<span class="co">#&gt; p-value = 0.5488</span>
+<span class="co">#&gt; alternative hypothesis: true difference in proportion is not equal to 0</span>
+<span class="co">#&gt; sample estimates:</span>
+<span class="co">#&gt; difference in proportion </span>
+<span class="co">#&gt;                0.2666667</span>
+</pre></div>
 </div>
   </div>
 
@@ -19710,7 +19854,7 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
       <footer><div class="copyright">
-  <p>Developed by Jan Meis, Luaks Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
 </div>
 
 <div class="pkgdown">
