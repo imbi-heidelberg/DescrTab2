@@ -162,8 +162,8 @@ For two-group comparisons, confidence intervals for appropriate summary measures
     <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), minmax = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>,
     digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), CI = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>)),
   format_p = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/label_pvalue.html'>pvalue_format</a></span>(),
-  format_options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(print_p = <span class='kw'>T</span>, print_CI = <span class='kw'>T</span>, omit_Nmiss_if_0 = <span class='kw'>T</span>,
-    omit_missings_in_group = <span class='kw'>T</span>, categorical_missing_percent_mode =
+  format_options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(print_p = <span class='kw'>T</span>, print_CI = <span class='kw'>T</span>, combine_mean_sd = <span class='kw'>F</span>, omit_Nmiss_if_0
+    = <span class='kw'>T</span>, omit_missings_in_group = <span class='kw'>T</span>, categorical_missing_percent_mode =
     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"no_missing_percent"</span>, <span class='st'>"missing_as_regular_category"</span>,
     <span class='st'>"missing_as_separate_category"</span>)),
   test_options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(paired = <span class='kw'>F</span>, nonparametric = <span class='kw'>F</span>, exact = <span class='kw'>F</span>, indices = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
@@ -252,7 +252,8 @@ The <code>format_p</code> function converts p-values to character strings, e.g. 
 
 <p>Further formatting options can be specified in the <code>format_options</code> list. It contains the following members:</p><ul>
 <li><p><code>print_p</code> (logical) controls whether to print the p-value column.</p></li>
-<li><p><code>print_CI</code> (logical)  controls whether to print the confidence intervals for group-differences.</p></li>
+<li><p><code>print_CI</code> (logical) controls whether to print the confidence intervals for group-differences.</p></li>
+<li><p><code>combine_mean_sd</code> (logical) controls whether to combine the mean and sd row into one mean ± sd row</p></li>
 <li><p><code>omit_Nmiss_if_0</code> (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.</p></li>
 <li><p><code>omit_missings_in_group</code> (logical)  controls whether to omit all observations where the group variable is missing.</p></li>
 <li><p><code>categorical_missing_percent_mode</code> (character)  controls how to display percentages in categorical variables with a (Missing) category.
