@@ -39,7 +39,8 @@ utils::globalVariables(".")
 #' Further formatting options can be specified in the \code{format_options} list. It contains the following members:
 #' \itemize{
 #' \item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
-#' \item{\code{print_CI}}{ (logical)  controls whether to print the confidence intervals for group-differences.}
+#' \item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
+#' \item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row}
 #' \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 #' \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 #' \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
@@ -164,6 +165,7 @@ descr <-
            format_options = list(
              print_p = T,
              print_CI = T,
+             combine_mean_sd = F,
              omit_Nmiss_if_0 = T,
              omit_missings_in_group = T,
              categorical_missing_percent_mode = c(
@@ -1295,16 +1297,40 @@ create_character_subtable.cont_summary <-
       }
 
     } else{
+      combined_summary_stats <- c()
+      summary_stat_names_pre_modification <-
+        names(DescrVarObj[["results"]][["Total"]])
+
+
+      if (all(c("Q1", "Q3") %in% names(DescrVarObj[["results"]][["Total"]]))) {
+        combined_summary_stats %<>%  c(., "Q1", "Q3")
+        DescrVarObj[["results"]][["Total"]] <-
+          combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]], "Q1", "Q3", format_summary_stats[["Q"]])
+      }
+
+      if (all(c("min", "max") %in% names(DescrVarObj[["results"]][["Total"]]))) {
+        combined_summary_stats %<>%  c(., "min", "max")
+        DescrVarObj[["results"]][["Total"]] <-
+          combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]], "min", "max", format_summary_stats[["minmax"]])
+      }
+
+      if (isTRUE(format_options[["combine_mean_sd"]])) {
+        if (all(c("mean", "sd") %in% names(DescrVarObj[["results"]][["Total"]]))) {
+          combined_summary_stats %<>%  c(., "mean", "sd")
+          DescrVarObj[["results"]][["Total"]] <-
+            combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]],
+                                         "mean",
+                                         "sd",
+                                         format_summary_stats[["mean"]],
+                                         " ± ",
+                                         " ± ")
+        }
+      }
+
       summary_stat_names <-
-        setdiff(names(DescrVarObj[["results"]][["Total"]]), c("Q1", "Q3", "min", "max"))
+        setdiff(summary_stat_names_pre_modification,
+                combined_summary_stats)
 
-      # DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
-      #   NA_character_
-
-      DescrVarObj[["results"]][["Total"]] <-
-        combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]], "Q1", "Q3", format_summary_stats[["Q"]])
-      DescrVarObj[["results"]][["Total"]] <-
-        combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]], "min", "max", format_summary_stats[["minmax"]])
 
       if (!is.null(DescrVarObj[["results"]][["Total"]][["Nmiss"]])) {
         DescrVarObj[["results"]][["Total"]][["Nmiss"]] <-
@@ -1333,10 +1359,26 @@ create_character_subtable.cont_summary <-
 
       for (group in groups) {
         # DescrVarObj[["results"]][[group]][sapply(DescrVarObj[["results"]][[group]], is.null)] <- NA
-        DescrVarObj[["results"]][[group]] <-
-          combine_two_elements_of_list(DescrVarObj[["results"]][[group]], "Q1", "Q3", format_summary_stats[["Q"]])
-        DescrVarObj[["results"]][[group]] <-
-          combine_two_elements_of_list(DescrVarObj[["results"]][[group]], "min", "max", format_summary_stats[["minmax"]])
+        if (all(c("Q1", "Q3") %in% names(DescrVarObj[["results"]][[group]]))) {
+          DescrVarObj[["results"]][[group]] <-
+            combine_two_elements_of_list(DescrVarObj[["results"]][[group]], "Q1", "Q3", format_summary_stats[["Q"]])
+        }
+
+        if (all(c("min", "max") %in% names(DescrVarObj[["results"]][[group]]))) {
+          DescrVarObj[["results"]][[group]] <-
+            combine_two_elements_of_list(DescrVarObj[["results"]][[group]], "min", "max", format_summary_stats[["minmax"]])
+        }
+
+        if (isTRUE(format_options[["combine_mean_sd"]])) {
+          DescrVarObj[["results"]][[group]] <-
+            combine_two_elements_of_list(DescrVarObj[["results"]][[group]],
+                                         "mean",
+                                         "sd",
+                                         format_summary_stats[["mean"]],
+                                         " ± ",
+                                         " ± ")
+        }
+
 
         if (!is.null(DescrVarObj[["results"]][[group]][["Nmiss"]])) {
           DescrVarObj[["results"]][[group]][["Nmiss"]] <-
@@ -1562,13 +1604,21 @@ create_character_subtable.cat_summary <-
 
 
 combine_two_elements_of_list <-
-  function(lst, elem1, elem2, format_summary_stats) {
+  function(lst,
+           elem1,
+           elem2,
+           format_summary_stats,
+           connector_names = c(" - ", " ± "),
+           connector_summary_stats = c(" -- ", " ± ")) {
     if (c(elem1, elem2) %in% names(lst) %>% all()) {
       lst[[elem1]] <-
-        paste0(format_summary_stats(lst[[elem1]]),
-               " -- ",
-               format_summary_stats(lst[[elem2]]))
-      names(lst)[names(lst) == elem1] <- paste0(elem1, " - ", elem2)
+        paste0(
+          format_summary_stats(lst[[elem1]]),
+          connector_summary_stats[[1]],
+          format_summary_stats(lst[[elem2]])
+        )
+      names(lst)[names(lst) == elem1] <-
+        paste0(elem1, connector_names[[1]], elem2)
       lst <- lst[setdiff(names(lst), elem2)]
     }
     else{

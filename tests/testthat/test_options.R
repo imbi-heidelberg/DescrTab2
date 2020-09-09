@@ -66,11 +66,26 @@ dat2$cat_var <- c(1, 2) %>% sample(150, T) %>% factor()
 dat2 <- dat2[, c("Species", "cat_var")]
 
 test_that("cat_summary_stats works",
-          expect_error(
-            descr(
+          {
+            expect_error(descr(
               dat2,
               "Species",
               summary_stats_cat = list(mean = DescrTab2:::.factormean)
             ) %>% print(silent = T),
-            NA
-          ))
+            NA)
+            expect_error(
+              descr(
+                dat2,
+                "Species",
+                summary_stats_cat = list(mean = DescrTab2:::.factormean)
+              ) %>% print(silent = T, print_format = "numeric"),
+              NA
+            )
+          })
+
+
+test_that("combine_mean_sd works",
+          expect_error(descr(
+            iris, format_options = c(combine_mean_sd = T)
+          ) %>% print(silent = T),
+          NA))

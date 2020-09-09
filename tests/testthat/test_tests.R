@@ -12,6 +12,11 @@ test_that("wilcox.test_1_sample does not produce error",
           expect_error(descr(dat, test_options = c(nonparametric = T)) %>% print(silent =
                                                                                    T), NA))
 
+test_that("wilcox.test_1_sample does not produce error categorical",
+          expect_error(descr(dat %>% mutate(diff=ordered(diff)), test_options = c(nonparametric = T)) %>% print(silent =
+                                                                                   T), NA))
+
+
 verify_output("../console/wilcox.test_1_sample.txt",
               descr(dat, test_options = c(nonparametric = T)) %>% print())
 
@@ -20,6 +25,7 @@ x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
 y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 group <- c(rep("Trt", length(x)), rep("Ctrl", length(y)))
 dat_wilcox.test_2_sample <- tibble(var = c(x, y), group = group)
+dat_wilcox.test_2_sample_paired <- tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)))
 
 test_that("wilcox.test_2_sample",
           expect_error(
@@ -27,6 +33,36 @@ test_that("wilcox.test_2_sample",
               dat_wilcox.test_2_sample,
               "group",
               test_options = c(nonparametric = T)
+            ) %>% print(silent = T),
+            NA
+          ))
+
+test_that("wilcox.test_2_sample categorical",
+          expect_error(
+            descr(
+              dat_wilcox.test_2_sample %>% mutate(var=ordered(var)),
+              "group",
+              test_options = c(nonparametric = T)
+            ) %>% print(silent = T),
+            NA
+          ))
+
+test_that("wilcox.test_2_sample paired",
+          expect_error(
+            descr(
+              dat_wilcox.test_2_sample_paired,
+              "group",
+              test_options = list(nonparametric = T, paired=T, indices=rep(1:10, 2))
+            ) %>% print(silent = T),
+            NA
+          ))
+
+test_that("wilcox.test_2_sample paired categorical",
+          expect_error(
+            descr(
+              dat_wilcox.test_2_sample_paired %>% mutate(var=ordered(var)),
+              "group",
+              test_options = list(nonparametric = T, paired=T, indices=rep(1:10, 2))
             ) %>% print(silent = T),
             NA
           ))
@@ -39,7 +75,6 @@ verify_output(
     test_options = c(nonparametric = T)
   ) %>% print()
 )
-
 
 
 x <- c(2.9, 3.0, 2.5, 2.6, 3.2) # normal subjects
@@ -58,6 +93,12 @@ test_that("kruskal.test works",
             NA
           ))
 
+test_that("kruskal.test works categorical",
+          expect_error(
+            descr(dat_kruskal.test %>% mutate(var=ordered(var)), "group", test_options = c(nonparametric = T)) %>%
+              print(silent = T),
+            NA
+          ))
 
 verify_output(
   "../console/kruskal.test.txt",
@@ -159,6 +200,20 @@ dat <-
 test_that("friedman.test works",
           expect_error(descr(
             dat,
+            "group",
+            test_options = list(
+              nonparametric = T,
+              indices = idx,
+              paired = T
+            )
+          ) %>%
+            print(silent = T),
+          NA))
+
+
+test_that("friedman.test works",
+          expect_error(descr(
+            dat %>% mutate(var=ordered(var)),
             "group",
             test_options = list(
               nonparametric = T,

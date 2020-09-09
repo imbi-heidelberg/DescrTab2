@@ -17,28 +17,28 @@ dat3[1, "Species"] <- NA
 
 
 test_that("Missings are handles properly", {
-  expect_error(descr(dat1, "Species"), NA)
+  expect_error(descr(dat1, "Species") %>%  print(silent=T), NA)
   expect_error( descr(
     dat1,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_regular_category")
-  ), NA)
+  ) %>%  print(silent=T), NA)
   expect_error( descr(
     dat1,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_separate_category")
-  ), NA)
-  expect_error( descr(dat2, "Species"), NA)
+  ) %>%  print(silent=T), NA)
+  expect_error( descr(dat2, "Species") %>%  print(silent=T), NA)
   expect_error( descr(
     dat2,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_regular_category")
-  ), NA)
+  ) %>%  print(silent=T), NA)
   expect_error(descr(
     dat2,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_separate_category")
-  ) , NA)
-  expect_warning( descr(dat3, "Species"))
-  expect_error( descr(dat3, "Species", format_options = list(omit_missings_in_group = F)), NA)
+  ) %>%  print(silent=T), NA)
+  expect_warning( descr(dat3, "Species") %>%  print(silent=T) )
+  expect_error( descr(dat3, "Species", format_options = list(omit_missings_in_group = F)) %>%  print(silent=T), NA)
 })

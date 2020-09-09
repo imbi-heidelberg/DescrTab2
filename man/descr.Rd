@@ -22,8 +22,8 @@ descr(
     function(x) format(x, digits = 2, scientific = 3), minmax = function(x) format(x,
     digits = 2, scientific = 3), CI = function(x) format(x, digits = 2, scientific = 3)),
   format_p = scales::pvalue_format(),
-  format_options = list(print_p = T, print_CI = T, omit_Nmiss_if_0 = T,
-    omit_missings_in_group = T, categorical_missing_percent_mode =
+  format_options = list(print_p = T, print_CI = T, combine_mean_sd = F, omit_Nmiss_if_0
+    = T, omit_missings_in_group = T, categorical_missing_percent_mode =
     c("no_missing_percent", "missing_as_regular_category",
     "missing_as_separate_category")),
   test_options = list(paired = F, nonparametric = F, exact = F, indices = c(),
@@ -89,7 +89,8 @@ The \code{format_p} function converts p-values to character strings, e.g. 0.05 -
 Further formatting options can be specified in the \code{format_options} list. It contains the following members:
 \itemize{
 \item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
-\item{\code{print_CI}}{ (logical)  controls whether to print the confidence intervals for group-differences.}
+\item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
+\item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row}
 \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.

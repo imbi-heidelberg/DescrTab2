@@ -196,6 +196,13 @@ descr(dat2, "Species", summary_stats_cat=list(mean=DescrTab2:::.factormean))
 
 ```
 
+## Combining mean and sd
+Use the `format_options = list(combine_mean_sd=T)` option:
+
+```{r, results='asis'}
+descr(dat, "Species", format_options = c(combine_mean_sd=T))
+```
+
 
 ## Omitting p values
 
