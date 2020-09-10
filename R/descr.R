@@ -13,14 +13,15 @@ utils::globalVariables(".")
 #' @param group name (as character) of the group variable in dat.
 #' @param group_labels named list of labels for the levels of the group variable in dat.
 #' @param var_labels named list of variable labels.
-#' @param var_options A named list of named lists. For each variable, you can have special options that apply only to that variable.
+#' @param var_options A named list of lists. For each variable, you can have special options that apply only to that variable.
 #' These options are specified in this argument. See the details and examples for more explanation.
 #' @param summary_stats_cont named list of summary statistic functions to be used for numeric variables.
 #' @param summary_stats_cat named list of summary statistic function to be used for categorical variables.
 #' @param format_summary_stats named list of formatting functions for summary statistics.
 #' @param format_p formatting function for p-values.
 #' @param format_options named list of formatting options.
-#' @param test_options named list of test options.
+#' @param test_options A named list of test options.
+#' @param reshape_rows A named list of lists. Describes how to combine different summary statistics into the same row.
 #' @param ... further argument to be passed along
 #'
 #' @section Labels:
@@ -154,9 +155,13 @@ descr <-
                format(x, digits = 2, scientific = 3),
              median = function(x)
                format(x, digits = 2, scientific = 3),
-             Q = function(x)
+             Q1 = function(x)
                format(x, digits = 2, scientific = 3),
-             minmax = function(x)
+             Q3 = function(x)
+               format(x, digits = 2, scientific = 3),
+             min = function(x)
+               format(x, digits = 2, scientific = 3),
+             max = function(x)
                format(x, digits = 2, scientific = 3),
              CI = function(x)
                format(x, digits = 2, scientific = 3)
@@ -182,6 +187,18 @@ descr <-
              indices = c(),
              include_group_missings_in_test = F,
              include_categorical_missings_in_test = F
+           ),
+           reshape_rows = list(
+             `Q1 - Q3` = list(
+               args = c("Q1", "Q3"),
+               fun  = function(Q1, Q3)
+                 paste0(Q1,  " -- ", Q3)
+             ),
+             `min - max` = list(
+               args = c("min", "max"),
+               fun  = function(min, max)
+                 paste0(min,  " -- ", max)
+             )
            ),
            ...) {
     # Coerce dataset to tibble
@@ -281,16 +298,16 @@ descr <-
         !all(sapply(format_summary_stats, is.function))) {
       stop("format_summary_stats must be a list of functions.")
     }
+    ### is reshape_rows a list of lists?
+    if (!all(sapply(reshape_rows, is.list))) {
+      stop("reshape_rows must be a list of lists")
+    }
+
+
     format_summary_stats <-
       fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
     ### do all summary_stats have a corresponding format function?
     tmp_names <- names(format_summary_stats)
-    if ("Q" %in% tmp_names) {
-      tmp_names <- c(tmp_names, "Q1", "Q3")
-    }
-    if ("minmax" %in% tmp_names) {
-      tmp_names <- c(tmp_names, "min", "max")
-    }
     if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)) {
       warning(
         "All summary stats must have a corresponding formatting function. Defaulting to as.character"
@@ -321,6 +338,17 @@ descr <-
     test_options <-
       fill_list_with_default_arguments(test_options, descr, "test_options")
 
+    reshape_rows <-
+      fill_list_with_default_arguments(reshape_rows, descr, "reshape_rows")
+
+    if (isTRUE(format_options[["combine_mean_sd"]])) {
+      reshape_rows[["mean \u00B1 sd"]] <- list(
+        args = c("mean", "sd"),
+        fun = function(mean, sd)
+          paste0(mean, " \u00B1 ", sd)
+      )
+    }
+
 
     for (var_option_name in names(var_options)) {
       if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
@@ -338,12 +366,6 @@ descr <-
 
         tmp_names <-
           names(var_options[[var_option_name]][["format_summary_stats"]])
-        if ("Q" %in% tmp_names) {
-          tmp_names <- c(tmp_names, "Q1", "Q3")
-        }
-        if ("minmax" %in% tmp_names) {
-          tmp_names <- c(tmp_names, "min", "max")
-        }
         if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% tmp_names)) {
           warning(
             "All summary stats in var_options must have a corresponding formatting function. Defaulting to as.character"
@@ -376,6 +398,24 @@ descr <-
         if (var_options[[var_option_name]][["test_override"]] %in% print_test_names()) {
           stop(paste0("test_override has to be one of: ", print_test_names()))
         }
+      }
+      if (!is.null(var_options[[var_option_name]][["reshape_rows"]])) {
+        name_diff <-
+          setdiff(names(reshape_rows), names(var_options[[var_option_name]][["reshape_rows"]]))
+        var_options[[var_option_name]][["reshape_rows"]][name_diff] <-
+          reshape_rows[name_diff]
+      }
+      if (isTRUE(var_options[[var_option_name]][["format_options"]][["combine_mean_sd"]])) {
+        name_diff <-
+          setdiff(names(reshape_rows), names(var_options[[var_option_name]][["reshape_rows"]]))
+        var_options[[var_option_name]][["reshape_rows"]][name_diff] <-
+          reshape_rows[name_diff]
+        var_options[[var_option_name]][["reshape_rows"]][["mean ± sd"]] <-
+          list(
+            args = c("mean", "sd"),
+            fun = function(mean, sd)
+              paste0(mean, " ± ", sd)
+          )
       }
     }
 
@@ -442,6 +482,7 @@ descr <-
     ergs[["format"]][["p"]] <- format_p
     ergs[["format"]][["summary_stats"]] <- format_summary_stats
     ergs[["format"]][["options"]] <- format_options
+    ergs[["format"]][["reshape_rows"]] <- reshape_rows
 
     # Make result a "DescrList" object and return
     attr(ergs, "class") <- c("DescrList", "list")
@@ -758,6 +799,7 @@ create_DescrPrint <- function(DescrListObj, print_format) {
     DescrListObj[["format"]][["summary_stats"]]
   format_p <- DescrListObj[["format"]][["p"]]
   format_options <- DescrListObj[["format"]][["options"]]
+  reshape_rows <- DescrListObj[["format"]][["reshape_rows"]]
 
   print_list <- list()
 
@@ -782,17 +824,38 @@ create_DescrPrint <- function(DescrListObj, print_format) {
     } else{
       var_format_p <- format_p
     }
+    if (!is.null(var_option[["format_p"]])) {
+      var_reshape_rows <- var_option[["reshape_rows"]]
+    } else{
+      var_reshape_rows <- reshape_rows
+    }
 
-    if (print_format=="numeric"){
-      DescrListObj[["variables"]][[var_name]]
+
+    if (print_format == "numeric") {
+      if ("cont_summary" %in% class(DescrListObj[["variables"]][[var_name]])) {
+        if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]], is.numeric))) {
+          stop(
+            "You can only create numeric tables if all of your summary statistics return numeric values."
+          )
+        } else{
+          if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]][["summary_stats"]], is.numeric))) {
+            stop(
+              "You can only create numeric tables if all of your summary statistics return numeric values."
+            )
+          }
+        }
+      }
     }
 
     print_list[[var_name]] <-
-      DescrListObj[["variables"]][[var_name]] %>% create_subtable(.,
-                                                                  var_name,
-                                                                  var_format_options,
-                                                                  var_format_summary_stats,
-                                                                  var_format_p)
+      DescrListObj[["variables"]][[var_name]] %>% create_subtable(
+        .,
+        var_name,
+        var_format_options,
+        var_format_summary_stats,
+        var_format_p,
+        reshape_rows
+      )
   }
 
   printObj <- list()
@@ -848,6 +911,7 @@ create_DescrPrint <- function(DescrListObj, print_format) {
 
   printObj
 }
+
 
 
 print_numeric <- function(DescrPrintObj,
@@ -939,7 +1003,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
@@ -949,7 +1013,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames,] %>%
+  tex <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -972,9 +1036,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices,-1)) > 0) {
-    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices, -1)) > 0) {
+    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -1028,14 +1092,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames,] %>%
+  html <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1110,7 +1174,8 @@ print_word <- function(DescrPrintObj, silent = F) {
     align(j = which(names(tibl2) != "Variables"),
           part = "all",
           align = "center") %>%
-    align(j = 1, part = "all",
+    align(j = 1,
+          part = "all",
           align = "left")
 
   if (print_footnotes) {
@@ -1142,7 +1207,8 @@ create_numeric_subtable <- function(DescrVarObj,
                                     var_name,
                                     format_options,
                                     format_summary_stats,
-                                    format_p) {
+                                    format_p,
+                                    reshape_rows) {
   UseMethod("create_numeric_subtable")
 }
 
@@ -1153,7 +1219,8 @@ create_numeric_subtable.cat_summary <-
            var_name,
            format_options,
            format_summary_stats,
-           format_p) {
+           format_p,
+           reshape_rows) {
     cat_names <- DescrVarObj[["variable_levels"]]
     summary_stat_names <-
       names(DescrVarObj[["results"]][["Total"]][["summary_stats"]])
@@ -1222,12 +1289,14 @@ create_numeric_subtable.cont_summary <-
            var_name,
            format_options,
            format_summary_stats,
-           format_p) {
+           format_p,
+           reshape_rows) {
     summary_stat_names <- names(DescrVarObj[["results"]][["Total"]])
 
     # DescrVarObj[["Total"]][sapply(DescrVarObj[["Total"]], is.null)] <-
     #   NA
-    tot <- c(NA_real_, unlist(DescrVarObj[["results"]][["Total"]]))
+    tot <-
+      c(NA_real_, unlist(DescrVarObj[["results"]][["Total"]]))
 
 
     label <- DescrVarObj[["variable_options"]][["label"]]
@@ -1241,7 +1310,8 @@ create_numeric_subtable.cont_summary <-
 
     for (group in groups) {
       # DescrVarObj[["results"]][[group]][sapply(DescrVarObj[["results"]][[group]], is.null)] <- NA
-      tmp <- c(NA_real_, unlist(DescrVarObj[["results"]][[group]]))
+      tmp <-
+        c(NA_real_, unlist(DescrVarObj[["results"]][[group]]))
       tibl %<>% bind_cols(!!group := tmp)
     }
     tibl %<>% bind_cols(Total = tot)
@@ -1276,7 +1346,8 @@ create_character_subtable <- function(DescrVarObj,
                                       var_name,
                                       format_options,
                                       format_summary_stats,
-                                      format_p) {
+                                      format_p,
+                                      reshape_rows) {
   UseMethod("create_character_subtable")
 }
 
@@ -1286,7 +1357,8 @@ create_character_subtable.cont_summary <-
            var_name,
            format_options,
            format_summary_stats,
-           format_p) {
+           format_p,
+           reshape_rows) {
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
     if (format_options[["omit_Nmiss_if_0"]] == T) {
@@ -1327,40 +1399,7 @@ create_character_subtable.cont_summary <-
       }
 
     } else{
-      combined_summary_stats <- c()
-      summary_stat_names_pre_modification <-
-        names(DescrVarObj[["results"]][["Total"]])
-
-
-      if (all(c("Q1", "Q3") %in% names(DescrVarObj[["results"]][["Total"]]))) {
-        combined_summary_stats %<>%  c(., "Q1", "Q3")
-        DescrVarObj[["results"]][["Total"]] <-
-          combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]], "Q1", "Q3", format_summary_stats[["Q"]])
-      }
-
-      if (all(c("min", "max") %in% names(DescrVarObj[["results"]][["Total"]]))) {
-        combined_summary_stats %<>%  c(., "min", "max")
-        DescrVarObj[["results"]][["Total"]] <-
-          combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]], "min", "max", format_summary_stats[["minmax"]])
-      }
-
-      if (isTRUE(format_options[["combine_mean_sd"]])) {
-        if (all(c("mean", "sd") %in% names(DescrVarObj[["results"]][["Total"]]))) {
-          combined_summary_stats %<>%  c(., "mean", "sd")
-          DescrVarObj[["results"]][["Total"]] <-
-            combine_two_elements_of_list(DescrVarObj[["results"]][["Total"]],
-                                         "mean",
-                                         "sd",
-                                         format_summary_stats[["mean"]],
-                                         " ± ",
-                                         " ± ")
-        }
-      }
-
-      summary_stat_names <-
-        setdiff(summary_stat_names_pre_modification,
-                combined_summary_stats)
-
+      summary_stat_names <- names(DescrVarObj[["results"]][["Total"]])
 
       if (!is.null(DescrVarObj[["results"]][["Total"]][["Nmiss"]])) {
         DescrVarObj[["results"]][["Total"]][["Nmiss"]] <-
@@ -1377,6 +1416,26 @@ create_character_subtable.cont_summary <-
         DescrVarObj[["results"]][["Total"]][[summary_stat]] <-
           format_summary_stats[[summary_stat]](DescrVarObj[["results"]][["Total"]][[summary_stat]])
       }
+
+      for (reshape_name in names(reshape_rows)) {
+        reshape <- reshape_rows[[reshape_name]]
+
+        if (all(reshape[["args"]] %in% summary_stat_names)) {
+          DescrVarObj[["results"]][["Total"]][[reshape[["args"]][[1]]]] <-
+            do.call(reshape[["fun"]], DescrVarObj[["results"]][["Total"]][reshape[["args"]]])
+
+          DescrVarObj[["results"]][["Total"]][[reshape[["args"]][[-1]]]] <-
+            NULL
+          name_indx <-
+            which(names(DescrVarObj[["results"]][["Total"]]) == reshape[["args"]][[1]])
+          names(DescrVarObj[["results"]][["Total"]])[name_indx] <-
+            reshape_name
+        }
+      }
+
+      summary_stat_names_pre_modification <-
+        names(DescrVarObj[["results"]][["Total"]])
+
       tot <- DescrVarObj[["results"]][["Total"]]
 
       display_names <-
@@ -1389,25 +1448,9 @@ create_character_subtable.cont_summary <-
 
       for (group in groups) {
         # DescrVarObj[["results"]][[group]][sapply(DescrVarObj[["results"]][[group]], is.null)] <- NA
-        if (all(c("Q1", "Q3") %in% names(DescrVarObj[["results"]][[group]]))) {
-          DescrVarObj[["results"]][[group]] <-
-            combine_two_elements_of_list(DescrVarObj[["results"]][[group]], "Q1", "Q3", format_summary_stats[["Q"]])
-        }
 
-        if (all(c("min", "max") %in% names(DescrVarObj[["results"]][[group]]))) {
-          DescrVarObj[["results"]][[group]] <-
-            combine_two_elements_of_list(DescrVarObj[["results"]][[group]], "min", "max", format_summary_stats[["minmax"]])
-        }
 
-        if (isTRUE(format_options[["combine_mean_sd"]])) {
-          DescrVarObj[["results"]][[group]] <-
-            combine_two_elements_of_list(DescrVarObj[["results"]][[group]],
-                                         "mean",
-                                         "sd",
-                                         format_summary_stats[["mean"]],
-                                         " ± ",
-                                         " ± ")
-        }
+
 
 
         if (!is.null(DescrVarObj[["results"]][[group]][["Nmiss"]])) {
@@ -1427,10 +1470,37 @@ create_character_subtable.cont_summary <-
         }
 
 
+        for (reshape_name in names(reshape_rows)) {
+          reshape <- reshape_rows[[reshape_name]]
+
+          if (all(reshape[["args"]] %in% summary_stat_names)) {
+            DescrVarObj[["results"]][[group]][[reshape[["args"]][[1]]]] <-
+              do.call(reshape[["fun"]], DescrVarObj[["results"]][[group]][reshape[["args"]]])
+
+            DescrVarObj[["results"]][[group]][[reshape[["args"]][[-1]]]] <-
+              NULL
+            name_indx <-
+              which(names(DescrVarObj[["results"]][[group]]) == reshape[["args"]][[1]])
+            names(DescrVarObj[["results"]][[group]])[name_indx] <-
+              reshape_name
+          }
+        }
+
+
         tibl %<>% bind_cols(!!group := c("", unlist(DescrVarObj[["results"]][[group]])))
       }
 
       tibl %<>% bind_cols(Total = c("", unlist(tot)))
+
+      ## TODO: implement this
+      # if(length_tibl>2){
+      #      p_col <- rep("", length_tibl)
+      # } else if(length_tibl==1){
+      #
+      # } else{
+      #
+      # }
+
       tibl %<>% bind_cols(p =  c("",
                                  format_p(DescrVarObj[["test_list"]]$p),
                                  rep("", length_tibl -
@@ -1476,7 +1546,8 @@ create_character_subtable.cat_summary <-
            var_name,
            format_options,
            format_summary_stats,
-           format_p) {
+           format_p,
+           reshape_rows) {
     ## Remember: Category levels may not be names "N"
 
 
@@ -1502,6 +1573,23 @@ create_character_subtable.cat_summary <-
     for (summary_stat in summary_stat_names) {
       DescrVarObj[["results"]][["Total"]][["summary_stats"]][[summary_stat]] <-
         format_summary_stats[[summary_stat]](DescrVarObj[["results"]][["Total"]][["summary_stats"]][[summary_stat]])
+    }
+
+
+    for (reshape_name in names(reshape_rows)) {
+      reshape <- reshape_rows[[reshape_name]]
+
+      if (all(reshape[["args"]] %in% summary_stat_names)) {
+        DescrVarObj[["results"]][["Total"]][["summary_stats"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
+          do.call(reshape[["fun"]], DescrVarObj[["results"]][["Total"]][["summary_stats"]][reshape[["args"]]])
+
+        DescrVarObj[["results"]][["Total"]][["summary_stats"]][[reshape[["args"]][[-1]]]] <-
+          NULL
+        name_indx <-
+          which(names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]) == reshape[["args"]][[1]])
+        names(DescrVarObj[["results"]][["Total"]][["summary_stats"]])[name_indx] <-
+          reshape_name
+      }
     }
 
     for (cat_name in cat_names_nonmissing) {
@@ -1563,6 +1651,24 @@ create_character_subtable.cat_summary <-
           format_summary_stats[[summary_stat]](DescrVarObj[["results"]][[group]][["summary_stats"]][[summary_stat]])
       }
 
+      for (reshape_name in names(reshape_rows)) {
+        reshape <- reshape_rows[[reshape_name]]
+
+        if (all(reshape[["args"]] %in% summary_stat_names)) {
+          DescrVarObj[["results"]][[group]][["summary_stats"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
+            do.call(reshape[["fun"]], DescrVarObj[["results"]][[group]][["summary_stats"]][reshape[["args"]]])
+
+          DescrVarObj[["results"]][[group]][["summary_stats"]][[reshape[["args"]][[-1]]]] <-
+            NULL
+          name_indx <-
+            which(names(DescrVarObj[["results"]][[group]][["summary_stats"]]) == reshape[["args"]][[1]])
+          names(DescrVarObj[["results"]][[group]][["summary_stats"]])[name_indx] <-
+            reshape_name
+        }
+      }
+
+
+
       for (cat_name in cat_names_nonmissing) {
         DescrVarObj[["results"]][[group]][["categories"]][[cat_name]] <-
           paste0(
@@ -1589,6 +1695,7 @@ create_character_subtable.cat_summary <-
         }
       }
 
+      ## TODO: implement categories first option
       tmp <- c("",
                unlist(DescrVarObj[["results"]][[group]][["summary_stats"]]),
                unlist(DescrVarObj[["results"]][[group]][["categories"]]))
@@ -2195,4 +2302,3 @@ test_cat <-
     erg[["test_name"]] <- test
     erg
   }
-

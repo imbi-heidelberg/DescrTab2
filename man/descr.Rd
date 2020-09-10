@@ -18,9 +18,11 @@ descr(
   format_summary_stats = list(N = function(x) format(x, digits = 2, scientific = 3),
     Nmiss = function(x) format(x, digits = 2, scientific = 3), mean = function(x)
     format(x, digits = 2, scientific = 3), sd = function(x) format(x, digits = 2,
-    scientific = 3), median = function(x) format(x, digits = 2, scientific = 3), Q =
-    function(x) format(x, digits = 2, scientific = 3), minmax = function(x) format(x,
-    digits = 2, scientific = 3), CI = function(x) format(x, digits = 2, scientific = 3)),
+    scientific = 3), median = function(x) format(x, digits = 2, scientific = 3), Q1 =
+    function(x) format(x, digits = 2, scientific = 3), Q3 = function(x) format(x, digits
+    = 2, scientific = 3), min = function(x) format(x, digits = 2, scientific = 3), max =
+    function(x) format(x, digits = 2,      scientific = 3), CI = function(x) format(x,
+    digits = 2, scientific = 3)),
   format_p = scales::pvalue_format(),
   format_options = list(print_p = T, print_CI = T, combine_mean_sd = F, omit_Nmiss_if_0
     = T, omit_missings_in_group = T, categorical_missing_percent_mode =
@@ -28,6 +30,9 @@ descr(
     "missing_as_separate_category")),
   test_options = list(paired = F, nonparametric = F, exact = F, indices = c(),
     include_group_missings_in_test = F, include_categorical_missings_in_test = F),
+  reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3)
+    paste0(Q1, " -- ", Q3)), `min - max` = list(args = c("min", "max"), fun =
+    function(min, max) paste0(min, " -- ", max))),
   ...
 )
 }
@@ -40,7 +45,7 @@ descr(
 
 \item{var_labels}{named list of variable labels.}
 
-\item{var_options}{A named list of named lists. For each variable, you can have special options that apply only to that variable.
+\item{var_options}{A named list of lists. For each variable, you can have special options that apply only to that variable.
 These options are specified in this argument. See the details and examples for more explanation.}
 
 \item{summary_stats_cont}{named list of summary statistic functions to be used for numeric variables.}
@@ -53,7 +58,9 @@ These options are specified in this argument. See the details and examples for m
 
 \item{format_options}{named list of formatting options.}
 
-\item{test_options}{named list of test options.}
+\item{test_options}{A named list of test options.}
+
+\item{reshape_rows}{A named list of lists. Describes how to combine different summary statistics into the same row.}
 
 \item{...}{further argument to be passed along}
 }
