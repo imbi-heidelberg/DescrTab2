@@ -158,9 +158,11 @@ For two-group comparisons, confidence intervals for appropriate summary measures
   format_summary_stats = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(N = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>),
     Nmiss = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), mean = <span class='fu'>function</span>(<span class='kw'>x</span>)
     <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), sd = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>,
-    scientific = <span class='fl'>3</span>), median = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), Q =
-    <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), minmax = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>,
-    digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), CI = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>)),
+    scientific = <span class='fl'>3</span>), median = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), Q1 =
+    <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), Q3 = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits
+    = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), min = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>), max =
+    <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>2</span>,      scientific = <span class='fl'>3</span>), CI = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>,
+    digits = <span class='fl'>2</span>, scientific = <span class='fl'>3</span>)),
   format_p = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/label_pvalue.html'>pvalue_format</a></span>(),
   format_options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(print_p = <span class='kw'>T</span>, print_CI = <span class='kw'>T</span>, combine_mean_sd = <span class='kw'>F</span>, omit_Nmiss_if_0
     = <span class='kw'>T</span>, omit_missings_in_group = <span class='kw'>T</span>, categorical_missing_percent_mode =
@@ -168,6 +170,9 @@ For two-group comparisons, confidence intervals for appropriate summary measures
     <span class='st'>"missing_as_separate_category"</span>)),
   test_options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(paired = <span class='kw'>F</span>, nonparametric = <span class='kw'>F</span>, exact = <span class='kw'>F</span>, indices = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
     include_group_missings_in_test = <span class='kw'>F</span>, include_categorical_missings_in_test = <span class='kw'>F</span>),
+  reshape_rows = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(`Q1 - Q3` = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(args = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Q1"</span>, <span class='st'>"Q3"</span>), fun = <span class='fu'>function</span>(<span class='kw'>Q1</span>, <span class='kw'>Q3</span>)
+    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='kw'>Q1</span>, <span class='st'>" -- "</span>, <span class='kw'>Q3</span>)), `min - max` = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(args = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"min"</span>, <span class='st'>"max"</span>), fun =
+    <span class='fu'>function</span>(<span class='kw'>min</span>, <span class='kw'>max</span>) <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='kw'>min</span>, <span class='st'>" -- "</span>, <span class='kw'>max</span>))),
   <span class='kw'>...</span>
 )</pre>
 
@@ -192,7 +197,7 @@ For two-group comparisons, confidence intervals for appropriate summary measures
     </tr>
     <tr>
       <th>var_options</th>
-      <td><p>A named list of named lists. For each variable, you can have special options that apply only to that variable.
+      <td><p>A named list of lists. For each variable, you can have special options that apply only to that variable.
 These options are specified in this argument. See the details and examples for more explanation.</p></td>
     </tr>
     <tr>
@@ -217,7 +222,11 @@ These options are specified in this argument. See the details and examples for m
     </tr>
     <tr>
       <th>test_options</th>
-      <td><p>named list of test options.</p></td>
+      <td><p>A named list of test options.</p></td>
+    </tr>
+    <tr>
+      <th>reshape_rows</th>
+      <td><p>A named list of lists. Describes how to combine different summary statistics into the same row.</p></td>
     </tr>
     <tr>
       <th>...</th>
