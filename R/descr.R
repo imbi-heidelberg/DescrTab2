@@ -201,6 +201,16 @@ descr <-
       dat %<>% select(-all_of(idx_name))
     }
 
+    ### Is group either null or a length one character or numeric?
+    if (!is.null(group) &
+        !((is.character(group) |
+           is.numeric(group)) & length(group) == 1)) {
+      stop(
+        "group has to be either NULL or a character specifiying the name of the group variable,
+        or a length one numeric specifying the column number of the group variable"
+      )
+    }
+
     # Remove group column from dataset & coerce group to factor
     if (!is.null(group)) {
       if (isTRUE(format_options[["omit_missings_in_group"]])) {
@@ -243,15 +253,6 @@ descr <-
     if (nrow(dat) == 0 | ncol(dat) == 0) {
       stop("dat has 0 rows or 0 columns.")
     }
-    ### Is group either null or a length one character or numeric?
-    if (!is.null(group) &
-        !((is.character(group) |
-           is.numeric(group)) & length(group) == 1)) {
-      stop(
-        "group has to be either NULL or a character specifiying the name of the group variable,
-        or a length one numeric specifying the column number of the group variable"
-      )
-    }
     ### Does var_labels contain labels for variables not in the dataset?
     if (!all(names(var_labels) %in% var_names)) {
       warning("Not all variables from var_labels are present in dat.")
@@ -265,10 +266,10 @@ descr <-
         !all(sapply(summary_stats_cont, is.function))) {
       stop("summary_stats_cont must be a list of functions.")
     }
-    ### is summary_stats_cat a list of functions?
+    ### is summary_stats_cat an empty list or a  list of functions?
     if ((length(summary_stats_cat) > 0) &
-        (!is.list(summary_stats_cont) |
-         !all(sapply(summary_stats_cont, is.function)))) {
+        (!is.list(summary_stats_cat) |
+         !all(sapply(summary_stats_cat, is.function)))) {
       stop("summary_stats_cat must be a list of functions.")
     }
     ### is format_p a function?
@@ -291,7 +292,18 @@ descr <-
       tmp_names <- c(tmp_names, "min", "max")
     }
     if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)) {
-      stop("All summary stats must have a corresponding formatting function.")
+      warning(
+        "All summary stats must have a corresponding formatting function. Defaulting to as.character"
+      )
+      format_summary_stats[setdiff(names(c(
+        summary_stats_cat, summary_stats_cont
+      )), tmp_names)] <-
+        sapply(setdiff(names(
+          c(summary_stats_cat, summary_stats_cont)
+        ), tmp_names), function(x)
+          return(as.character),
+        USE.NAMES = T,
+        simplify = F)
     }
     ## Fill incomplete input lists with default parameters
     if (!is.null(group)) {
@@ -317,15 +329,30 @@ descr <-
           stop("summary_stats in var_options must be a list of functions.")
         }
       }
-      if (!is.null(var_options[[var_option_name]][["format_summary_stats"]])) {
+      if (!is.null(var_options[[var_option_name]][["summary_stats"]]) ||
+          !is.null(var_options[[var_option_name]][["format_summary_stats"]])) {
         name_diff <-
           setdiff(names(format_summary_stats), names(var_options[[var_option_name]][["format_summary_stats"]]))
         var_options[[var_option_name]][["format_summary_stats"]][name_diff] <-
           format_summary_stats[name_diff]
-        if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% names(var_options[[var_option_name]][["format_summary_stats"]]))) {
-          stop(
-            "All summary stats in var_options must have a corresponding formatting function."
+
+        tmp_names <-
+          names(var_options[[var_option_name]][["format_summary_stats"]])
+        if ("Q" %in% tmp_names) {
+          tmp_names <- c(tmp_names, "Q1", "Q3")
+        }
+        if ("minmax" %in% tmp_names) {
+          tmp_names <- c(tmp_names, "min", "max")
+        }
+        if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% tmp_names)) {
+          warning(
+            "All summary stats in var_options must have a corresponding formatting function. Defaulting to as.character"
           )
+          var_options[[var_option_name]][["format_summary_stats"]][setdiff(names(var_options[[var_option_name]][["summary_stats"]]), tmp_names)] <-
+            sapply(setdiff(names(var_options[[var_option_name]][["summary_stats"]]), tmp_names), function(x)
+              return(as.character),
+              USE.NAMES = T,
+              simplify = F)
         }
       }
       if (!is.null(var_options[[var_option_name]][["format_p"]])) {
@@ -351,7 +378,6 @@ descr <-
         }
       }
     }
-
 
 
     # Create list where all results will be saved
@@ -755,6 +781,10 @@ create_DescrPrint <- function(DescrListObj, print_format) {
       var_format_p <- var_option[["format_p"]]
     } else{
       var_format_p <- format_p
+    }
+
+    if (print_format=="numeric"){
+      DescrListObj[["variables"]][[var_name]]
     }
 
     print_list[[var_name]] <-
@@ -1448,6 +1478,8 @@ create_character_subtable.cat_summary <-
            format_summary_stats,
            format_p) {
     ## Remember: Category levels may not be names "N"
+
+
     cat_names <- DescrVarObj[["variable_levels"]]
     cat_names_nonmissing <- setdiff(cat_names, "(Missing)")
     summary_stat_names <-
@@ -1465,6 +1497,7 @@ create_character_subtable.cat_summary <-
       N_nonmissing <-
         sum(unlist(DescrVarObj[["results"]][["Total"]][["categories"]][cat_names_nonmissing]))
     }
+
 
     for (summary_stat in summary_stat_names) {
       DescrVarObj[["results"]][["Total"]][["summary_stats"]][[summary_stat]] <-
@@ -1987,7 +2020,6 @@ test_cat <-
       n_levels_var <- length(levels(var))
     }
 
-
     # if test is not supplied, determine test
     if (is.null(test)) {
       if (is.ordered(var)) {
@@ -2164,19 +2196,3 @@ test_cat <-
     erg
   }
 
-
-
-# get_groupNames <- function(DescrVarObj) {
-#   setdiff(
-#     names(DescrVarObj),
-#     c(
-#       "Total",
-#       "test_list",
-#       "variable_name",
-#       "variable_levels",
-#       "variable_options",
-#       "label",
-#       "variable_lengths"
-#     )
-#   )
-# }

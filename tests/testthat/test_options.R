@@ -89,3 +89,20 @@ test_that("combine_mean_sd works",
             iris, format_options = c(combine_mean_sd = T)
           ) %>% print(silent = T),
           NA))
+
+test_that("warnings about unused variable names work",
+          {
+          expect_warning(descr(iris, var_labels=c(a="b")))
+          expect_warning(descr(iris, var_options=c(a="b")))
+          }
+          )
+
+test_that("function list misconfiguration leads to error",
+          {
+            expect_error(descr(iris, summary_stats_cont="mean"))
+            expect_error(descr(iris, summary_stats_cat="mean"))
+            expect_error(descr(iris, format_p="mean"))
+            expect_error(descr(iris, format_summary_stats="mean"))
+          }
+)
+

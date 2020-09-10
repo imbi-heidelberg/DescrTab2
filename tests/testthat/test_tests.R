@@ -359,9 +359,17 @@ test_that("t.test 2 sample test works",
           expect_error(descr(dat, "group") %>%
                          print(silent = T),
                        NA))
+
 test_that("t.test paired 2 sample test works",
           expect_error(descr(
             dat, "group", test_options = list(paired = T, indices = rep(1:10, 2))
+          ) %>%
+            print(silent = T),
+          NA))
+
+test_that("t.test paired 2 sample test works",
+          expect_error(descr(
+            dat %>% mutate(indices=rep(1:10, 2)), "group", test_options = list(paired = T, indices ="indices" )
           ) %>%
             print(silent = T),
           NA))
