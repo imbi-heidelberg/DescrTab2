@@ -98,7 +98,7 @@
       <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_html.html">Test choice</a>
+      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
       <a href="../articles/usage_guide.html">Usage guidance</a>
@@ -138,7 +138,7 @@
     <p>calculate a statistical test for a numerical variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>test_cont</span>(<span class='kw'>var</span>, group = <span class='kw'>NULL</span>, test_options = <span class='kw'>NULL</span>, test = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>test_cont</span>(<span class='no'>var</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,9 +166,8 @@
     <p>A list of test test results.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>cont_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>)
-<span class='fu'>test_cont</span>(<span class='kw'>cont_var</span>)
-</div><div class='output co'>#&gt; $p
+    <pre class="examples"><div class='input'><span class='no'>cont_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>)
+<span class='fu'>test_cont</span>(<span class='no'>cont_var</span>)</div><div class='output co'>#&gt; $p
 #&gt; [1] 0.0741799
 #&gt; 
 #&gt; $test_name
@@ -190,7 +189,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

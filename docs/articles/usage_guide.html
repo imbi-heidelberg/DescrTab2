@@ -57,7 +57,7 @@
       <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_html.html">Test choice</a>
+      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
       <a href="../articles/usage_guide.html">Usage guidance</a>
@@ -90,7 +90,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2020-09-10</h4>
+            <h4 class="date">2020-09-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/usage_guide.Rmd"><code>vignettes/usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>usage_guide.Rmd</code></div>
@@ -135,23 +135,17 @@
 <h2 class="hasAnchor">
 <a href="#global-print_format-option" class="anchor"></a>Global print_format option</h2>
 <p>In order for <code>DescrTab2</code> to work properly with your document type of choice, you need to set the <code>printFormat</code> options, preferably right at the start of your document. You can do this by typing:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(print_format = <span class="st">"html"</span>) <span class="co"># or = "word" or "tex", depending on your document type</span>
-</pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">print_format</span> <span class="kw">=</span> <span class="st">"html"</span>) <span class="co"># or = "word" or "tex", depending on your document type</span></pre></body></html></div>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>For instructive purposes, we will use the following dataset:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="kw">iris</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>)]
-<span class="kw">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span>(animal= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Mammal"</span>, <span class="st">"Fish"</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">75</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>())
-<span class="kw">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span>(food= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"fries"</span>, <span class="st">"wedges"</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">150</span>, <span class="kw">T</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>())
-</pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">dat</span> <span class="kw">&lt;-</span> <span class="no">iris</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>)]
+<span class="no">dat</span> <span class="kw">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="kw">animal</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Mammal"</span>, <span class="st">"Fish"</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">75</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>())
+<span class="no">dat</span> <span class="kw">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="kw">food</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"fries"</span>, <span class="st">"wedges"</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">150</span>, <span class="no">T</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>())</pre></body></html></div>
 <p>Make sure you include the DescrTab library by typing</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://imbi-heidelberg.github.io/DescrTab2">DescrTab2</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">DescrTab2</span>)</pre></body></html></div>
 <p>somewhere in the document before you use it. You are now ready to go! Producing beautiful descriptive tables in html and tex is now as easy as typing:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="bn">```{r, results='asis'}</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="bn">descr(dat)</span></span>
@@ -324,10 +318,10 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.414<sup>chi1</sup>
+0.870<sup>chi1</sup>
 </td>
 </tr>
 <tr>
@@ -335,7 +329,7 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -366,27 +360,19 @@ wedges
 <h2 class="hasAnchor">
 <a href="#accessing-table-elements" class="anchor"></a>Accessing table elements</h2>
 <p>The object returned from the <code>descr</code> function is basically just a named list. You may be interested in referencing certain summary statistics from the table in your document. To do this, you can save the list returned by <code>descr</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>)
-</pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">my_table</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>)</pre></body></html></div>
 <p>You can then access the elements of the list using the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">my_table</span><span class="op">$</span><span class="kw">variables</span><span class="op">$</span><span class="kw">Sepal.Length</span><span class="op">$</span><span class="kw">results</span><span class="op">$</span><span class="kw">Total</span><span class="op">$</span><span class="kw">mean</span>
-<span class="co">#&gt; [1] 5.843333</span>
-</pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">my_table</span>$<span class="no">variables</span>$<span class="no">Sepal.Length</span>$<span class="no">results</span>$<span class="no">Total</span>$<span class="no">mean</span>
+<span class="co">#&gt; [1] 5.843333</span></pre></body></html></div>
 <p>Rstudios autocomplete suggestions are very helpful when navigating this list.</p>
 <p>The <code>print</code> function returns a formatted version of this list, which you can also save and access using the same syntax.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="kw">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(silent=<span class="kw">T</span>)
-</pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">my_table</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">silent</span><span class="kw">=</span><span class="no">T</span>)</pre></body></html></div>
 </div>
 <div id="specifying-a-group" class="section level2">
 <h2 class="hasAnchor">
 <a href="#specifying-a-group" class="anchor"></a>Specifying a group</h2>
 <p>Use the <code>group</code> option to specify the name of a grouping variable in your data:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"Species"</span>)
-</pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"Species"</span>)</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -615,19 +601,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+21 (42%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.974<sup>chi2</sup>
+0.373<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -635,16 +621,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+29 (58%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -668,9 +654,7 @@ wedges
 <h2 class="hasAnchor">
 <a href="#assigning-labels" class="anchor"></a>Assigning labels</h2>
 <p>Use the <code>group_labels</code> option to assign group labels and the <code>var_labels</code> option to assign variable labels:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"Species"</span>, group_labels=<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(setosa=<span class="st">"My custom group label"</span>), var_labels = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(Sepal.Length = <span class="st">"My custom variable label"</span>))
-</pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"Species"</span>, <span class="kw">group_labels</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">setosa</span><span class="kw">=</span><span class="st">"My custom group label"</span>), <span class="kw">var_labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">Sepal.Length</span> <span class="kw">=</span> <span class="st">"My custom variable label"</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -899,19 +883,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+21 (42%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.974<sup>chi2</sup>
+0.373<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -919,16 +903,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+29 (58%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -952,9 +936,7 @@ wedges
 <h2 class="hasAnchor">
 <a href="#confidence-intervals-for-two-group-comparisons" class="anchor"></a>Confidence intervals for two group comparisons</h2>
 <p>For 2-group comparisons, decrtab automatically calculates confidence intervals for differences in effect measures:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"animal"</span>)
-</pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"animal"</span>)</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1194,16 +1176,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.623<sup>chi2</sup>
+0.072<sup>chi2</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1214,18 +1196,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.23, 0.12]
+[-0.33, 0.011]
 </td>
 </tr>
 </tbody>
@@ -1248,9 +1230,7 @@ wedges
 <a href="#different-tests" class="anchor"></a>Different tests</h2>
 <p>There are a lot of different tests available. Check out the test_choice vignette for details: <code>vignette("test_choice_tree", "DescrTab2")</code>, or look at <a href="https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_html.html" class="uri">https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_html.html</a></p>
 <p>Here are some different tests in action:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span>(<span class="op">-</span><span class="st">"Species"</span>), <span class="st">"animal"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(exact=<span class="kw">T</span>, nonparametric=<span class="kw">T</span>))
-</pre></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(-<span class="st">"Species"</span>), <span class="st">"animal"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">exact</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">nonparametric</span><span class="kw">=</span><span class="no">T</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1430,16 +1410,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.556<sup>Bolo</sup>
+0.060<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1450,18 +1430,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.23, 0.12]
+[-0.33, 0.011]
 </td>
 </tr>
 </tbody>
@@ -1478,9 +1458,7 @@ wedges
 </tr>
 </tfoot>
 </table>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>)), <span class="st">"Species"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(nonparametric=<span class="kw">T</span>))
-</pre></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span>)), <span class="st">"Species"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">nonparametric</span><span class="kw">=</span><span class="no">T</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1662,9 +1640,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span>(<span class="op">-</span><span class="st">"Species"</span>), <span class="st">"animal"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(paired=<span class="kw">T</span>, indices=<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="fl">3</span>)))
-</pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(-<span class="st">"Species"</span>), <span class="st">"animal"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">indices</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span>:<span class="fl">50</span>, <span class="fl">3</span>)))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1844,16 +1820,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.653<sup>McN</sup>
+&gt;0.999<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1864,18 +1840,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.23, 0.12]
+[-0.33, 0.011]
 </td>
 </tr>
 </tbody>
@@ -1897,9 +1873,7 @@ wedges
 <h2 class="hasAnchor">
 <a href="#significant-digits" class="anchor"></a>Significant digits</h2>
 <p>Every summary statistic in DescrTab2 is formatted by a corresponding formatting function. You can exchange these formatting functions as you please:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"Species"</span>, format_summary_stats = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mean=<span class="fu">function</span>(<span class="kw">x</span>)<span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span>(<span class="kw">x</span>, digits = <span class="fl">4</span>)) )
-</pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"Species"</span>, <span class="kw">format_summary_stats</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mean</span><span class="kw">=</span><span class="kw">function</span>(<span class="no">x</span>)<span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span>(<span class="no">x</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">4</span>)) )</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2128,19 +2102,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+21 (42%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.974<sup>chi2</sup>
+0.373<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2148,16 +2122,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+29 (58%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2181,11 +2155,9 @@ wedges
 <h2 class="hasAnchor">
 <a href="#omitting-summary-statistics" class="anchor"></a>Omitting summary statistics</h2>
 <p>Let’s say you don’t want to calculate quantiles for your numeric variables. You can specify the <code>summary_stats_cont</code> option to include all summary statistics but quantiles:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"Species"</span>, summary_stats_cont = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(N = <span class="kw">DescrTab2</span>:::<span class="kw">.N</span>, Nmiss = <span class="kw">DescrTab2</span>:::<span class="kw">.Nmiss</span>, mean =
-    <span class="kw">DescrTab2</span>:::<span class="kw">.mean</span>, sd = <span class="kw">DescrTab2</span>:::<span class="kw">.sd</span>, median = <span class="kw">DescrTab2</span>:::<span class="kw">.median</span>, min = <span class="kw">DescrTab2</span>:::<span class="kw">.min</span>, max =
-    <span class="kw">DescrTab2</span>:::<span class="kw">.max</span>))
-</pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"Species"</span>, <span class="kw">summary_stats_cont</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">N</span> <span class="kw">=</span> <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.N</span>, <span class="kw">Nmiss</span> <span class="kw">=</span> <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.Nmiss</span>, <span class="kw">mean</span> <span class="kw">=</span>
+    <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.mean</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.sd</span>, <span class="kw">median</span> <span class="kw">=</span> <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.median</span>, <span class="kw">min</span> <span class="kw">=</span> <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.min</span>, <span class="kw">max</span> <span class="kw">=</span>
+    <span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.max</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2395,19 +2367,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+21 (42%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.974<sup>chi2</sup>
+0.373<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2415,16 +2387,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+29 (58%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2448,14 +2420,12 @@ wedges
 <h2 class="hasAnchor">
 <a href="#adding-summary-statistics" class="anchor"></a>Adding summary statistics</h2>
 <p>Let’s say you have a categorical variable, but for some reason it’s levels are numerals and you want to calculate the mean. No problem:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="co"># Create example dataset</span>
-<span class="kw">dat2</span> <span class="op">&lt;-</span> <span class="kw">iris</span>
-<span class="kw">dat2</span><span class="op">$</span><span class="kw">cat_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">150</span>, <span class="kw">T</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>()
-<span class="kw">dat2</span> <span class="op">&lt;-</span> <span class="kw">dat2</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"cat_var"</span>)]
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co"># Create example dataset</span>
+<span class="no">dat2</span> <span class="kw">&lt;-</span> <span class="no">iris</span>
+<span class="no">dat2</span>$<span class="no">cat_var</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">150</span>, <span class="no">T</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>()
+<span class="no">dat2</span> <span class="kw">&lt;-</span> <span class="no">dat2</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>, <span class="st">"cat_var"</span>)]
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat2</span>, <span class="st">"Species"</span>, summary_stats_cat=<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mean=<span class="kw">DescrTab2</span>:::<span class="kw">.factormean</span>))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat2</span>, <span class="st">"Species"</span>, <span class="kw">summary_stats_cat</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mean</span><span class="kw">=</span><span class="kw pkg">DescrTab2</span><span class="kw ns">:::</span><span class="no">.factormean</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2532,7 +2502,7 @@ mean
 1.5
 </td>
 <td style="text-align:center;">
-0.785<sup>chi2</sup>
+0.512<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2540,16 +2510,16 @@ mean
 1
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+20 (40%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+70 (47%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2559,16 +2529,16 @@ mean
 2
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+30 (60%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+80 (53%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2585,9 +2555,7 @@ mean
 <h2 class="hasAnchor">
 <a href="#combining-mean-and-sd" class="anchor"></a>Combining mean and sd</h2>
 <p>Use the <code>format_options = list(combine_mean_sd=T)</code> option:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"Species"</span>, format_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(combine_mean_sd=<span class="kw">T</span>))
-</pre></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"Species"</span>, <span class="kw">format_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">combine_mean_sd</span><span class="kw">=</span><span class="no">T</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2797,19 +2765,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-26 (52%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+21 (42%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.974<sup>chi2</sup>
+0.373<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2817,16 +2785,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-24 (48%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+29 (58%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2850,9 +2818,7 @@ wedges
 <h2 class="hasAnchor">
 <a href="#omitting-p-values" class="anchor"></a>Omitting p values</h2>
 <p>You can declare the <code>format_options = list(print_p = F)</code> option to omit p-values:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"animal"</span>, format_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(print_p = <span class="kw">F</span>))
-</pre></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"animal"</span>, <span class="kw">format_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">print_p</span> <span class="kw">=</span> <span class="no">F</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3065,13 +3031,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -3082,24 +3048,22 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
-[-0.23, 0.12]
+[-0.33, 0.011]
 </td>
 </tr>
 </tbody>
 </table>
 <p>Similarily for Confidence intervals:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"animal"</span>, format_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(print_CI = <span class="kw">F</span>))
-</pre></div>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"animal"</span>, <span class="kw">format_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">print_CI</span> <span class="kw">=</span> <span class="no">F</span>))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3312,16 +3276,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
-0.623<sup>chi2</sup>
+0.072<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3329,13 +3293,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-70 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3362,9 +3326,7 @@ wedges
 <div class="sourceCode" id="cb22"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1"></a><span class="bn">```{r}</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a><span class="bn">capture.output(print(descr(dat, "Species"))) %&gt;%  knitr::raw_html() # or knitr::raw_tex() for tex</span></span>
 <span id="cb22-3"><a href="#cb22-3"></a><span class="bn">```</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"Species"</span>))) <span class="op">%&gt;%</span>  <span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/raw_block.html">raw_html</a></span>() <span class="co"># or knitr::raw_tex() for tex</span>
-</pre></div>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"Species"</span>))) <span class="kw">%&gt;%</span>  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/raw_block.html">raw_html</a></span>() <span class="co"># or knitr::raw_tex() for tex</span></pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3456,19 +3418,19 @@ wedges
 <tr grouplength="2"><td colspan="6" style="border-bottom: 1px solid;"><strong>food</strong></td></tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> fries </td>
-   <td style="text-align:center;"> 26 (52%) </td>
-   <td style="text-align:center;"> 27 (54%) </td>
-   <td style="text-align:center;"> 27 (54%) </td>
-   <td style="text-align:center;"> 80 (53%) </td>
-   <td style="text-align:center;"> 0.974<sup>chi2</sup>
+   <td style="text-align:center;"> 25 (50%) </td>
+   <td style="text-align:center;"> 21 (42%) </td>
+   <td style="text-align:center;"> 28 (56%) </td>
+   <td style="text-align:center;"> 74 (49%) </td>
+   <td style="text-align:center;"> 0.373<sup>chi2</sup>
 </td>
   </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> wedges </td>
-   <td style="text-align:center;"> 24 (48%) </td>
-   <td style="text-align:center;"> 23 (46%) </td>
-   <td style="text-align:center;"> 23 (46%) </td>
-   <td style="text-align:center;"> 70 (47%) </td>
+   <td style="text-align:center;"> 25 (50%) </td>
+   <td style="text-align:center;"> 29 (58%) </td>
+   <td style="text-align:center;"> 22 (44%) </td>
+   <td style="text-align:center;"> 76 (51%) </td>
    <td style="text-align:center;">  </td>
   </tr>
 </tbody>
@@ -3485,15 +3447,13 @@ wedges
 <h2 class="hasAnchor">
 <a href="#controling-options-on-a-per-variable-level" class="anchor"></a>Controling options on a per-variable level</h2>
 <p>You can use the <code>var_options</code> list to control formatting and test options on a per-variable basis. Let’s say in the dataset <code>iris</code>, we want that only the <code>Sepal.Length</code> variable has more digits in the mean and a nonparametric test:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">iris</span>, <span class="st">"Species"</span>, var_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(Sepal.Length = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-  format_summary_stats = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-    mean = <span class="fu">function</span>(<span class="kw">x</span>)
-      <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span>(<span class="kw">x</span>, digits = <span class="fl">4</span>)
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">iris</span>, <span class="st">"Species"</span>, <span class="kw">var_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">Sepal.Length</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+  <span class="kw">format_summary_stats</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+    <span class="kw">mean</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">x</span>)
+      <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span>(<span class="no">x</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">4</span>)
   ),
-  test_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(nonparametric = <span class="kw">T</span>)
-)))
-</pre></div>
+  <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">nonparametric</span> <span class="kw">=</span> <span class="no">T</span>)
+)))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -4060,7 +4020,7 @@ min - max
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
