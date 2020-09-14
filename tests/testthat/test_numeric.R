@@ -3,6 +3,7 @@ library(magrittr)
 
 dat <- iris[iris$Species != "setosa",]
 dat$Species <- factor(as.character(dat$Species))
+dat$cat_var <- c("a", "b") %>% rep(50) %>% factor()
 
 
 

@@ -41,7 +41,8 @@ utils::globalVariables(".")
 #' \itemize{
 #' \item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
 #' \item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
-#' \item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row}
+#' \item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
+#' shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
 #' \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 #' \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 #' \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
@@ -59,6 +60,8 @@ utils::globalVariables(".")
 #'   }
 #'  }
 #' }
+#'
+#'
 #' @section Test options:
 #' \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
 #' \code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
@@ -99,6 +102,14 @@ utils::globalVariables(".")
 #'   }
 #'  }
 #' }
+#'
+#' @section Combining rows:
+#' The \code{reshape_rows} argument offers a framework for combining multiple rows of the output table into a single one.
+#' \code{reshape_rows} is a named list of lists. The names of it's member-lists determine the name that will be displayed
+#' as the name of the combined summary stats in the table (e.g. "mean ± sd "). The member lists need to contain two
+#' elements: \code{args}, contains the names of the summary statistics to be combined as characters, and
+#' \code{fun} which contains a function to combine these summary stats. The argument names of this function need to match
+#' the character strings specified in \code{args}. Check out the default options for an exemplary definition.
 #'
 #' @return
 #' Returns a A \code{DescrList} object, which is a named list of descriptive statistics
@@ -254,6 +265,19 @@ descr <-
     var_names <- names(dat)
     names(var_names) <- var_names
 
+    ## Check if input was specified correctly
+    ### Is dat empty?
+    if (nrow(dat) == 0 | ncol(dat) == 0) {
+      stop("dat has 0 rows or 0 columns.")
+    }
+
+    if (!all(
+      sapply(dat, function(x)
+        class(x)[[1]]) %in% c("numeric", "integer", "factor", "ordered", "character")
+    )) {
+      stop("You may only have numeric, factor or character columns in your data.")
+    }
+
     # Coerce all non-numeric columns to factors
     dat %<>% mutate(across(-where(is.numeric), function(x)
       x %>% as_factor() %>% fct_explicit_na()))
@@ -265,11 +289,24 @@ descr <-
     var_labels %<>% as.list()
     var_options <- lapply(var_options, as.list)
 
-    ## Check if input was specified correctly
-    ### Is dat empty?
-    if (nrow(dat) == 0 | ncol(dat) == 0) {
-      stop("dat has 0 rows or 0 columns.")
+
+    ### Is group_labels a named list?
+    if (length(group_labels)>0 && is.null(names(group_labels)) ){
+      warning("names(group_labels) cannot be empty. Ignoring the group_labels option.")
     }
+    ### Is format_options a named list?
+    if (length(format_options)>0 && is.null(names(format_options)) ){
+      warning("names(format_options) cannot be empty. Ignoring the format_options option.")
+    }
+    ### Is test_options a named list?
+    if (length(test_options)>0 && is.null(names(test_options)) ){
+      warning("names(test_options) cannot be empty. Ignoring the test_options option.")
+    }
+    ### Is reshape_rows a named list?
+    if (length(reshape_rows)>0 && is.null(names(reshape_rows)) ){
+      warning("names(reshape_rows) cannot be empty. Ignoring the reshape_rows option.")
+    }
+
     ### Does var_labels contain labels for variables not in the dataset?
     if (!all(names(var_labels) %in% var_names)) {
       warning("Not all variables from var_labels are present in dat.")
@@ -289,6 +326,10 @@ descr <-
          !all(sapply(summary_stats_cat, is.function)))) {
       stop("summary_stats_cat must be a list of functions.")
     }
+    ### Is summary_stats_cat a named list?
+    if (length(summary_stats_cat)>0 && is.null(names(summary_stats_cat)) ){
+      warning("names(summary_stats_cat) cannot be empty. Ignoring the summary_stats_cat option.")
+    }
     ### is format_p a function?
     if (!is.function(format_p)) {
       stop("format_p must be a function.")
@@ -298,11 +339,14 @@ descr <-
         !all(sapply(format_summary_stats, is.function))) {
       stop("format_summary_stats must be a list of functions.")
     }
+    ### Is format_summary_stats a named list?
+    if (length(format_summary_stats)>0 && is.null(names(format_summary_stats)) ){
+      warning("names(format_summary_stats) cannot be empty. Ignoring the format_summary_stats option.")
+    }
     ### is reshape_rows a list of lists?
     if (!all(sapply(reshape_rows, is.list))) {
       stop("reshape_rows must be a list of lists")
     }
-
 
     format_summary_stats <-
       fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
@@ -349,7 +393,6 @@ descr <-
       )
     }
 
-
     for (var_option_name in names(var_options)) {
       if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
         if (!is.list(var_options[[var_option_name]][["summary_stats"]]) |
@@ -395,8 +438,8 @@ descr <-
           test_options[name_diff]
       }
       if (!is.null(var_options[[var_option_name]][["test_override"]])) {
-        if (var_options[[var_option_name]][["test_override"]] %in% print_test_names()) {
-          stop(paste0("test_override has to be one of: ", print_test_names()))
+        if (!(var_options[[var_option_name]][["test_override"]] %in% print_test_names())) {
+          stop(paste0("test_override has to be one of: ", paste(print_test_names(), collapse = ", ") ))
         }
       }
       if (!is.null(var_options[[var_option_name]][["reshape_rows"]])) {
@@ -468,8 +511,6 @@ descr <-
                                 summary_stats_cont,
                                 var_options = var_options[[var_name]],
                                 test_options)
-      } else{
-        stop("Somehow, you have variables which are neither factors nor numerical.")
       }
       # Append result of analysis to list
       ergs[["variables"]][[var_name]] <- var_descr
@@ -514,6 +555,8 @@ descr_cat <-
     } else{
       test_override <- NULL
     }
+
+
 
     for (group_name in levels(group)) {
       # Subset values for the respective group
@@ -1580,10 +1623,10 @@ create_character_subtable.cat_summary <-
       reshape <- reshape_rows[[reshape_name]]
 
       if (all(reshape[["args"]] %in% summary_stat_names)) {
-        DescrVarObj[["results"]][["Total"]][["summary_stats"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
+        DescrVarObj[["results"]][["Total"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
           do.call(reshape[["fun"]], DescrVarObj[["results"]][["Total"]][["summary_stats"]][reshape[["args"]]])
 
-        DescrVarObj[["results"]][["Total"]][["summary_stats"]][[reshape[["args"]][[-1]]]] <-
+        DescrVarObj[["results"]][["Total"]][["summary_stats"]][reshape[["args"]][[-1]]] <-
           NULL
         name_indx <-
           which(names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]) == reshape[["args"]][[1]])
@@ -1616,7 +1659,6 @@ create_character_subtable.cat_summary <-
       }
     }
 
-
     tot <- c("",
              unlist(DescrVarObj[["results"]][["Total"]][["summary_stats"]]),
              unlist(DescrVarObj[["results"]][["Total"]][["categories"]]))
@@ -1626,7 +1668,7 @@ create_character_subtable.cat_summary <-
     DescrVarObj[["label"]] <- label
 
     tibl <- tibble(Variables = c(label,
-                                 summary_stat_names, cat_names))
+                                 names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]), cat_names))
     length_tibl <- nrow(tibl)
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
@@ -1655,10 +1697,10 @@ create_character_subtable.cat_summary <-
         reshape <- reshape_rows[[reshape_name]]
 
         if (all(reshape[["args"]] %in% summary_stat_names)) {
-          DescrVarObj[["results"]][[group]][["summary_stats"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
+          DescrVarObj[["results"]][[group]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
             do.call(reshape[["fun"]], DescrVarObj[["results"]][[group]][["summary_stats"]][reshape[["args"]]])
 
-          DescrVarObj[["results"]][[group]][["summary_stats"]][[reshape[["args"]][[-1]]]] <-
+          DescrVarObj[["results"]][[group]][["summary_stats"]][reshape[["args"]][[-1]]] <-
             NULL
           name_indx <-
             which(names(DescrVarObj[["results"]][[group]][["summary_stats"]]) == reshape[["args"]][[1]])
@@ -1818,8 +1860,52 @@ combine_two_elements_of_list <-
   }
 }
 
+.mode <- function(var) {
+  ux <- unique(var)
+  ux[which.max(tabulate(match(var, ux)))]
+}
+
 .factormean <- function(var) {
   var %>% as.character() %>% as.numeric() %>% mean(na.rm = T)
+}
+
+.factorsd <- function(var) {
+  var %>% as.character() %>% as.numeric() %>% stats::sd(na.rm = T)
+}
+
+
+.factormedian <- function(var) {
+  var %>% as.character() %>% as.numeric() %>% stats::median(na.rm = T)
+}
+
+.factorQ1 <- function(var) {
+  var %>% as.character() %>% as.numeric() %>% stats::quantile(probs = 0.25,
+                                                              na.rm = T,
+                                                              type = 2)
+}
+
+.factorQ3 <- function(var) {
+  var %>% as.character() %>% as.numeric() %>% stats::quantile(probs = 0.75,
+                                                              na.rm = T,
+                                                              type = 2)
+}
+
+.factormin <- function(var) {
+  var_num <- var %>% as.character() %>% as.numeric()
+  if (any(!is.na(var))) {
+    min(var_num, na.rm = T)
+  } else{
+    NA_real_
+  }
+}
+
+.factormax <- function(var) {
+  var_num <- var %>% as.character() %>% as.numeric()
+  if (any(!is.na(var))) {
+    max(var_num, na.rm = T)
+  } else{
+    NA_real_
+  }
 }
 
 
@@ -2295,6 +2381,53 @@ test_cat <-
           } else{
             list(p = stats::chisq.test(var, group)$p.value)
           }
+        },
+
+        # Continuous tests for categorical variables
+        `Students paired t-test` = {
+          tibl <- tibble(var = var %>% as.character() %>% as.numeric(),
+                         group = group,
+                         id = test_options[["indices"]])
+          level1 <- levels(group)[1]
+          level2 <- levels(group)[2]
+
+          x <-
+            tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
+          y <-
+            tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
+
+          tl <- stats::t.test(x, y, paired = T)
+
+          list(p = tl$p.value,
+               CI = tl$conf.int,
+               CI_name = "Mean dif. CI")
+        },
+        `Mixed model ANOVA` = {
+          tmp <- tibble(var = var %>% as.character() %>% as.numeric(),
+                        group = group,
+                        idx = test_options[["indices"]])
+
+          fit <-
+            nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
+          tl <- stats::anova(fit)
+          pv <- tl$`p-value`[2]
+          list(p = pv)
+        },
+        `Students one-sample t-test` = {
+          list(p = stats::t.test(var %>% as.character() %>% as.numeric())$p.value)
+        },
+        `Welchs two-sample t-test` = {
+          var_numeric <- var %>% as.character() %>% as.numeric()
+          tl <- stats::t.test(var_numeric ~ group, var.equal = F)
+          list(p = tl$p.value,
+               CI = tl$conf.int,
+               CI_name = "Mean dif. CI")
+        },
+        `F-test (ANOVA)` = {
+          var_numeric <- var %>% as.character() %>% as.numeric()
+          tl <- summary(stats::aov(var_numeric ~ group))[[1]]
+          pv <- tl$`Pr(>F)`[1]
+          list(p = pv)
         },
         list(p = NA_real_)
       )

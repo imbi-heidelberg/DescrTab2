@@ -106,3 +106,14 @@ test_that("function list misconfiguration leads to error",
           }
 )
 
+test_that("check if print_red_na option works",
+          expect_type(capture.output(descr(iris) %>% print(print_format="numeric", print_red_NA=T)),"character") )
+
+
+
+
+
+
+
+
+

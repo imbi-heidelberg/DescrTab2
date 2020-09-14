@@ -97,7 +97,8 @@ Further formatting options can be specified in the \code{format_options} list. I
 \itemize{
 \item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
 \item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
-\item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row}
+\item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
+shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
 \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
@@ -160,6 +161,16 @@ by typing \code{print_test_names()}. Possible choices are:
   }
  }
 }
+}
+
+\section{Combining rows}{
+
+The \code{reshape_rows} argument offers a framework for combining multiple rows of the output table into a single one.
+\code{reshape_rows} is a named list of lists. The names of it's member-lists determine the name that will be displayed
+as the name of the combined summary stats in the table (e.g. "mean ± sd "). The member lists need to contain two
+elements: \code{args}, contains the names of the summary statistics to be combined as characters, and
+\code{fun} which contains a function to combine these summary stats. The argument names of this function need to match
+the character strings specified in \code{args}. Check out the default options for an exemplary definition.
 }
 
 \examples{

@@ -262,7 +262,8 @@ The <code>format_p</code> function converts p-values to character strings, e.g. 
 <p>Further formatting options can be specified in the <code>format_options</code> list. It contains the following members:</p><ul>
 <li><p><code>print_p</code> (logical) controls whether to print the p-value column.</p></li>
 <li><p><code>print_CI</code> (logical) controls whether to print the confidence intervals for group-differences.</p></li>
-<li><p><code>combine_mean_sd</code> (logical) controls whether to combine the mean and sd row into one mean ± sd row</p></li>
+<li><p><code>combine_mean_sd</code> (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
+shortcut argument for the specification of an appropriate entry in the <code>reshape_rows</code> argument.</p></li>
 <li><p><code>omit_Nmiss_if_0</code> (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.</p></li>
 <li><p><code>omit_missings_in_group</code> (logical)  controls whether to omit all observations where the group variable is missing.</p></li>
 <li><p><code>categorical_missing_percent_mode</code> (character)  controls how to display percentages in categorical variables with a (Missing) category.
@@ -323,6 +324,16 @@ by typing <code><a href='print_test_names.html'>print_test_names()</a></code>. P
 </ul></p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="combining-rows"><a class="anchor" href="#combining-rows"></a>Combining rows</h2>
+
+    
+
+<p>The <code>reshape_rows</code> argument offers a framework for combining multiple rows of the output table into a single one.
+<code>reshape_rows</code> is a named list of lists. The names of it's member-lists determine the name that will be displayed
+as the name of the combined summary stats in the table (e.g. "mean ± sd "). The member lists need to contain two
+elements: <code>args</code>, contains the names of the summary statistics to be combined as characters, and
+<code>fun</code> which contains a function to combine these summary stats. The argument names of this function need to match
+the character strings specified in <code>args</code>. Check out the default options for an exemplary definition.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>descr</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt;    Variables      Total        p        Test                              

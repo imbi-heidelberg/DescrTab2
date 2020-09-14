@@ -19,3 +19,6 @@ test_that("Warnings for missing formatting functions are produced",{
   expect_warning(descr(iris, var_options = list(Species=list(summary_stats = list(mod=function(x)3)))))
 })
 
+dat <- tibble(a=list(a=1), b=list(b=1))
+test_that("dataset with non-numeric non-factor argument produces errors",
+          expect_error(descr(dat)))
