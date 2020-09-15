@@ -138,7 +138,7 @@
     <p>calculate a statistical test for a numerical variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>test_cont</span>(<span class='no'>var</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>test_cont</span>(<span class='no'>var</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>var_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,6 +158,10 @@
     <tr>
       <th>test</th>
       <td><p>Name of a statistical test.</p></td>
+    </tr>
+    <tr>
+      <th>var_name</th>
+      <td><p>Name of variable to be tested (only used in warning messages).</p></td>
     </tr>
     </table>
 

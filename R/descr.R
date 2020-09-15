@@ -197,7 +197,8 @@ descr <-
              exact = F,
              indices = c(),
              include_group_missings_in_test = F,
-             include_categorical_missings_in_test = F
+             include_categorical_missings_in_test = F,
+             test_override=NULL
            ),
            reshape_rows = list(
              `Q1 - Q3` = list(
@@ -2041,7 +2042,7 @@ test_cont <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if ( !all(table(group)>1) ) {
+      if (!is.null(group) && !all(table(group)>1) ) {
         warning(
           paste0(
             "Skipping test for variable ",
@@ -2050,7 +2051,7 @@ test_cont <-
           )
         )
         test <- "No appropriate test available."
-      } else if( nrow(table(var, group))==1 || !all(table(var, group)>0 ) ){
+      } else if(!is.null(group) && nrow(table(var, group))==1){
         warning(
           paste0(
             "Skipping test for variable ",
