@@ -4,7 +4,7 @@
 \alias{test_cat}
 \title{calculate a statistical test for a numerical variable.}
 \usage{
-test_cat(var, group = NULL, test_options = NULL, test = NULL)
+test_cat(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
 }
 \arguments{
 \item{var}{A variable (a vector).}
@@ -14,6 +14,8 @@ test_cat(var, group = NULL, test_options = NULL, test = NULL)
 \item{test_options}{Named list containing test options.}
 
 \item{test}{Name of a statistical test.}
+
+\item{var_name}{Name of variable to be tested (only used in warning messages).}
 }
 \value{
 A list of test test results.

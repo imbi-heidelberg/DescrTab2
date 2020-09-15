@@ -291,19 +291,20 @@ descr <-
 
 
     ### Is group_labels a named list?
-    if (length(group_labels)>0 && is.null(names(group_labels)) ){
+    if (length(group_labels) > 0 && is.null(names(group_labels))) {
       warning("names(group_labels) cannot be empty. Ignoring the group_labels option.")
     }
     ### Is format_options a named list?
-    if (length(format_options)>0 && is.null(names(format_options)) ){
+    if (length(format_options) > 0 &&
+        is.null(names(format_options))) {
       warning("names(format_options) cannot be empty. Ignoring the format_options option.")
     }
     ### Is test_options a named list?
-    if (length(test_options)>0 && is.null(names(test_options)) ){
+    if (length(test_options) > 0 && is.null(names(test_options))) {
       warning("names(test_options) cannot be empty. Ignoring the test_options option.")
     }
     ### Is reshape_rows a named list?
-    if (length(reshape_rows)>0 && is.null(names(reshape_rows)) ){
+    if (length(reshape_rows) > 0 && is.null(names(reshape_rows))) {
       warning("names(reshape_rows) cannot be empty. Ignoring the reshape_rows option.")
     }
 
@@ -327,8 +328,11 @@ descr <-
       stop("summary_stats_cat must be a list of functions.")
     }
     ### Is summary_stats_cat a named list?
-    if (length(summary_stats_cat)>0 && is.null(names(summary_stats_cat)) ){
-      warning("names(summary_stats_cat) cannot be empty. Ignoring the summary_stats_cat option.")
+    if (length(summary_stats_cat) > 0 &&
+        is.null(names(summary_stats_cat))) {
+      warning(
+        "names(summary_stats_cat) cannot be empty. Ignoring the summary_stats_cat option."
+      )
     }
     ### is format_p a function?
     if (!is.function(format_p)) {
@@ -340,8 +344,11 @@ descr <-
       stop("format_summary_stats must be a list of functions.")
     }
     ### Is format_summary_stats a named list?
-    if (length(format_summary_stats)>0 && is.null(names(format_summary_stats)) ){
-      warning("names(format_summary_stats) cannot be empty. Ignoring the format_summary_stats option.")
+    if (length(format_summary_stats) > 0 &&
+        is.null(names(format_summary_stats))) {
+      warning(
+        "names(format_summary_stats) cannot be empty. Ignoring the format_summary_stats option."
+      )
     }
     ### is reshape_rows a list of lists?
     if (!all(sapply(reshape_rows, is.list))) {
@@ -439,7 +446,10 @@ descr <-
       }
       if (!is.null(var_options[[var_option_name]][["test_override"]])) {
         if (!(var_options[[var_option_name]][["test_override"]] %in% print_test_names())) {
-          stop(paste0("test_override has to be one of: ", paste(print_test_names(), collapse = ", ") ))
+          stop(paste0(
+            "test_override has to be one of: ",
+            paste(print_test_names(), collapse = ", ")
+          ))
         }
       }
       if (!is.null(var_options[[var_option_name]][["reshape_rows"]])) {
@@ -587,7 +597,7 @@ descr_cat <-
 
     # Calculate test
     erg[["test_list"]] <-
-      test_cat(var, group, test_options, test_override)
+      test_cat(var, group, test_options, test_override, var_name)
     erg[["variable_name"]] <- var_name
     erg[["variable_levels"]] <- var_levels
     erg[["variable_options"]] <- var_options
@@ -648,7 +658,7 @@ descr_cont <-
 
     # Calculate test
     erg[["test_list"]] <-
-      test_cont(var, group, test_options, test_override)
+      test_cont(var, group, test_options, test_override, var_name)
     erg[["variable_name"]] <- var_name
     erg[["variable_options"]] <- var_options
     erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
@@ -1046,7 +1056,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
@@ -1056,7 +1066,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames, ] %>%
+  tex <- tibl[!indx_varnames,] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -1079,9 +1089,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices, -1)) > 0) {
-    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices,-1)) > 0) {
+    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -1135,14 +1145,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames, ] %>%
+  html <- tibl[!indx_varnames,] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1989,6 +1999,7 @@ print_test_names <- function() {
 #' @param group A variable containing the grouping information.
 #' @param test_options Named list containing test options.
 #' @param test Name of a statistical test.
+#' @param var_name Name of variable to be tested (only used in warning messages).
 #'
 #' @return
 #' A list of test test results.
@@ -2007,7 +2018,8 @@ test_cont <-
   function(var,
            group = NULL,
            test_options = NULL,
-           test = NULL) {
+           test = NULL,
+           var_name = NULL) {
     # decide how to handle missings
     if (!is.null(group)) {
       tibl <- tibble(var = var, group = group)
@@ -2029,7 +2041,25 @@ test_cont <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if (isTRUE(test_options[["nonparametric"]] == T)) {
+      if ( !all(table(group)>1) ) {
+        warning(
+          paste0(
+            "Skipping test for variable ",
+            var_name,
+            " because it has has only 1 nonmissing observation in some group."
+          )
+        )
+        test <- "No appropriate test available."
+      } else if( nrow(table(var, group))==1 || !all(table(var, group)>0 ) ){
+        warning(
+          paste0(
+            "Skipping test for variable ",
+            var_name,
+            " because it is essentially constantin some group."
+          )
+        )
+        test <- "No appropriate test available."
+      } else if (isTRUE(test_options[["nonparametric"]] == T)) {
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == T)) {
           # ordinal variable, paired test
@@ -2165,6 +2195,7 @@ test_cont <-
 #' @param group A variable containing the grouping information.
 #' @param test_options Named list containing test options.
 #' @param test Name of a statistical test.
+#' @param var_name Name of variable to be tested (only used in warning messages).
 #'
 #' @return
 #' A list of test test results.
@@ -2184,7 +2215,8 @@ test_cat <-
   function(var,
            group = NULL,
            test_options = NULL,
-           test = NULL) {
+           test = NULL,
+           var_name = NULL) {
     # decide how to handle missings
     if (!is.null(group)) {
       tibl <- tibble(var = var, group = group)
@@ -2194,8 +2226,8 @@ test_cat <-
       if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
         tibl %<>% filter(var != "(Missing)")
       }
-      var <- tibl %>% pull(var)
-      group <- tibl %>% pull(group)
+      var <- tibl %>% pull(var) %>% droplevels()
+      group <- tibl %>% pull(group)  %>% droplevels()
 
       n_levels_group <- length(levels(group))
       n_levels_var <- length(levels(var))
@@ -2214,7 +2246,16 @@ test_cat <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if (is.ordered(var)) {
+      if (length(levels(var)) == 1) {
+        warning(
+          paste0(
+            "Skipping test for variable ",
+            var_name,
+            " because it has only 1 level associated with it."
+          )
+        )
+        test <- "No appropriate test available."
+      } else if (is.ordered(var)) {
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == T)) {
           # ordinal variable, paired test
@@ -2384,9 +2425,11 @@ test_cat <-
 
         # Continuous tests for categorical variables
         `Students paired t-test` = {
-          tibl <- tibble(var = var %>% as.character() %>% as.numeric(),
-                         group = group,
-                         id = test_options[["indices"]])
+          tibl <- tibble(
+            var = var %>% as.character() %>% as.numeric(),
+            group = group,
+            id = test_options[["indices"]]
+          )
           level1 <- levels(group)[1]
           level2 <- levels(group)[2]
 
@@ -2402,9 +2445,11 @@ test_cat <-
                CI_name = "Mean dif. CI")
         },
         `Mixed model ANOVA` = {
-          tmp <- tibble(var = var %>% as.character() %>% as.numeric(),
-                        group = group,
-                        idx = test_options[["indices"]])
+          tmp <- tibble(
+            var = var %>% as.character() %>% as.numeric(),
+            group = group,
+            idx = test_options[["indices"]]
+          )
 
           fit <-
             nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
