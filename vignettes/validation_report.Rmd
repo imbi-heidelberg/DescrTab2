@@ -18,9 +18,11 @@ library(tidyverse)
 options(print_format="html")
 ```
 
+<font size="2">
+
 # Introduction
-<font size=4> In this document, we compare various DescrTab2 tests with their SAS equivalents.
-This document is created by including in the .html SAS output. Unfortunately, this has ugly side effects for the formatting of this document, but everything should still be readable. </font>
+In this document, we compare various DescrTab2 tests with their SAS equivalents.
+This document is created by including in the .html SAS output. Unfortunately, this has ugly side effects for the formatting of this document, but everything should still be readable.
 
 
 # Wilcoxon one-sample signed-rank test

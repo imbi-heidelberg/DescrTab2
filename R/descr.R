@@ -1444,6 +1444,7 @@ create_character_subtable.cont_summary <-
     } else{
       summary_stat_names <- names(DescrVarObj[["results"]][["Total"]])
 
+
       if (!is.null(DescrVarObj[["results"]][["Total"]][["Nmiss"]])) {
         DescrVarObj[["results"]][["Total"]][["Nmiss"]] <-
           paste0(
@@ -1494,15 +1495,13 @@ create_character_subtable.cont_summary <-
 
 
 
-
-
         if (!is.null(DescrVarObj[["results"]][[group]][["Nmiss"]])) {
           DescrVarObj[["results"]][[group]][["Nmiss"]] <-
             paste0(
               DescrVarObj[["results"]][[group]][["Nmiss"]],
               " (",
               scales::label_percent()(DescrVarObj[["results"]][[group]][["Nmiss"]] /
-                                        DescrVarObj[["results"]][["variable_lengths"]][[group]][["N"]]),
+                                        DescrVarObj[["variable_lengths"]][[group]][["N"]]),
               ")"
             )
         }
@@ -2018,7 +2017,7 @@ test_cont <-
       tibl %<>% filter(!is.na(var))
 
       var <- tibl %>% pull(var)
-      group <- tibl %>% pull(group)
+      group <- tibl %>% pull(group) %>% droplevels()
 
       n_levels_group <- length(levels(group))
     } else{
