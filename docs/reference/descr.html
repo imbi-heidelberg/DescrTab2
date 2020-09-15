@@ -287,7 +287,9 @@ and "(Missing)" with 10 counts, they will become "A": 10 (50%), "B": 10 (50%), "
 
 <p><code>test_options</code> is a named list with test options. It's members <code>paired</code>,  <code>nonparametric</code>, and
 <code>exact</code> (logicals) control which test in the corresponding situation. For details, check out the vignette:
-<code>vignette("test_choice_tree", "DescrTab2")</code>.</p>
+<code>vignette("test_choice_tree", "DescrTab2")</code>. The <code>test_options = list(test_override="&lt;some test name&gt;")</code> option can be specified to force usage of a
+specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
+Use <code><a href='print_test_names.html'>print_test_names()</a></code> to see a list of all available test names.</p>
     <h2 class="hasAnchor" id="customization-for-single-variables"><a class="anchor" href="#customization-for-single-variables"></a>Customization for single variables</h2>
 
     

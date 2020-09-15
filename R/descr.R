@@ -65,7 +65,9 @@ utils::globalVariables(".")
 #' @section Test options:
 #' \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
 #' \code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
-#' \code{vignette("test_choice_tree", "DescrTab2")}.
+#' \code{vignette("test_choice_tree", "DescrTab2")}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
+#' specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
+#' Use \code{print_test_names()} to see a list of all available test names.
 #'
 #' @section Customization for single variables:
 #' The \code{var_options} list can be used to conduct customizations that should only apply to a single variable and leave
@@ -447,7 +449,7 @@ descr <-
       }
       if (!is.null(var_options[[var_option_name]][["test_override"]])) {
         if (!(var_options[[var_option_name]][["test_override"]] %in% print_test_names())) {
-          stop(paste0(
+          warning(paste0(
             "test_override has to be one of: ",
             paste(print_test_names(), collapse = ", ")
           ))
@@ -561,10 +563,9 @@ descr_cat <-
       test_options <- var_options[["test_options"]]
     }
     # Was a specific test requested?
+    test_override <- test_options[["test_override"]]
     if (!is.null(var_options[["test_override"]])) {
       test_override <- var_options[["test_override"]]
-    } else{
-      test_override <- NULL
     }
 
 
@@ -629,10 +630,9 @@ descr_cont <-
       test_options <- var_options[["test_options"]]
     }
     # Was a specific test requested?
+    test_override <- test_options[["test_override"]]
     if (!is.null(var_options[["test_override"]])) {
       test_override <- var_options[["test_override"]]
-    } else{
-      test_override <- NULL
     }
 
 

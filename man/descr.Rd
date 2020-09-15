@@ -123,7 +123,9 @@ and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%),
 
 \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
 \code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
-\code{vignette("test_choice_tree", "DescrTab2")}.
+\code{vignette("test_choice_tree", "DescrTab2")}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
+specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
+Use \code{print_test_names()} to see a list of all available test names.
 }
 
 \section{Customization for single variables}{
