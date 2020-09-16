@@ -228,8 +228,8 @@ descr <-
         length(test_options[["indices"]]) == 1 &&
         test_options[["indices"]] %in% names(dat)) {
       idx_name <- test_options[["indices"]]
-      test_options[["indices"]] <- dat %>% pull(all_of(idx_name))
-      dat %<>% select(-all_of(idx_name))
+      test_options[["indices"]] <- dat %>% pull(!!idx_name)
+      dat %<>% select(- !!idx_name)
     }
 
     ### Is group either null or a length one character or numeric?
@@ -245,19 +245,18 @@ descr <-
     # Remove group column from dataset & coerce group to factor
     if (!is.null(group)) {
       if (isTRUE(format_options[["omit_missings_in_group"]])) {
-        if (dat %>% pull(all_of(group)) %>% is.na() %>% any()) {
+        if (dat %>% pull( !!group) %>% is.na() %>% any()) {
           warning(
             "Observations with missings in the group variable were dropped. To include them as a separate category, specify
             format_options = list(ommit_missings_in_group=F)"
           )
-          dat %<>% filter(!is.na(get(group)))
+          dat %<>% filter(!is.na(get(!!group)))
         }
       }
 
       group_var <-
-        dat %>% pull(all_of(group)) %>% as_factor() %>%  fct_explicit_na()
-
-      dat %<>% select(-all_of(group))
+        dat %>% pull(!!group) %>% as_factor() %>%  fct_explicit_na()
+      dat %<>% select(- !!group)
 
       group_levels <- levels(group_var)
       names(group_levels) <- group_levels
