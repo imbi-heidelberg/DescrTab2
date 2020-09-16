@@ -200,7 +200,7 @@ descr <-
              indices = c(),
              include_group_missings_in_test = F,
              include_categorical_missings_in_test = F,
-             test_override=NULL
+             test_override = NULL
            ),
            reshape_rows = list(
              `Q1 - Q3` = list(
@@ -229,7 +229,7 @@ descr <-
         test_options[["indices"]] %in% names(dat)) {
       idx_name <- test_options[["indices"]]
       test_options[["indices"]] <- dat %>% pull(!!idx_name)
-      dat %<>% select(- !!idx_name)
+      dat %<>% select(-!!idx_name)
     }
 
     ### Is group either null or a length one character or numeric?
@@ -245,7 +245,7 @@ descr <-
     # Remove group column from dataset & coerce group to factor
     if (!is.null(group)) {
       if (isTRUE(format_options[["omit_missings_in_group"]])) {
-        if (dat %>% pull( !!group) %>% is.na() %>% any()) {
+        if (dat %>% pull(!!group) %>% is.na() %>% any()) {
           warning(
             "Observations with missings in the group variable were dropped. To include them as a separate category, specify
             format_options = list(ommit_missings_in_group=F)"
@@ -256,7 +256,7 @@ descr <-
 
       group_var <-
         dat %>% pull(!!group) %>% as_factor() %>%  fct_explicit_na()
-      dat %<>% select(- !!group)
+      dat %<>% select(-!!group)
 
       group_levels <- levels(group_var)
       names(group_levels) <- group_levels
@@ -275,7 +275,7 @@ descr <-
 
     if (!all(
       sapply(dat, function(x)
-        class(x)[[1]]) %in% c("numeric", "integer", "factor", "ordered", "character")
+        class(x)[[1]]) %in% c("numeric", "integer", "factor", "ordered", "character", "logical")
     )) {
       stop("You may only have numeric, factor or character columns in your data.")
     }
@@ -1052,11 +1052,13 @@ print_tex <- function(DescrPrintObj, silent = F) {
     print_footnotes <- F
   }
 
+  if ("Test" %in% names(tibl)) {
+    tibl %<>% select(-"Test")
+  }
 
-  tibl %<>% select(-"Test")
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
@@ -1066,7 +1068,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames,] %>%
+  tex <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -1089,9 +1091,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices,-1)) > 0) {
-    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices, -1)) > 0) {
+    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -1145,14 +1147,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames,] %>%
+  html <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -2022,14 +2024,31 @@ test_cont <-
            var_name = NULL) {
     # decide how to handle missings
     if (!is.null(group)) {
-      tibl <- tibble(var = var, group = group)
+      paired_test <-
+        !is.null(test_options[["indices"]]) &&
+        test_options[["paired"]]
+      if (paired_test) {
+        tibl <-
+          tibble(var = var,
+                 group = group,
+                 id = test_options[["indices"]])
+      } else{
+        tibl <- tibble(var = var, group = group)
+      }
+
       if (!test_options[["include_group_missings_in_test"]]) {
         tibl %<>% filter(group != "(Missing)")
       }
+
+
       tibl %<>% filter(!is.na(var))
 
       var <- tibl %>% pull(var)
       group <- tibl %>% pull(group) %>% droplevels()
+
+      if (paired_test) {
+        id <- tibl %>% pull(id)
+      }
 
       n_levels_group <- length(levels(group))
     } else{
@@ -2041,7 +2060,7 @@ test_cont <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if (!is.null(group) && !all(table(group)>1) ) {
+      if (!is.null(group) && !all(table(group) > 1)) {
         warning(
           paste0(
             "Skipping test for variable ",
@@ -2050,7 +2069,7 @@ test_cont <-
           )
         )
         test <- "No appropriate test available."
-      } else if(!is.null(group) && nrow(table(var, group))==1){
+      } else if (!is.null(group) && nrow(table(var, group)) == 1) {
         warning(
           paste0(
             "Skipping test for variable ",
@@ -2105,9 +2124,14 @@ test_cont <-
       erg <- switch(
         test,
         `Wilcoxon two-sample signed-rank test` = {
+          good_idx <- names(table(id)==2)
+          if (!all(id %in% good_idx)){
+            warning("Removed paired observations with missings.")
+          }
           tibl <- tibble(var = var,
                          group = group,
-                         id = test_options[["indices"]])
+                         id = id)
+          tibl %<>% filter(id %in% good_idx)
           level1 <- levels(group)[1]
           level2 <- levels(group)[2]
 
@@ -2122,7 +2146,7 @@ test_cont <-
           tmp <-
             tibble(var = var,
                    group = group,
-                   idx = test_options[["indices"]])
+                   idx = id)
           list(p = stats::friedman.test(var ~ group |
                                           idx, dat = tmp)$p.value)
         },
@@ -2139,9 +2163,14 @@ test_cont <-
           list(p = stats::kruskal.test(var ~ group)$p.value)
         },
         `Students paired t-test` = {
+          good_idx <- names(table(id)[table(id)==2])
+          if (!all(id %in% good_idx)){
+            warning("Removed paired observations with missings.")
+          }
           tibl <- tibble(var = var,
                          group = group,
-                         id = test_options[["indices"]])
+                         id = id)
+          tibl %<>% filter(id %in% good_idx)
           level1 <- levels(group)[1]
           level2 <- levels(group)[2]
 
@@ -2159,7 +2188,7 @@ test_cont <-
         `Mixed model ANOVA` = {
           tmp <- tibble(var = var,
                         group = group,
-                        idx = test_options[["indices"]])
+                        idx = id)
 
           fit <-
             nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
