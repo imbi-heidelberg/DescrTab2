@@ -248,7 +248,7 @@ descr <-
         if (dat %>% pull(!!group) %>% is.na() %>% any()) {
           warning(
             "Observations with missings in the group variable were dropped. To include them as a separate category, specify
-            format_options = list(ommit_missings_in_group=F)"
+            format_options = list(omit_missings_in_group=F)"
           )
           dat %<>% filter(!is.na(get(!!group)))
         }
@@ -1078,7 +1078,6 @@ print_tex <- function(DescrPrintObj, silent = F) {
       escape = F,
       col.names = N_numbers
     ) %>%
-    kable_styling() %>%
     `if`(
       print_footnotes,
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
@@ -1086,6 +1085,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
     ) %>%
     kableExtra::pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = F, align = alig2) %>%
+    kable_styling(latex_options = "repeat_header", repeat_header_continued=F) %>%
     capture.output()
 
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
