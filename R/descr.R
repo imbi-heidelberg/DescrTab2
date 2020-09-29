@@ -568,7 +568,6 @@ descr_cat <-
     }
 
 
-
     for (group_name in levels(group)) {
       # Subset values for the respective group
       var_grp <- var[which(group == group_name)]
@@ -1930,7 +1929,7 @@ escape_latex_symbols <- function(tibl) {
         str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
-      # tibl[i,j] <- str_replace_all(tibl[i,j], fixed("_"), fixed("\\_"))
+      tibl[i,j] <- str_replace_all(tibl[i,j], fixed("_"), fixed("\\_"))
     }
   }
   tibl
