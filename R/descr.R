@@ -275,7 +275,14 @@ descr <-
 
     if (!all(
       sapply(dat, function(x)
-        class(x)[[1]]) %in% c("numeric", "integer", "factor", "ordered", "character", "logical")
+        class(x)[[1]]) %in% c(
+          "numeric",
+          "integer",
+          "factor",
+          "ordered",
+          "character",
+          "logical"
+        )
     )) {
       stop("You may only have numeric, factor or character columns in your data.")
     }
@@ -596,8 +603,18 @@ descr_cat <-
     erg[["results"]][["Total"]] <- cat_list
 
     # Calculate test
-    erg[["test_list"]] <-
-      test_cat(var, group, test_options, test_override, var_name)
+    test_list <-
+      erg[["test_list"]] <-
+      tryCatch(
+        test_cat(var, group, test_options, test_override, var_name),
+        error = function(cond) {
+          message("Error converted to warning: ", cond)
+        },
+        list(p="-",
+             test_name="No appropriate test available",
+             CI=c("", ""))
+      )
+
     erg[["variable_name"]] <- var_name
     erg[["variable_levels"]] <- var_levels
     erg[["variable_options"]] <- var_options
@@ -657,7 +674,15 @@ descr_cont <-
 
     # Calculate test
     erg[["test_list"]] <-
-      test_cont(var, group, test_options, test_override, var_name)
+      tryCatch(
+        test_cont(var, group, test_options, test_override, var_name),
+        error = function(cond) {
+          message("Error converted to warning: ", cond)
+        },
+        list(p="-",
+             test_name="No appropriate test available",
+             CI=c("", ""))
+      )
     erg[["variable_name"]] <- var_name
     erg[["variable_options"]] <- var_options
     erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
@@ -1057,7 +1082,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
@@ -1067,7 +1092,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames, ] %>%
+  tex <- tibl[!indx_varnames,] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -1084,15 +1109,16 @@ print_tex <- function(DescrPrintObj, silent = F) {
     ) %>%
     kableExtra::pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = F, align = alig2) %>%
-    kable_styling(latex_options = "repeat_header", repeat_header_continued=F) %>%
+    kable_styling(latex_options = "repeat_header",
+                  repeat_header_continued = F) %>%
     capture.output()
 
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices, -1)) > 0) {
-    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices,-1)) > 0) {
+    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -1146,14 +1172,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
+  actual_colnames <- names(tibl[!indx_varnames,])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames, ] %>%
+  html <- tibl[!indx_varnames,] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -1929,7 +1955,8 @@ escape_latex_symbols <- function(tibl) {
         str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
-      tibl[i,j] <- str_replace_all(tibl[i,j], fixed("_"), fixed("\\_"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("_"), fixed("\\_"))
     }
   }
   tibl
@@ -2123,8 +2150,8 @@ test_cont <-
       erg <- switch(
         test,
         `Wilcoxon two-sample signed-rank test` = {
-          good_idx <- names(table(id)==2)
-          if (!all(id %in% good_idx)){
+          good_idx <- names(table(id) == 2)
+          if (!all(id %in% good_idx)) {
             warning("Removed paired observations with missings.")
           }
           tibl <- tibble(var = var,
@@ -2162,8 +2189,8 @@ test_cont <-
           list(p = stats::kruskal.test(var ~ group)$p.value)
         },
         `Students paired t-test` = {
-          good_idx <- names(table(id)[table(id)==2])
-          if (!all(id %in% good_idx)){
+          good_idx <- names(table(id)[table(id) == 2])
+          if (!all(id %in% good_idx)) {
             warning("Removed paired observations with missings.")
           }
           tibl <- tibble(var = var,
