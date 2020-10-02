@@ -29,3 +29,7 @@ verify_output(
     var_options = list(Sepal.Length = list(label = "My custom variable label"))
   ) %>% print(print_format = "console")
 )
+
+
+test_that("console is default print argument",
+          expect_error(print(descr(iris), print_format=NULL, silent=T), NA) )

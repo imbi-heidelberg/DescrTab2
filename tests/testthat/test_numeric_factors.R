@@ -15,6 +15,7 @@ test_that("summary statistics for factors work",
               summary_stats_cat = list(
                 mean = DescrTab2:::.factormean,
                 sd = DescrTab2:::.factorsd,
+                median = DescrTab2:::.factormedian,
                 Q1 = DescrTab2:::.factorQ1,
                 Q3 = DescrTab2:::.factorQ3,
                 min = DescrTab2:::.factormin,
@@ -56,3 +57,10 @@ test_that("summary statistics for factors work",
             ,
             NA
           ))
+
+
+
+
+
+
+

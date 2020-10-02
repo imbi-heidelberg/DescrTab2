@@ -220,6 +220,12 @@ descr <-
 
     # Format options have to be cleaned first, because the next data cleaning step depends on them
     format_options %<>% as.list()
+
+    ### Is format_options a named list?
+    if (length(format_options) > 0 &&
+        is.null(names(format_options))) {
+      warning("names(format_options) cannot be empty. Ignoring the format_options option.")
+    }
     format_options <-
       fill_list_with_default_arguments(format_options, descr, "format_options")
 
@@ -303,18 +309,13 @@ descr <-
     if (length(group_labels) > 0 && is.null(names(group_labels))) {
       warning("names(group_labels) cannot be empty. Ignoring the group_labels option.")
     }
-    ### Is format_options a named list?
-    if (length(format_options) > 0 &&
-        is.null(names(format_options))) {
-      warning("names(format_options) cannot be empty. Ignoring the format_options option.")
-    }
     ### Is test_options a named list?
     if (length(test_options) > 0 && is.null(names(test_options))) {
       warning("names(test_options) cannot be empty. Ignoring the test_options option.")
     }
     ### Is reshape_rows a named list?
     if (length(reshape_rows) > 0 && is.null(names(reshape_rows))) {
-      warning("names(reshape_rows) cannot be empty. Ignoring the reshape_rows option.")
+      stop("names(reshape_rows) may not be empty.")
     }
 
     ### Does var_labels contain labels for variables not in the dataset?
@@ -1823,29 +1824,6 @@ create_character_subtable.cat_summary <-
   }
 
 
-combine_two_elements_of_list <-
-  function(lst,
-           elem1,
-           elem2,
-           format_summary_stats,
-           connector_names = c(" - ", " ± "),
-           connector_summary_stats = c(" -- ", " ± ")) {
-    if (c(elem1, elem2) %in% names(lst) %>% all()) {
-      lst[[elem1]] <-
-        paste0(
-          format_summary_stats(lst[[elem1]]),
-          connector_summary_stats[[1]],
-          format_summary_stats(lst[[elem2]])
-        )
-      names(lst)[names(lst) == elem1] <-
-        paste0(elem1, connector_names[[1]], elem2)
-      lst <- lst[setdiff(names(lst), elem2)]
-    }
-    else{
-      return(lst)
-    }
-  }
-
 
 .N <- function(var) {
   sum(!is.na(var))
@@ -2088,7 +2066,7 @@ test_cont <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if (!is.null(group) && !all(table(group) > 1)) {
+      if ( (!is.null(group) && !all(table(group) > 1)) ||  length(var)==1 ) {
         warning(
           paste0(
             "Skipping test for variable ",
