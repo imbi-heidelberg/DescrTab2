@@ -21,7 +21,8 @@ test_that(
   {
     expect_error(farrington.manning(c(1,2,3),y))
     expect_warning(farrington.manning(c(TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,NA),y, -.3))
-    expect_error(farrington.manning(x,y, 2, "abc"))
+    expect_error(farrington.manning(x,y, 2, "less"))
+    expect_error(farrington.manning(x,y, 0.3, "abc"))
     expect_error(farrington.manning(x,y, 0.3, "greater", 2))
     expect_error(farrington.manning(x,y, -2, "two.sided"))
   }
