@@ -7,7 +7,8 @@ Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-
              person("Lukas", "Baumann", role = c("aut")),
              person("Maximilian", "Pilz", role = c("aut")),
              person("Lorenz", "Uhlmann", role = c("aut")),
-             person("Csilla", "van Lunteren", role = c("aut")))
+             person("Csilla", "van Lunteren", role = c("aut")),
+             person("Kevin", "Kunzmann", role = c("ctb")))
 Description: This package provides functions to create descriptive statistics tables for continuous and categorical variables.
     By default, it calculates summary statistics such as mean, standard deviation, quantiles, minimum and maximum for continuous
     variables and relative and absolute frequencies for categorical variables. DescrTab2 features a sophisticated algorithm to
@@ -45,7 +46,7 @@ Imports:
     flextable,
     officer
 VignetteBuilder: knitr
-License: GPL (>=3)
+License: GPL (>=3) + file LICENSE
 LazyLoad: true
 RoxygenNote: 7.1.1
 Encoding: UTF-8
