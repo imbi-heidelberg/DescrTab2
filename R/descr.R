@@ -609,10 +609,11 @@ descr_cat <-
         test_cat(var, group, test_options, test_override, var_name),
         error = function(cond) {
           message("Error converted to warning: ", cond)
-        },
-        list(p="-",
-             test_name="No appropriate test available",
-             CI=c("", ""))
+          list(p = NA_real_,
+               test_name = "Test errored, check console output.",
+               CI_name = "",
+               CI = c(NA_real_, NA_real_))
+        }
       )
 
     erg[["variable_name"]] <- var_name
@@ -678,10 +679,11 @@ descr_cont <-
         test_cont(var, group, test_options, test_override, var_name),
         error = function(cond) {
           message("Error converted to warning: ", cond)
-        },
-        list(p="-",
-             test_name="No appropriate test available",
-             CI=c("", ""))
+          list(p = NA_real_,
+               test_name = "Test errored, check console output.",
+               CI_name = "",
+               CI = c(NA_real_, NA_real_))
+        }
       )
     erg[["variable_name"]] <- var_name
     erg[["variable_options"]] <- var_options
@@ -1082,7 +1084,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
@@ -1092,7 +1094,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tibl <- escape_latex_symbols(tibl)
 
 
-  tex <- tibl[!indx_varnames,] %>%
+  tex <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "latex",
       longtable = T,
@@ -1116,9 +1118,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
-  if (length(head(pagebreak_indices,-1)) > 0) {
-    tex[head(pagebreak_indices,-1) - 2] %<>% str_replace_all(fixed("\\\\*"),
-                                                             fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
+  if (length(head(pagebreak_indices, -1)) > 0) {
+    tex[head(pagebreak_indices, -1) - 2] %<>% str_replace_all(fixed("\\\\*"),
+                                                              fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}"))
   }
   if (length(tail(pagebreak_indices, 1))) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
@@ -1172,14 +1174,14 @@ print_html <- function(DescrPrintObj, silent = F) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames,])
+  actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  html <- tibl[!indx_varnames,] %>%
+  html <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "html",
       longtable = T,
@@ -2341,7 +2343,11 @@ test_cat <-
           # nominal variable, exact test
           if (isTRUE(test_options[["paired"]] == T)) {
             # nominal variable, exact paired test
-            if (n_levels_group == 2 & n_levels_var == 2) {
+            if (is.null(test_options[["indices"]])) {
+              stop(
+                "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+              )
+            } else if (n_levels_group == 2 & n_levels_var == 2) {
               test <- "Exact McNemars test"
             } else{
               test <- "No appropriate test available."
@@ -2355,19 +2361,17 @@ test_cat <-
             }
           }
         } else{
-          # nominal variable, asymp <- ic test
+          # nominal variable, asymptotic test
           if (isTRUE(test_options[["paired"]] == T)) {
             # nominal variable, asymptotic paired test
-            if (n_levels_group == 2 & n_levels_var == 2) {
+            if (is.null(test_options[["indices"]])) {
+              stop(
+                "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+              )
+            } else if (n_levels_group == 2 & n_levels_var == 2) {
               test <- "McNemars test"
             } else if (n_levels_group >= 3 & n_levels_var == 2) {
-              if (is.null(test_options[["indices"]])) {
-                stop(
-                  "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
-                )
-              } else{
-                test <- "Cochrans Q test"
-              }
+              test <- "Cochrans Q test"
             } else{
               test <- "No appropriate test available."
             }
@@ -2383,6 +2387,7 @@ test_cat <-
         }
       }
     }
+
 
     erg <-
       switch(
@@ -2425,10 +2430,20 @@ test_cat <-
         },
         `Exact McNemars test` = {
           # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+
+          tmp <- tibble(var = var,
+                        group = group,
+                        idx = test_options[["indices"]])
+          tmp1 <-
+            tmp %>% filter(group == levels(group)[1]) %>% arrange(idx)
+          tmp2 <-
+            tmp %>% filter(group == levels(group)[2]) %>% arrange(idx)
+
+          stopifnot(tmp1$idx == tmp2$idx)
+          cont.table <- table(tmp1$var, tmp2$var)
           list(
             p = exact2x2::exact2x2(
-              var,
-              group,
+              cont.table,
               alternative = "two.sided",
               tsmethod = "central",
               paired = TRUE
@@ -2450,8 +2465,18 @@ test_cat <-
           )
         },
         `McNemars test` = {
+          tmp <- tibble(var = var,
+                        group = group,
+                        idx = test_options[["indices"]])
+          tmp1 <-
+            tmp %>% filter(group == levels(group)[1]) %>% arrange(idx)
+          tmp2 <-
+            tmp %>% filter(group == levels(group)[2]) %>% arrange(idx)
+
+          stopifnot(tmp1$idx == tmp2$idx)
+          cont.table <- table(tmp1$var, tmp2$var)
           list(
-            p = stats::mcnemar.test(var, group)$p.value,
+            p = stats::mcnemar.test(cont.table)$p.value,
             CI = stats::prop.test(table(var, group))$conf.int,
             CI_name = "Prop. dif. CI"
           )

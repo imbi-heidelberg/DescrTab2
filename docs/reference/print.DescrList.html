@@ -217,6 +217,17 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{1}{l}{Variables} &amp; \multicolumn{1}{c}{Total} &amp; \multicolumn{1}{c}{p} \\*
 #&gt;  &amp; (N=150) &amp; \\*
 #&gt; \midrule
+#&gt; \endfirsthead
+#&gt; \multicolumn{3}{@{}l}{\textit{(continued)}}\\*
+#&gt; \toprule
+#&gt; \multicolumn{1}{l}{Variables} &amp; \multicolumn{1}{c}{Total} &amp; \multicolumn{1}{c}{p} \\*
+#&gt;  &amp; (N=150) &amp; \\*
+#&gt; \midrule
+#&gt; \endhead
+#&gt; 
+#&gt; \endfoot
+#&gt; \bottomrule
+#&gt; \endlastfoot
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Sepal.Length}}\\*
 #&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{3}\textless0.001\textsuperscript{tt1}\\*
@@ -253,8 +264,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{3}{l}{\textbf{Species}}\\*
 #&gt; \hspace{1em}setosa &amp; 50 (33\%) &amp; \textgreater0.999\textsuperscript{chi1}\\*
 #&gt; \hspace{1em}versicolor &amp; 50 (33\%) &amp; \\*
-#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\*
-#&gt; \bottomrule
+#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\**
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
 #&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='no'>iris</span>), <span class='kw'>print_format</span><span class='kw'>=</span><span class='st'>"html"</span>)</div><div class='output co'>#&gt; &lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
@@ -473,6 +483,17 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{1}{l}{Variables} &amp; \multicolumn{1}{c}{Total} &amp; \multicolumn{1}{c}{p} \\*
 #&gt;  &amp; (N=150) &amp; \\*
 #&gt; \midrule
+#&gt; \endfirsthead
+#&gt; \multicolumn{3}{@{}l}{\textit{(continued)}}\\*
+#&gt; \toprule
+#&gt; \multicolumn{1}{l}{Variables} &amp; \multicolumn{1}{c}{Total} &amp; \multicolumn{1}{c}{p} \\*
+#&gt;  &amp; (N=150) &amp; \\*
+#&gt; \midrule
+#&gt; \endhead
+#&gt; 
+#&gt; \endfoot
+#&gt; \bottomrule
+#&gt; \endlastfoot
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Sepal.Length}}\\*
 #&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{3}\textless0.001\textsuperscript{tt1}\\*
@@ -509,8 +530,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{3}{l}{\textbf{Species}}\\*
 #&gt; \hspace{1em}setosa &amp; 50 (33\%) &amp; \textgreater0.999\textsuperscript{chi1}\\*
 #&gt; \hspace{1em}versicolor &amp; 50 (33\%) &amp; \\*
-#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\*
-#&gt; \bottomrule
+#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\**
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
 #&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>print_format</span><span class='kw'>=</span><span class='st'>"console"</span>)

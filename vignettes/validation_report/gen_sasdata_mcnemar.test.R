@@ -6,17 +6,27 @@ nr_dataset <-  1
 dat_list <- list()
 
 # Put the data that you want to analyse with SAS here.
-dat <- tibble(var = c(rep("Approve", 794+150), rep("Disapprove", 86+570), rep("Approve", 794+86),  rep("Disapprove", 150+570)),
-              group= c(rep("first", 1600), rep("second",1600)))
+dat <-
+  tibble::tibble(x = c(
+    rep("Approve", 794),
+    rep("Approve", 150),
+    rep("Disapprove", 86),
+    rep("Disapprove", 570)
+  ),
+  y = c(
+    rep("Approve", 794),
+    rep("Disapprove", 150),
+    rep("Approve", 86),
+    rep("Disapprove", 570)
+  ))
 
 
 require(foreign)
 require(here)
 
-code_dir <- here::here(
-  "vignettes",
-  "validation_report",
-  URS_ID)
+code_dir <- here::here("vignettes",
+                       "validation_report",
+                       URS_ID)
 
 code_path <-
   paste0(code_dir, "/", URS_ID, "_sas_example_", nr_dataset, ".sas")
@@ -40,7 +50,13 @@ foreign::write.foreign(
 append_txt <- c(
   "",
   "ods graphics off;",
-  paste0('ods html file="', URS_ID, '_example_', nr_dataset, '.html" path=".";'),
+  paste0(
+    'ods html file="',
+    URS_ID,
+    '_example_',
+    nr_dataset,
+    '.html" path=".";'
+  ),
   "",
   "PROC UNIVARIATE data=rdata;",
   "VAR diff;",

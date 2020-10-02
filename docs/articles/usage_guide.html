@@ -90,7 +90,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2020-09-16</h4>
+            <h4 class="date">2020-10-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/usage_guide.Rmd"><code>vignettes/usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>usage_guide.Rmd</code></div>
@@ -318,10 +318,10 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.327<sup>chi1</sup>
+0.624<sup>chi1</sup>
 </td>
 </tr>
 <tr>
@@ -329,7 +329,7 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -601,19 +601,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.785<sup>chi2</sup>
+0.571<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -621,16 +621,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -883,19 +883,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.785<sup>chi2</sup>
+0.571<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -903,16 +903,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1176,16 +1176,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-43 (57%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.512<sup>chi2</sup>
+&gt;0.999<sup>chi2</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1196,18 +1196,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-32 (43%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.24, 0.11]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
@@ -1410,16 +1410,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-43 (57%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.449<sup>Bolo</sup>
+0.984<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1430,18 +1430,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-32 (43%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.24, 0.11]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
@@ -1640,7 +1640,11 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(-<span class="st">"Species"</span>), <span class="st">"animal"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">indices</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span>:<span class="fl">50</span>, <span class="fl">3</span>)))</pre></body></html></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(-<span class="st">"Species"</span>), <span class="st">"animal"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">indices</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span>:<span class="fl">50</span>, <span class="fl">3</span>)))
+<span class="co">#&gt; Warning in test_cont(var, group, test_options, test_override, var_name): Removed</span>
+<span class="co">#&gt; paired observations with missings.</span>
+<span class="co">#&gt; Error converted to warning: Error in t.test.default(x, y, paired = T): not enough 'x' observations</span>
+<span class="co">#&gt; Error converted to warning: Error in test_cat(var, group, test_options, test_override, var_name): tmp1$idx == tmp2$idx are not all TRUE</span></pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1713,10 +1717,9 @@ N
 150
 </td>
 <td style="text-align:center;">
-0.937<sup>tpar</sup>
+NA
 </td>
 <td style="text-align:center;">
-Mean dif. CI
 </td>
 </tr>
 <tr>
@@ -1735,7 +1738,7 @@ mean
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.16, 0.18]
+[NA, NA]
 </td>
 </tr>
 <tr>
@@ -1820,19 +1823,18 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-43 (57%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.576<sup>McN</sup>
+NA
 </td>
 <td style="text-align:center;">
-Prop. dif. CI
 </td>
 </tr>
 <tr>
@@ -1840,33 +1842,26 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-32 (43%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.24, 0.11]
+[NA, NA]
 </td>
 </tr>
 </tbody>
-<tfoot>
-<tr>
+<tfoot><tr>
 <td style="padding: 0; border: 0;" colspan="100%">
-<sup>tpar</sup> Students paired t-test
+<sup>Unknown test</sup> Test errored, check console output.
 </td>
-</tr>
-<tr>
-<td style="padding: 0; border: 0;" colspan="100%">
-<sup>McN</sup> McNemars test
-</td>
-</tr>
-</tfoot>
+</tr></tfoot>
 </table>
 </div>
 <div id="significant-digits" class="section level2">
@@ -2102,19 +2097,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.785<sup>chi2</sup>
+0.571<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2122,16 +2117,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2367,19 +2362,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.785<sup>chi2</sup>
+0.571<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2387,16 +2382,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2496,13 +2491,13 @@ mean
 1.6
 </td>
 <td style="text-align:center;">
-1.4
+1.5
 </td>
 <td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
-0.122<sup>chi2</sup>
+0.317<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2510,16 +2505,16 @@ mean
 1
 </td>
 <td style="text-align:center;">
-24 (48%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+20 (40%)
 </td>
 <td style="text-align:center;">
-31 (62%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-76 (51%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2529,16 +2524,16 @@ mean
 2
 </td>
 <td style="text-align:center;">
-26 (52%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+30 (60%)
 </td>
 <td style="text-align:center;">
-19 (38%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-74 (49%)
+77 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2765,19 +2760,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.785<sup>chi2</sup>
+0.571<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2785,16 +2780,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3031,13 +3026,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-43 (57%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -3048,16 +3043,16 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-32 (43%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
-[-0.24, 0.11]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
@@ -3276,16 +3271,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-43 (57%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-81 (54%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.512<sup>chi2</sup>
+&gt;0.999<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3293,13 +3288,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-37 (49%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-32 (43%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-69 (46%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3418,19 +3413,19 @@ wedges
 <tr grouplength="2"><td colspan="6" style="border-bottom: 1px solid;"><strong>food</strong></td></tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> fries </td>
-   <td style="text-align:center;"> 28 (56%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 28 (56%) </td>
-   <td style="text-align:center;"> 81 (54%) </td>
-   <td style="text-align:center;"> 0.785<sup>chi2</sup>
+   <td style="text-align:center;"> 27 (54%) </td>
+   <td style="text-align:center;"> 23 (46%) </td>
+   <td style="text-align:center;"> 22 (44%) </td>
+   <td style="text-align:center;"> 72 (48%) </td>
+   <td style="text-align:center;"> 0.571<sup>chi2</sup>
 </td>
   </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> wedges </td>
-   <td style="text-align:center;"> 22 (44%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 22 (44%) </td>
-   <td style="text-align:center;"> 69 (46%) </td>
+   <td style="text-align:center;"> 23 (46%) </td>
+   <td style="text-align:center;"> 27 (54%) </td>
+   <td style="text-align:center;"> 28 (56%) </td>
+   <td style="text-align:center;"> 78 (52%) </td>
    <td style="text-align:center;">  </td>
   </tr>
 </tbody>

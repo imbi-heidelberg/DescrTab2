@@ -275,23 +275,18 @@ verify_output("../console/CochraneQTest.txt",
 
 
 ## ----mcnemar.test, results='asis'-------------------------------------------------------------------
-dat <-
-  tibble(var = c(
-    rep("Approve", 794 + 150),
-    rep("Disapprove", 86 + 570),
-    rep("Approve", 794 + 86),
-    rep("Disapprove", 150 + 570)
-  ),
-  group = c(rep("first", 1600), rep("second", 1600)))
+dat <- tibble::tibble(var = c(rep("Approve", 794), rep("Approve", 150), rep("Disapprove", 86), rep("Disapprove", 570),
+                              rep("Approve", 794), rep("Disapprove", 150), rep("Approve", 86), rep("Disapprove", 570)),
+                      group= c(rep("first", 1600), rep("second",1600)))
 
 test_that("mcnemar.test works",
-          expect_error(descr(dat, "group", test_options = list(paired = T)) %>%
+          expect_error(descr(dat, "group", test_options = list(paired = T, indices=c(1:1600, 1:1600))) %>%
                          print(silent = T),
                        NA))
 
 test_that("exact2x2 mcnemar test works",
           expect_error(descr(
-            dat, "group", test_options = list(paired = T, exact = T)
+            dat, "group", test_options = list(paired = T, exact = T, indices=c(1:1600, 1:1600))
           ) %>%
             print(silent = T),
           NA))

@@ -90,7 +90,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Validation report</h1>
             
-            <h4 class="date">2020-09-16</h4>
+            <h4 class="date">2020-10-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/validation_report.Rmd"><code>vignettes/validation_report.Rmd</code></a></small>
       <div class="hidden name"><code>validation_report.Rmd</code></div>
@@ -8074,10 +8074,11 @@ U
 <div id="mcnemars-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#mcnemars-test" class="anchor"></a>McNemars test</h1>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">dat</span> <span class="kw">&lt;-</span> <span class="fu">tibble</span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>+<span class="fl">150</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">86</span>+<span class="fl">570</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>+<span class="fl">86</span>),  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">150</span>+<span class="fl">570</span>)),
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">dat</span> <span class="kw">&lt;-</span> <span class="kw pkg">tibble</span><span class="kw ns">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">150</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">86</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>),
+                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">150</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">86</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>)),
               <span class="kw">group</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"first"</span>, <span class="fl">1600</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"second"</span>,<span class="fl">1600</span>)))
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"group"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>))</pre></body></html></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"group"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">indices</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">1600</span>, <span class="fl">1</span>:<span class="fl">1600</span>)))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8182,7 +8183,7 @@ Disapprove
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"group"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">exact</span><span class="kw">=</span><span class="no">T</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="no">dat</span>, <span class="st">"group"</span>, <span class="kw">test_options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">paired</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">exact</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">indices</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">1600</span>, <span class="fl">1</span>:<span class="fl">1600</span>)))</pre></body></html></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8287,9 +8288,23 @@ Disapprove
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span>(<span class="no">dat</span>$<span class="no">var</span>, <span class="no">dat</span>$<span class="no">group</span>)</pre></body></html></div>
-<p>McNemar’s Chi-squared test with continuity correction</p>
-<p>data: dat<span class="math inline">\(var and dat\)</span>group McNemar’s chi-squared = 32.376, df = 1, p-value = 1.271e-08</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r">
+<span class="no">dat</span> <span class="kw">&lt;-</span>
+  <span class="kw pkg">tibble</span><span class="kw ns">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">150</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">86</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>)
+  ),
+  <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">150</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">86</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>)
+  ))
+<span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span>(<span class="no">dat</span>$<span class="no">x</span>, <span class="no">dat</span>$<span class="no">y</span>, <span class="kw">correct</span> <span class="kw">=</span> <span class="no">F</span>)</pre></body></html></div>
+<p>McNemar’s Chi-squared test</p>
+<p>data: dat<span class="math inline">\(x and dat\)</span>y McNemar’s chi-squared = 17.356, df = 1, p-value = 3.099e-05</p>
 
 
 
@@ -9984,15 +9999,15 @@ var _ie64 = _info.indexOf("x64") > 0
 </colgroup>
 <thead>
 <tr>
-<th class="c header" colspan="4" scope="colgroup">Table of var by group</th>
+<th class="c header" colspan="4" scope="colgroup">Table of x by y</th>
 </tr>
 <tr>
-<th class="c b header" rowspan="2" scope="col">var</th>
-<th class="c b header" colspan="3" scope="colgroup">group</th>
+<th class="c b header" rowspan="2" scope="col">x</th>
+<th class="c b header" colspan="3" scope="colgroup">y</th>
 </tr>
 <tr>
-<th class="r header" scope="col">first</th>
-<th class="r header" scope="col">second</th>
+<th class="r header" scope="col">Approve</th>
+<th class="r header" scope="col">Disapprove</th>
 <th class="r header" scope="col">Total</th>
 </tr>
 </thead>
@@ -10001,38 +10016,38 @@ var _ie64 = _info.indexOf("x64") > 0
 <th class="l t rowheader" scope="row">Approve   </th>
 <td class="r t stacked_cell data"><table class="table">
 <tr>
+<td class="r t data top_stacked_value">794</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">49.63</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">84.11</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">90.23</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">150</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">9.38</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">15.89</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">20.83</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
 <td class="r t data top_stacked_value">944</td>
 </tr>
 <tr>
-<td class="r t data middle_stacked_value">29.50</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">51.75</td>
-</tr>
-<tr>
-<td class="r t data bottom_stacked_value">59.00</td>
-</tr>
-</table></td>
-<td class="r t stacked_cell data"><table class="table">
-<tr>
-<td class="r t data top_stacked_value">880</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">27.50</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">48.25</td>
-</tr>
-<tr>
-<td class="r t data bottom_stacked_value">55.00</td>
-</tr>
-</table></td>
-<td class="r t stacked_cell data"><table class="table">
-<tr>
-<td class="r t data top_stacked_value">1824</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">57.00</td>
+<td class="r t data middle_stacked_value">59.00</td>
 </tr>
 <tr>
 <td class="r t data middle_stacked_value"> </td>
@@ -10046,38 +10061,38 @@ var _ie64 = _info.indexOf("x64") > 0
 <th class="l t rowheader" scope="row">Disapprove</th>
 <td class="r t stacked_cell data"><table class="table">
 <tr>
+<td class="r t data top_stacked_value">86</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">5.38</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">13.11</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">9.77</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">570</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">35.63</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">86.89</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">79.17</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
 <td class="r t data top_stacked_value">656</td>
 </tr>
 <tr>
-<td class="r t data middle_stacked_value">20.50</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">47.67</td>
-</tr>
-<tr>
-<td class="r t data bottom_stacked_value">41.00</td>
-</tr>
-</table></td>
-<td class="r t stacked_cell data"><table class="table">
-<tr>
-<td class="r t data top_stacked_value">720</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">22.50</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">52.33</td>
-</tr>
-<tr>
-<td class="r t data bottom_stacked_value">45.00</td>
-</tr>
-</table></td>
-<td class="r t stacked_cell data"><table class="table">
-<tr>
-<td class="r t data top_stacked_value">1376</td>
-</tr>
-<tr>
-<td class="r t data middle_stacked_value">43.00</td>
+<td class="r t data middle_stacked_value">41.00</td>
 </tr>
 <tr>
 <td class="r t data middle_stacked_value"> </td>
@@ -10091,23 +10106,23 @@ var _ie64 = _info.indexOf("x64") > 0
 <th class="l t rowheader" scope="row">Total     </th>
 <td class="r t stacked_cell data"><table class="table">
 <tr>
-<td class="r t data top_stacked_value">1600</td>
+<td class="r t data top_stacked_value">880</td>
 </tr>
 <tr>
-<td class="r t data bottom_stacked_value">50.00</td>
+<td class="r t data bottom_stacked_value">55.00</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">720</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">45.00</td>
 </tr>
 </table></td>
 <td class="r t stacked_cell data"><table class="table">
 <tr>
 <td class="r t data top_stacked_value">1600</td>
-</tr>
-<tr>
-<td class="r t data bottom_stacked_value">50.00</td>
-</tr>
-</table></td>
-<td class="r t stacked_cell data"><table class="table">
-<tr>
-<td class="r t data top_stacked_value">3200</td>
 </tr>
 <tr>
 <td class="r t data bottom_stacked_value">100.00</td>
@@ -10123,7 +10138,7 @@ var _ie64 = _info.indexOf("x64") > 0
 </div>
 <br><br><p>
 </p>
-<div align="center"><table class="table proctitle"><tr><td class="c proctitle">Statistics for Table of var by group</td></tr></table></div>
+<div align="center"><table class="table proctitle"><tr><td class="c proctitle">Statistics for Table of x by y</td></tr></table></div>
 <p>
 <a name="IDX1"></a>
 </p>
@@ -10148,10 +10163,10 @@ var _ie64 = _info.indexOf("x64") > 0
 </tr>
 </thead>
 <tbody><tr>
-<td class="r data">32.6667</td>
+<td class="r data">17.3559</td>
 <td class="r data">1</td>
 <td class="r data">&lt;.0001</td>
-<td class="r data">.000000012</td>
+<td class="r data">.000037159</td>
 </tr></tbody>
 </table>
 </div>
@@ -10177,17 +10192,17 @@ var _ie64 = _info.indexOf("x64") > 0
 </tr>
 </thead>
 <tbody><tr>
-<td class="r data">0.0400</td>
-<td class="r data">0.0175</td>
-<td class="r data">0.0057</td>
-<td class="r data">0.0743</td>
+<td class="r data">0.6996</td>
+<td class="r data">0.0180</td>
+<td class="r data">0.6644</td>
+<td class="r data">0.7348</td>
 </tr></tbody>
 </table>
 </div>
 </div>
 <br><br><p>
 </p>
-<div align="center"><table class="table proctitle"><tr><td class="c proctitle">Sample Size = 3200</td></tr></table></div>
+<div align="center"><table class="table proctitle"><tr><td class="c proctitle">Sample Size = 1600</td></tr></table></div>
 <p>
 </p>
 </div>
