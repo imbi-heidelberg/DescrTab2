@@ -52,8 +52,8 @@
 #' }
 #'
 #' @examples
-#' x <- c(rep(T, 20), rep(F, 15))
-#' y <- c(rep(T, 30), rep(F, 25))
+#' x <- c(rep(TRUE, 20), rep(FALSE, 15))
+#' y <- c(rep(TRUE, 30), rep(FALSE, 25))
 #'
 #' farrington.manning(x, y, -.3)
 #'
@@ -64,6 +64,8 @@
 #' @keywords Farrington-Manning, rates, test
 #'
 #' @export
+#' @importFrom stats pnorm uniroot
+#'
 farrington.manning <- function(
   group1,
   group2,

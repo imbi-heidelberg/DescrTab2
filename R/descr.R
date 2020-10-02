@@ -473,11 +473,11 @@ descr <-
           setdiff(names(reshape_rows), names(var_options[[var_option_name]][["reshape_rows"]]))
         var_options[[var_option_name]][["reshape_rows"]][name_diff] <-
           reshape_rows[name_diff]
-        var_options[[var_option_name]][["reshape_rows"]][["mean ± sd"]] <-
+        var_options[[var_option_name]][["reshape_rows"]][["mean \u00B1 sd"]] <-
           list(
             args = c("mean", "sd"),
             fun = function(mean, sd)
-              paste0(mean, " ± ", sd)
+              paste0(mean, " \u00B1 ", sd)
           )
       }
     }
@@ -2413,9 +2413,9 @@ test_cat <-
                         group = group,
                         idx = test_options[["indices"]])
           tmp1 <-
-            tmp %>% filter(group == levels(group)[1]) %>% arrange(idx)
+            tmp %>% filter(group == levels(group)[1]) %>% arrange("idx")
           tmp2 <-
-            tmp %>% filter(group == levels(group)[2]) %>% arrange(idx)
+            tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
 
           stopifnot(tmp1$idx == tmp2$idx)
           cont.table <- table(tmp1$var, tmp2$var)
@@ -2447,9 +2447,9 @@ test_cat <-
                         group = group,
                         idx = test_options[["indices"]])
           tmp1 <-
-            tmp %>% filter(group == levels(group)[1]) %>% arrange(idx)
+            tmp %>% filter(group == levels(group)[1]) %>% arrange("idx")
           tmp2 <-
-            tmp %>% filter(group == levels(group)[2]) %>% arrange(idx)
+            tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
 
           stopifnot(tmp1$idx == tmp2$idx)
           cont.table <- table(tmp1$var, tmp2$var)
