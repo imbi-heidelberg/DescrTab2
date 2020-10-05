@@ -638,7 +638,6 @@ descr_cont <-
     # Summary stats choice: Special variable summary stats have precendence over global summary stats which in turn have precedence over
     # the default summary stats (which are N, Nmiss, mean, sd, median, Q1, Q3, min and max).
     # Summary stats choice: Special variable summary stats have precendence over global summary stats
-    # Summary stats choice: Special variable summary stats have precendence over global summary stats
     if (!is.null(var_options[["summary_stats"]])) {
       summary_stats <- var_options[["summary_stats"]]
     }
@@ -804,6 +803,7 @@ print.DescrList <-  function(x,
         ...)
 }
 
+
 #' S3 override for print function for DescrPrint objects
 #'
 #' @keywords internal
@@ -834,18 +834,20 @@ print.DescrPrint <-  function(x,
                               print_format = options("print_format")[[1]],
                               silent = F,
                               ...) {
-  NextMethod("print", x, print_format = print_format, silent = silent, ...)
+  # if no printing format was set, print to console
+  if (is.null(print_format)) {
+    print_format <- "console"
+  }
+  NextMethod("print",object= x,
+             print_format = print_format,
+             silent = silent,
+             ...)
 }
 
 print.DescrPrintCharacter <-  function(x,
                                        print_format = options("print_format")[[1]],
                                        silent = F,
                                        ...) {
-  # if no printing format was set, print to console
-  if (is.null(print_format)) {
-    print_format <- "console"
-  }
-
   ret <- switch(
     print_format,
     tex = print_tex(x, silent),

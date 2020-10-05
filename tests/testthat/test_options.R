@@ -92,8 +92,10 @@ test_that("combine_mean_sd works",
 
 test_that("warnings about unused variable names work",
           {
-          expect_warning(descr(iris, var_labels=c(a="b")))
-          expect_warning(descr(iris, var_options=c(a="b")))
+          expect_warning(descr(iris, var_labels=c(a="b"))%>%
+                           print(silent = T))
+          expect_warning(descr(iris, var_options=c(a="b"))%>%
+                           print(silent = T))
           }
           )
 
@@ -109,11 +111,49 @@ test_that("function list misconfiguration leads to error",
 test_that("check if print_red_na option works",
           expect_type(capture.output(descr(iris) %>% print(print_format="numeric", print_red_NA=T)),"character") )
 
+test_that("format_options in var_options is properly filled with default arguments",
+          {
+            expect_error(descr(iris, var_options = list(Sepal.Length = list(
+              format_options = (print_p = F)
+            ))) %>%
+              print(silent = T), NA)
+
+          })
+
+test_that("reshape_rows in var_options is properly filled with default arguments",
+          {
+            expect_error(descr(iris, var_options = list(Sepal.Length = list(
+              reshape_rows = list(`Q1 - Q3` = list(
+                args = c("Q1", "Q3"),
+                fun = function(Q1, Q3)
+                  paste0(Q1, " -- ", Q3)
+              ))
+            ))) %>%
+              print(silent = T)
+            , NA)
+            expect_error(descr(iris, var_options = list(Sepal.Length = list(
+              format_options = list(combine_mean_sd = T)
+            ))) %>%
+              print(silent = T)
+            , NA)
+
+          })
 
 
+test_that("Special summary stats for 1 variable work",
+          {
+            expect_error(descr(iris,
+                               var_options = list(Sepal.Length = list(
+                                 summary_stats = list(mean =
+                                                        DescrTab2:::.mean, sd = DescrTab2:::.sd)
+                               ))) %>%
+                                 print(silent = T), NA)
 
+            expect_warning(descr(iris,
+                                 var_options = list(Species = list(
+                                   summary_stats = list(mean =
+                                                          DescrTab2:::.factormean)
+                                 ))) %>%
+                             print(silent = T))
 
-
-
-
-
+          })

@@ -129,72 +129,10 @@ verify_output(
 RoundingTimes <-
   matrix(
     c(
-      5.459,
-      5.509,
-      5.509,
-      5.859,
-      5.709,
-      5.759,
-      5.209,
-      5.609,
-      5.509,
-      5.559,
-      5.509,
-      5.409,
-      5.909,
-      5.859,
-      5.709,
-      5.459,
-      5.559,
-      5.609,
-      5.409,
-      5.409,
-      5.359,
-      5.459,
-      5.509,
-      5.359,
-      5.259,
-      5.159,
-      5.009,
-      5.859,
-      5.809,
-      5.759,
-      5.259,
-      5.259,
-      5.159,
-      5.609,
-      5.559,
-      5.409,
-      5.609,
-      5.359,
-      5.459,
-      5.059,
-      5.009,
-      4.959,
-      5.509,
-      5.509,
-      5.409,
-      5.459,
-      5.559,
-      5.509,
-      5.559,
-      5.559,
-      5.359,
-      5.459,
-      5.509,
-      5.559,
-      5.509,
-      5.459,
-      5.259,
-      5.659,
-      5.609,
-      5.409,
-      5.709,
-      5.659,
-      5.559,
-      6.309,
-      6.309,
-      6.259
+      5.459,5.509,5.509,5.859,5.709,5.759,5.209,5.609,5.509,5.559,5.509,5.409,5.909,5.859,5.709,5.459,5.559,5.609,5.409,5.409,
+      5.359,5.459,5.509,5.359,5.259,5.159,5.009,5.859,5.809,5.759,5.259,5.259,5.159,5.609,5.559,5.409,5.609,5.359,5.459,5.059,
+      5.009,4.959,5.509,5.509,5.409,5.459,5.559,5.509,5.559,5.559,5.359,5.459,5.509,5.559,5.509,5.459,5.259,5.659,5.609,5.409,
+      5.709,5.659,5.559,6.309,6.309,6.259
     ),
     nrow = 22,
     byrow = TRUE,
@@ -333,7 +271,7 @@ verify_output("../console/mcnemar.test.txt",
 
 verify_output(
   "../console/exact_mcnemar.test.txt",
-  descr(dat, "group", test_options = list(paired = T, exact = T)) %>% print()
+  descr(dat, "group", test_options = list(paired = T, exact = T, indices = c(1:1600, 1:1600))) %>% print()
 )
 
 
@@ -386,7 +324,7 @@ test_that("t.test 1 sample test works",
                          print(silent = T),
                        NA))
 
-test_that("t.test 1 sample test works",
+test_that("t.test 1 sample works",
           expect_error(
             descr(
               dat[, "extra", drop = F] %>% mutate(extra = factor(extra)),
@@ -396,10 +334,34 @@ test_that("t.test 1 sample test works",
             NA
           ))
 
-test_that("t.test 2 sample test works",
+test_that("t.test 2 sample works",
           expect_error(descr(dat, "group") %>%
                          print(silent = T),
                        NA))
+
+test_that("t.test 2 sample works if specifically requrested",
+          expect_error(descr(dat, "group", var_options=list(extra=list(test_override = "Welchs two-sample t-test"))) %>%
+                         print(silent = T),
+                       NA))
+
+
+test_that(
+  "t.test 2 sample for factor variables works",
+  expect_error(
+    descr(
+      dat %>% mutate(extra = factor(extra)),
+      "group",
+      test_options = list(
+        paired = T,
+        indices = rep(1:10, 2),
+        test_override  = "Welchs two-sample t-test"
+      )
+    ) %>%
+      print(silent = T),
+    NA
+  )
+)
+
 
 test_that("t.test paired 2 sample test works",
           expect_error(descr(
@@ -428,7 +390,7 @@ test_that(
       test_options = list(
         paired = T,
         indices = rep(1:10, 2),
-        test_override  = "Welchs two-sample t-test"
+        test_override  = "Students paired t-test"
       )
     ) %>%
       print(silent = T),
@@ -565,8 +527,10 @@ verify_output("../console/boschloo.txt",
 
 test_that("tests are skipped if variables do not contain enough observations",
           {
-            expect_warning(descr(data.frame(a = 1)))
-            expect_warning(descr(data.frame(a = "a")))
+            expect_warning(descr(data.frame(a = 1))%>%
+                             print(silent = T))
+            expect_warning(descr(data.frame(a = "a"))%>%
+                             print(silent = T))
           })
 
 

@@ -31,6 +31,7 @@ test_that("warnings when lists which are supposed to be named dont have names ar
             expect_warning(descr(iris, format_options = c("a")))
             expect_warning(descr(iris, test_options = c("a")))
             expect_warning(descr(iris, summary_stats_cat = list(mean)))
+            expect_warning(descr(iris, format_summary_stats = list(formatC)))
           }
           )
 
@@ -39,7 +40,11 @@ test_that("error is produces when summary_stats lists are misspecified",
             expect_error(descr(iris, summary_stats_cat = list("mean")))
             expect_error(descr(iris, summary_stats_cont = list("mean")))
             expect_condition(descr(iris, var_options = list(a=list(summary_stats=list("mean")))))
+            expect_error(descr(iris, var_options = list(Sepal.Width = list(summary_stats=list("mean")))))
           })
+
+test_that("error is produced when format_p in var_options is misspecified",
+          expect_error(descr(iris, var_options = list(Sepal.Width = list(format_p=list("mean"))))))
 
 test_that("error is produced reshape_rows is misspecified",
           {
@@ -47,5 +52,29 @@ test_that("error is produced reshape_rows is misspecified",
             expect_error(descr(iris, reshape_rows=c(a=3)))
           }
 )
+
+test_that("test override is check",
+          expect_warning(descr(iris, var_options = list(Sepal.Length = list( test_override="abc"  ) )  ))
+          )
+
+
+
+test_that("test error catch mechanism works",
+          {
+            expect_message(descr(iris, "Species",  var_options = list(
+              Sepal.Length = list(test_override = "Welchs two-sample t-test")
+            )))
+            expect_warning(descr(iris,  var_options = list(
+              Species = list(test_override = "Pearsons chi-squared test")
+            )))
+          })
+
+
+
+
+
+
+
+
 
 
