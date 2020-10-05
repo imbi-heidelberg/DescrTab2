@@ -30,6 +30,10 @@ verify_output(
   ) %>% print(print_format = "console")
 )
 
+DescrPrintObj <- print(descr(iris), silent = T)
 
-test_that("console is default print argument",
-          expect_error(print(descr(iris), print_format=NULL, silent=T), NA) )
+test_that("console is default print argument",{
+  expect_error(print(descr(iris), print_format=NULL, silent=T), NA)
+  expect_error(print(DescrPrintObj, print_format=NULL, silent=T), NA)
+}
+           )

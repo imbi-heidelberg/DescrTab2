@@ -66,6 +66,19 @@ test_that("wilcox.test_2_sample paired",
             NA
           ))
 
+test_that("wilcox.test_2_sample paired works with missings",
+          expect_warning(
+            descr(
+              dat_wilcox.test_2_sample_paired %>% mutate(var = if_else(row_number()==1, NA_real_, var)),
+              "group",
+              test_options = list(
+                nonparametric = T,
+                paired = T,
+                indices = rep(1:10, 2)
+              )
+            ) %>% print(silent = T)
+          ))
+
 test_that("wilcox.test_2_sample paired categorical",
           expect_error(
             descr(
@@ -381,6 +394,19 @@ test_that("t.test paired 2 sample test works",
             NA
           ))
 
+
+test_that("t.test paired 2 sample test works with missings",
+          expect_warning(
+            descr(
+              dat %>% mutate(indices = rep(1:10, 2)) %>% mutate(extra = if_else(row_number()==1, NA_real_, extra )),
+              "group",
+              test_options = list(paired = T, indices = "indices")
+            ) %>%
+              print(silent = T)
+          ))
+
+
+
 test_that(
   "t.test paired 2 sample test for factor variables works",
   expect_error(
@@ -397,6 +423,8 @@ test_that(
     NA
   )
 )
+
+
 
 
 verify_output("../console/1_sample_t.test.txt",

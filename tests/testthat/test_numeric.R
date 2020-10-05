@@ -40,3 +40,32 @@ verify_output(
 verify_output("../console/print_numeric_CI.txt",
               descr(dat,
                     "Species") %>% print( print_format = "numeric"))
+
+
+test_that("Summary stats that produce non-numeric output lead to erros when numeric output format is requested",
+          {
+            expect_warning(
+              expect_error(descr(iris, summary_stats_cat = list(abc=function(...){"abc"} )) %>% print(print_format="numeric"))
+            )
+
+            expect_warning(
+              expect_error(descr(iris, summary_stats_cont = list(abc=function(...){"abc"} )) %>% print(print_format="numeric"))
+            )
+
+          }
+
+
+
+
+          )
+
+
+
+
+
+
+
+
+
+
+

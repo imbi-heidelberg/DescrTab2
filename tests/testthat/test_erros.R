@@ -69,8 +69,13 @@ test_that("test error catch mechanism works",
             )))
           })
 
-
-
+dat <- sleep[, c("extra", "group")] %>% mutate(cat= factor(c(rep("a", 10), rep("b", 10))))
+test_that("forgotten indices in paired tests lead to errors",
+          {
+            expect_message(descr(dat %>% select(-cat), "group", test_options = list(paired=T)) %>% print(silent=T))
+            expect_message(descr(dat %>% select(-extra), "group", test_options = list(paired=T)) %>% print(silent=T))
+          }
+          )
 
 
 

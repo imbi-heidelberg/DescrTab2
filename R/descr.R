@@ -906,7 +906,7 @@ create_DescrPrint <- function(DescrListObj, print_format) {
     } else{
       var_format_p <- format_p
     }
-    if (!is.null(var_option[["format_p"]])) {
+    if (!is.null(var_option[["reshape_rows"]])) {
       var_reshape_rows <- var_option[["reshape_rows"]]
     } else{
       var_reshape_rows <- reshape_rows
@@ -919,12 +919,12 @@ create_DescrPrint <- function(DescrListObj, print_format) {
           stop(
             "You can only create numeric tables if all of your summary statistics return numeric values."
           )
-        } else{
-          if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]][["summary_stats"]], is.numeric))) {
-            stop(
-              "You can only create numeric tables if all of your summary statistics return numeric values."
-            )
-          }
+        }
+      } else{
+        if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]][["summary_stats"]], is.numeric))) {
+          stop(
+            "You can only create numeric tables if all of your summary statistics return numeric values."
+          )
         }
       }
     }
@@ -936,7 +936,7 @@ create_DescrPrint <- function(DescrListObj, print_format) {
         var_format_options,
         var_format_summary_stats,
         var_format_p,
-        reshape_rows
+        var_reshape_rows
       )
   }
 
@@ -2090,10 +2090,16 @@ test_cont <-
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == T)) {
           # ordinal variable, paired test
-          if (n_levels_group == 2) {
-            test <- "Wilcoxon two-sample signed-rank test"
-          } else if (n_levels_group >= 2) {
-            test <- "Friedman test"
+          if (is.null(test_options[["indices"]])) {
+            stop(
+              "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+            )
+          } else{
+            if (n_levels_group == 2) {
+              test <- "Wilcoxon two-sample signed-rank test"
+            } else if (n_levels_group >= 2) {
+              test <- "Friedman test"
+            }
           }
         } else{
           # ordinal variable, independent test
@@ -2109,7 +2115,11 @@ test_cont <-
         # continuous variable
         if (isTRUE(test_options[["paired"]] == T)) {
           # continuous variable, paired test
-          if (n_levels_group == 2) {
+          if (is.null(test_options[["indices"]])) {
+            stop(
+              "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+            )
+          } else if (n_levels_group == 2) {
             test <- "Students paired t-test"
           } else{
             test <- "Mixed model ANOVA"
@@ -2132,7 +2142,7 @@ test_cont <-
       erg <- switch(
         test,
         `Wilcoxon two-sample signed-rank test` = {
-          good_idx <- names(table(id) == 2)
+          good_idx <- names(table(id)[table(id) == 2])
           if (!all(id %in% good_idx)) {
             warning("Removed paired observations with missings.")
           }
@@ -2368,173 +2378,101 @@ test_cat <-
       }
     }
 
+    if (test %in% c(
+      'Friedman test',
+      'Wilcoxon two-sample signed-rank test',
+      'Wilcoxon one-sample signed-rank test',
+      'Mann-Whitney U test',
+      'Kruskal-Wallis one-way ANOVA',
+      'Students paired t-test',
+      'Mixed model ANOVA',
+      'Students one-sample t-test',
+      'Welchs two-sample t-test',
+      'F-test (ANOVA)'
+    )) {
+      var <- as.numeric(as.character(var))
+      erg <- test_cont(var, group, test_options, test, var_name)
+    } else{
+      erg <-
+        switch(
+          test,
+          `Exact McNemars test` = {
+            # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
 
-    erg <-
-      switch(
-        test,
-        `Wilcoxon two-sample signed-rank test` = {
-          tibl <- tibble(var = as.numeric(as.character(var)),
-                         group = group,
-                         id = test_options[["indices"]])
+            tmp <- tibble(var = var,
+                          group = group,
+                          idx = test_options[["indices"]])
+            tmp1 <-
+              tmp %>% filter(group == levels(group)[1]) %>% arrange("idx")
+            tmp2 <-
+              tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
 
-          level1 <- levels(group)[1]
-          level2 <- levels(group)[2]
-          x <-
-            tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
-
-          y <-
-            tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
-
-          list(p = stats::wilcox.test(x, y, paired = T)$p.value)
-        },
-        `Friedman test` = {
-          tmp <-
-            tibble(var = as.numeric(as.character(var)),
-                   group = group,
-                   idx = test_options[["indices"]])
-          list(p = stats::friedman.test(var ~ group |
-                                          idx, tmp)$p.value)
-        },
-        `Wilcoxon one-sample signed-rank test` = {
-          list(p = stats::wilcox.test(as.numeric(as.character(var)))$p.value)
-        },
-        `Mann-Whitney U test` = {
-          tl <-
-            stats::wilcox.test(as.numeric(as.character(var)) ~ group, conf.int = T)
-          list(p = tl$p.value,
-               CI = tl$conf.int,
-               CI_name = "HL CI")
-        },
-        `Kruskal-Wallis one-way ANOVA` = {
-          list(p = stats::kruskal.test(as.numeric(as.character(var)) ~ group)$p.value)
-        },
-        `Exact McNemars test` = {
-          # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
-
-          tmp <- tibble(var = var,
-                        group = group,
-                        idx = test_options[["indices"]])
-          tmp1 <-
-            tmp %>% filter(group == levels(group)[1]) %>% arrange("idx")
-          tmp2 <-
-            tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
-
-          stopifnot(tmp1$idx == tmp2$idx)
-          cont.table <- table(tmp1$var, tmp2$var)
-          list(
-            p = exact2x2::exact2x2(
-              cont.table,
-              alternative = "two.sided",
-              tsmethod = "central",
-              paired = TRUE
-            )$p.value,
-            CI = stats::prop.test(table(var, group))$conf.int,
-            CI_name = "Prop. dif. CI"
-          )
-        },
-        `Boschloos test` = {
-          tabl <- table(var, group)
-          x1 <- tabl[1, 1]
-          n1 <- sum(tabl[, 1])
-          x2 <- tabl[1, 2]
-          n2 <- sum(tabl[, 2])
-          list(
-            p = exact2x2::boschloo(x1, n1, x2, n2)$p.value,
-            CI = stats::prop.test(table(var, group))$conf.int,
-            CI_name = "Prop. dif. CI"
-          )
-        },
-        `McNemars test` = {
-          tmp <- tibble(var = var,
-                        group = group,
-                        idx = test_options[["indices"]])
-          tmp1 <-
-            tmp %>% filter(group == levels(group)[1]) %>% arrange("idx")
-          tmp2 <-
-            tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
-
-          stopifnot(tmp1$idx == tmp2$idx)
-          cont.table <- table(tmp1$var, tmp2$var)
-          list(
-            p = stats::mcnemar.test(cont.table)$p.value,
-            CI = stats::prop.test(table(var, group))$conf.int,
-            CI_name = "Prop. dif. CI"
-          )
-        },
-        `Cochrans Q test` = {
-          tmp <- tibble(var = var,
-                        group = group,
-                        idx = test_options[["indices"]])
-          list(p = DescTools::CochranQTest(var ~ group | idx,
-                                           tmp)$p.value)
-        },
-        `Chi-squared goodness-of-fit test` = {
-          list(p = stats::chisq.test(table(var))$p.value)
-        },
-        `Pearsons chi-squared test` = {
-          if (n_levels_group == 2 & n_levels_var == 2) {
+            stopifnot(tmp1$idx == tmp2$idx)
+            cont.table <- table(tmp1$var, tmp2$var)
             list(
-              p = stats::chisq.test(var, group)$p.value,
+              p = exact2x2::exact2x2(
+                cont.table,
+                alternative = "two.sided",
+                tsmethod = "central",
+                paired = TRUE
+              )$p.value,
               CI = stats::prop.test(table(var, group))$conf.int,
               CI_name = "Prop. dif. CI"
             )
-          } else{
-            list(p = stats::chisq.test(var, group)$p.value)
-          }
-        },
+          },
+          `Boschloos test` = {
+            tabl <- table(var, group)
+            x1 <- tabl[1, 1]
+            n1 <- sum(tabl[, 1])
+            x2 <- tabl[1, 2]
+            n2 <- sum(tabl[, 2])
+            list(
+              p = exact2x2::boschloo(x1, n1, x2, n2)$p.value,
+              CI = stats::prop.test(table(var, group))$conf.int,
+              CI_name = "Prop. dif. CI"
+            )
+          },
+          `McNemars test` = {
+            tmp <- tibble(var = var,
+                          group = group,
+                          idx = test_options[["indices"]])
+            tmp1 <-
+              tmp %>% filter(group == levels(group)[1]) %>% arrange("idx")
+            tmp2 <-
+              tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
 
-        # Continuous tests for categorical variables
-        `Students paired t-test` = {
-          tibl <- tibble(
-            var = var %>% as.character() %>% as.numeric(),
-            group = group,
-            id = test_options[["indices"]]
-          )
-          level1 <- levels(group)[1]
-          level2 <- levels(group)[2]
-
-          x <-
-            tibl %>% filter(group == level1) %>% arrange(id) %>% pull(var)
-          y <-
-            tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
-
-          tl <- stats::t.test(x, y, paired = T)
-
-          list(p = tl$p.value,
-               CI = tl$conf.int,
-               CI_name = "Mean dif. CI")
-        },
-        `Mixed model ANOVA` = {
-          tmp <- tibble(
-            var = var %>% as.character() %>% as.numeric(),
-            group = group,
-            idx = test_options[["indices"]]
-          )
-
-          fit <-
-            nlme::lme(var ~ group, random = ~ 1 | idx, data = tmp)
-          tl <- stats::anova(fit)
-          pv <- tl$`p-value`[2]
-          list(p = pv)
-        },
-        `Students one-sample t-test` = {
-          list(p = stats::t.test(var %>% as.character() %>% as.numeric())$p.value)
-        },
-        `Welchs two-sample t-test` = {
-          var_numeric <- var %>% as.character() %>% as.numeric()
-          tl <- stats::t.test(var_numeric ~ group, var.equal = F)
-          list(p = tl$p.value,
-               CI = tl$conf.int,
-               CI_name = "Mean dif. CI")
-        },
-        `F-test (ANOVA)` = {
-          var_numeric <- var %>% as.character() %>% as.numeric()
-          tl <- summary(stats::aov(var_numeric ~ group))[[1]]
-          pv <- tl$`Pr(>F)`[1]
-          list(p = pv)
-        },
-        list(p = NA_real_)
-      )
+            stopifnot(tmp1$idx == tmp2$idx)
+            cont.table <- table(tmp1$var, tmp2$var)
+            list(
+              p = stats::mcnemar.test(cont.table)$p.value,
+              CI = stats::prop.test(table(var, group))$conf.int,
+              CI_name = "Prop. dif. CI"
+            )
+          },
+          `Cochrans Q test` = {
+            tmp <- tibble(var = var,
+                          group = group,
+                          idx = test_options[["indices"]])
+            list(p = DescTools::CochranQTest(var ~ group | idx,
+                                             tmp)$p.value)
+          },
+          `Chi-squared goodness-of-fit test` = {
+            list(p = stats::chisq.test(table(var))$p.value)
+          },
+          `Pearsons chi-squared test` = {
+            if (n_levels_group == 2 & n_levels_var == 2) {
+              list(
+                p = stats::chisq.test(var, group)$p.value,
+                CI = stats::prop.test(table(var, group))$conf.int,
+                CI_name = "Prop. dif. CI"
+              )
+            } else{
+              list(p = stats::chisq.test(var, group)$p.value)
+            }
+          },
+          list(p = NA_real_)
+        )
+    }
 
     erg[["test_name"]] <- test
     erg

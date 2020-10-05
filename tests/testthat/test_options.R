@@ -7,14 +7,30 @@ dat %<>% mutate(food = c("fries", "wedges") %>% sample(150, T) %>% factor())
 
 
 test_that("Confidence intervals",
-          expect_error(
-            descr(
+          {
+            expect_error(descr(
               dat %>% select(-"Species"),
               "animal",
               test_options = list(exact = T, nonparametric = T)
             ) %>%  print(silent = T),
-            NA
-          ))
+            NA)
+
+            expect_error(descr(
+              dat %>% select(-"Species"),
+              "animal",
+              test_options = list(exact = T, nonparametric = T)
+            ) %>%  print(silent = T, print_format="numeric"),
+            NA)
+
+            expect_error(descr(
+              dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
+              "animal",
+              ) %>%  print(silent = T),
+            NA)
+
+          })
+
+
 
 
 test_that("Ommit summary stats",
@@ -38,12 +54,40 @@ test_that("Ommit summary stats",
           ))
 
 test_that("No p",
-          expect_error(
-            descr(dat, "animal", format_options = list(print_p = F, print_CI = F)) %>%  print(silent = T),
-            NA
-          ))
+          {
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                print_p = F, print_CI = F
+              )) %>%  print(silent = T, print_format = "console"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                print_p = F, print_CI = F
+              )) %>%  print(silent = T, print_format = "tex"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                print_p = F, print_CI = F
+              )) %>%  print(silent = T, print_format = "word"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                print_p = F, print_CI = F
+              )) %>%  print(silent = T, print_format = "html"),
+              NA
+            )
+
+
+          })
 
 test_that("Per-variable options",
+          {
           expect_error(
             descr(iris, "Species", var_options = list(
               Sepal.Length = list(
@@ -55,7 +99,39 @@ test_that("Per-variable options",
               )
             )) %>%  print(silent = T),
             NA
+          )
+
+          expect_error(
+            descr(iris, var_options = list(
+              Species = list(
+                format_summary_stats = list(
+                  mean = function(x)
+                    formatC(x, digits = 4)
+                ),
+                test_options = c(include_group_missings_in_test = T)
+              )
+            )) %>%  print(silent = T),
+            NA
+          )
+
+          descr(iris, var_options = list(
+            Sepal.Length = list(
+              format_summary_stats = list(
+                mean = function(x)
+                  formatC(x, digits = 4)
+              ),
+              format_p = formatC,
+              reshape_rows = list(
+                args = c("mean", "sd"),
+                fun = function(mean, sd)
+                  paste0(mean, " \u00B1 ", sd)
+              ),
+              test_options = c(include_group_missings_in_test = T)
+            )
           ))
+
+          }
+          )
 
 
 test_that("print_test_names works",
