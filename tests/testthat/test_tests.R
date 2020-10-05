@@ -66,6 +66,30 @@ test_that("wilcox.test_2_sample paired",
             NA
           ))
 
+test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
+          {
+            expect_message(
+              descr(
+                dat_wilcox.test_2_sample_paired,
+                "group",
+                test_options = list(nonparametric = T,
+                                    paired = T)
+              ) %>% print(silent = T)
+            )
+
+
+            expect_message(
+              descr(
+                dat_wilcox.test_2_sample_paired %>%  mutate(var = ordered(var)),
+                "group",
+                test_options = list(nonparametric = T,
+                                    paired = T)
+              ) %>% print(silent = T)
+            )
+
+
+          })
+
 test_that("wilcox.test_2_sample paired works with missings",
           expect_warning(
             descr(
@@ -277,6 +301,15 @@ test_that("exact2x2 mcnemar test works",
           ) %>%
             print(silent = T),
           NA))
+
+test_that("exact2x2 mcnemar test errors if you forget to specify indices",
+          expect_message(descr(
+            dat, "group", test_options = list(
+              paired = T,
+              exact = T
+            )
+          ) %>%
+            print(silent = T)))
 
 
 verify_output("../console/mcnemar.test.txt",

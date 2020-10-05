@@ -2077,15 +2077,15 @@ test_cont <-
           )
         )
         test <- "No appropriate test available."
-      } else if (!is.null(group) && nrow(table(var, group)) == 1) {
-        warning(
-          paste0(
-            "Skipping test for variable ",
-            var_name,
-            " because it is essentially constantin some group."
-          )
-        )
-        test <- "No appropriate test available."
+      # } else if (!is.null(group) && nrow(table(var, group)) == 1) {
+      #   warning(
+      #     paste0(
+      #       "Skipping test for variable ",
+      #       var_name,
+      #       " because it is essentially constantin some group."
+      #     )
+      #   )
+      #   test <- "No appropriate test available."
       } else if (isTRUE(test_options[["nonparametric"]] == T)) {
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == T)) {
@@ -2132,12 +2132,16 @@ test_cont <-
             test <- "Welchs two-sample t-test"
           } else if (n_levels_group >= 3) {
             test <- "F-test (ANOVA)"
+          } else{
+            test <- "No appropriate test available."
           }
         }
       }
     }
     if (length(var) == 0) {
-      erg <- list(p = NA_real_)
+      erg <- list(p = NA_real_,
+                  CI = NA_real_,
+                  CI_name = "")
     } else{
       erg <- switch(
         test,
@@ -2231,6 +2235,7 @@ test_cont <-
         list(p = NA_real_)
       )
     }
+
     erg[["test_name"]] <- test
     erg
   }
@@ -2372,6 +2377,8 @@ test_cat <-
             }
             else if (n_levels_group >= 2) {
               test <- "Pearsons chi-squared test"
+            } else {
+              test <- "No appropriate test available."
             }
           }
         }
@@ -2470,10 +2477,14 @@ test_cat <-
               list(p = stats::chisq.test(var, group)$p.value)
             }
           },
-          list(p = NA_real_)
+          list(p = NA_real_,
+               CI = NA_real_,
+               CI_name = "")
         )
     }
 
-    erg[["test_name"]] <- test
+    if (is.null(erg[["test_name"]] )){
+      erg[["test_name"]] <- test
+    }
     erg
   }

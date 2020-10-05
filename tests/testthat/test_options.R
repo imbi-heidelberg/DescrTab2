@@ -28,6 +28,18 @@ test_that("Confidence intervals",
               ) %>%  print(silent = T),
             NA)
 
+            expect_error(descr(
+              dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
+              "animal",
+            ) %>%  print(silent = T, print_format="numeric"),
+            NA)
+
+            expect_error(descr(
+              dat %>% select(-"Species") %>% mutate(all_na = NA_character_),
+              "animal",
+            ) %>%  print(silent = T, print_format="numeric"),
+            NA)
+
           })
 
 
@@ -114,21 +126,21 @@ test_that("Per-variable options",
             NA
           )
 
-          descr(iris, var_options = list(
+          expect_error(descr(iris, var_options = list(
             Sepal.Length = list(
               format_summary_stats = list(
                 mean = function(x)
                   formatC(x, digits = 4)
               ),
               format_p = formatC,
-              reshape_rows = list(
+              reshape_rows = list(`mean pm sd` = list(
                 args = c("mean", "sd"),
                 fun = function(mean, sd)
                   paste0(mean, " \u00B1 ", sd)
-              ),
+              )),
               test_options = c(include_group_missings_in_test = T)
             )
-          ))
+          )) %>% print(silent=T), NA)
 
           }
           )
