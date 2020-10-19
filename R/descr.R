@@ -1064,8 +1064,12 @@ print_tex <- function(DescrPrintObj, silent = F) {
 
   names(lengths) <- c(labels)
 
-  c1 <- tibl %>% pull(1)
-  indx_varnames <- c1 %in% labels
+  indx_varnames <- logical()
+  for(i in 1:length(DescrPrintObj$variables)){
+    indx_varnames <- c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]]-1 )))
+  }
+
+  # indx_varnames <- c1 %in% labels
 
   if ("p" %in% names(tibl)) {
     print_footnotes <- T
@@ -1154,8 +1158,10 @@ print_html <- function(DescrPrintObj, silent = F) {
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
   names(lengths) <- c(labels)
 
-  c1 <- tibl %>% pull(1)
-  indx_varnames <- c1 %in% labels
+  indx_varnames <- logical()
+  for(i in 1:length(DescrPrintObj$variables)){
+    indx_varnames <- c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]]-1 )))
+  }
 
   if ("p" %in% names(tibl)) {
     print_footnotes <- T
