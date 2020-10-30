@@ -393,6 +393,9 @@ descr <-
     var_labels[tmp_names] <- var_names[tmp_names]
     for (var_name in var_names) {
       if (is.null(var_options[[var_name]][["label"]])) {
+        if (!is.list(var_options[[var_name]])) {
+          var_options[[var_name]] <- as.list(var_options[[var_name]])
+        }
         var_options[[var_name]][["label"]] <- var_labels[[var_name]]
       }
     }
@@ -411,12 +414,12 @@ descr <-
     }
 
     for (var_option_name in names(var_options)) {
-      if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
-        if (!is.list(var_options[[var_option_name]][["summary_stats"]]) |
-            !all(sapply(var_options[[var_option_name]][["summary_stats"]], is.function))) {
-          stop("summary_stats in var_options must be a list of functions.")
+        if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
+          if (!is.list(var_options[[var_option_name]][["summary_stats"]]) |
+              !all(sapply(var_options[[var_option_name]][["summary_stats"]], is.function))) {
+            stop("summary_stats in var_options must be a list of functions.")
+          }
         }
-      }
       if (!is.null(var_options[[var_option_name]][["summary_stats"]]) ||
           !is.null(var_options[[var_option_name]][["format_summary_stats"]])) {
         name_diff <-
@@ -580,12 +583,14 @@ descr_cat <-
       # Subset values for the respective group
       var_grp <- var[which(group == group_name)]
       cat_list <- list()
+      cat_list[["summary_stats"]] <- list()
 
       for (summary_stat_name in names(summary_stats)) {
         cat_list[["summary_stats"]][[summary_stat_name]] <-
           summary_stats[[summary_stat_name]](var_grp)
       }
 
+      cat_list[["categories"]] <- list()
       for (cat_name in var_levels) {
         cat_list[["categories"]][[cat_name]] <- sum(var_grp == cat_name)
       }
@@ -594,10 +599,13 @@ descr_cat <-
 
     # Caclulate summary for whole cohort
     cat_list <- list()
+    cat_list[["summary_stats"]] <- list()
+
     for (summary_stat_name in names(summary_stats)) {
       cat_list[["summary_stats"]][[summary_stat_name]] <-
         summary_stats[[summary_stat_name]](var)
     }
+    cat_list[["categories"]] <- list()
     for (cat_name in var_levels) {
       cat_list[["categories"]][[cat_name]] <- sum(var == cat_name)
     }
@@ -610,10 +618,12 @@ descr_cat <-
         test_cat(var, group, test_options, test_override, var_name),
         error = function(cond) {
           message("Error converted to warning: ", cond)
-          list(p = NA_real_,
-               test_name = "Test errored, check console output.",
-               CI_name = "",
-               CI = c(NA_real_, NA_real_))
+          list(
+            p = NA_real_,
+            test_name = "Test errored, check console output.",
+            CI_name = "",
+            CI = c(NA_real_, NA_real_)
+          )
         }
       )
 
@@ -679,10 +689,12 @@ descr_cont <-
         test_cont(var, group, test_options, test_override, var_name),
         error = function(cond) {
           message("Error converted to warning: ", cond)
-          list(p = NA_real_,
-               test_name = "Test errored, check console output.",
-               CI_name = "",
-               CI = c(NA_real_, NA_real_))
+          list(
+            p = NA_real_,
+            test_name = "Test errored, check console output.",
+            CI_name = "",
+            CI = c(NA_real_, NA_real_)
+          )
         }
       )
     erg[["variable_name"]] <- var_name
@@ -838,10 +850,13 @@ print.DescrPrint <-  function(x,
   if (is.null(print_format)) {
     print_format <- "console"
   }
-  NextMethod("print",object= x,
-             print_format = print_format,
-             silent = silent,
-             ...)
+  NextMethod(
+    "print",
+    object = x,
+    print_format = print_format,
+    silent = silent,
+    ...
+  )
 }
 
 print.DescrPrintCharacter <-  function(x,
@@ -1065,8 +1080,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
   names(lengths) <- c(labels)
 
   indx_varnames <- logical()
-  for(i in 1:length(DescrPrintObj$variables)){
-    indx_varnames <- c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]]-1 )))
+  for (i in 1:length(DescrPrintObj$variables)) {
+    indx_varnames <-
+      c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]] - 1)))
   }
 
   # indx_varnames <- c1 %in% labels
@@ -1122,7 +1138,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
                   repeat_header_continued = F) %>%
     capture.output()
 
-  tex %<>% str_replace_all( "\\\\\\\\(?!\\*)", fixed("\\\\\\\\*"))
+  tex %<>% str_replace_all("\\\\\\\\(?!\\*)", fixed("\\\\\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
   if (length(head(pagebreak_indices, -1)) > 0) {
@@ -1159,8 +1175,9 @@ print_html <- function(DescrPrintObj, silent = F) {
   names(lengths) <- c(labels)
 
   indx_varnames <- logical()
-  for(i in 1:length(DescrPrintObj$variables)){
-    indx_varnames <- c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]]-1 )))
+  for (i in 1:length(DescrPrintObj$variables)) {
+    indx_varnames <-
+      c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]] - 1)))
   }
 
   if ("p" %in% names(tibl)) {
@@ -2074,7 +2091,8 @@ test_cont <-
 
     # if test is not supplied, determine test
     if (is.null(test)) {
-      if ( (!is.null(group) && !all(table(group) > 1)) ||  length(var)==1 ) {
+      if ((!is.null(group) &&
+           !all(table(group) > 1)) ||  length(var) == 1) {
         warning(
           paste0(
             "Skipping test for variable ",
@@ -2083,15 +2101,15 @@ test_cont <-
           )
         )
         test <- "No appropriate test available."
-      # } else if (!is.null(group) && nrow(table(var, group)) == 1) {
-      #   warning(
-      #     paste0(
-      #       "Skipping test for variable ",
-      #       var_name,
-      #       " because it is essentially constantin some group."
-      #     )
-      #   )
-      #   test <- "No appropriate test available."
+        # } else if (!is.null(group) && nrow(table(var, group)) == 1) {
+        #   warning(
+        #     paste0(
+        #       "Skipping test for variable ",
+        #       var_name,
+        #       " because it is essentially constantin some group."
+        #     )
+        #   )
+        #   test <- "No appropriate test available."
       } else if (isTRUE(test_options[["nonparametric"]] == T)) {
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == T)) {
@@ -2483,13 +2501,15 @@ test_cat <-
               list(p = stats::chisq.test(var, group)$p.value)
             }
           },
-          list(p = NA_real_,
-               CI = NA_real_,
-               CI_name = "")
+          list(
+            p = NA_real_,
+            CI = NA_real_,
+            CI_name = ""
+          )
         )
     }
 
-    if (is.null(erg[["test_name"]] )){
+    if (is.null(erg[["test_name"]])) {
       erg[["test_name"]] <- test
     }
     erg
