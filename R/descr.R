@@ -1122,7 +1122,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
                   repeat_header_continued = F) %>%
     capture.output()
 
-  tex %<>% str_replace_all(fixed("\\\\"), fixed("\\\\*"))
+  tex %<>% str_replace_all( "\\\\\\\\(?!\\*)", fixed("\\\\\\\\*"))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>% which() %>% tail(-1)
   if (length(head(pagebreak_indices, -1)) > 0) {
