@@ -1,6 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-10-02T17:00Z
+articles:
+  maintenance_guide: maintenance_guide.html
+  test_choice_tree_pdf: test_choice_tree_pdf.pdf
+  usage_guide: usage_guide.html
+  validation_report: validation_report.html
+last_built: 2020-11-23T14:18Z
 

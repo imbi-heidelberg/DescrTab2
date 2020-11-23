@@ -141,7 +141,7 @@ depending on the print_format option. This object is then printed in an appropri
     </div>
 
     <pre class="usage"><span class='co'># S3 method for DescrList</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>x</span>, print_format = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"print_format"</span>)[[<span class='fl'>1</span>]], silent = <span class='kw'>F</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, print_format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"print_format"</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, silent <span class='op'>=</span> <span class='cn'>F</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,7 +178,7 @@ what you would usually want, the second type is mostly for debugging purposes. A
 be printed as html, tex code, as a flextable object or simply to the console.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>), print_format=<span class='st'>"console"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"console"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    Variables      Total        p        Test                              
 #&gt; <span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'> </span><span>Sepal.Length</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'>  </span><span>           </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
 #&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'> </span><span>  N</span><span style='color: #555555;'> </span><span>          </span><span style='color: #555555;'> </span><span>150</span><span style='color: #555555;'> </span><span>        </span><span style='color: #555555;'> </span><span>&lt;0.001</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>Students one-sample t-test</span><span style='color: #555555;'> </span><span>      
@@ -211,7 +211,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; </span><span style='color: #555555;'>29</span><span> </span><span style='color: #555555;'> </span><span>Species</span><span style='color: #555555;'> </span><span>      </span><span style='color: #555555;'>  </span><span>           </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
 #&gt; </span><span style='color: #555555;'>30</span><span> </span><span style='color: #555555;'> </span><span>  setosa</span><span style='color: #555555;'> </span><span>     </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'> </span><span>&gt;0.999</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>Chi-squared goodness-of-fit test</span><span style='color: #555555;'> </span><span>
 #&gt; </span><span style='color: #555555;'>31</span><span> </span><span style='color: #555555;'> </span><span>  versicolor</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
-#&gt; </span><span style='color: #555555;'>32</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>  </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>), print_format=<span class='st'>"tex"</span>)
+#&gt; </span><span style='color: #555555;'>32</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>  </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"tex"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; \needspace{2cm}
 #&gt; 
 #&gt; \begin{longtable}[t]{lcc}
@@ -266,10 +266,10 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{3}{l}{\textbf{Species}}\\*
 #&gt; \hspace{1em}setosa &amp; 50 (33\%) &amp; \textgreater0.999\textsuperscript{chi1}\\*
 #&gt; \hspace{1em}versicolor &amp; 50 (33\%) &amp; \\*
-#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\**
+#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
-#&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>), print_format=<span class='st'>"html"</span>)
+#&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"html"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
 #&gt;  &lt;thead&gt;
 #&gt; &lt;tr&gt;
@@ -431,8 +431,8 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; &lt;tr&gt;&lt;td style="padding: 0; border: 0;" colspan="100%"&gt;
 #&gt; &lt;sup&gt;chi1&lt;/sup&gt; Chi-squared goodness-of-fit test&lt;/td&gt;&lt;/tr&gt;
 #&gt; &lt;/tfoot&gt;
-#&gt; &lt;/table&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>), print_format=<span class='st'>"word"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>), print_format=<span class='st'>"numeric"</span>)
+#&gt; &lt;/table&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"word"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"numeric"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 44 x 4</span><span>
 #&gt;    Variable         Total          p Test                            
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                           
@@ -479,8 +479,8 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; </span><span style='color: #555555;'>41</span><span> </span><span style='color: #555555;'> </span><span>Species</span><span style='color: #555555;'> </span><span>       </span><span style='color: #BB0000;'>  </span><span>      1.00</span><span style='color: #555555;'>e</span><span>+  0 Chi-squared goodness-of-fit test
 #&gt; </span><span style='color: #555555;'>42</span><span> </span><span style='color: #555555;'> </span><span>  setosa</span><span style='color: #555555;'> </span><span>      50     </span><span style='color: #BB0000;'>  </span><span>   </span><span style='color: #555555;'> </span><span>     </span><span style='color: #BB0000;'>  </span><span>                              
 #&gt; </span><span style='color: #555555;'>43</span><span> </span><span style='color: #555555;'> </span><span>  versicolor</span><span style='color: #555555;'> </span><span>  50     </span><span style='color: #BB0000;'>  </span><span>   </span><span style='color: #555555;'> </span><span>     </span><span style='color: #BB0000;'>  </span><span>                              
-#&gt; </span><span style='color: #555555;'>44</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>   50     </span><span style='color: #BB0000;'>  </span><span>   </span><span style='color: #555555;'> </span><span>     </span><span style='color: #BB0000;'>  </span><span>                              </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(print_format=<span class='st'>"tex"</span>)
-<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>)
+#&gt; </span><span style='color: #555555;'>44</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>   50     </span><span style='color: #BB0000;'>  </span><span>   </span><span style='color: #555555;'> </span><span>     </span><span style='color: #BB0000;'>  </span><span>                              </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>print_format<span class='op'>=</span><span class='st'>"tex"</span><span class='op'>)</span>
+<span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; \needspace{2cm}
 #&gt; 
 #&gt; \begin{longtable}[t]{lcc}
@@ -535,11 +535,11 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{3}{l}{\textbf{Species}}\\*
 #&gt; \hspace{1em}setosa &amp; 50 (33\%) &amp; \textgreater0.999\textsuperscript{chi1}\\*
 #&gt; \hspace{1em}versicolor &amp; 50 (33\%) &amp; \\*
-#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\**
+#&gt; \hspace{1em}virginica &amp; 50 (33\%) &amp; \\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
-#&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(print_format=<span class='st'>"console"</span>)
-<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>)
+#&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>print_format<span class='op'>=</span><span class='st'>"console"</span><span class='op'>)</span>
+<span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    Variables      Total        p        Test                              
 #&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'> </span><span>Sepal.Length</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'>  </span><span>           </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
 #&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'> </span><span>  N</span><span style='color: #555555;'> </span><span>          </span><span style='color: #555555;'> </span><span>150</span><span style='color: #555555;'> </span><span>        </span><span style='color: #555555;'> </span><span>&lt;0.001</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>Students one-sample t-test</span><span style='color: #555555;'> </span><span>      
@@ -572,7 +572,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; </span><span style='color: #555555;'>29</span><span> </span><span style='color: #555555;'> </span><span>Species</span><span style='color: #555555;'> </span><span>      </span><span style='color: #555555;'>  </span><span>           </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
 #&gt; </span><span style='color: #555555;'>30</span><span> </span><span style='color: #555555;'> </span><span>  setosa</span><span style='color: #555555;'> </span><span>     </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'> </span><span>&gt;0.999</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>Chi-squared goodness-of-fit test</span><span style='color: #555555;'> </span><span>
 #&gt; </span><span style='color: #555555;'>31</span><span> </span><span style='color: #555555;'> </span><span>  versicolor</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
-#&gt; </span><span style='color: #555555;'>32</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>  </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                </div><div class='input'><span class='kw'>DescrPrint</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='descr.html'>descr</a></span>(<span class='kw'>iris</span>))
+#&gt; </span><span style='color: #555555;'>32</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>  </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                </div><div class='input'><span class='va'>DescrPrint</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    Variables      Total        p        Test                              
 #&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'> </span><span>Sepal.Length</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'>  </span><span>           </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
 #&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'> </span><span>  N</span><span style='color: #555555;'> </span><span>          </span><span style='color: #555555;'> </span><span>150</span><span style='color: #555555;'> </span><span>        </span><span style='color: #555555;'> </span><span>&lt;0.001</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>Students one-sample t-test</span><span style='color: #555555;'> </span><span>      
@@ -605,8 +605,8 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; </span><span style='color: #555555;'>29</span><span> </span><span style='color: #555555;'> </span><span>Species</span><span style='color: #555555;'> </span><span>      </span><span style='color: #555555;'>  </span><span>           </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
 #&gt; </span><span style='color: #555555;'>30</span><span> </span><span style='color: #555555;'> </span><span>  setosa</span><span style='color: #555555;'> </span><span>     </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'> </span><span>&gt;0.999</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>Chi-squared goodness-of-fit test</span><span style='color: #555555;'> </span><span>
 #&gt; </span><span style='color: #555555;'>31</span><span> </span><span style='color: #555555;'> </span><span>  versicolor</span><span style='color: #555555;'> </span><span> </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                
-#&gt; </span><span style='color: #555555;'>32</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>  </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                </div><div class='input'><span class='kw'>DescrPrint</span><span class='op'>$</span><span class='kw'>variables</span><span class='op'>$</span><span class='kw'>results</span><span class='op'>$</span><span class='kw'>Sepal.Length</span><span class='op'>$</span><span class='kw'>Total</span><span class='op'>$</span><span class='kw'>mean</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>DescrPrint</span>)
+#&gt; </span><span style='color: #555555;'>32</span><span> </span><span style='color: #555555;'> </span><span>  virginica</span><span style='color: #555555;'> </span><span>  </span><span style='color: #555555;'> </span><span>50 (33%)</span><span style='color: #555555;'> </span><span>   </span><span style='color: #555555;'>  </span><span>       </span><span style='color: #555555;'>  </span><span>                                </div><div class='input'><span class='va'>DescrPrint</span><span class='op'>$</span><span class='va'>variables</span><span class='op'>$</span><span class='va'>results</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>$</span><span class='va'>Total</span><span class='op'>$</span><span class='va'>mean</span>
+</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>DescrPrint</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $variables
 #&gt; $variables$Sepal.Length
 #&gt; $results
@@ -831,6 +831,9 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; $variables$Species
 #&gt; $results
 #&gt; $results$Total
+#&gt; $results$Total$summary_stats
+#&gt; list()
+#&gt; 
 #&gt; $results$Total$categories
 #&gt; $results$Total$categories$setosa
 #&gt; [1] "50 (33%)"
@@ -963,7 +966,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

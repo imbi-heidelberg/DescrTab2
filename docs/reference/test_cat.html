@@ -138,7 +138,7 @@
     <p>calculate a statistical test for a numerical variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>test_cat</span>(<span class='kw'>var</span>, group = <span class='kw'>NULL</span>, test_options = <span class='kw'>NULL</span>, test = <span class='kw'>NULL</span>, var_name = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>test_cat</span><span class='op'>(</span><span class='va'>var</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, test_options <span class='op'>=</span> <span class='cn'>NULL</span>, test <span class='op'>=</span> <span class='cn'>NULL</span>, var_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,8 +170,8 @@
     <p>A list of test test results.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>cat_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))
-<span class='fu'>test_cat</span>(<span class='kw'>cat_var</span>)
+    <pre class="examples"><div class='input'><span class='va'>cat_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>test_cat</span><span class='op'>(</span><span class='va'>cat_var</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; $p
 #&gt; [1] 1
 #&gt; 
@@ -194,7 +194,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

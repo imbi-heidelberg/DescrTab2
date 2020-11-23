@@ -90,7 +90,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Validation report</h1>
             
-            <h4 class="date">2020-10-02</h4>
+            <h4 class="date">2020-11-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/validation_report.Rmd"><code>vignettes/validation_report.Rmd</code></a></small>
       <div class="hidden name"><code>validation_report.Rmd</code></div>
@@ -110,12 +110,11 @@
 <a href="#wilcoxon-one-sample-signed-rank-test" class="anchor"></a>Wilcoxon one-sample signed-rank test</h1>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 
-<span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.83</span>,  <span class="fl">0.50</span>,  <span class="fl">1.62</span>,  <span class="fl">2.48</span>, <span class="fl">1.68</span>, <span class="fl">1.88</span>, <span class="fl">1.55</span>, <span class="fl">3.06</span>, <span class="fl">1.30</span>)
-<span class="kw">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.878</span>, <span class="fl">0.647</span>, <span class="fl">0.598</span>, <span class="fl">2.05</span>, <span class="fl">1.06</span>, <span class="fl">1.29</span>, <span class="fl">1.06</span>, <span class="fl">3.14</span>, <span class="fl">1.29</span>)
-<span class="kw">dat_wilcox.test_1_sample</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(diff = <span class="kw">x</span><span class="op">-</span><span class="kw">y</span>)
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.83</span>,  <span class="fl">0.50</span>,  <span class="fl">1.62</span>,  <span class="fl">2.48</span>, <span class="fl">1.68</span>, <span class="fl">1.88</span>, <span class="fl">1.55</span>, <span class="fl">3.06</span>, <span class="fl">1.30</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.878</span>, <span class="fl">0.647</span>, <span class="fl">0.598</span>, <span class="fl">2.05</span>, <span class="fl">1.06</span>, <span class="fl">1.29</span>, <span class="fl">1.06</span>, <span class="fl">3.14</span>, <span class="fl">1.29</span><span class="op">)</span>
+<span class="va">dat_wilcox.test_1_sample</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>diff <span class="op">=</span> <span class="va">x</span><span class="op">-</span><span class="va">y</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat_wilcox.test_1_sample</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(nonparametric=<span class="kw">T</span>))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_wilcox.test_1_sample</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2155,13 +2154,12 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#mann-whitney-u-test" class="anchor"></a>Mann-Whitney U test</h1>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 
-<span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.80</span>, <span class="fl">0.83</span>, <span class="fl">1.89</span>, <span class="fl">1.04</span>, <span class="fl">1.45</span>, <span class="fl">1.38</span>, <span class="fl">1.91</span>, <span class="fl">1.64</span>, <span class="fl">0.73</span>, <span class="fl">1.46</span>)
-<span class="kw">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.15</span>, <span class="fl">0.88</span>, <span class="fl">0.90</span>, <span class="fl">0.74</span>, <span class="fl">1.21</span>)
-<span class="kw">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Trt"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">x</span>)), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Ctrl"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">y</span>)))
-<span class="kw">dat_wilcox.test_2_sample</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(var=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">x</span>,<span class="kw">y</span>), group=<span class="kw">group</span>)
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.83</span>, <span class="fl">1.89</span>, <span class="fl">1.04</span>, <span class="fl">1.45</span>, <span class="fl">1.38</span>, <span class="fl">1.91</span>, <span class="fl">1.64</span>, <span class="fl">0.73</span>, <span class="fl">1.46</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.15</span>, <span class="fl">0.88</span>, <span class="fl">0.90</span>, <span class="fl">0.74</span>, <span class="fl">1.21</span><span class="op">)</span>
+<span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Trt"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Ctrl"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dat_wilcox.test_2_sample</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>var<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>, group<span class="op">=</span><span class="va">group</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat_wilcox.test_2_sample</span>, <span class="st">"group"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(nonparametric=<span class="kw">T</span>))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_wilcox.test_2_sample</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -4154,14 +4152,13 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#kruskal-wallis-one-way-anova" class="anchor"></a>Kruskal-Wallis one-way ANOVA</h1>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 
-<span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2.9</span>, <span class="fl">3.0</span>, <span class="fl">2.5</span>, <span class="fl">2.6</span>, <span class="fl">3.2</span>) <span class="co"># normal subjects</span>
-<span class="kw">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3.8</span>, <span class="fl">2.7</span>, <span class="fl">4.0</span>, <span class="fl">2.4</span>)      <span class="co"># with obstructive airway disease</span>
-<span class="kw">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2.8</span>, <span class="fl">3.4</span>, <span class="fl">3.7</span>, <span class="fl">2.2</span>, <span class="fl">2.0</span>) <span class="co"># with asbestosis</span>
-<span class="kw">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Trt"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">x</span>)), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Ctrl"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">y</span>)), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Placebo"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">z</span>)))
-<span class="kw">dat_kruskal.test</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(var=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">x</span>,<span class="kw">y</span>,<span class="kw">z</span>), group=<span class="kw">group</span>)
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.9</span>, <span class="fl">3.0</span>, <span class="fl">2.5</span>, <span class="fl">2.6</span>, <span class="fl">3.2</span><span class="op">)</span> <span class="co"># normal subjects</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3.8</span>, <span class="fl">2.7</span>, <span class="fl">4.0</span>, <span class="fl">2.4</span><span class="op">)</span>      <span class="co"># with obstructive airway disease</span>
+<span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.8</span>, <span class="fl">3.4</span>, <span class="fl">3.7</span>, <span class="fl">2.2</span>, <span class="fl">2.0</span><span class="op">)</span> <span class="co"># with asbestosis</span>
+<span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Trt"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Ctrl"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dat_kruskal.test</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>var<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,<span class="va">z</span><span class="op">)</span>, group<span class="op">=</span><span class="va">group</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat_kruskal.test</span>, <span class="st">"group"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(nonparametric=<span class="kw">T</span>)) 
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_kruskal.test</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span> </pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -6032,8 +6029,8 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#friedman-test" class="anchor"></a>Friedman test</h1>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 
-<span class="kw">RoundingTimes</span> <span class="op">&lt;-</span>
-<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5.40</span>, <span class="fl">5.50</span>, <span class="fl">5.55</span>,
+<span class="va">RoundingTimes</span> <span class="op">&lt;-</span>
+<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5.40</span>, <span class="fl">5.50</span>, <span class="fl">5.55</span>,
          <span class="fl">5.85</span>, <span class="fl">5.70</span>, <span class="fl">5.75</span>,
          <span class="fl">5.20</span>, <span class="fl">5.60</span>, <span class="fl">5.50</span>,
          <span class="fl">5.55</span>, <span class="fl">5.50</span>, <span class="fl">5.40</span>,
@@ -6054,19 +6051,18 @@ var _ie64 = _info.indexOf("x64") > 0
          <span class="fl">5.50</span>, <span class="fl">5.45</span>, <span class="fl">5.25</span>,
          <span class="fl">5.65</span>, <span class="fl">5.60</span>, <span class="fl">5.40</span>,
          <span class="fl">5.70</span>, <span class="fl">5.65</span>, <span class="fl">5.55</span>,
-         <span class="fl">6.30</span>, <span class="fl">6.30</span>, <span class="fl">6.25</span>),
-       nrow = <span class="fl">22</span>,
-       byrow = <span class="fl">TRUE</span>,
-       dimnames = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">1</span> <span class="op">:</span> <span class="fl">22</span>,
-                       <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Round Out"</span>, <span class="st">"Narrow Angle"</span>, <span class="st">"Wide Angle"</span>)))
+         <span class="fl">6.30</span>, <span class="fl">6.30</span>, <span class="fl">6.25</span><span class="op">)</span>,
+       nrow <span class="op">=</span> <span class="fl">22</span>,
+       byrow <span class="op">=</span> <span class="cn">TRUE</span>,
+       dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">:</span> <span class="fl">22</span>,
+                       <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Round Out"</span>, <span class="st">"Narrow Angle"</span>, <span class="st">"Wide Angle"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="kw">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">22</span>, <span class="fl">3</span>)
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(var = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">RoundingTimes</span>[,<span class="fl">1</span>], <span class="kw">RoundingTimes</span>[,<span class="fl">2</span>], <span class="kw">RoundingTimes</span>[,<span class="fl">3</span>]),
-              group = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Round Out"</span>, <span class="fl">22</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Narrow Angle"</span>, <span class="fl">22</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Wide Angle"</span>, <span class="fl">22</span>)))
+<span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">22</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">RoundingTimes</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">RoundingTimes</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, <span class="va">RoundingTimes</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,
+              group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Round Out"</span>, <span class="fl">22</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Narrow Angle"</span>, <span class="fl">22</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Wide Angle"</span>, <span class="fl">22</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"group"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(nonparametric=<span class="kw">T</span>, indices=<span class="kw">idx</span>, paired=<span class="kw">T</span>))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">T</span>, indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -7963,18 +7959,17 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#cochrans-q-test" class="anchor"></a>Cochrans Q test</h1>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 
-<span class="kw">d.frm</span> <span class="op">&lt;-</span> <span class="kw">DescTools</span>::<span class="fu"><a href="https://rdrr.io/pkg/DescTools/man/Untable.html">Untable</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">6</span>,<span class="fl">16</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">6</span>) <span class="op">~</span> <span class="kw">.</span>, 
-    <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"F"</span>,<span class="st">"U"</span>)), times=<span class="fl">3</span>))), 
-    colnames = <span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>])
+<span class="va">d.frm</span> <span class="op">&lt;-</span> <span class="fu">DescTools</span><span class="fu">::</span><span class="fu"><a href="https://andrisignorell.github.io/DescTools/reference/Untable.html">Untable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">6</span>,<span class="fl">16</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, 
+    <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"F"</span>,<span class="st">"U"</span><span class="op">)</span><span class="op">)</span>, times<span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, 
+    colnames <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># rearrange to long shape    </span>
-<span class="kw">d.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html">reshape</a></span>(<span class="kw">d.frm</span>, varying=<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, times=<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">d.frm</span>)[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)], 
-                  v.names=<span class="st">"resp"</span>, direction=<span class="st">"long"</span>)
-<span class="kw">idx</span> <span class="op">&lt;-</span> <span class="kw">d.long</span><span class="op">$</span><span class="kw">id</span>
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="kw">d.long</span>[, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>] <span class="op">%&gt;%</span> <span class="fu">mutate</span>(time=<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">time</span>), resp=<span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">resp</span>))
+<span class="va">d.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html">reshape</a></span><span class="op">(</span><span class="va">d.frm</span>, varying<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, times<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d.frm</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span>, 
+                  v.names<span class="op">=</span><span class="st">"resp"</span>, direction<span class="op">=</span><span class="st">"long"</span><span class="op">)</span>
+<span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">d.long</span><span class="op">$</span><span class="va">id</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">d.long</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>time<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>, resp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"time"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(indices=<span class="kw">idx</span>, paired=<span class="kw">T</span>))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"time"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8085,12 +8080,11 @@ U
 <h1 class="hasAnchor">
 <a href="#mcnemars-test" class="anchor"></a>McNemars test</h1>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="kw">tibble</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(var = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">150</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">86</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>),
-                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">150</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">86</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>)),
-              group= <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"first"</span>, <span class="fl">1600</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"second"</span>,<span class="fl">1600</span>)))
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>,
+                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span><span class="op">)</span>,
+              group<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="fl">1600</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"second"</span>,<span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
               
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"group"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(paired=<span class="kw">T</span>, indices=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>)))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">T</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8196,8 +8190,7 @@ Disapprove
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"group"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(paired=<span class="kw">T</span>, exact=<span class="kw">T</span>, indices=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>)))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">T</span>, exact<span class="op">=</span><span class="cn">T</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8304,21 +8297,20 @@ Disapprove
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 
-<span class="kw">dat</span> <span class="op">&lt;-</span>
-  <span class="kw">tibble</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(x = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>),
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">150</span>),
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">86</span>),
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>)
-  ),
-  y = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">794</span>),
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">150</span>),
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Approve"</span>, <span class="fl">86</span>),
-    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Disapprove"</span>, <span class="fl">570</span>)
-  ))
-<span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span>(<span class="kw">dat</span><span class="op">$</span><span class="kw">x</span>, <span class="kw">dat</span><span class="op">$</span><span class="kw">y</span>, correct = <span class="kw">F</span>)
-</pre></div>
+<span class="va">dat</span> <span class="op">&lt;-</span>
+  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">150</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">86</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>
+  <span class="op">)</span>,
+  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">150</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">86</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">x</span>, <span class="va">dat</span><span class="op">$</span><span class="va">y</span>, correct <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></pre></div>
 <p>McNemar’s Chi-squared test</p>
 <p>data: dat<span class="math inline">\(x and dat\)</span>y McNemar’s chi-squared = 17.356, df = 1, p-value = 3.099e-05</p>
 
@@ -10230,12 +10222,11 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#chi-squared-test" class="anchor"></a>Chi-squared test</h1>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(gender=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"F"</span>,<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">762</span>, <span class="fl">327</span>, <span class="fl">468</span>)) ), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"M"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">484</span>, <span class="fl">239</span>, <span class="fl">477</span>)))),
-              party=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Democrat"</span>, <span class="fl">762</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Independent"</span>, <span class="fl">327</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Republican"</span>, <span class="fl">468</span>),
-                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Democrat"</span>, <span class="fl">484</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Independent"</span>, <span class="fl">239</span>), <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"Republican"</span>, <span class="fl">477</span>)))
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"F"</span>,<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">762</span>, <span class="fl">327</span>, <span class="fl">468</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">484</span>, <span class="fl">239</span>, <span class="fl">477</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+              party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Democrat"</span>, <span class="fl">762</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Independent"</span>, <span class="fl">327</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Republican"</span>, <span class="fl">468</span><span class="op">)</span>,
+                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Democrat"</span>, <span class="fl">484</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Independent"</span>, <span class="fl">239</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Republican"</span>, <span class="fl">477</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
               
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"gender"</span>)
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -10357,8 +10348,7 @@ Republican
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>)
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -10460,18 +10450,15 @@ Republican
 </table>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 
-<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span>(<span class="kw">dat</span><span class="op">$</span><span class="kw">gender</span>, <span class="kw">dat</span><span class="op">$</span><span class="kw">party</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gender</span>, <span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span></pre></div>
 <p>Pearson’s Chi-squared test</p>
 <p>data: dat<span class="math inline">\(gender and dat\)</span>party X-squared = 30.07, df = 2, p-value = 2.954e-07</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">dat</span><span class="op">$</span><span class="kw">gender</span>))
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Chi-squared test for given probabilities</p>
 <p>data: table(dat$gender) X-squared = 46.227, df = 1, p-value = 1.053e-11</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">dat</span><span class="op">$</span><span class="kw">party</span>))
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Chi-squared test for given probabilities</p>
 <p>data: table(dat$party) X-squared = 252.68, df = 2, p-value &lt; 2.2e-16</p>
 
@@ -12566,11 +12553,10 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#t-test" class="anchor"></a>t-test</h1>
 <div class="sourceCode" id="cb14"><pre class="downlit">
 
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="kw">sleep</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"extra"</span>, <span class="st">"group"</span>)]
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sleep</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"extra"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">]</span>
               
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>[, <span class="st">"extra"</span>]) 
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="st">"extra"</span><span class="op">]</span><span class="op">)</span> </pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -12675,8 +12661,7 @@ min - max
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"group"</span>)
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -12854,8 +12839,7 @@ min - max
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"group"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(paired=<span class="kw">T</span>, indices=<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span>)))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">T</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -15196,13 +15180,12 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#f-test" class="anchor"></a>F-test</h1>
 <div class="sourceCode" id="cb17"><pre class="downlit">
 
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
-    y = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">449</span>, <span class="fl">413</span>, <span class="fl">326</span>, <span class="fl">409</span>, <span class="fl">358</span>, <span class="fl">291</span>, <span class="fl">341</span>, <span class="fl">278</span>, <span class="fl">312</span>)<span class="op">/</span><span class="fl">12</span>,
-    P = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span>(<span class="fl">3</span>, <span class="fl">3</span>)), N = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span>(<span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">9</span>))
-)
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">449</span>, <span class="fl">413</span>, <span class="fl">326</span>, <span class="fl">409</span>, <span class="fl">358</span>, <span class="fl">291</span>, <span class="fl">341</span>, <span class="fl">278</span>, <span class="fl">312</span><span class="op">)</span><span class="op">/</span><span class="fl">12</span>,
+    P <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
               
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"y"</span>, <span class="st">"P"</span>)], <span class="st">"P"</span>) 
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"P"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"P"</span><span class="op">)</span> </pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -15385,8 +15368,7 @@ min - max
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"y"</span>, <span class="st">"N"</span>)], <span class="st">"N"</span>) 
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"N"</span><span class="op">)</span> </pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -17567,17 +17549,16 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#mixed-model-anova" class="anchor"></a>Mixed model ANOVA</h1>
 <div class="sourceCode" id="cb19"><pre class="downlit">
 
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="kw">nlme</span>::<span class="kw"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>
-<span class="kw">dat2</span> <span class="op">&lt;-</span> <span class="kw">nlme</span>::<span class="kw"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>[<span class="fl">1</span><span class="op">:</span><span class="fl">64</span>,]
-<span class="kw">dat2</span><span class="op">$</span><span class="kw">Sex</span> <span class="op">&lt;-</span> <span class="st">"Divers"</span>
-<span class="kw">dat2</span><span class="op">$</span><span class="kw">distance</span> <span class="op">&lt;-</span> <span class="kw">dat2</span><span class="op">$</span><span class="kw">distance</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">0.1</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">2</span>), <span class="fl">10</span>), <span class="fl">0.1</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.4</span>,<span class="fl">2</span>,<span class="fl">1.5</span>, <span class="fl">2.3</span>), <span class="fl">6</span>) )
-<span class="kw">dat2</span><span class="op">$</span><span class="kw">Subject</span> <span class="op">&lt;-</span> <span class="fu">str_replace_all</span>(<span class="kw">dat2</span><span class="op">$</span><span class="kw">Subject</span>, <span class="st">"M"</span>, <span class="st">"D"</span>)
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span>(<span class="kw">dat</span>, <span class="kw">dat2</span>)
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span>(<span class="kw">dat</span>)
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>
+<span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">64</span>,<span class="op">]</span>
+<span class="va">dat2</span><span class="op">$</span><span class="va">Sex</span> <span class="op">&lt;-</span> <span class="st">"Divers"</span>
+<span class="va">dat2</span><span class="op">$</span><span class="va">distance</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">$</span><span class="va">distance</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fl">0.1</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">2</span>,<span class="fl">1.5</span>, <span class="fl">2.3</span><span class="op">)</span>, <span class="fl">6</span><span class="op">)</span> <span class="op">)</span>
+<span class="va">dat2</span><span class="op">$</span><span class="va">Subject</span> <span class="op">&lt;-</span> <span class="fu">str_replace_all</span><span class="op">(</span><span class="va">dat2</span><span class="op">$</span><span class="va">Subject</span>, <span class="st">"M"</span>, <span class="st">"D"</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">dat</span>, <span class="va">dat2</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>
 
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sex"</span>, <span class="st">"distance"</span>)], <span class="st">"Sex"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(paired=<span class="kw">T</span>, indices=<span class="kw">dat</span><span class="op">$</span><span class="kw">Subject</span>))
-</pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sex"</span>, <span class="st">"distance"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"Sex"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">T</span>, indices<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">Subject</span><span class="op">)</span><span class="op">)</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -19715,12 +19696,11 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#boschloos-test" class="anchor"></a>Boschloos test</h1>
 <p>DescrTab2 uses the exact2x2::boschloo with option <code>tsmethod=central</code> to calculate p-values. There is no comparison for this option readily available.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(gender=<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>)),
-              party=<span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>)))
-<span class="fu"><a href="../reference/descr.html">descr</a></span>(<span class="kw">dat</span>, <span class="st">"gender"</span>, test_options = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(exact=<span class="kw">T</span>))
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
+              party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning in stats::prop.test(table(var, group)): Chi-squared approximation may be</span>
-<span class="co">#&gt; incorrect</span>
-</pre></div>
+<span class="co">#&gt; incorrect</span></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -19826,13 +19806,12 @@ B
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="kw">exact2x2</span>::<span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span>(<span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod=<span class="st">"central"</span>)
-</pre></div>
+<span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"central"</span><span class="op">)</span></pre></div>
 <p>Boschloo’s test</p>
 <p>data: x1/n1=(3/5) and x2/n2= (2/6) proportion 1 = 0.6, proportion 2 = 0.33333, p-value = 0.4909 alternative hypothesis: true p2(1-p1)/[p1(1-p2)] is less than 1 percent confidence interval: NA NA sample estimates: p2(1-p1)/[p1(1-p2)] 0.3333333</p>
 <p>However, we can compare the exact2x2::boschloo with <code>tsmethod=minlike</code> to <code><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">Exact::exact.test</a></code>:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="kw">exact2x2</span>::<span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span>(<span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod=<span class="st">"minlike"</span>)
+<span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"minlike"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Boschloo's test</span>
 <span class="co">#&gt; </span>
@@ -19844,7 +19823,7 @@ B
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt; p2(1-p1)/[p1(1-p2)] </span>
 <span class="co">#&gt;           0.3333333</span>
-<span class="kw">Exact</span>::<span class="fu"><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">exact.test</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">dat</span>), method=<span class="st">"boschloo"</span>, to.plot = <span class="kw">F</span>)
+<span class="fu">Exact</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">exact.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"boschloo"</span>, to.plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Boschloo's Exact Test</span>
 <span class="co">#&gt; </span>
@@ -19854,8 +19833,7 @@ B
 <span class="co">#&gt; alternative hypothesis: true difference in proportion is not equal to 0</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt; difference in proportion </span>
-<span class="co">#&gt;                0.2666667</span>
-</pre></div>
+<span class="co">#&gt;                0.2666667</span></pre></div>
 </div>
   </div>
 
@@ -19874,7 +19852,7 @@ B
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

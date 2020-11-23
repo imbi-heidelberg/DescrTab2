@@ -245,3 +245,14 @@ test_that("Special summary stats for 1 variable work",
                              print(silent = T))
 
           })
+
+
+
+test_that("Settings to determine the number of digits for perecent numbers work",
+          {
+          expect_error(descr(iris, format_options=list(percent_accuracy=0.1)) %>% print(silent=T), NA)
+          }
+            )
+
+
+

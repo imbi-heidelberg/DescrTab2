@@ -45,6 +45,8 @@ utils::globalVariables(".")
 #' shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
 #' \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 #' \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
+#' \item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
+#' should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent}
 #' \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
 #' It may be set to one of the following options:
 #' \itemize{
@@ -186,6 +188,7 @@ descr <-
              combine_mean_sd = F,
              omit_Nmiss_if_0 = T,
              omit_missings_in_group = T,
+             percent_accuracy=NULL,
              categorical_missing_percent_mode = c(
                "no_missing_percent",
                "missing_as_regular_category",
@@ -1515,7 +1518,7 @@ create_character_subtable.cont_summary <-
           paste0(
             DescrVarObj[["results"]][["Total"]][["Nmiss"]],
             " (",
-            scales::label_percent()(DescrVarObj[["results"]][["Total"]][["Nmiss"]] /
+            scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][["Total"]][["Nmiss"]] /
                                       DescrVarObj[["variable_lengths"]][["Total"]][["N"]]),
             ")"
           )
@@ -1565,7 +1568,7 @@ create_character_subtable.cont_summary <-
             paste0(
               DescrVarObj[["results"]][[group]][["Nmiss"]],
               " (",
-              scales::label_percent()(DescrVarObj[["results"]][[group]][["Nmiss"]] /
+              scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][[group]][["Nmiss"]] /
                                         DescrVarObj[["variable_lengths"]][[group]][["N"]]),
               ")"
             )
@@ -1704,7 +1707,7 @@ create_character_subtable.cat_summary <-
         paste0(
           DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
           " (",
-          scales::label_percent()(DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] / N_nonmissing)  ,
+          scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] / N_nonmissing)  ,
           ")"
         )
     }
@@ -1718,7 +1721,7 @@ create_character_subtable.cat_summary <-
         DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] <-
           paste0(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]],
                  " (",
-                 scales::label_percent()(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] / N_total)  ,
+                 scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] / N_total)  ,
                  ")")
       }
     }
@@ -1780,7 +1783,7 @@ create_character_subtable.cat_summary <-
           paste0(
             DescrVarObj[["results"]][[group]][["categories"]][[cat_name]],
             " (",
-            scales::label_percent()(DescrVarObj[["results"]][[group]][["categories"]][[cat_name]] / N_group_nonmissing),
+            scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][[group]][["categories"]][[cat_name]] / N_group_nonmissing),
             ")"
           )
       }
@@ -1795,7 +1798,7 @@ create_character_subtable.cat_summary <-
             paste0(
               DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]],
               " (",
-              scales::label_percent()(DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] / N_total)  ,
+              scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] / N_total)  ,
               ")"
             )
         }
