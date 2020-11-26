@@ -17,3 +17,7 @@ into your R console.
 For usage instructions and detailed documentation, check out our documentation page:
 
 https://imbi-heidelberg.github.io/DescrTab2/
+
+Specifically this article may be useful to get aquainted with DescTab2:
+
+https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html
