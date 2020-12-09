@@ -218,8 +218,27 @@ descr <-
              )
            ),
            ...) {
+
+
+
+
     # Coerce dataset to tibble
     dat %<>% as_tibble()
+
+
+    # Check for empty strings
+    if(any(dat=="", na.rm = T)){
+      if (any(dat=="(empty)", na.rm = T)){
+        stop('Your data contains both "" (i.e. empty strings) and "(empty)". This would lead to conflicts. Rename your "" data. ')
+      }
+
+      warning('Your data contains "" (i.e., emtpy strings). If "" is used to code missings, you should
+              recode this to a more meaningful name. "" was converted to "(empty)".')
+      dat %<>% mutate(across(where(function(x)is.factor(x) ), function(x) fct_recode(x, "(empty)"="" ) ),
+                    across(where(is.character), function(x) if_else(x=="", "(empty)", x) )
+      )
+    }
+
 
     # Format options have to be cleaned first, because the next data cleaning step depends on them
     format_options %<>% as.list()
