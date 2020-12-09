@@ -1,7 +1,7 @@
 Package: DescrTab2
 Type: Package
 Title: Publication quality descriptive statistics tables with R
-Version: 2.0
+Version: 2.0.1
 Date: 2020-09-04
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de"),
              person("Lukas", "Baumann", role = c("aut")),
