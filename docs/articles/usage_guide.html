@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.1</span>
       </span>
     </div>
 
@@ -85,12 +85,12 @@
 
       
 
-      </header><script src="usage_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="usage_guide_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2020-12-09</h4>
+            <h4 class="date">2020-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/usage_guide.Rmd"><code>vignettes/usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>usage_guide.Rmd</code></div>
@@ -116,14 +116,14 @@
 <h3 class="hasAnchor">
 <a href="#pdf_document" class="anchor"></a>pdf_document</h3>
 <p>Here is what you need to include in the yaml header to use <code>DescrTab2</code> inside .Rmd file with pdf_document output:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a>---</span>
-<span id="cb1-2"><a href="#cb1-2"></a>title: "DescrTab2 tutorial"</span>
-<span id="cb1-3"><a href="#cb1-3"></a>header-includes:</span>
-<span id="cb1-4"><a href="#cb1-4"></a>   - \usepackage{needspace}</span>
-<span id="cb1-5"><a href="#cb1-5"></a>   - \usepackage{longtable}</span>
-<span id="cb1-6"><a href="#cb1-6"></a>   - \usepackage{booktabs}</span>
-<span id="cb1-7"><a href="#cb1-7"></a>output: pdf_document</span>
-<span id="cb1-8"><a href="#cb1-8"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "DescrTab2 tutorial"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">header-includes:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">   - \usepackage{needspace}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">   - \usepackage{longtable}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">   - \usepackage{booktabs}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> pdf_document</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
 </div>
 <div id="html-word_document" class="section level3">
 <h3 class="hasAnchor">
@@ -150,9 +150,9 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://imbi-heidelberg.github.io/DescrTab2/">DescrTab2</a></span><span class="op">)</span></code></pre></div>
 <p>somewhere in the document before you use it. You are now ready to go! Producing beautiful descriptive tables in html and tex is now as easy as typing:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="bn">```{r, results='asis'}</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="bn">descr(dat)</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="bn">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results='asis'}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">descr(dat)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -321,10 +321,10 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.514<sup>chi1</sup>
+0.624<sup>chi1</sup>
 </td>
 </tr>
 <tr>
@@ -332,7 +332,7 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -353,9 +353,9 @@ wedges
 </table>
 <p>Note the chunk option <code>results='asis'</code>. <code>DescrTab2</code> produces raw LaTeX or hmtl code. To get pandoc to render this properly, the <code>results='asis'</code> option is required. An alternative will be described later.</p>
 <p>To produce descriptive tables for a word document, a bit more typing is required:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="bn">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="bn">descr(dat) %&gt;% print() %&gt;% knitr::knit_print()</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="bn">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">descr(dat) %&gt;% print() %&gt;% knitr::knit_print()</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>When producing word tables in this fashion, you must <em>not</em> have the <code>results='asis'</code> chunk option set.</p>
 <p>Note that <code>DescrTab2</code> can also produce console output! In fact, this is the default setting (i.e. if the global <code>DescrTabFormat</code> is not specified)</p>
 </div>
@@ -608,19 +608,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.829<sup>chi2</sup>
+0.786<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -628,16 +628,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -891,19 +891,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.829<sup>chi2</sup>
+0.786<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -911,16 +911,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1185,16 +1185,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-40 (53%)
+28 (37%)
 </td>
 <td style="text-align:center;">
-31 (41%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.191<sup>chi2</sup>
+0.014<sup>chi2</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1205,18 +1205,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-35 (47%)
+47 (63%)
 </td>
 <td style="text-align:center;">
-44 (59%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.052, 0.29]
+[-0.38, -0.044]
 </td>
 </tr>
 </tbody>
@@ -1420,16 +1420,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-40 (53%)
+28 (37%)
 </td>
 <td style="text-align:center;">
-31 (41%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.157<sup>Bolo</sup>
+0.010<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1440,18 +1440,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-35 (47%)
+47 (63%)
 </td>
 <td style="text-align:center;">
-44 (59%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.052, 0.29]
+[-0.38, -0.044]
 </td>
 </tr>
 </tbody>
@@ -1835,13 +1835,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-40 (53%)
+28 (37%)
 </td>
 <td style="text-align:center;">
-31 (41%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
 NA
@@ -1854,13 +1854,13 @@ NA
 wedges
 </td>
 <td style="text-align:center;">
-35 (47%)
+47 (63%)
 </td>
 <td style="text-align:center;">
-44 (59%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2110,19 +2110,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.829<sup>chi2</sup>
+0.786<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2130,16 +2130,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2376,19 +2376,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.829<sup>chi2</sup>
+0.786<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2396,16 +2396,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2512,7 +2512,7 @@ mean
 1.5
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+0.371<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2520,7 +2520,7 @@ mean
 1
 </td>
 <td style="text-align:center;">
-26 (52%)
+27 (54%)
 </td>
 <td style="text-align:center;">
 23 (46%)
@@ -2529,7 +2529,7 @@ mean
 30 (60%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+80 (53%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2539,7 +2539,7 @@ mean
 2
 </td>
 <td style="text-align:center;">
-24 (48%)
+23 (46%)
 </td>
 <td style="text-align:center;">
 27 (54%)
@@ -2548,7 +2548,7 @@ mean
 20 (40%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+70 (47%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2776,19 +2776,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.829<sup>chi2</sup>
+0.786<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2796,16 +2796,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3043,13 +3043,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-40 (53%)
+28 (37%)
 </td>
 <td style="text-align:center;">
-31 (41%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -3060,16 +3060,16 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-35 (47%)
+47 (63%)
 </td>
 <td style="text-align:center;">
-44 (59%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
-[-0.052, 0.29]
+[-0.38, -0.044]
 </td>
 </tr>
 </tbody>
@@ -3289,16 +3289,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-40 (53%)
+28 (37%)
 </td>
 <td style="text-align:center;">
-31 (41%)
+44 (59%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+72 (48%)
 </td>
 <td style="text-align:center;">
-0.191<sup>chi2</sup>
+0.014<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3306,13 +3306,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-35 (47%)
+47 (63%)
 </td>
 <td style="text-align:center;">
-44 (59%)
+31 (41%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+78 (52%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3336,9 +3336,9 @@ wedges
 <h2 class="hasAnchor">
 <a href="#printing-without-resultsasis" class="anchor"></a>Printing without results=‘asis’</h2>
 <p>Sometimes, e.g. if you have a loop inside your R-chunk and you want to plot graphics in between descriptive tables, it is necessary not to have the results=‘asis’ option. You can still use DescrTab2 with the following commands:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1"></a><span class="bn">```{r}</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="bn">capture.output(print(descr(dat, "Species"))) %&gt;%  knitr::raw_html() # or knitr::raw_tex() for tex</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="bn">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="in">capture.output(print(descr(dat, "Species"))) %&gt;%  knitr::raw_html() # or knitr::raw_tex() for tex</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/raw_block.html">raw_html</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># or knitr::raw_tex() for tex</span></code></pre></div>
 <table class="table table">
@@ -3432,19 +3432,19 @@ wedges
 <tr grouplength="2"><td colspan="6" style="border-bottom: 1px solid;"><strong>food</strong></td></tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> fries </td>
-   <td style="text-align:center;"> 24 (48%) </td>
-   <td style="text-align:center;"> 22 (44%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 71 (47%) </td>
-   <td style="text-align:center;"> 0.829<sup>chi2</sup>
+   <td style="text-align:center;"> 26 (52%) </td>
+   <td style="text-align:center;"> 23 (46%) </td>
+   <td style="text-align:center;"> 23 (46%) </td>
+   <td style="text-align:center;"> 72 (48%) </td>
+   <td style="text-align:center;"> 0.786<sup>chi2</sup>
 </td>
   </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> wedges </td>
-   <td style="text-align:center;"> 26 (52%) </td>
-   <td style="text-align:center;"> 28 (56%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 79 (53%) </td>
+   <td style="text-align:center;"> 24 (48%) </td>
+   <td style="text-align:center;"> 27 (54%) </td>
+   <td style="text-align:center;"> 27 (54%) </td>
+   <td style="text-align:center;"> 78 (52%) </td>
    <td style="text-align:center;">  </td>
   </tr>
 </tbody>
@@ -4031,7 +4031,7 @@ min - max
 
 
       <footer><div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
 </div>
 
 <div class="pkgdown">

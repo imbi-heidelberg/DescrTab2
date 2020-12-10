@@ -61,7 +61,7 @@
 #'
 #' @references [1] Farrington, Conor P., and Godfrey Manning. "Test statistics and sample size formulae for comparative binomial trials with null hypothesis of non-zero risk difference or non-unity relative risk." Statistics in medicine 9.12 (1990): 1447-1454.
 #'
-#' @keywords Farrington-Manning, rates, test
+#' @keywords Farrington-Manning rates test
 #'
 #' @export
 #' @importFrom stats pnorm uniroot

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.1</span>
       </span>
     </div>
 
@@ -85,12 +85,12 @@
 
       
 
-      </header><script src="validation_report_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="validation_report_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Validation report</h1>
             
-            <h4 class="date">2020-12-09</h4>
+            <h4 class="date">2020-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/validation_report.Rmd"><code>vignettes/validation_report.Rmd</code></a></small>
       <div class="hidden name"><code>validation_report.Rmd</code></div>
@@ -8311,7 +8311,7 @@ Disapprove
     <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>
   <span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">x</span>, <span class="va">dat</span><span class="op">$</span><span class="va">y</span>, correct <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
-<p>McNemar’s Chi-squared test</p>
+<pre><code>McNemar's Chi-squared test</code></pre>
 <p>data: dat<span class="math inline">\(x and dat\)</span>y McNemar’s chi-squared = 17.356, df = 1, p-value = 3.099e-05</p>
 
 
@@ -10220,7 +10220,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <div id="chi-squared-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#chi-squared-test" class="anchor"></a>Chi-squared test</h1>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"F"</span>,<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">762</span>, <span class="fl">327</span>, <span class="fl">468</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">484</span>, <span class="fl">239</span>, <span class="fl">477</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
               party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Democrat"</span>, <span class="fl">762</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Independent"</span>, <span class="fl">327</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Republican"</span>, <span class="fl">468</span><span class="op">)</span>,
@@ -10347,7 +10347,7 @@ Republican
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
@@ -10448,18 +10448,18 @@ Republican
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gender</span>, <span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span></code></pre></div>
-<p>Pearson’s Chi-squared test</p>
+<pre><code>Pearson's Chi-squared test</code></pre>
 <p>data: dat<span class="math inline">\(gender and dat\)</span>party X-squared = 30.07, df = 2, p-value = 2.954e-07</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Chi-squared test for given probabilities</p>
+<pre><code>Chi-squared test for given probabilities</code></pre>
 <p>data: table(dat$gender) X-squared = 46.227, df = 1, p-value = 1.053e-11</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Chi-squared test for given probabilities</p>
+<pre><code>Chi-squared test for given probabilities</code></pre>
 <p>data: table(dat$party) X-squared = 252.68, df = 2, p-value &lt; 2.2e-16</p>
 
 
@@ -12551,7 +12551,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <div id="t-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#t-test" class="anchor"></a>t-test</h1>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sleep</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"extra"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">]</span>
               
@@ -12660,7 +12660,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
@@ -12838,7 +12838,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">T</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
@@ -15178,7 +15178,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <div id="f-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#f-test" class="anchor"></a>F-test</h1>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
     y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">449</span>, <span class="fl">413</span>, <span class="fl">326</span>, <span class="fl">409</span>, <span class="fl">358</span>, <span class="fl">291</span>, <span class="fl">341</span>, <span class="fl">278</span>, <span class="fl">312</span><span class="op">)</span><span class="op">/</span><span class="fl">12</span>,
@@ -15367,7 +15367,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"N"</span><span class="op">)</span> </code></pre></div>
 <table class="table table">
 <thead>
@@ -17547,7 +17547,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <div id="mixed-model-anova" class="section level1">
 <h1 class="hasAnchor">
 <a href="#mixed-model-anova" class="anchor"></a>Mixed model ANOVA</h1>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">64</span>,<span class="op">]</span>
@@ -19695,7 +19695,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#boschloos-test" class="anchor"></a>Boschloos test</h1>
 <p>DescrTab2 uses the exact2x2::boschloo with option <code>tsmethod=central</code> to calculate p-values. There is no comparison for this option readily available.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
               party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span>
@@ -19805,12 +19805,12 @@ B
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"central"</span><span class="op">)</span></code></pre></div>
-<p>Boschloo’s test</p>
+<pre><code>Boschloo's test</code></pre>
 <p>data: x1/n1=(3/5) and x2/n2= (2/6) proportion 1 = 0.6, proportion 2 = 0.33333, p-value = 0.4909 alternative hypothesis: true p2(1-p1)/[p1(1-p2)] is less than 1 percent confidence interval: NA NA sample estimates: p2(1-p1)/[p1(1-p2)] 0.3333333</p>
 <p>However, we can compare the exact2x2::boschloo with <code>tsmethod=minlike</code> to <code><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">Exact::exact.test</a></code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"minlike"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Boschloo's test</span>
@@ -19848,7 +19848,7 @@ B
 
 
       <footer><div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
 </div>
 
 <div class="pkgdown">

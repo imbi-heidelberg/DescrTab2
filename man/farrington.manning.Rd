@@ -84,6 +84,6 @@ farrington.manning(x, y, -.3)
 \author{
 Kevin Kunzmann
 }
-\keyword{Farrington-Manning,}
-\keyword{rates,}
+\keyword{Farrington-Manning}
+\keyword{rates}
 \keyword{test}

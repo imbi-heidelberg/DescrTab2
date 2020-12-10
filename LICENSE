@@ -677,5 +677,5 @@ Public License instead of this License.  But first, please read
 This software includes third party open source software components:
 ./R/farringtonManning.R
 
-Each of these software components have their own license. Please see ./THIRDPARTYLICENSE.
+Each of these software components have their own license. Please see ./inst/COPYRIGHTS.
 
