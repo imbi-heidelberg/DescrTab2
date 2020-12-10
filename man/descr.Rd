@@ -25,9 +25,9 @@ descr(
     digits = 2, scientific = 3)),
   format_p = scales::pvalue_format(),
   format_options = list(print_p = T, print_CI = T, combine_mean_sd = F, omit_Nmiss_if_0
-    = T, omit_missings_in_group = T, categorical_missing_percent_mode =
-    c("no_missing_percent", "missing_as_regular_category",
-    "missing_as_separate_category")),
+    = T, omit_missings_in_group = T, percent_accuracy = NULL,
+    categorical_missing_percent_mode = c("no_missing_percent",
+    "missing_as_regular_category", "missing_as_separate_category")),
   test_options = list(paired = F, nonparametric = F, exact = F, indices = c(),
     include_group_missings_in_test = F, include_categorical_missings_in_test = F,
     test_override = NULL),
@@ -102,6 +102,8 @@ Further formatting options can be specified in the \code{format_options} list. I
 shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
 \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
+\item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
+should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent}
 \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
 It may be set to one of the following options:
 \itemize{
