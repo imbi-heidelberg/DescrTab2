@@ -47,6 +47,7 @@ utils::globalVariables(".")
 #' \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 #' \item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
 #' should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent}
+#' \item{\code{omit_missings_in_categorical_var}} (logical) controls whether to omit missing values in categorical variables completely.
 #' \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
 #' It may be set to one of the following options:
 #' \itemize{
@@ -189,6 +190,7 @@ descr <-
              omit_Nmiss_if_0 = T,
              omit_missings_in_group = T,
              percent_accuracy=NULL,
+             omit_missings_in_categorical_var = F,
              categorical_missing_percent_mode = c(
                "no_missing_percent",
                "missing_as_regular_category",
@@ -335,6 +337,13 @@ descr <-
     if (length(test_options) > 0 && is.null(names(test_options))) {
       warning("names(test_options) cannot be empty. Ignoring the test_options option.")
     }
+
+    if (isTRUE(format_options[["omit_missings_in_categorical_var"]] == T) & isTRUE(test_options[["include_group_missings_in_test"]] == T)){
+      stop("You have format_options[['omit_missings_in_categorical_var']] == F and test_options[['include_group_missings_in_test']] == T,
+           i.e. you request a statistical test that treats missings in categorical variables as regular observations, but you do not report the number of missings.
+           You should avoid this.")
+    }
+
     ### Is reshape_rows a named list?
     if (length(reshape_rows) > 0 && is.null(names(reshape_rows))) {
       stop("names(reshape_rows) may not be empty.")
@@ -474,6 +483,13 @@ descr <-
           format_options[name_diff]
       }
       if (!is.null(var_options[[var_option_name]][["test_options"]])) {
+        if (!is.null(var_options[[var_option_name]][["format_options"]])){
+          if (isTRUE(var_options[[var_option_name]][["format_options"]][["omit_missings_in_categorical_var"]] == T) & isTRUE(var_options[[var_option_name]][["test_options"]][["include_group_missings_in_test"]] == T)){
+            stop("You have format_options[['omit_missings_in_categorical_var']] == F and test_options[['include_group_missings_in_test']] == T,
+           i.e. you request a statistical test that treats missings in categorical variables as regular observations, but you do not report the number of missings.
+           You should avoid this.")
+          }
+        }
         name_diff <-
           setdiff(names(test_options), names(var_options[[var_option_name]][["test_options"]]))
         var_options[[var_option_name]][["test_options"]][name_diff] <-
@@ -1691,7 +1707,8 @@ create_character_subtable.cat_summary <-
     N_total <-
       sum(unlist(DescrVarObj[["results"]][["Total"]][["categories"]][cat_names]))
 
-    if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category")) {
+    if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
+        format_options[["omit_missings_in_categorical_var"]] == F) {
       N_nonmissing <- N_total
     } else{
       N_nonmissing <-
@@ -1732,7 +1749,9 @@ create_character_subtable.cat_summary <-
     }
 
     if ("(Missing)" %in% cat_names) {
-      if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
+      if (format_options[["omit_missings_in_categorical_var"]] == T ){
+        DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] <- NULL
+      } else if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
         DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] <-
           as.character(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]])
 
@@ -1754,7 +1773,9 @@ create_character_subtable.cat_summary <-
     DescrVarObj[["label"]] <- label
 
     tibl <- tibble(Variables = c(label,
-                                 names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]), cat_names))
+                                 names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]),
+                                        cat_names[cat_names!="(Missing)" | !isTRUE(format_options[["omit_missings_in_categorical_var"]])]))
+
     length_tibl <- nrow(tibl)
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
@@ -1766,7 +1787,8 @@ create_character_subtable.cat_summary <-
       N_group_total <-
         sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][cat_names]))
 
-      if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category")) {
+      if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
+          format_options[["omit_missings_in_categorical_var"]] == F) {
         N_group_nonmissing <- N_group_total
       } else{
         N_group_nonmissing <-
@@ -1808,7 +1830,9 @@ create_character_subtable.cat_summary <-
       }
 
       if ("(Missing)" %in% cat_names) {
-        if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
+        if (format_options[["omit_missings_in_categorical_var"]] == T ){
+          DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] <- NULL
+        } else if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
           DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] <-
             as.character(DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]])
 

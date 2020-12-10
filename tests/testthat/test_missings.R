@@ -41,4 +41,8 @@ test_that("Missings are handles properly", {
   ) %>%  print(silent=T), NA)
   expect_warning( descr(dat3, "Species") %>%  print(silent=T) )
   expect_error( descr(dat3, "Species", format_options = list(omit_missings_in_group = F)) %>%  print(silent=T), NA)
+  expect_error(descr(dat1, "Species", format_options = list(omit_missings_in_categorical_var =T), test_options = list(include_group_missings_in_test=T)))
+  expect_error(descr(dat1, "Species", var_options=list(cat_var = list(format_options = list(omit_missings_in_categorical_var =T), test_options = list(include_group_missings_in_test=T)))))
+  expect_error(descr(dat1, "Species", format_options = list(omit_missings_in_categorical_var =T)) %>%  print(silent=T), NA)
+  expect_error(descr(dat2, "Species", format_options = list(omit_missings_in_categorical_var =T)) %>%  print(silent=T), NA)
 })

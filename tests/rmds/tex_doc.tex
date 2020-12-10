@@ -5,12 +5,13 @@
 \documentclass[
 ]{article}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -81,7 +82,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -101,6 +102,9 @@
 \usepackage{needspace}
 \usepackage{longtable}
 \usepackage{booktabs}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 
 \title{test\_tex}
 \author{}
@@ -115,7 +119,7 @@
 }
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{descr}\NormalTok{(iris)}
+\FunctionTok{descr}\NormalTok{(iris)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -180,11 +184,11 @@
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{descr}\NormalTok{(}
+\FunctionTok{descr}\NormalTok{(}
 \NormalTok{  iris,}
   \StringTok{"Species"}\NormalTok{,}
-  \DataTypeTok{group_labels =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{setosa =} \StringTok{"My custom group label"}\NormalTok{),}
-  \DataTypeTok{var_options =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{Sepal.Length =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{label =} \StringTok{"My custom variable label"}\NormalTok{))}
+  \AttributeTok{group\_labels =} \FunctionTok{list}\NormalTok{(}\AttributeTok{setosa =} \StringTok{"My custom group label"}\NormalTok{),}
+  \AttributeTok{var\_options =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Sepal.Length =} \FunctionTok{list}\NormalTok{(}\AttributeTok{label =} \StringTok{"My custom variable label"}\NormalTok{))}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -244,7 +248,7 @@
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{descr}\NormalTok{(iris) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{print}\NormalTok{(.)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{raw_latex}\NormalTok{()}
+\FunctionTok{descr}\NormalTok{(iris) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{capture.output}\NormalTok{(}\FunctionTok{print}\NormalTok{(.)) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ knitr}\SpecialCharTok{::}\FunctionTok{raw\_latex}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
