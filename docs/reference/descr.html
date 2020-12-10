@@ -75,7 +75,7 @@ For two-group comparisons, confidence intervals for appropriate summary measures
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.2</span>
       </span>
     </div>
 
@@ -166,8 +166,9 @@ For two-group comparisons, confidence intervals for appropriate summary measures
   format_p <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/label_pvalue.html'>pvalue_format</a></span><span class='op'>(</span><span class='op'>)</span>,
   format_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>print_p <span class='op'>=</span> <span class='cn'>T</span>, print_CI <span class='op'>=</span> <span class='cn'>T</span>, combine_mean_sd <span class='op'>=</span> <span class='cn'>F</span>, omit_Nmiss_if_0
     <span class='op'>=</span> <span class='cn'>T</span>, omit_missings_in_group <span class='op'>=</span> <span class='cn'>T</span>, percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>,
-    categorical_missing_percent_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_missing_percent"</span>,
-    <span class='st'>"missing_as_regular_category"</span>, <span class='st'>"missing_as_separate_category"</span><span class='op'>)</span><span class='op'>)</span>,
+    omit_missings_in_categorical_var <span class='op'>=</span> <span class='cn'>F</span>, categorical_missing_percent_mode <span class='op'>=</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_missing_percent"</span>, <span class='st'>"missing_as_regular_category"</span>,
+    <span class='st'>"missing_as_separate_category"</span><span class='op'>)</span><span class='op'>)</span>,
   test_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>paired <span class='op'>=</span> <span class='cn'>F</span>, nonparametric <span class='op'>=</span> <span class='cn'>F</span>, exact <span class='op'>=</span> <span class='cn'>F</span>, indices <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>,
     include_group_missings_in_test <span class='op'>=</span> <span class='cn'>F</span>, include_categorical_missings_in_test <span class='op'>=</span> <span class='cn'>F</span>,
     test_override <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>,
@@ -269,6 +270,7 @@ shortcut argument for the specification of an appropriate entry in the <code>res
 <li><p><code>omit_missings_in_group</code> (logical)  controls whether to omit all observations where the group variable is missing.</p></li>
 <li><p><code>percent_accuracy</code> (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
 should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent</p></li>
+<li><p><code>omit_missings_in_categorical_var</code> (logical) controls whether to omit missing values in categorical variables completely.</p></li>
 <li><p><code>categorical_missing_percent_mode</code> (character)  controls how to display percentages in categorical variables with a (Missing) category.
 It may be set to one of the following options:
 <ul>
