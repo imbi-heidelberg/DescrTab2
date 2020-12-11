@@ -4,7 +4,7 @@
 \alias{print.DescrPrint}
 \title{S3 override for print function for DescrPrint objects}
 \usage{
-\method{print}{DescrPrint}(x, print_format = options("print_format")[[1]], silent = F, ...)
+\method{print}{DescrPrint}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}

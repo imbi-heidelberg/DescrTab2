@@ -1,4 +1,4 @@
-> descr(dat, test_options = c(nonparametric = T)) %>% print()
+> descr(dat, test_options = c(nonparametric = TRUE)) %>% print()
   Variables     Total          p       Test                                  
 1  diff                                                                      
 2    N           9              0.039   Wilcoxon one-sample signed-rank test 

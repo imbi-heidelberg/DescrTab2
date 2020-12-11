@@ -1,4 +1,4 @@
-> descr(dat, "group", test_options = list(paired = T, indices = rep(1:10, 2))) %>%
+> descr(dat, "group", test_options = list(paired = TRUE, indices = rep(1:10, 2))) %>%
 +   print()
   Variables    `1`        `2`       Total      p      Test            CI        
 1  extra                                                                        

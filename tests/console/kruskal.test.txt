@@ -1,4 +1,5 @@
-> descr(dat_kruskal.test, "group", test_options = c(nonparametric = T)) %>% print()
+> descr(dat_kruskal.test, "group", test_options = c(nonparametric = TRUE)) %>%
++   print()
   Variables    Trt       Ctrl      Placebo    Total    p      Test              
 1  var                                                                          
 2    N          5         4         5          14       0.68~  Kruskal-Wallis o~

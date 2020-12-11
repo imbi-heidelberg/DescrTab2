@@ -5,7 +5,7 @@ library(magrittr)
 
 dat1 <- iris
 dat1[1, "Sepal.Length"] <- NA
-dat1$cat_var <-  c("a", "b") %>% sample(150, T) %>% factor()
+dat1$cat_var <-  c("a", "b") %>% sample(150, TRUE) %>% factor()
 
 dat1[1, "cat_var"] <- NA
 
@@ -17,32 +17,32 @@ dat3[1, "Species"] <- NA
 
 
 test_that("Missings are handles properly", {
-  expect_error(descr(dat1, "Species") %>%  print(silent=T), NA)
+  expect_error(descr(dat1, "Species") %>%  print(silent=TRUE), NA)
   expect_error( descr(
     dat1,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_regular_category")
-  ) %>%  print(silent=T), NA)
+  ) %>%  print(silent=TRUE), NA)
   expect_error( descr(
     dat1,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_separate_category")
-  ) %>%  print(silent=T), NA)
-  expect_error( descr(dat2, "Species") %>%  print(silent=T), NA)
+  ) %>%  print(silent=TRUE), NA)
+  expect_error( descr(dat2, "Species") %>%  print(silent=TRUE), NA)
   expect_error( descr(
     dat2,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_regular_category")
-  ) %>%  print(silent=T), NA)
+  ) %>%  print(silent=TRUE), NA)
   expect_error(descr(
     dat2,
     "Species",
     format_options = list(categorical_missing_percent_mode = "missing_as_separate_category")
-  ) %>%  print(silent=T), NA)
-  expect_warning( descr(dat3, "Species") %>%  print(silent=T) )
-  expect_error( descr(dat3, "Species", format_options = list(omit_missings_in_group = F)) %>%  print(silent=T), NA)
-  expect_error(descr(dat1, "Species", format_options = list(omit_missings_in_categorical_var =T), test_options = list(include_group_missings_in_test=T)))
-  expect_error(descr(dat1, "Species", var_options=list(cat_var = list(format_options = list(omit_missings_in_categorical_var =T), test_options = list(include_group_missings_in_test=T)))))
-  expect_error(descr(dat1, "Species", format_options = list(omit_missings_in_categorical_var =T)) %>%  print(silent=T), NA)
-  expect_error(descr(dat2, "Species", format_options = list(omit_missings_in_categorical_var =T)) %>%  print(silent=T), NA)
+  ) %>%  print(silent=TRUE), NA)
+  expect_warning( descr(dat3, "Species") %>%  print(silent=TRUE) )
+  expect_error( descr(dat3, "Species", format_options = list(omit_missings_in_group = FALSE)) %>%  print(silent=TRUE), NA)
+  expect_error(descr(dat1, "Species", format_options = list(omit_missings_in_categorical_var =TRUE), test_options = list(include_group_missings_in_test=TRUE)))
+  expect_error(descr(dat1, "Species", var_options=list(cat_var = list(format_options = list(omit_missings_in_categorical_var =TRUE), test_options = list(include_group_missings_in_test=TRUE)))))
+  expect_error(descr(dat1, "Species", format_options = list(omit_missings_in_categorical_var =TRUE)) %>%  print(silent=TRUE), NA)
+  expect_error(descr(dat2, "Species", format_options = list(omit_missings_in_categorical_var =TRUE)) %>%  print(silent=TRUE), NA)
 })

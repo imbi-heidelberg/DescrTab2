@@ -1,4 +1,4 @@
-> descr(dat, "group", test_options = list(nonparametric = T, indices = idx,
+> descr(dat, "group", test_options = list(nonparametric = TRUE, indices = idx,
 +   paired = T)) %>% print()
   Variables   `Round Out`  `Narrow Angle` `Wide Angle` Total     p     Test     
 1  var                                                                          

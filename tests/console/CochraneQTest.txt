@@ -1,4 +1,4 @@
-> descr(dat, "time", test_options = list(indices = idx, paired = T)) %>% print()
+> descr(dat, "time", test_options = list(indices = idx, paired = TRUE)) %>% print()
   Variables A          B          C          Total      p       Test            
 1  resp                                                                         
 2    F       28 (61%)   28 (61%)   16 (35%)   72 (52%)   0.014   Cochrans Q tes~

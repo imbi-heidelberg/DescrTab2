@@ -1,4 +1,4 @@
-> descr(dat_wilcox.test_2_sample, "group", test_options = c(nonparametric = T)) %>%
+> descr(dat_wilcox.test_2_sample, "group", test_options = c(nonparametric = TRUE)) %>%
 +   print()
   Variables    Trt        Ctrl       Total      p      Test           CI        
 1  var                                                                          

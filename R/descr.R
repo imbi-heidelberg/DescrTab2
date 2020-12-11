@@ -77,7 +77,7 @@ utils::globalVariables(".")
 #' the rest of the table unchanged. \cr
 #' \code{var_options} is a list of named lists. This means that each member of \code{var_options} is itself a list again.
 #' The names of the list elements of \code{var_options} determine the variables to which the options will apply.
-#' Let's say you have an \code{age} variable in your dataset. To change descr options only for \code{age}, you will need to pass
+#' Let's say you have an \code{age} variable in your dataset. To change 'descr' options only for \code{age}, you will need to pass
 #' a list of the form \code{var_options = list(age = list(<Your options here>))}. \cr
 #' You can replace \code{<Your options here>} with the following options:
 #' \itemize{
@@ -184,13 +184,13 @@ descr <-
            ),
            format_p = scales::pvalue_format(),
            format_options = list(
-             print_p = T,
-             print_CI = T,
-             combine_mean_sd = F,
-             omit_Nmiss_if_0 = T,
-             omit_missings_in_group = T,
+             print_p = TRUE,
+             print_CI = TRUE,
+             combine_mean_sd = FALSE,
+             omit_Nmiss_if_0 = TRUE,
+             omit_missings_in_group = TRUE,
              percent_accuracy=NULL,
-             omit_missings_in_categorical_var = F,
+             omit_missings_in_categorical_var = FALSE,
              categorical_missing_percent_mode = c(
                "no_missing_percent",
                "missing_as_regular_category",
@@ -199,12 +199,12 @@ descr <-
            ),
 
            test_options = list(
-             paired = F,
-             nonparametric = F,
-             exact = F,
+             paired = FALSE,
+             nonparametric = FALSE,
+             exact = FALSE,
              indices = c(),
-             include_group_missings_in_test = F,
-             include_categorical_missings_in_test = F,
+             include_group_missings_in_test = FALSE,
+             include_categorical_missings_in_test = FALSE,
              test_override = NULL
            ),
            reshape_rows = list(
@@ -229,8 +229,8 @@ descr <-
 
 
     # Check for empty strings
-    if(any(dat=="", na.rm = T)){
-      if (any(dat=="(empty)", na.rm = T)){
+    if(any(dat=="", na.rm = TRUE)){
+      if (any(dat=="(empty)", na.rm = TRUE)){
         stop('Your data contains both "" (i.e. empty strings) and "(empty)". This would lead to conflicts. Rename your "" data. ')
       }
 
@@ -278,7 +278,7 @@ descr <-
         if (dat %>% pull(!!group) %>% is.na() %>% any()) {
           warning(
             "Observations with missings in the group variable were dropped. To include them as a separate category, specify
-            format_options = list(omit_missings_in_group=F)"
+            format_options = list(omit_missings_in_group=FALSE)"
           )
           dat %<>% filter(!is.na(get(!!group)))
         }
@@ -338,8 +338,8 @@ descr <-
       warning("names(test_options) cannot be empty. Ignoring the test_options option.")
     }
 
-    if (isTRUE(format_options[["omit_missings_in_categorical_var"]] == T) & isTRUE(test_options[["include_group_missings_in_test"]] == T)){
-      stop("You have format_options[['omit_missings_in_categorical_var']] == F and test_options[['include_group_missings_in_test']] == T,
+    if (isTRUE(format_options[["omit_missings_in_categorical_var"]] == TRUE) & isTRUE(test_options[["include_group_missings_in_test"]] == TRUE)){
+      stop("You have format_options[['omit_missings_in_categorical_var']] == FALSEand test_options[['include_group_missings_in_test']] == TRUE,
            i.e. you request a statistical test that treats missings in categorical variables as regular observations, but you do not report the number of missings.
            You should avoid this.")
     }
@@ -411,8 +411,8 @@ descr <-
           c(summary_stats_cat, summary_stats_cont)
         ), tmp_names), function(x)
           return(as.character),
-        USE.NAMES = T,
-        simplify = F)
+        USE.NAMES = TRUE,
+        simplify = FALSE)
     }
     ## Fill incomplete input lists with default parameters
     if (!is.null(group)) {
@@ -467,8 +467,8 @@ descr <-
           var_options[[var_option_name]][["format_summary_stats"]][setdiff(names(var_options[[var_option_name]][["summary_stats"]]), tmp_names)] <-
             sapply(setdiff(names(var_options[[var_option_name]][["summary_stats"]]), tmp_names), function(x)
               return(as.character),
-              USE.NAMES = T,
-              simplify = F)
+              USE.NAMES = TRUE,
+              simplify = FALSE)
         }
       }
       if (!is.null(var_options[[var_option_name]][["format_p"]])) {
@@ -484,8 +484,8 @@ descr <-
       }
       if (!is.null(var_options[[var_option_name]][["test_options"]])) {
         if (!is.null(var_options[[var_option_name]][["format_options"]])){
-          if (isTRUE(var_options[[var_option_name]][["format_options"]][["omit_missings_in_categorical_var"]] == T) & isTRUE(var_options[[var_option_name]][["test_options"]][["include_group_missings_in_test"]] == T)){
-            stop("You have format_options[['omit_missings_in_categorical_var']] == F and test_options[['include_group_missings_in_test']] == T,
+          if (isTRUE(var_options[[var_option_name]][["format_options"]][["omit_missings_in_categorical_var"]] == TRUE) & isTRUE(var_options[[var_option_name]][["test_options"]][["include_group_missings_in_test"]] == TRUE)){
+            stop("You have format_options[['omit_missings_in_categorical_var']] == FALSEand test_options[['include_group_missings_in_test']] == TRUE,
            i.e. you request a statistical test that treats missings in categorical variables as regular observations, but you do not report the number of missings.
            You should avoid this.")
           }
@@ -805,7 +805,7 @@ calc_variable_lengths <- function(var, group) {
 #' @return
 #' A DescrPrint object which can be printed in various formats.
 #'
-#' You can use the \code{print_format} option to control the output type. If you use DescrTab2 inside an .Rmd document,
+#' You can use the \code{print_format} option to control the output type. If you use 'DescrTab2' inside an .Rmd document,
 #' you can set the clobal option \code{option(print_format="tex")} or \code{option(print_format="html")} or
 #' \code{option(print_format="word")} depending on your document type. This way, all your tables will be printed in the
 #' right format by default inside this document.
@@ -833,7 +833,7 @@ calc_variable_lengths <- function(var, group) {
 #' @import stringr
 print.DescrList <-  function(x,
                              print_format = options("print_format")[[1]],
-                             silent = F,
+                             silent = FALSE,
                              ...) {
   DescrListObj <- x
 
@@ -882,7 +882,7 @@ print.DescrList <-  function(x,
 #' @import stringr
 print.DescrPrint <-  function(x,
                               print_format = options("print_format")[[1]],
-                              silent = F,
+                              silent = FALSE,
                               ...) {
   # if no printing format was set, print to console
   if (is.null(print_format)) {
@@ -899,7 +899,7 @@ print.DescrPrint <-  function(x,
 
 print.DescrPrintCharacter <-  function(x,
                                        print_format = options("print_format")[[1]],
-                                       silent = F,
+                                       silent = FALSE,
                                        ...) {
   ret <- switch(
     print_format,
@@ -913,7 +913,7 @@ print.DescrPrintCharacter <-  function(x,
 
 print.DescrPrintNumeric <-  function(x,
                                      print_format = options("print_format")[[1]],
-                                     silent = F,
+                                     silent = FALSE,
                                      ...) {
   ret <- print_numeric(x, silent, ...)
   invisible(ret)
@@ -1026,12 +1026,12 @@ create_DescrPrint <- function(DescrListObj, print_format) {
     tibl %<>%  bind_rows(print_list[[var_name]][["tibble"]])
   }
 
-  if (isTRUE(DescrListObj[["format"]][["options"]][["print_p"]] == F)) {
+  if (isTRUE(DescrListObj[["format"]][["options"]][["print_p"]] == FALSE)) {
     tibl %<>% select(-"p")
     tibl %<>% select(-"Test")
   }
 
-  if (isTRUE(DescrListObj[["format"]][["options"]][["print_CI"]] == F)) {
+  if (isTRUE(DescrListObj[["format"]][["options"]][["print_CI"]] == FALSE)) {
     tibl %<>% select(-"CI")
   }
 
@@ -1050,11 +1050,11 @@ create_DescrPrint <- function(DescrListObj, print_format) {
 
 
 print_numeric <- function(DescrPrintObj,
-                          silent = F,
+                          silent = FALSE,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
-                          print_red_NA = F) {
+                          print_red_NA = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
@@ -1080,11 +1080,11 @@ print_numeric <- function(DescrPrintObj,
 
 
 print_console <- function(DescrPrintObj,
-                          silent = F,
+                          silent = FALSE,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
-                          print_red_NA = F) {
+                          print_red_NA = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
@@ -1108,7 +1108,7 @@ print_console <- function(DescrPrintObj,
 
 #' @importFrom kableExtra kbl kable_styling add_header_above
 #' @importFrom utils capture.output head tail
-print_tex <- function(DescrPrintObj, silent = F) {
+print_tex <- function(DescrPrintObj, silent = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -1120,7 +1120,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
   indx_varnames <- logical()
   for (i in 1:length(DescrPrintObj$variables)) {
     indx_varnames <-
-      c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]] - 1)))
+      c(indx_varnames, c(TRUE, rep(FALSE, DescrPrintObj$lengths[[i]] - 1)))
   }
 
   # indx_varnames <- c1 %in% labels
@@ -1158,11 +1158,11 @@ print_tex <- function(DescrPrintObj, silent = F) {
   tex <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "latex",
-      longtable = T,
-      booktabs = T,
+      longtable = TRUE,
+      booktabs = TRUE,
       linesep = "",
       align = alig,
-      escape = F,
+      escape = FALSE,
       col.names = N_numbers
     ) %>%
     `if`(
@@ -1171,9 +1171,9 @@ print_tex <- function(DescrPrintObj, silent = F) {
       .
     ) %>%
     kableExtra::pack_rows(index = lengths) %>%
-    add_header_above(actual_colnames, line = F, align = alig2) %>%
+    add_header_above(actual_colnames, line = FALSE, align = alig2) %>%
     kable_styling(latex_options = "repeat_header",
-                  repeat_header_continued = F) %>%
+                  repeat_header_continued = FALSE) %>%
     capture.output()
 
   tex %<>% str_replace_all("\\\\\\\\(?!\\*)", fixed("\\\\\\\\*"))
@@ -1203,7 +1203,7 @@ print_tex <- function(DescrPrintObj, silent = F) {
 
 #' @importFrom kableExtra kbl kable_styling add_header_above
 #' @importFrom utils capture.output head tail
-print_html <- function(DescrPrintObj, silent = F) {
+print_html <- function(DescrPrintObj, silent = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -1215,7 +1215,7 @@ print_html <- function(DescrPrintObj, silent = F) {
   indx_varnames <- logical()
   for (i in 1:length(DescrPrintObj$variables)) {
     indx_varnames <-
-      c(indx_varnames, c(T, rep(F, DescrPrintObj$lengths[[i]] - 1)))
+      c(indx_varnames, c(TRUE, rep(FALSE, DescrPrintObj$lengths[[i]] - 1)))
   }
 
   if ("p" %in% names(tibl)) {
@@ -1248,11 +1248,11 @@ print_html <- function(DescrPrintObj, silent = F) {
   html <- tibl[!indx_varnames, ] %>%
     kbl(
       format = "html",
-      longtable = T,
-      booktabs = T,
+      longtable = TRUE,
+      booktabs = TRUE,
       linesep = "",
       align = alig,
-      escape = F,
+      escape = FALSE,
       col.names = N_numbers
     ) %>%
     kable_styling() %>%
@@ -1262,7 +1262,7 @@ print_html <- function(DescrPrintObj, silent = F) {
       .
     ) %>%
     kableExtra::pack_rows(index = lengths) %>%
-    add_header_above(actual_colnames, line = F, align = alig2)
+    add_header_above(actual_colnames, line = FALSE, align = alig2)
 
   if (!silent) {
     cli::cat_line(html)
@@ -1276,7 +1276,7 @@ print_html <- function(DescrPrintObj, silent = F) {
 #' @importFrom flextable flextable bold padding add_header border_inner align autofit
 #' @importFrom officer fp_border
 #' @importFrom utils capture.output head tail
-print_word <- function(DescrPrintObj, silent = F) {
+print_word <- function(DescrPrintObj, silent = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -1314,7 +1314,7 @@ print_word <- function(DescrPrintObj, silent = F) {
     padding(j = 1,
             i = !indx_varnames,
             padding.left = 20) %>%
-    add_header(top = F, values = N_numbers) %>%
+    add_header(top = FALSE, values = N_numbers) %>%
     flextable::border_inner(part = "header", border = officer::fp_border(width = 0)) %>%
     flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) %>%
     align(j = which(names(tibl2) != "Variables"),
@@ -1507,7 +1507,7 @@ create_character_subtable.cont_summary <-
            reshape_rows) {
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
-    if (format_options[["omit_Nmiss_if_0"]] == T) {
+    if (format_options[["omit_Nmiss_if_0"]] == TRUE) {
       if (isTRUE(DescrVarObj[["results"]][["Total"]][["Nmiss"]] == 0)) {
         DescrVarObj[["results"]][["Total"]] <-
           DescrVarObj[["results"]][["Total"]][setdiff(names(DescrVarObj[["results"]][["Total"]]), "Nmiss")]
@@ -1708,7 +1708,7 @@ create_character_subtable.cat_summary <-
       sum(unlist(DescrVarObj[["results"]][["Total"]][["categories"]][cat_names]))
 
     if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
-        format_options[["omit_missings_in_categorical_var"]] == F) {
+        format_options[["omit_missings_in_categorical_var"]] == FALSE) {
       N_nonmissing <- N_total
     } else{
       N_nonmissing <-
@@ -1749,7 +1749,7 @@ create_character_subtable.cat_summary <-
     }
 
     if ("(Missing)" %in% cat_names) {
-      if (format_options[["omit_missings_in_categorical_var"]] == T ){
+      if (format_options[["omit_missings_in_categorical_var"]] == TRUE ){
         DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] <- NULL
       } else if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
         DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] <-
@@ -1788,7 +1788,7 @@ create_character_subtable.cat_summary <-
         sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][cat_names]))
 
       if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
-          format_options[["omit_missings_in_categorical_var"]] == F) {
+          format_options[["omit_missings_in_categorical_var"]] == FALSE) {
         N_group_nonmissing <- N_group_total
       } else{
         N_group_nonmissing <-
@@ -1830,7 +1830,7 @@ create_character_subtable.cat_summary <-
       }
 
       if ("(Missing)" %in% cat_names) {
-        if (format_options[["omit_missings_in_categorical_var"]] == T ){
+        if (format_options[["omit_missings_in_categorical_var"]] == TRUE ){
           DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] <- NULL
         } else if (format_options[["categorical_missing_percent_mode"]][1] == "no_missing_percent") {
           DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] <-
@@ -1905,35 +1905,35 @@ create_character_subtable.cat_summary <-
 }
 
 .mean <- function(var) {
-  mean(var, na.rm = T)
+  mean(var, na.rm = TRUE)
 }
 
 .sd <- function(var) {
-  stats::sd(var, na.rm = T)
+  stats::sd(var, na.rm = TRUE)
 }
 
 .median <- function(var) {
-  stats::median(var, na.rm = T)
+  stats::median(var, na.rm = TRUE)
 }
 
 .Q1 <- function(var) {
   stats::quantile(var,
                   probs = 0.25,
-                  na.rm = T,
+                  na.rm = TRUE,
                   type = 2)
 }
 
 .Q3 <- function(var) {
   stats::quantile(var,
                   probs = 0.75,
-                  na.rm = T,
+                  na.rm = TRUE,
                   type = 2)
 }
 
 
 .min <- function(var) {
   if (any(!is.na(var))) {
-    min(var, na.rm = T)
+    min(var, na.rm = TRUE)
   } else{
     NA_real_
   }
@@ -1941,7 +1941,7 @@ create_character_subtable.cat_summary <-
 
 .max <- function(var) {
   if (any(!is.na(var))) {
-    max(var, na.rm = T)
+    max(var, na.rm = TRUE)
   } else{
     NA_real_
   }
@@ -1953,34 +1953,34 @@ create_character_subtable.cat_summary <-
 }
 
 .factormean <- function(var) {
-  var %>% as.character() %>% as.numeric() %>% mean(na.rm = T)
+  var %>% as.character() %>% as.numeric() %>% mean(na.rm = TRUE)
 }
 
 .factorsd <- function(var) {
-  var %>% as.character() %>% as.numeric() %>% stats::sd(na.rm = T)
+  var %>% as.character() %>% as.numeric() %>% stats::sd(na.rm = TRUE)
 }
 
 
 .factormedian <- function(var) {
-  var %>% as.character() %>% as.numeric() %>% stats::median(na.rm = T)
+  var %>% as.character() %>% as.numeric() %>% stats::median(na.rm = TRUE)
 }
 
 .factorQ1 <- function(var) {
   var %>% as.character() %>% as.numeric() %>% stats::quantile(probs = 0.25,
-                                                              na.rm = T,
+                                                              na.rm = TRUE,
                                                               type = 2)
 }
 
 .factorQ3 <- function(var) {
   var %>% as.character() %>% as.numeric() %>% stats::quantile(probs = 0.75,
-                                                              na.rm = T,
+                                                              na.rm = TRUE,
                                                               type = 2)
 }
 
 .factormin <- function(var) {
   var_num <- var %>% as.character() %>% as.numeric()
   if (any(!is.na(var))) {
-    min(var_num, na.rm = T)
+    min(var_num, na.rm = TRUE)
   } else{
     NA_real_
   }
@@ -1989,7 +1989,7 @@ create_character_subtable.cat_summary <-
 .factormax <- function(var) {
   var_num <- var %>% as.character() %>% as.numeric()
   if (any(!is.na(var))) {
-    max(var_num, na.rm = T)
+    max(var_num, na.rm = TRUE)
   } else{
     NA_real_
   }
@@ -2156,9 +2156,9 @@ test_cont <-
         #     )
         #   )
         #   test <- "No appropriate test available."
-      } else if (isTRUE(test_options[["nonparametric"]] == T)) {
+      } else if (isTRUE(test_options[["nonparametric"]] == TRUE)) {
         # ordinal variable
-        if (isTRUE(test_options[["paired"]] == T)) {
+        if (isTRUE(test_options[["paired"]] == TRUE)) {
           # ordinal variable, paired test
           if (is.null(test_options[["indices"]])) {
             stop(
@@ -2183,7 +2183,7 @@ test_cont <-
         }
       } else{
         # continuous variable
-        if (isTRUE(test_options[["paired"]] == T)) {
+        if (isTRUE(test_options[["paired"]] == TRUE)) {
           # continuous variable, paired test
           if (is.null(test_options[["indices"]])) {
             stop(
@@ -2232,7 +2232,7 @@ test_cont <-
           y <-
             tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
 
-          list(p = stats::wilcox.test(x, y, paired = T)$p.value)
+          list(p = stats::wilcox.test(x, y, paired = TRUE)$p.value)
         },
         `Friedman test` = {
           tmp <-
@@ -2246,7 +2246,7 @@ test_cont <-
           list(p = stats::wilcox.test(var)$p.value)
         },
         `Mann-Whitney U test` = {
-          tl <- stats::wilcox.test(var ~ group, conf.int = T)
+          tl <- stats::wilcox.test(var ~ group, conf.int = TRUE)
           list(p = tl$p.value,
                CI = tl$conf.int,
                CI_name = "HL CI")
@@ -2271,7 +2271,7 @@ test_cont <-
           y <-
             tibl %>% filter(group == level2) %>% arrange(id) %>% pull(var)
 
-          tl <- stats::t.test(x, y, paired = T)
+          tl <- stats::t.test(x, y, paired = TRUE)
 
           list(p = tl$p.value,
                CI = tl$conf.int,
@@ -2292,7 +2292,7 @@ test_cont <-
           list(p = stats::t.test(var)$p.value)
         },
         `Welchs two-sample t-test` = {
-          tl <- stats::t.test(var ~ group, var.equal = F)
+          tl <- stats::t.test(var ~ group, var.equal = FALSE)
           list(p = tl$p.value,
                CI = tl$conf.int,
                CI_name = "Mean dif. CI")
@@ -2379,7 +2379,7 @@ test_cat <-
         test <- "No appropriate test available."
       } else if (is.ordered(var)) {
         # ordinal variable
-        if (isTRUE(test_options[["paired"]] == T)) {
+        if (isTRUE(test_options[["paired"]] == TRUE)) {
           # ordinal variable, paired test
           if (is.null(test_options[["indices"]])) {
             stop(
@@ -2404,9 +2404,9 @@ test_cat <-
         }
       } else{
         # nominal variable
-        if (isTRUE(test_options[["exact"]] == T)) {
+        if (isTRUE(test_options[["exact"]] == TRUE)) {
           # nominal variable, exact test
-          if (isTRUE(test_options[["paired"]] == T)) {
+          if (isTRUE(test_options[["paired"]] == TRUE)) {
             # nominal variable, exact paired test
             if (is.null(test_options[["indices"]])) {
               stop(
@@ -2427,7 +2427,7 @@ test_cat <-
           }
         } else{
           # nominal variable, asymptotic test
-          if (isTRUE(test_options[["paired"]] == T)) {
+          if (isTRUE(test_options[["paired"]] == TRUE)) {
             # nominal variable, asymptotic paired test
             if (is.null(test_options[["indices"]])) {
               stop(

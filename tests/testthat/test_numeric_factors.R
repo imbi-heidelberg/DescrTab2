@@ -4,7 +4,7 @@ library(magrittr)
 
 dat <- iris[iris$Species != "setosa", ]
 dat$Species <- factor(as.character(dat$Species))
-dat$cat_var <- c(1, 2) %>% sample(100, T) %>% factor()
+dat$cat_var <- c(1, 2) %>% sample(100, TRUE) %>% factor()
 
 
 test_that("summary statistics for factors work",
@@ -53,7 +53,7 @@ test_that("summary statistics for factors work",
                          digits = 2, scientific = 3)
               ),
               var_options = list(cat_var = list(test_override  = "Welchs two-sample t-test"))
-            ) %>% print(silent = T)
+            ) %>% print(silent = TRUE)
             ,
             NA
           ))

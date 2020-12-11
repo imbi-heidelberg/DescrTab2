@@ -1,4 +1,4 @@
-> descr(dat[, c("Sex", "distance")], "Sex", test_options = list(paired = T,
+> descr(dat[, c("Sex", "distance")], "Sex", test_options = list(paired = TRUE,
 +   indices = dat$Subject)) %>% print()
   Variables     Male       Female    Divers    Total     p      Test            
 1  distance                                                                     

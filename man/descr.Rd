@@ -24,14 +24,14 @@ descr(
     function(x) format(x, digits = 2,      scientific = 3), CI = function(x) format(x,
     digits = 2, scientific = 3)),
   format_p = scales::pvalue_format(),
-  format_options = list(print_p = T, print_CI = T, combine_mean_sd = F, omit_Nmiss_if_0
-    = T, omit_missings_in_group = T, percent_accuracy = NULL,
-    omit_missings_in_categorical_var = F, categorical_missing_percent_mode =
+  format_options = list(print_p = TRUE, print_CI = TRUE, combine_mean_sd = FALSE,
+    omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = NULL,
+    omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
     c("no_missing_percent", "missing_as_regular_category",
     "missing_as_separate_category")),
-  test_options = list(paired = F, nonparametric = F, exact = F, indices = c(),
-    include_group_missings_in_test = F, include_categorical_missings_in_test = F,
-    test_override = NULL),
+  test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
+    c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
+    FALSE, test_override = NULL),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3)
     paste0(Q1, " -- ", Q3)), `min - max` = list(args = c("min", "max"), fun =
     function(min, max) paste0(min, " -- ", max))),
@@ -138,7 +138,7 @@ The \code{var_options} list can be used to conduct customizations that should on
 the rest of the table unchanged. \cr
 \code{var_options} is a list of named lists. This means that each member of \code{var_options} is itself a list again.
 The names of the list elements of \code{var_options} determine the variables to which the options will apply.
-Let's say you have an \code{age} variable in your dataset. To change descr options only for \code{age}, you will need to pass
+Let's say you have an \code{age} variable in your dataset. To change 'descr' options only for \code{age}, you will need to pass
 a list of the form \code{var_options = list(age = list(<Your options here>))}. \cr
 You can replace \code{<Your options here>} with the following options:
 \itemize{

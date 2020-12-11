@@ -8,18 +8,18 @@ dat$cat_var <- c("a", "b") %>% rep(50) %>% factor()
 
 
 test_that("numeric output does not produce errors.", {
-  expect_error(descr(iris) %>% print(silent = T, print_format = "numeric"), NA)
+  expect_error(descr(iris) %>% print(silent = TRUE, print_format = "numeric"), NA)
   expect_error(
     descr(
       iris,
       "Species",
       group_labels = list(setosa = "My custom group label"),
       var_options = list(Sepal.Length = list(label = "My custom variable label"))
-    ) %>% print(silent = T, print_format = "numeric"),
+    ) %>% print(silent = TRUE, print_format = "numeric"),
     NA
   )
   expect_error(descr(dat,
-                     "Species") %>% print(silent = T, print_format = "numeric"),
+                     "Species") %>% print(silent = TRUE, print_format = "numeric"),
                NA)
 })
 

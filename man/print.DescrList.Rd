@@ -4,7 +4,7 @@
 \alias{print.DescrList}
 \title{S3 override for print function for DescrList objects.}
 \usage{
-\method{print}{DescrList}(x, print_format = options("print_format")[[1]], silent = F, ...)
+\method{print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}
@@ -18,7 +18,7 @@
 \value{
 A DescrPrint object which can be printed in various formats.
 
-You can use the \code{print_format} option to control the output type. If you use DescrTab2 inside an .Rmd document,
+You can use the \code{print_format} option to control the output type. If you use 'DescrTab2' inside an .Rmd document,
 you can set the clobal option \code{option(print_format="tex")} or \code{option(print_format="html")} or
 \code{option(print_format="word")} depending on your document type. This way, all your tables will be printed in the
 right format by default inside this document.
