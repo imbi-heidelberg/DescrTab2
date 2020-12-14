@@ -8,8 +8,8 @@ test_that("knit a tex file with DescrTab2 tables", {
     rmarkdown::render(
       "../rmds/tex_doc.Rmd",
       clean = TRUE,
-      quiet = TRUE,
-      output_dir = ifelse(isTRUE(test_on_cran), tempfile(), NULL)
+      quiet = TRUE
+      # output_dir = ifelse(isTRUE(test_on_cran), tempfile(), NULL)
     ),
     "character"
   )
