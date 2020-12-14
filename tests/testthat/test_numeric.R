@@ -1,11 +1,11 @@
 context("Output tables to the console")
 library(magrittr)
 
+test_on_cran <- TRUE
+
 dat <- iris[iris$Species != "setosa",]
 dat$Species <- factor(as.character(dat$Species))
 dat$cat_var <- c("a", "b") %>% rep(50) %>% factor()
-
-
 
 test_that("numeric output does not produce errors.", {
   expect_error(descr(iris) %>% print(silent = TRUE, print_format = "numeric"), NA)
@@ -24,11 +24,11 @@ test_that("numeric output does not produce errors.", {
 })
 
 verify_output(
-  "../console/print_numeric_single.txt",
+  ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_numeric_single.txt"),
   descr(iris) %>% print(print_format = "numeric")
 )
 verify_output(
-  "../console/print_numeric_group.txt",
+  ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_numeric_group.txt"),
   descr(
     iris,
     "Species",
@@ -37,7 +37,7 @@ verify_output(
   ) %>% print(print_format = "numeric")
 )
 
-verify_output("../console/print_numeric_CI.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_numeric_CI.txt"),
               descr(dat,
                     "Species") %>% print( print_format = "numeric"))
 
@@ -51,12 +51,7 @@ test_that("Summary stats that produce non-numeric output lead to erros when nume
             expect_warning(
               expect_error(descr(iris, summary_stats_cont = list(abc=function(...){"abc"} )) %>% print(print_format="numeric"))
             )
-
           }
-
-
-
-
           )
 
 

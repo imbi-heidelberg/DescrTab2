@@ -61,7 +61,7 @@ For instructive purposes, we will use the following dataset:
 ```{r}
 dat <- iris[, c("Species", "Sepal.Length")]
 dat %<>% mutate(animal= c("Mammal", "Fish") %>% rep(75) %>% factor())
-dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, T) %>% factor())
+dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
 ```
 
 
@@ -120,7 +120,7 @@ Rstudios autocomplete suggestions are very helpful when navigating this list.
 The `print` function returns a formatted version of this list, which you can also save and access using the same syntax.
 
 ```{r, results='asis'}
-my_table <- descr(dat) %>% print(silent=T)
+my_table <- descr(dat) %>% print(silent=TRUE)
 ```
 
 
@@ -151,17 +151,17 @@ There are a lot of different tests available. Check out the test_choice vignette
 Here are some different tests in action:
 
 ```{r, results='asis'}
-descr(dat %>% select(-"Species"), "animal", test_options = list(exact=T, nonparametric=T))
+descr(dat %>% select(-"Species"), "animal", test_options = list(exact=TRUE, nonparametric=TRUE))
 ```
 
 
 ```{r, results='asis'}
-descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = list(nonparametric=T))
+descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = list(nonparametric=TRUE))
 ```
 
 
 ```{r, results='asis'}
-descr(dat %>% select(-"Species"), "animal", test_options = list(paired=T, indices=rep(1:50, 3)))
+descr(dat %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices=rep(1:50, 3)))
 ```
 
 ## Significant digits
@@ -189,7 +189,7 @@ Let's say you have a categorical variable, but for some reason it's levels are n
 ```{r, results='asis'}
 # Create example dataset
 dat2 <- iris
-dat2$cat_var <- c(1,2) %>% sample(150, T) %>% factor()
+dat2$cat_var <- c(1,2) %>% sample(150, TRUE) %>% factor()
 dat2 <- dat2[, c("Species", "cat_var")]
 
 descr(dat2, "Species", summary_stats_cat=list(mean=DescrTab2:::.factormean))
@@ -197,25 +197,25 @@ descr(dat2, "Species", summary_stats_cat=list(mean=DescrTab2:::.factormean))
 ```
 
 ## Combining mean and sd
-Use the `format_options = list(combine_mean_sd=T)` option:
+Use the `format_options = list(combine_mean_sd=TRUE)` option:
 
 ```{r, results='asis'}
-descr(dat, "Species", format_options = c(combine_mean_sd=T))
+descr(dat, "Species", format_options = c(combine_mean_sd=TRUE))
 ```
 
 
 ## Omitting p values
 
-You can declare the `format_options = list(print_p = F)` option to omit p-values:
+You can declare the `format_options = list(print_p = FALSE)` option to omit p-values:
 
 ```{r, results='asis'}
-descr(dat, "animal", format_options = list(print_p = F))
+descr(dat, "animal", format_options = list(print_p = FALSE))
 ```
 
 Similarily for Confidence intervals:
 
 ```{r, results='asis'}
-descr(dat, "animal", format_options = list(print_CI = F))
+descr(dat, "animal", format_options = list(print_CI = FALSE))
 ```
 
 
@@ -247,7 +247,7 @@ descr(iris, "Species", var_options = list(Sepal.Length = list(
     mean = function(x)
       formatC(x, digits = 4)
   ),
-  test_options = c(nonparametric = T)
+  test_options = c(nonparametric = TRUE)
 )))
 ```
 

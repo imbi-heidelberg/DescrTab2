@@ -75,7 +75,7 @@ For two-group comparisons, confidence intervals for appropriate summary measures
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
       </span>
     </div>
 
@@ -164,14 +164,14 @@ For two-group comparisons, confidence intervals for appropriate summary measures
     <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>2</span>,      scientific <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>, CI <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>,
     digits <span class='op'>=</span> <span class='fl'>2</span>, scientific <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,
   format_p <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/label_pvalue.html'>pvalue_format</a></span><span class='op'>(</span><span class='op'>)</span>,
-  format_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>print_p <span class='op'>=</span> <span class='cn'>T</span>, print_CI <span class='op'>=</span> <span class='cn'>T</span>, combine_mean_sd <span class='op'>=</span> <span class='cn'>F</span>, omit_Nmiss_if_0
-    <span class='op'>=</span> <span class='cn'>T</span>, omit_missings_in_group <span class='op'>=</span> <span class='cn'>T</span>, percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>,
-    omit_missings_in_categorical_var <span class='op'>=</span> <span class='cn'>F</span>, categorical_missing_percent_mode <span class='op'>=</span>
+  format_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>print_p <span class='op'>=</span> <span class='cn'>TRUE</span>, print_CI <span class='op'>=</span> <span class='cn'>TRUE</span>, combine_mean_sd <span class='op'>=</span> <span class='cn'>FALSE</span>,
+    omit_Nmiss_if_0 <span class='op'>=</span> <span class='cn'>TRUE</span>, omit_missings_in_group <span class='op'>=</span> <span class='cn'>TRUE</span>, percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>,
+    omit_missings_in_categorical_var <span class='op'>=</span> <span class='cn'>FALSE</span>, categorical_missing_percent_mode <span class='op'>=</span>
     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_missing_percent"</span>, <span class='st'>"missing_as_regular_category"</span>,
     <span class='st'>"missing_as_separate_category"</span><span class='op'>)</span><span class='op'>)</span>,
-  test_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>paired <span class='op'>=</span> <span class='cn'>F</span>, nonparametric <span class='op'>=</span> <span class='cn'>F</span>, exact <span class='op'>=</span> <span class='cn'>F</span>, indices <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>,
-    include_group_missings_in_test <span class='op'>=</span> <span class='cn'>F</span>, include_categorical_missings_in_test <span class='op'>=</span> <span class='cn'>F</span>,
-    test_override <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>,
+  test_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>paired <span class='op'>=</span> <span class='cn'>FALSE</span>, nonparametric <span class='op'>=</span> <span class='cn'>FALSE</span>, exact <span class='op'>=</span> <span class='cn'>FALSE</span>, indices <span class='op'>=</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, include_group_missings_in_test <span class='op'>=</span> <span class='cn'>FALSE</span>, include_categorical_missings_in_test <span class='op'>=</span>
+    <span class='cn'>FALSE</span>, test_override <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>,
   reshape_rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>`Q1 - Q3` <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Q1"</span>, <span class='st'>"Q3"</span><span class='op'>)</span>, fun <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>Q1</span>, <span class='va'>Q3</span><span class='op'>)</span>
     <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>Q1</span>, <span class='st'>" -- "</span>, <span class='va'>Q3</span><span class='op'>)</span><span class='op'>)</span>, `min - max` <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"min"</span>, <span class='st'>"max"</span><span class='op'>)</span>, fun <span class='op'>=</span>
     <span class='kw'>function</span><span class='op'>(</span><span class='va'>min</span>, <span class='va'>max</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>min</span>, <span class='st'>" -- "</span>, <span class='va'>max</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
@@ -302,7 +302,7 @@ Use <code><a href='print_test_names.html'>print_test_names()</a></code> to see a
 the rest of the table unchanged. <br />
 <code>var_options</code> is a list of named lists. This means that each member of <code>var_options</code> is itself a list again.
 The names of the list elements of <code>var_options</code> determine the variables to which the options will apply.
-Let's say you have an <code>age</code> variable in your dataset. To change descr options only for <code>age</code>, you will need to pass
+Let's say you have an <code>age</code> variable in your dataset. To change 'descr' options only for <code>age</code>, you will need to pass
 a list of the form <code>var_options = list(age = list(&lt;Your options here&gt;))</code>. <br />
 You can replace <code>&lt;Your options here&gt;</code> with the following options:</p><ul>
 <li><p><code>label</code> a character string containing the label for the variable</p></li>

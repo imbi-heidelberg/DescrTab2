@@ -2,7 +2,7 @@
 % Please edit documentation in R/descr.R
 \name{test_cont}
 \alias{test_cont}
-\title{calculate a statistical test for a numerical variable.}
+\title{Calculate a statistical test for a numerical variable.}
 \usage{
 test_cont(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
 }
@@ -21,7 +21,7 @@ test_cont(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
 A list of test test results.
 }
 \description{
-calculate a statistical test for a numerical variable.
+Calculate a statistical test for a numerical variable.
 }
 \examples{
 cont_var <- c(1,2,3)

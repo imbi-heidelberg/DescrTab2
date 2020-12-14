@@ -2072,7 +2072,7 @@ print_test_names <- function() {
   )
 }
 
-#' calculate a statistical test for a numerical variable.
+#' Calculate a statistical test for a numerical variable.
 #'
 #' @param var A variable (a vector).
 #' @param group A variable containing the grouping information.
@@ -2311,7 +2311,7 @@ test_cont <-
   }
 
 
-#' calculate a statistical test for a numerical variable.
+#' Calculate a statistical test for a categorical variable.
 #'
 #' @param var A variable (a vector).
 #' @param group A variable containing the grouping information.

@@ -1,12 +1,16 @@
 context("Output tex tables in pdf_document .Rmd files")
 
-test_that(
-  "knit a tex file with DescrTab2 tables",{
-    skip_on_cran()
-    expect_type(
-      rmarkdown::render("../rmds/tex_doc.Rmd", clean = TRUE, quiet = TRUE),
-      "character"
-    )
-  }
+test_on_cran <- TRUE
 
-)
+test_that("knit a tex file with DescrTab2 tables", {
+  skip_on_cran()
+  expect_type(
+    rmarkdown::render(
+      "../rmds/tex_doc.Rmd",
+      clean = TRUE,
+      quiet = TRUE,
+      output_dir = ifelse(isTRUE(test_on_cran), tempfile(), NULL)
+    ),
+    "character"
+  )
+})

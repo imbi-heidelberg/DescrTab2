@@ -69,28 +69,28 @@ test_that("No p",
           {
             expect_error(
               descr(dat, "animal", format_options = list(
-                print_p = F, print_CI = F
+                print_p = FALSE, print_CI = FALSE
               )) %>%  print(silent = TRUE, print_format = "console"),
               NA
             )
 
             expect_error(
               descr(dat, "animal", format_options = list(
-                print_p = F, print_CI = F
+                print_p = FALSE, print_CI = FALSE
               )) %>%  print(silent = TRUE, print_format = "tex"),
               NA
             )
 
             expect_error(
               descr(dat, "animal", format_options = list(
-                print_p = F, print_CI = F
+                print_p = FALSE, print_CI = FALSE
               )) %>%  print(silent = TRUE, print_format = "word"),
               NA
             )
 
             expect_error(
               descr(dat, "animal", format_options = list(
-                print_p = F, print_CI = F
+                print_p = FALSE, print_CI = FALSE
               )) %>%  print(silent = TRUE, print_format = "html"),
               NA
             )
@@ -202,7 +202,7 @@ test_that("check if print_red_na option works",
 test_that("format_options in var_options is properly filled with default arguments",
           {
             expect_error(descr(iris, var_options = list(Sepal.Length = list(
-              format_options = (print_p = F)
+              format_options = (print_p = FALSE)
             ))) %>%
               print(silent = TRUE), NA)
 

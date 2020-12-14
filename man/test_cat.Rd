@@ -2,7 +2,7 @@
 % Please edit documentation in R/descr.R
 \name{test_cat}
 \alias{test_cat}
-\title{calculate a statistical test for a numerical variable.}
+\title{Calculate a statistical test for a categorical variable.}
 \usage{
 test_cat(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
 }
@@ -21,7 +21,7 @@ test_cat(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
 A list of test test results.
 }
 \description{
-calculate a statistical test for a numerical variable.
+Calculate a statistical test for a categorical variable.
 }
 \examples{
 cat_var <- factor(c("a", "b", "c"))

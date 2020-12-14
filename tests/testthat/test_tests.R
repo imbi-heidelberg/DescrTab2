@@ -2,6 +2,7 @@ context("Test statistical tests that produce p-values.")
 options(print_format = "console")
 library(magrittr)
 
+test_on_cran <- TRUE
 
 x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
 y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
@@ -21,7 +22,7 @@ test_that(
 )
 
 
-verify_output("../console/wilcox.test_1_sample.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/wilcox.test_1_sample.txt"),
               descr(dat, test_options = c(nonparametric = TRUE)) %>% print())
 
 
@@ -118,7 +119,7 @@ test_that("wilcox.test_2_sample paired categorical",
           ))
 
 verify_output(
-  "../console/wilcox.test_2_sample.txt",
+  ifelse(isTRUE(test_on_cran), tempfile(), "../console/wilcox.test_2_sample.txt"),
   descr(
     dat_wilcox.test_2_sample,
     "group",
@@ -155,7 +156,7 @@ test_that("kruskal.test works categorical",
           ))
 
 verify_output(
-  "../console/kruskal.test.txt",
+  ifelse(isTRUE(test_on_cran), tempfile(), "../console/kruskal.test.txt"),
   descr(dat_kruskal.test, "group", test_options = c(nonparametric = TRUE)) %>% print()
 )
 
@@ -219,7 +220,7 @@ test_that("friedman.test works",
           ))
 
 
-verify_output("../console/friedman.test.txt",
+verify_output( ifelse(isTRUE(test_on_cran), tempfile(), "../console/friedman.test.txt"),
               descr(
                 dat,
                 "group",
@@ -262,7 +263,7 @@ test_that("CochranQTest works",
           NA))
 
 
-verify_output("../console/CochraneQTest.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/CochraneQTest.txt"),
               descr(dat, "time", test_options = list(indices = idx, paired = TRUE)) %>% print())
 
 
@@ -312,11 +313,11 @@ test_that("exact2x2 mcnemar test errors if you forget to specify indices",
             print(silent = TRUE)))
 
 
-verify_output("../console/mcnemar.test.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/mcnemar.test.txt"),
               descr(dat, "group", test_options = list(paired = TRUE)) %>% print())
 
 verify_output(
-  "../console/exact_mcnemar.test.txt",
+  ifelse(isTRUE(test_on_cran), tempfile(), "../console/exact_mcnemar.test.txt"),
   descr(dat, "group", test_options = list(paired = TRUE, exact = TRUE, indices = c(1:1600, 1:1600))) %>% print()
 )
 
@@ -352,11 +353,11 @@ test_that("chisq.test more sample test works",
                        NA))
 
 
-verify_output("../console/1_sample_chisq.test.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/1_sample_chisq.test.txt"),
               descr(dat)
               %>% print())
 
-verify_output("../console/more_sample_chisq.test.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/more_sample_chisq.test.txt"),
               descr(dat, "gender") %>% print())
 
 
@@ -460,16 +461,16 @@ test_that(
 
 
 
-verify_output("../console/1_sample_t.test.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/1_sample_t.test.txt"),
               descr(dat)
               %>% print())
 
-verify_output("../console/2_sample_t.test.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/2_sample_t.test.txt"),
               descr(dat, "group")
               %>% print())
 
 verify_output(
-  "../console/1_samplepaired_t.test.txt",
+  ifelse(isTRUE(test_on_cran), tempfile(), "../console/1_samplepaired_t.test.txt"),
   descr(dat, "group", test_options = list(
     paired = TRUE, indices = rep(1:10, 2)
   ))
@@ -506,7 +507,7 @@ test_that("f.test test works",
           ))
 
 
-verify_output("../console/f.test.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/f.test.txt"),
               descr(dat[, c("y", "P")], "P")
               %>% print())
 
@@ -552,7 +553,7 @@ test_that("mixed_model test works",
 
 
 
-verify_output("../console/mixed_model.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/mixed_model.txt"),
               descr(dat[, c("Sex", "distance")], "Sex", test_options = list(
                 paired = TRUE, indices =
                   dat$Subject
@@ -580,7 +581,7 @@ test_that("boschloo test works",
           expect_error(descr(dat, "gender", test_options = c(exact = TRUE)) %>%
                          print(silent = TRUE),
                        NA))
-verify_output("../console/boschloo.txt",
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/boschloo.txt"),
               descr(dat, "gender", test_options = c(exact = TRUE)) %>% print())
 
 
