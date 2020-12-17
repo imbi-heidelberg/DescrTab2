@@ -134,7 +134,7 @@
 <div id="global-print_format-option" class="section level2">
 <h2 class="hasAnchor">
 <a href="#global-print_format-option" class="anchor"></a>Global print_format option</h2>
-<p>In order for <code>DescrTab2</code> to work properly with your document type of choice, you need to set the <code>printFormat</code> options, preferably right at the start of your document. You can do this by typing:</p>
+<p>In order for <code>DescrTab2</code> to work properly with your document type of choice, you need to set the <code>print_format</code> options, preferably right at the start of your document. You can do this by typing:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>print_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span> <span class="co"># or = "word" or "tex", depending on your document type</span></code></pre></div>
 </div>
@@ -146,7 +146,7 @@
 <code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">]</span>
 <span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mammal"</span>, <span class="st">"Fish"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">75</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>food<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fries"</span>, <span class="st">"wedges"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Make sure you include the DescrTab library by typing</p>
+<p>Make sure you include the DescrTab2 library by typing</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://imbi-heidelberg.github.io/DescrTab2/">DescrTab2</a></span><span class="op">)</span></code></pre></div>
 <p>somewhere in the document before you use it. You are now ready to go! Producing beautiful descriptive tables in html and tex is now as easy as typing:</p>
@@ -321,10 +321,10 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.102<sup>chi1</sup>
+&gt;0.999<sup>chi1</sup>
 </td>
 </tr>
 <tr>
@@ -332,7 +332,7 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -357,7 +357,7 @@ wedges
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">descr(dat) %&gt;% print() %&gt;% knitr::knit_print()</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>When producing word tables in this fashion, you must <em>not</em> have the <code>results='asis'</code> chunk option set.</p>
-<p>Note that <code>DescrTab2</code> can also produce console output! In fact, this is the default setting (i.e. if the global <code>DescrTabFormat</code> is not specified)</p>
+<p>Note that <code>DescrTab2</code> can also produce console output! In fact, this is the default setting (i.e. if the global <code>print_format</code> is not specified)</p>
 </div>
 <div id="accessing-table-elements" class="section level2">
 <h2 class="hasAnchor">
@@ -608,19 +608,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.507<sup>chi2</sup>
+0.787<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -628,16 +628,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -891,19 +891,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.507<sup>chi2</sup>
+0.787<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -911,16 +911,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1185,13 +1185,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-43 (57%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 &gt;0.999<sup>chi2</sup>
@@ -1205,13 +1205,13 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-32 (43%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1237,7 +1237,7 @@ wedges
 <div id="different-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#different-tests" class="anchor"></a>Different tests</h2>
-<p>There are a lot of different tests available. Check out the test_choice vignette for details: <code>vignette("test_choice_tree", "DescrTab2")</code>, or look at <a href="https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_html.html" class="uri">https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_html.html</a></p>
+<p>There are a lot of different tests available. Check out the test_choice vignette for details: <a href="https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf" class="uri">https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf</a></p>
 <p>Here are some different tests in action:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span>, nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1420,16 +1420,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-43 (57%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.919<sup>Bolo</sup>
+0.835<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1440,13 +1440,13 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-32 (43%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1652,11 +1652,7 @@ min - max
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in test_cont(var, group, test_options, test_override, var_name): Removed</span>
-<span class="co">#&gt; paired observations with missings.</span>
-<span class="co">#&gt; Error converted to warning: Error in t.test.default(x, y, paired = TRUE): not enough 'x' observations</span>
-<span class="co">#&gt; Error converted to warning: Error in test_cat(var, group, test_options, test_override, var_name): tmp1$idx == tmp2$idx are not all TRUE</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1667,12 +1663,12 @@ Variables
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
-Fish
+Before
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
-Mammal
+After
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -1729,9 +1725,10 @@ N
 150
 </td>
 <td style="text-align:center;">
-NA
+0.937<sup>tpar</sup>
 </td>
 <td style="text-align:center;">
+Mean dif. CI
 </td>
 </tr>
 <tr>
@@ -1750,7 +1747,7 @@ mean
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[NA, NA]
+[-0.16, 0.18]
 </td>
 </tr>
 <tr>
@@ -1835,18 +1832,19 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-43 (57%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-NA
+&gt;0.999<sup>McN</sup>
 </td>
 <td style="text-align:center;">
+Prop. dif. CI
 </td>
 </tr>
 <tr>
@@ -1854,26 +1852,33 @@ NA
 wedges
 </td>
 <td style="text-align:center;">
-32 (43%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[NA, NA]
+[-0.16, 0.19]
 </td>
 </tr>
 </tbody>
-<tfoot><tr>
+<tfoot>
+<tr>
 <td style="padding: 0; " colspan="100%">
-<sup>Unknown test</sup> Test errored, check console output.
+<sup>tpar</sup> Students paired t-test
 </td>
-</tr></tfoot>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup>McN</sup> McNemars test
+</td>
+</tr>
+</tfoot>
 </table>
 </div>
 <div id="significant-digits" class="section level2">
@@ -2110,19 +2115,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.507<sup>chi2</sup>
+0.787<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2130,16 +2135,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2376,19 +2381,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.507<sup>chi2</sup>
+0.787<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2396,16 +2401,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2500,19 +2505,19 @@ p
 mean
 </td>
 <td style="text-align:center;">
-1.6
+1.5
 </td>
 <td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
-1.4
+1.5
 </td>
 <td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
-0.167<sup>chi2</sup>
+0.899<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2520,16 +2525,16 @@ mean
 1
 </td>
 <td style="text-align:center;">
-19 (38%)
+24 (48%)
+</td>
+<td style="text-align:center;">
+24 (48%)
 </td>
 <td style="text-align:center;">
 26 (52%)
 </td>
 <td style="text-align:center;">
-28 (56%)
-</td>
-<td style="text-align:center;">
-73 (49%)
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2539,16 +2544,16 @@ mean
 2
 </td>
 <td style="text-align:center;">
-31 (62%)
+26 (52%)
+</td>
+<td style="text-align:center;">
+26 (52%)
 </td>
 <td style="text-align:center;">
 24 (48%)
 </td>
 <td style="text-align:center;">
-22 (44%)
-</td>
-<td style="text-align:center;">
-77 (51%)
+76 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2776,19 +2781,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
-0.507<sup>chi2</sup>
+0.787<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2796,16 +2801,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3043,13 +3048,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-43 (57%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -3060,13 +3065,13 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-32 (43%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 [-0.16, 0.19]
@@ -3289,13 +3294,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-43 (57%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-42 (56%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-85 (57%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 &gt;0.999<sup>chi2</sup>
@@ -3306,13 +3311,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-32 (43%)
+37 (49%)
 </td>
 <td style="text-align:center;">
-33 (44%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-65 (43%)
+75 (50%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3432,19 +3437,19 @@ wedges
 <tr grouplength="2"><td colspan="6" style="border-bottom: 1px solid;"><strong>food</strong></td></tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> fries </td>
-   <td style="text-align:center;"> 30 (60%) </td>
-   <td style="text-align:center;"> 30 (60%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 85 (57%) </td>
-   <td style="text-align:center;"> 0.507<sup>chi2</sup>
+   <td style="text-align:center;"> 26 (52%) </td>
+   <td style="text-align:center;"> 23 (46%) </td>
+   <td style="text-align:center;"> 26 (52%) </td>
+   <td style="text-align:center;"> 75 (50%) </td>
+   <td style="text-align:center;"> 0.787<sup>chi2</sup>
 </td>
   </tr>
 <tr>
 <td style="text-align:left; padding-left:  2em;" indentlevel="1"> wedges </td>
-   <td style="text-align:center;"> 20 (40%) </td>
-   <td style="text-align:center;"> 20 (40%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 65 (43%) </td>
+   <td style="text-align:center;"> 24 (48%) </td>
+   <td style="text-align:center;"> 27 (54%) </td>
+   <td style="text-align:center;"> 24 (48%) </td>
+   <td style="text-align:center;"> 75 (50%) </td>
    <td style="text-align:center;">  </td>
   </tr>
 </tbody>

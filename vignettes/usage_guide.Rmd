@@ -47,7 +47,7 @@ output: pdf_document
 No special preamble needed. Make sure you have pandoc version >= 2.0 installed on your system.
 
 ## Global print_format option
-In order for `DescrTab2` to work properly with your document type of choice, you need to set the `printFormat` options, preferably right at the start of your document. You can do this by typing:
+In order for `DescrTab2` to work properly with your document type of choice, you need to set the `print_format` options, preferably right at the start of your document. You can do this by typing:
 
 ```{r, echo=TRUE, message=FALSE}
 options(print_format = "html") # or = "word" or "tex", depending on your document type
@@ -65,7 +65,7 @@ dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
 ```
 
 
-Make sure you include the DescrTab library by typing 
+Make sure you include the DescrTab2 library by typing 
 
 ```{r, echo=TRUE}
 library(DescrTab2)
@@ -98,7 +98,7 @@ descr(dat) %>% print() %>% knitr::knit_print()
 
 When producing word tables in this fashion, you must *not* have the `results='asis'` chunk option set.
 
-Note that `DescrTab2` can also produce console output! In fact, this is the default setting (i.e. if the global `DescrTabFormat` is not specified)
+Note that `DescrTab2` can also produce console output! In fact, this is the default setting (i.e. if the global `print_format` is not specified)
 
 
 ## Accessing table elements
@@ -146,7 +146,7 @@ descr(dat, "animal")
 ```
 
 ## Different tests
-There are a lot of different tests available. Check out the test_choice vignette for details: `vignette("test_choice_tree", "DescrTab2")`, or look at https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_html.html
+There are a lot of different tests available. Check out the test_choice vignette for details: https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf
 
 Here are some different tests in action:
 
@@ -161,7 +161,7 @@ descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = li
 
 
 ```{r, results='asis'}
-descr(dat %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices=rep(1:50, 3)))
+descr(dat %>% mutate(animal = fct_recode(animal, Before="Fish", After="Mammal")) %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices=rep(1:75, each=2)))
 ```
 
 ## Significant digits

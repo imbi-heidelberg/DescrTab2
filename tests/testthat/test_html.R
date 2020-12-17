@@ -9,7 +9,7 @@ test_that("knit an html file with DescrTab2 tables", {
       "../rmds/html_doc.Rmd",
       clean = TRUE,
       quiet = TRUE,
-      output_dir = ifelse(isTRUE(test_on_cran), tempfile(), NULL)
+      output_dir = if(isTRUE(test_on_cran)) tempfile() else NULL
     ),
     "character"
   )

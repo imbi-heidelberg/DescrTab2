@@ -10,7 +10,7 @@ test_that("knit a tex file with DescrTab2 tables", {
       "../rmds/tex_doc.Rmd",
       clean = TRUE,
       quiet = TRUE,
-      output_dir = ifelse(isTRUE(test_on_cran), tempfile(), NULL)
+      output_dir = if(isTRUE(test_on_cran)) tempfile() else NULL
     ),
     "character"
   )
