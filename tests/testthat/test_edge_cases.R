@@ -26,7 +26,7 @@ test_that("No test is calculated if a test is requested that is not implemented"
 
 
 dat <- tibble(a=c("a", ""), b=factor(c("a", "")))
-da2 <- tibble(a=c("a", "(empty)"), b=factor(c("a", "")))
+dat2 <- tibble(a=c("a", "(empty)"), b=factor(c("a", "")))
 test_that("Empty strings are handled correctly",
           {
             expect_warning(descr(dat))

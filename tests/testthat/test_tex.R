@@ -1,6 +1,6 @@
 context("Output tex tables in pdf_document .Rmd files")
 
-test_on_cran <- TRUE
+test_on_cran <- FALSE
 
 test_that("knit a tex file with DescrTab2 tables", {
   skip_on_cran()

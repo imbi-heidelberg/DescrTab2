@@ -2,7 +2,7 @@ context("Test statistical tests that produce p-values.")
 options(print_format = "console")
 library(magrittr)
 
-test_on_cran <- TRUE
+test_on_cran <- FALSE
 
 x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
 y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)

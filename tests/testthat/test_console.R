@@ -1,7 +1,7 @@
 context("Output tables to the console")
 library(magrittr)
 
-test_on_cran <- TRUE
+test_on_cran <- FALSE
 
 test_that("numeric output does not produce errors.", {
   expect_error(descr(iris) %>% print(silent=TRUE, print_format = "console"), NA)

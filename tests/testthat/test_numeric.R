@@ -1,7 +1,7 @@
 context("Output tables to the console")
 library(magrittr)
 
-test_on_cran <- TRUE
+test_on_cran <- FALSE
 
 dat <- iris[iris$Species != "setosa",]
 dat$Species <- factor(as.character(dat$Species))

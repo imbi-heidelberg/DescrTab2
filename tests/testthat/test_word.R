@@ -1,6 +1,6 @@
 context("Output flextables in word_document .Rmd files")
 
-test_on_cran <- TRUE
+test_on_cran <- FALSE
 
 test_that(
   "knit a word file with DescrTab2 tables",{
