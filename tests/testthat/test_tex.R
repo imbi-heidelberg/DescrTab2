@@ -15,3 +15,13 @@ test_that("knit a tex file with DescrTab2 tables", {
     "character"
   )
 })
+
+
+test_that("Outputformat .tex produces no errors",{
+  expect_error(capture_output(descr(
+    iris,
+    "Species",
+    group_labels = list(setosa = "My custom group label"),
+    var_options = list(Sepal.Length = list(label = "My custom variable label"))
+  ) %>% print(print_format="tex", silent=F)), NA)
+})
