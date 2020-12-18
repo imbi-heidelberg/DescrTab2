@@ -68,9 +68,12 @@ utils::globalVariables(".")
 #' @section Test options:
 #' \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
 #' \code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
-#' \code{vignette("test_choice_tree", "DescrTab2")}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
+#' \url{https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
 #' specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
-#' Use \code{print_test_names()} to see a list of all available test names.
+#' Use \code{print_test_names()} to see a list of all available test names. If \code{paired = TRUE} is specified, you need to supply an index variable
+#' \code{indices} that specifies which datapoints in your dataset are paired. \code{indices} may either be a length one character vector that describes
+#' the name of the index variable in your dataset, or a vector containing the respective indices. See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
+#' for a bit more explanation.
 #'
 #' @section Customization for single variables:
 #' The \code{var_options} list can be used to conduct customizations that should only apply to a single variable and leave

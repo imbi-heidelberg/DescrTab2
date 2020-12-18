@@ -159,9 +159,14 @@ descr(dat %>% select(-"Species"), "animal", test_options = list(exact=TRUE, nonp
 descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = list(nonparametric=TRUE))
 ```
 
+## Paired observations
+
+In situations with paired data, the `group` variable usually denotes the timing of the measurement (e.g. "before" and "after" or "time 1", "time 2", etc.). In these scenarios, you need an additional index variable that specifies which observations from the different timepoints should be paired. The `test_options =list(paired=TRUE, indices = <Character name of index variable name or vector of indices>)` option can be used to specify the pairing indices, see the example below. DescrTab2 only works with data in "long format", see e.g. `?reshape` or `?tidyr::pivot_longer` for information on how to transoform your data from wide to long format.
 
 ```{r, results='asis'}
 descr(dat %>% mutate(animal = fct_recode(animal, Before="Fish", After="Mammal")) %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices=rep(1:75, each=2)))
+
+descr(dat %>% mutate(animal = fct_recode(animal, Before="Fish", After="Mammal"), idx = rep(1:75, each=2)) %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices="idx" ))
 ```
 
 ## Significant digits
