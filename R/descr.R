@@ -2098,10 +2098,11 @@ print_test_names <- function() {
 #' @import tibble
 #' @import forcats
 #' @import stringr
+#' @importFrom utils modifyList
 test_cont <-
   function(var,
            group = NULL,
-           test_options = NULL,
+           test_options = list(),
            test = NULL,
            var_name = NULL) {
     # decide how to handle missings
@@ -2244,10 +2245,10 @@ test_cont <-
               correct=FALSE,
               paired=TRUE
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
-          list(p = ignore_unused_args(stats:::wilcox.test.default, arglist)$p.value)
+          list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
         },
         `Friedman test` = {
           tmp <-
@@ -2260,9 +2261,9 @@ test_cont <-
               formula=var ~ group | idx,
               data=tmp
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
-          list(p = ignore_unused_args(stats:::friedman.test.formula, arglist)$p.value)
+          list(p = ignore_unused_args(stats::friedman.test, arglist)$p.value)
         },
         `Wilcoxon one-sample signed-rank test` = {
           arglist <- modifyList(
@@ -2270,9 +2271,9 @@ test_cont <-
               x=var,
               correct=FALSE
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
-          list(p = ignore_unused_args(stats:::wilcox.test.default, arglist)$p.value)
+          list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
         },
         `Mann-Whitney U test` = {
           tmp <- tibble(var = var, group = group)
@@ -2283,9 +2284,9 @@ test_cont <-
               correct=FALSE,
               data=tmp
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
-          tl <- ignore_unused_args(stats:::wilcox.test.formula, arglist)
+          tl <- ignore_unused_args(stats::wilcox.test, arglist)
           list(p = tl$p.value,
                CI = tl$conf.int,
                CI_name = "HL CI")
@@ -2297,10 +2298,10 @@ test_cont <-
               formula=var ~ group,
               data=tmp
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
-          list(p = ignore_unused_args(stats:::kruskal.test.formula, arglist)$p.value)
+          list(p = ignore_unused_args(stats::kruskal.test, arglist)$p.value)
         },
         `Students paired t-test` = {
           good_idx <- names(table(id)[table(id) == 2])
@@ -2325,10 +2326,10 @@ test_cont <-
               y=y,
               paired=TRUE
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
-          tl <- ignore_unused_args(stats:::t.test.default, arglist)
+          tl <- ignore_unused_args(stats::t.test, arglist)
 
           list(p = tl$p.value,
                CI = tl$conf.int,
@@ -2345,7 +2346,7 @@ test_cont <-
               random=~ 1 | idx,
               data = tmp
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
           fit <-
@@ -2360,10 +2361,10 @@ test_cont <-
             list(
               x=var
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
-          list(p = ignore_unused_args(stats:::t.test.default, arglist)$p.value)
+          list(p = ignore_unused_args(stats::t.test, arglist)$p.value)
         },
         `Welchs two-sample t-test` = {
           tmp <- tibble(var = var, group = group)
@@ -2373,10 +2374,10 @@ test_cont <-
               var.equal=FALSE,
               data=tmp
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
-          tl <- ignore_unused_args(stats:::t.test.formula, arglist)
+          tl <- ignore_unused_args(stats::t.test, arglist)
           list(p = tl$p.value,
                CI = tl$conf.int,
                CI_name = "Mean dif. CI")
@@ -2388,7 +2389,7 @@ test_cont <-
               formula=var ~ group,
               data=tmp
             ),
-            test_options[["additional_test_args"]]
+            as.list(test_options[["additional_test_args"]])
           )
 
           tl <-  summary(ignore_unused_args(stats::aov, arglist))[[1]]
@@ -2426,10 +2427,11 @@ test_cont <-
 #' @import forcats
 #' @import stringr
 #' @importFrom DescTools CochranQTest
+#' @importFrom utils modifyList
 test_cat <-
   function(var,
            group = NULL,
-           test_options = NULL,
+           test_options = list(),
            test = NULL,
            var_name = NULL) {
     # decide how to handle missings
@@ -2587,7 +2589,7 @@ test_cat <-
                 tsmethod = "central",
                 paired = TRUE
               ),
-              test_options[["additional_test_args"]]
+              as.list(test_options[["additional_test_args"]])
             )
 
             list(
@@ -2609,7 +2611,7 @@ test_cat <-
                 x2=x2,
                 n2=n2
               ),
-              test_options[["additional_test_args"]]
+              as.list(test_options[["additional_test_args"]])
             )
 
             list(
@@ -2634,7 +2636,7 @@ test_cat <-
               list(
                 x=cont.table
               ),
-              test_options[["additional_test_args"]]
+              as.list(test_options[["additional_test_args"]])
             )
 
             list(
@@ -2654,7 +2656,7 @@ test_cat <-
                 data=tmp
 
               ),
-              test_options[["additional_test_args"]]
+              as.list(test_options[["additional_test_args"]])
             )
 
             list(p = ignore_unused_args(DescTools::CochranQTest, arglist)$p.value)
@@ -2667,7 +2669,7 @@ test_cat <-
                 correct=FALSE
 
               ),
-              test_options[["additional_test_args"]]
+              as.list(test_options[["additional_test_args"]])
             )
 
             list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
@@ -2681,7 +2683,7 @@ test_cat <-
                 correct=FALSE
 
               ),
-              test_options[["additional_test_args"]]
+              as.list(test_options[["additional_test_args"]])
             )
 
             if (n_levels_group == 2 & n_levels_var == 2) {
@@ -2718,11 +2720,13 @@ test_cat <-
 #'
 #' @examples
 #' # works:
-#' ignore_unused_args(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
+#' DescrTab2:::ignore_unused_args(chisq.test,
+#'  list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
 #'
-#' # would produce error: do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
+#' # would produce error:
+#' # do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
 #'
-#' #' @importFrom magrittr `%>%`
+#' @importFrom magrittr `%>%`
 ignore_unused_args <- function(what, args){
   if ("..." %in% names(formals(what))){
     do.call(what, args %>% as.list)

@@ -19,9 +19,10 @@ do.call but without an error for unused arguments
 }
 \examples{
 # works:
-ignore_unused_args(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
+DescrTab2:::ignore_unused_args(chisq.test,
+ list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
 
-# would produce error: do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
+# would produce error:
+# do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )
 
-#' @importFrom magrittr `\%>\%`
 }

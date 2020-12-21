@@ -162,11 +162,17 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># works:</span>
-<span class='fu'>ignore_unused_args</span><span class='op'>(</span><span class='va'>chisq.test</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, abc<span class='op'>=</span><span class='fl'>3</span> <span class='op'>)</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ignore_unused_args(chisq.test, list(x = factor(c(1, 0, 1, 1,     1, 0)), y = factor(c(0, 1, 1, 0, 1, 0)), abc = 3)): could not find function "ignore_unused_args"</span></div><div class='input'>
-<span class='co'># would produce error: do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )</span>
+<span class='fu'>DescrTab2</span><span class='fu'>:::</span><span class='fu'>ignore_unused_args</span><span class='op'>(</span><span class='va'>chisq.test</span>,
+ <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, abc<span class='op'>=</span><span class='fl'>3</span> <span class='op'>)</span> <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; 
+#&gt; 	Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  structure(c(2L, 1L, 2L, 2L, 2L, 1L), .Label = c("0", "1"), class = "factor") and structure(c(1L, 2L, 2L, 1L, 2L, 1L), .Label = c("0", "1"), class = "factor")
+#&gt; X-squared = 0, df = 1, p-value = 1
+#&gt; </div><div class='input'>
+<span class='co'># would produce error:</span>
+<span class='co'># do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )</span>
 
-<span class='co'>#' @importFrom magrittr `%&gt;%`</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -4,7 +4,13 @@
 \alias{test_cont}
 \title{Calculate a statistical test for a numerical variable.}
 \usage{
-test_cont(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
+test_cont(
+  var,
+  group = NULL,
+  test_options = list(),
+  test = NULL,
+  var_name = NULL
+)
 }
 \arguments{
 \item{var}{A variable (a vector).}

@@ -4,7 +4,13 @@
 \alias{test_cat}
 \title{Calculate a statistical test for a categorical variable.}
 \usage{
-test_cat(var, group = NULL, test_options = NULL, test = NULL, var_name = NULL)
+test_cat(
+  var,
+  group = NULL,
+  test_options = list(),
+  test = NULL,
+  var_name = NULL
+)
 }
 \arguments{
 \item{var}{A variable (a vector).}
