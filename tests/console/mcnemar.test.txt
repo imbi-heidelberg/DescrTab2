@@ -1,8 +1,7 @@
-> descr(dat, "group", test_options = list(paired = TRUE)) %>% print()
-Message: Error converted to warning: Error in test_cat(var, group, test_options, test_override, var_name): You need to supply patient IDs, e.g. via test_options=list(indices=patIDs).
-
-  Variables    first     second    Total    p     Test                   CI     
+> descr(dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1:
++   1600))) %>% print()
+  Variables     first     second     Total     p       Test        CI           
 1  var                                                                          
-2    Approve    944 (59~  880 (55~  1824 (~  <NA>  Test errored, check ~        
-3    Disappro~  656 (41~  720 (45~  1376 (~                               [NA, ~
+2    Approve     944 (59~  880 (55%~  1824 (5~  <0.00~  McNemars ~  Prop. dif. ~
+3    Disapprov~  656 (41~  720 (45%~  1376 (4~                      [0.0052, 0.~
 

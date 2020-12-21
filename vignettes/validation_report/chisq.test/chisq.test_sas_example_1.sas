@@ -7,7 +7,7 @@ LENGTH
  party $ 11
 ;
 
-INFILE  "C:/Users/z7a/Documents/DescrTab2/vignettes/validation_report/chisq.test/chisq.test_dat_1.csv" 
+INFILE  "./chisq.test_dat_1.csv" 
      DSD 
      LRECL= 21 ;
 INPUT
@@ -27,6 +27,29 @@ ods html file="chisq.test_example_1.html" path=".";
 proc freq data=rdata;
    tables gender party /chisq;
    tables gender*party /chisq; 
+run;
+
+
+
+data small_sample;
+input a $ b $;
+datalines;
+0 1
+0 1
+1 1
+1 1
+0 1
+0 1
+0 1
+0 0
+0 0
+0 1
+1 0
+;
+run;
+
+proc freq data=small_sample;
+tables a*b /chisq;
 run;
 
 ods html close;

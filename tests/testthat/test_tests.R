@@ -313,12 +313,26 @@ test_that("exact2x2 mcnemar test errors if you forget to specify indices",
             print(silent = TRUE)))
 
 
-verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/mcnemar.test.txt"),
-              descr(dat, "group", test_options = list(paired = TRUE)) %>% print())
 
 verify_output(
-  ifelse(isTRUE(test_on_cran), tempfile(), "../console/exact_mcnemar.test.txt"),
-  descr(dat, "group", test_options = list(paired = TRUE, exact = TRUE, indices = c(1:1600, 1:1600))) %>% print()
+  ifelse(
+    isTRUE(test_on_cran),
+    tempfile(),
+    "../console/mcnemar.test.txt"
+  ),
+  descr(dat, "group", test_options = list(
+    paired = TRUE, indices = c(1:1600, 1:1600)
+  )) %>% print()
+)
+
+verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/exact_mcnemar.test.txt"),
+              descr(
+                dat, "group", test_options = list(
+                  paired = TRUE,
+                  exact = TRUE,
+                  indices = c(1:1600, 1:1600)
+                )
+              ) %>% print()
 )
 
 

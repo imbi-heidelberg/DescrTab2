@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.4</span>
       </span>
     </div>
 
@@ -67,6 +67,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -90,7 +93,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Validation report</h1>
             
-            <h4 class="date">2020-12-18</h4>
+            <h4 class="date">2020-12-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/validation_report.Rmd"><code>vignettes/validation_report.Rmd</code></a></small>
       <div class="hidden name"><code>validation_report.Rmd</code></div>
@@ -10461,9 +10464,144 @@ Republican
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Chi-squared test for given probabilities</code></pre>
 <p>data: table(dat$party) X-squared = 252.68, df = 2, p-value &lt; 2.2e-16</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
+  
+  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
+  b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">1</span>,
+               <span class="fl">0</span>,
+               <span class="fl">0</span>,
+               <span class="fl">1</span>,
+               <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 
+<span class="op">)</span>
 
-
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"b"</span><span class="op">)</span>
+<span class="co">#&gt; Warning in (function (x, y = NULL, correct = TRUE, p = rep(1/length(x), : Chi-</span>
+<span class="co">#&gt; squared approximation may be incorrect</span>
+<span class="co">#&gt; Warning in stats::prop.test(table(var, group)): Chi-squared approximation may be</span>
+<span class="co">#&gt; incorrect</span></code></pre></div>
+<table class="table table">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1">
+<div style="">
+Variables
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+Total
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+p
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="">
+CI
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+(N=3)
+</th>
+<th style="text-align:center;">
+(N=8)
+</th>
+<th style="text-align:center;">
+(N=11)
+</th>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="2">
+<td colspan="6" style="border-bottom: 1px solid;">
+<strong>a</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+0
+</td>
+<td style="text-align:center;">
+2 (67%)
+</td>
+<td style="text-align:center;">
+6 (75%)
+</td>
+<td style="text-align:center;">
+8 (73%)
+</td>
+<td style="text-align:center;">
+0.782<sup>chi2</sup>
+</td>
+<td style="text-align:center;">
+Prop. dif. CI
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+1
+</td>
+<td style="text-align:center;">
+1 (33%)
+</td>
+<td style="text-align:center;">
+2 (25%)
+</td>
+<td style="text-align:center;">
+3 (27%)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+[-0.78, 0.61]
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; " colspan="100%">
+<sup>chi2</sup> Pearsons chi-squared test
+</td>
+</tr></tfoot>
+</table>
 <meta name="Generator" content="SAS Software Version 9.4, see www.sas.com">
 <meta http-equiv="Content-type" content="text/html; charset=windows-1252">
 <title>SAS Output</title>
@@ -12545,13 +12683,315 @@ var _ie64 = _info.indexOf("x64") > 0
 <p>
 </p>
 </div>
+<div class="branch">
+<p style="page-break-after: always;"><br></p>
+<hr size="3">
+<a name="IDX6"></a>
+<table class="table systitleandfootercontainer"><tr>
+<td class="c systemtitle">The SAS System</td>
+</tr></table>
+<br><div class="c proctitle">The FREQ Procedure</div>
+<p>
+</p>
+<div>
+<div align="center">
+<table class="table"><tr>
+<td class="c t">
+<div align="center">
+<table class="table table">
+<colgroup><col></colgroup>
+<colgroup></colgroup>
+<tbody><tr>
+<th class="l t stacked_cell header" scope="col"><table class="table">
+<tr>
+<th class="l t header top_stacked_value" scope="col">Frequency</th>
+</tr>
+<tr>
+<th class="l t header middle_stacked_value" scope="col">Percent</th>
+</tr>
+<tr>
+<th class="l t header middle_stacked_value" scope="col">Row Pct</th>
+</tr>
+<tr>
+<th class="l t header bottom_stacked_value" scope="col">Col Pct</th>
+</tr>
+</table></th>
+</tr></tbody>
+</table>
+</div>
+</td>
+<td>
+<div align="center">
+<table class="table table">
+<colgroup><col></colgroup>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="c header" colspan="4" scope="colgroup">Table of a by b</th>
+</tr>
+<tr>
+<th class="c b header" rowspan="2" scope="col">a</th>
+<th class="c b header" colspan="3" scope="colgroup">b</th>
+</tr>
+<tr>
+<th class="r header" scope="col">0</th>
+<th class="r header" scope="col">1</th>
+<th class="r header" scope="col">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="l t rowheader" scope="row">0       </th>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">2</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">18.18</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">25.00</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">66.67</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">6</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">54.55</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">75.00</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">75.00</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">8</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">72.73</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value"> </td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value"> </td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">1       </th>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">1</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">9.09</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">33.33</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">33.33</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">2</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">18.18</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">66.67</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">25.00</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">3</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value">27.27</td>
+</tr>
+<tr>
+<td class="r t data middle_stacked_value"> </td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value"> </td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<th class="l t rowheader" scope="row">Total   </th>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">3</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">27.27</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">8</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">72.73</td>
+</tr>
+</table></td>
+<td class="r t stacked_cell data"><table class="table">
+<tr>
+<td class="r t data top_stacked_value">11</td>
+</tr>
+<tr>
+<td class="r t data bottom_stacked_value">100.00</td>
+</tr>
+</table></td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr></table>
+</div>
+</div>
+<br><br><p>
+</p>
+<div align="center"><table class="table proctitle"><tr><td class="c proctitle">Statistics for Table of a by b</td></tr></table></div>
+<p>
+<a name="IDX7"></a>
+</p>
+<div>
+<div align="center">
+<table class="table table">
+<colgroup><col></colgroup>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th class="l b header" scope="col">Statistic</th>
+<th class="r b header" scope="col">DF</th>
+<th class="r b header" scope="col">Value</th>
+<th class="r b header" scope="col">Prob</th>
+</tr></thead>
+<tbody>
+<tr>
+<th class="l rowheader" scope="row">Chi-Square</th>
+<td class="r data">1</td>
+<td class="r data">0.0764</td>
+<td class="r data">0.7823</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Likelihood Ratio Chi-Square</th>
+<td class="r data">1</td>
+<td class="r data">0.0745</td>
+<td class="r data">0.7849</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Continuity Adj. Chi-Square</th>
+<td class="r data">1</td>
+<td class="r data">0.0000</td>
+<td class="r data">1.0000</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Mantel-Haenszel Chi-Square</th>
+<td class="r data">1</td>
+<td class="r data">0.0694</td>
+<td class="r data">0.7921</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Phi Coefficient</th>
+<td class="r data"> </td>
+<td class="r data" nowrap>-0.0833</td>
+<td class="r data"> </td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Contingency Coefficient</th>
+<td class="r data"> </td>
+<td class="r data">0.0830</td>
+<td class="r data"> </td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Cramer's V</th>
+<td class="r data"> </td>
+<td class="r data" nowrap>-0.0833</td>
+<td class="r data"> </td>
+</tr>
+</tbody>
+<tfoot><tr>
+<th class="c b footer" colspan="4">WARNING: 75% of the cells have expected counts less <br>         than 5. Chi-Square may not be a valid test.</th>
+</tr></tfoot>
+</table>
+</div>
+</div>
+<br><a name="IDX8"></a>
+<div>
+<div align="center">
+<table class="table table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th class="c b header" colspan="2" scope="colgroup">Fisher's Exact Test</th>
+</tr></thead>
+<tbody>
+<tr>
+<th class="l rowheader" scope="row">Cell (1,1) Frequency (F)</th>
+<td class="r data">2</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Left-sided Pr &lt;= F</th>
+<td class="r data">0.6606</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Right-sided Pr &gt;= F</th>
+<td class="r data">0.8485</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row"> </th>
+<td class="r data"> </td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Table Probability (P)</th>
+<td class="r data">0.5091</td>
+</tr>
+<tr>
+<th class="l rowheader" scope="row">Two-sided Pr &lt;= P</th>
+<td class="r data">1.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br><br><p>
+</p>
+<div align="center"><table class="table proctitle"><tr><td class="c proctitle">Sample Size = 11</td></tr></table></div>
+<p>
+</p>
+</div>
 
 
 </div>
 <div id="t-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#t-test" class="anchor"></a>t-test</h1>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sleep</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"extra"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">]</span>
               
@@ -12660,7 +13100,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
@@ -12838,7 +13278,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
@@ -15178,7 +15618,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <div id="f-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#f-test" class="anchor"></a>F-test</h1>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
     y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">449</span>, <span class="fl">413</span>, <span class="fl">326</span>, <span class="fl">409</span>, <span class="fl">358</span>, <span class="fl">291</span>, <span class="fl">341</span>, <span class="fl">278</span>, <span class="fl">312</span><span class="op">)</span><span class="op">/</span><span class="fl">12</span>,
@@ -15367,7 +15807,7 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"N"</span><span class="op">)</span> </code></pre></div>
 <table class="table table">
 <thead>
@@ -17547,7 +17987,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <div id="mixed-model-anova" class="section level1">
 <h1 class="hasAnchor">
 <a href="#mixed-model-anova" class="anchor"></a>Mixed model ANOVA</h1>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">64</span>,<span class="op">]</span>
@@ -19695,7 +20135,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#boschloos-test" class="anchor"></a>Boschloos test</h1>
 <p>DescrTab2 uses the exact2x2::boschloo with option <code>tsmethod=central</code> to calculate p-values. There is no comparison for this option readily available.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
               party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
@@ -19805,12 +20245,12 @@ B
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"central"</span><span class="op">)</span></code></pre></div>
 <pre><code>Boschloo's test</code></pre>
 <p>data: x1/n1=(3/5) and x2/n2= (2/6) proportion 1 = 0.6, proportion 2 = 0.33333, p-value = 0.4909 alternative hypothesis: true p2(1-p1)/[p1(1-p2)] is less than 1 percent confidence interval: NA NA sample estimates: p2(1-p1)/[p1(1-p2)] 0.3333333</p>
 <p>However, we can compare the exact2x2::boschloo with <code>tsmethod=minlike</code> to <code><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">Exact::exact.test</a></code>:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"minlike"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Boschloo's test</span>
