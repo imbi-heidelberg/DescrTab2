@@ -1,7 +1,7 @@
 Package: DescrTab2
 Type: Package
 Title: Publication Quality Descriptive Statistics Tables
-Version: 2.0.4
+Version: 2.0.5
 Date: 2020-12-21
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")),
              person("Lukas", "Baumann", role = c("aut"), comment = c(ORCID = "0000-0001-7931-7470")),

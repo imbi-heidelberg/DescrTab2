@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.5</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Validation report</h1>
             
-            <h4 class="date">2020-12-21</h4>
+            <h4 class="date">2021-01-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/validation_report.Rmd"><code>vignettes/validation_report.Rmd</code></a></small>
       <div class="hidden name"><code>validation_report.Rmd</code></div>
@@ -8182,7 +8182,7 @@ Disapprove
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[0.0052, 0.076]
+[0.0058, 0.076]
 </td>
 </tr>
 </tbody>
@@ -8288,7 +8288,7 @@ Disapprove
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[0.0052, 0.076]
+[0.0058, 0.076]
 </td>
 </tr>
 </tbody>
@@ -10496,8 +10496,8 @@ Republican
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"b"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in (function (x, y = NULL, correct = TRUE, p = rep(1/length(x), : Chi-</span>
 <span class="co">#&gt; squared approximation may be incorrect</span>
-<span class="co">#&gt; Warning in stats::prop.test(table(var, group)): Chi-squared approximation may be</span>
-<span class="co">#&gt; incorrect</span></code></pre></div>
+<span class="co">#&gt; Warning in stats::prop.test(table(var, group), correct = FALSE): Chi-squared</span>
+<span class="co">#&gt; approximation may be incorrect</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -10592,7 +10592,7 @@ Prop. dif. CI
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.78, 0.61]
+[-0.7, 0.53]
 </td>
 </tr>
 </tbody>
@@ -20139,8 +20139,8 @@ var _ie64 = _info.indexOf("x64") > 0
 <code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
               party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in stats::prop.test(table(var, group)): Chi-squared approximation may be</span>
-<span class="co">#&gt; incorrect</span></code></pre></div>
+<span class="co">#&gt; Warning in stats::prop.test(table(var, group), correct = FALSE): Chi-squared</span>
+<span class="co">#&gt; approximation may be incorrect</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -20235,7 +20235,7 @@ B
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.49, 1]
+[-0.3, 0.84]
 </td>
 </tr>
 </tbody>

@@ -6,7 +6,9 @@ utils::globalVariables(".")
 #' Generate a list of descriptive statistics. By default, the function calculates summary statistics such as mean,
 #' standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
 #' for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
-#' For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell.
+#' For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell. In particular,
+#' Wilson score intervals [1] from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
+#' are used for continuous variables and confidence intervals for the Hodge-Lehman estimator [2] from \link[stats]{wilcox.test} are used for ordinal variables.
 #'
 #' @param dat
 #' Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
@@ -125,7 +127,10 @@ utils::globalVariables(".")
 #' which can be passed along to the print function to create
 #' pretty summary tables.
 #'
+#' @references [1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774
 #'
+#'
+#' [2] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
 #'
 #' @examples
 #' descr(iris)
@@ -2594,7 +2599,7 @@ test_cat <-
 
             list(
               p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
-              CI = stats::prop.test(table(var, group))$conf.int,
+              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
               CI_name = "Prop. dif. CI"
             )
           },
@@ -2616,7 +2621,7 @@ test_cat <-
 
             list(
               p = ignore_unused_args(exact2x2::boschloo, arglist)$p.value,
-              CI = stats::prop.test(table(var, group))$conf.int,
+              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
               CI_name = "Prop. dif. CI"
             )
           },
@@ -2641,7 +2646,7 @@ test_cat <-
 
             list(
               p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
-              CI = stats::prop.test(table(var, group))$conf.int,
+              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
               CI_name = "Prop. dif. CI"
             )
           },
@@ -2689,7 +2694,7 @@ test_cat <-
             if (n_levels_group == 2 & n_levels_var == 2) {
               list(
                 p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
-                CI = stats::prop.test(table(var, group))$conf.int,
+                CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
                 CI_name = "Prop. dif. CI"
               )
             } else{

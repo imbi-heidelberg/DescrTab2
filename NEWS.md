@@ -1,3 +1,7 @@
+# Version 2.0.5
+
+* Added documentation for confidence intervals.
+
 # Version 2.0.4
 
 * All tests that previously used continuity correction by default do _not_ use continuity correction anymore.

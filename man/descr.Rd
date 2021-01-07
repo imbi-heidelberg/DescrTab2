@@ -75,7 +75,9 @@ pretty summary tables.
 Generate a list of descriptive statistics. By default, the function calculates summary statistics such as mean,
 standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
 for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
-For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell.
+For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell. In particular,
+Wilson score intervals [1] from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
+are used for continuous variables and confidence intervals for the Hodge-Lehman estimator [2] from \link[stats]{wilcox.test} are used for ordinal variables.
 }
 \section{Labels}{
 
@@ -192,4 +194,10 @@ print(DescrList)
 descr(iris, "Species")
 
 
+}
+\references{
+[1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774
+
+
+[2] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
 }
