@@ -1,8 +1,6 @@
 context("Output tables to the console")
 library(magrittr)
 
-test_on_cran <- FALSE
-
 test_that("numeric output does not produce errors.", {
   expect_error(descr(iris) %>% print(silent=TRUE, print_format = "console"), NA)
   expect_error(
@@ -18,12 +16,12 @@ test_that("numeric output does not produce errors.", {
 
 
 verify_output(
-  ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_console_single.txt"),
+  ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/print_console_single.txt"),
 descr(iris) %>% print(print_format = "console")
   )
 
 verify_output(
-  ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_console_group.txt"),
+  ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/print_console_group.txt"),
   descr(
     iris,
     "Species",

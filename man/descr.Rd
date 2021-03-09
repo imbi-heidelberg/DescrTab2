@@ -26,6 +26,8 @@ descr(
   format_p = scales::pvalue_format(),
   format_options = list(print_p = TRUE, print_CI = TRUE, combine_mean_sd = FALSE,
     omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = NULL,
+    percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,
+    absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
     omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
     c("no_missing_percent", "missing_as_regular_category",
     "missing_as_separate_category")),
@@ -107,7 +109,18 @@ shortcut argument for the specification of an appropriate entry in the \code{res
 \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 \item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
 should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent}
-\item{\code{omit_missings_in_categorical_var}} (logical) controls whether to omit missing values in categorical variables completely.
+\item{\code{percent_suffix}}{ (character) the symbol to be used where "\%" is appropriate, sensible choices are usually "\%" (default) or "" (i.e., empty string) }
+\item{\code{row_percent}}{ (logical) controls wheter percentages of regular categorical variables should be calculated column-wise (default) or row-wise}
+\item{\code{Nmiss_row_percent}}{ (logical) controls whether percentages of the "Nmiss"-statistic (number of missing values) should be calculated column-wise (default) or row-wise}
+\item{\code{absolute_relative_frequency_mode}}{ (character)  controls how to display frequencies.
+It may be set to one of the following options:
+\itemize{
+\item{\code{"both"}}{ will display absolute and relative frequencies.}
+\item{\code{"only_absolute"}}{ will only display absolute frequencies. }
+\item{\code{"only_relative"}}{ will only display relative frequencies. }
+  }
+ }
+\item{\code{omit_missings_in_categorical_var}}{ (logical) controls whether to omit missing values in categorical variables completely.}
 \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
 It may be set to one of the following options:
 \itemize{

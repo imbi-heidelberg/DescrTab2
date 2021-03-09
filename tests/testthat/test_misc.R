@@ -1,8 +1,6 @@
 context("Test miscellaneous functions")
 library(magrittr)
 
-test_on_cran <- FALSE
-
 
 test_that("ignore_unused_args works as expected", {
   expect_warning(expect_equal(

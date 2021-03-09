@@ -3,5 +3,5 @@
   Variables     first     second     Total     p       Test        CI           
 1  var                                                                          
 2    Approve     944 (59~  880 (55%~  1824 (5~  <0.00~  McNemars ~  Prop. dif. ~
-3    Disapprov~  656 (41~  720 (45%~  1376 (4~                      [0.0052, 0.~
+3    Disapprov~  656 (41~  720 (45%~  1376 (4~                      [0.0058, 0.~
 

@@ -1,6 +1,5 @@
 context("Output tex tables in pdf_document .Rmd files")
 
-test_on_cran <- FALSE
 
 test_that("knit a tex file with DescrTab2 tables", {
   skip_on_cran()
@@ -10,7 +9,7 @@ test_that("knit a tex file with DescrTab2 tables", {
       "../rmds/tex_doc.Rmd",
       clean = TRUE,
       quiet = TRUE,
-      output_dir = if(isTRUE(test_on_cran)) tempfile() else NULL
+      output_dir = if(isTRUE(write_in_tmpfile_for_cran())) tempfile() else NULL
     ),
     "character"
   )

@@ -209,8 +209,7 @@ descr(dat, "Species", format_options = c(combine_mean_sd=TRUE))
 ```
 
 
-## Omitting p values
-
+## Omitting p-values
 You can declare the `format_options = list(print_p = FALSE)` option to omit p-values:
 
 ```{r, results='asis'}
@@ -225,7 +224,6 @@ descr(dat, "animal", format_options = list(print_CI = FALSE))
 
 
 ## Printing without results='asis'
-
 Sometimes, e.g. if you have a loop inside your R-chunk and you want to plot graphics in between descriptive tables, it is necessary not to have the results='asis' option. You can still use DescrTab2 with the following commands:
 
 ````markdown

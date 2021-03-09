@@ -43,8 +43,6 @@ test_that("Confidence intervals",
           })
 
 
-
-
 test_that("Ommit summary stats",
           expect_error(
             descr(
@@ -253,6 +251,54 @@ test_that("Settings to determine the number of digits for perecent numbers work"
           expect_error(descr(iris, format_options=list(percent_accuracy=0.1)) %>% print(silent=TRUE), NA)
           }
             )
+
+
+
+
+test_that("format_freqs works",
+          {
+            expect_equal(
+              format_freqs(1, 3, "both", NULL, "%"),
+              "1 (33%)")
+            expect_equal(
+              format_freqs(1, 3, "only_absolute", NULL, "%"),
+              "1")
+            expect_equal(
+              format_freqs(1, 3, "only_relative", NULL, "%"),
+              "33%")
+          }
+)
+
+test_that("frequency formatting options work",
+          {
+            expect_error(descr(dat, "Species", format_options = list(absolute_relative_frequency_mode="both")) %>%
+                           print(silent = TRUE), NA)
+            expect_error(descr(dat, "Species", format_options = list(absolute_relative_frequency_mode="only_absolute")) %>%
+                           print(silent = TRUE), NA)
+            expect_error(descr(dat, "Species", format_options = list(absolute_relative_frequency_mode="only_relative")) %>%
+                           print(silent = TRUE), NA)
+          }
+)
+
+test_that("row_percent works",
+          {
+            expect_error(descr(dat, "Species", format_options = list(row_percent=TRUE)) %>%
+                           print(silent = TRUE), NA)
+
+          }
+)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

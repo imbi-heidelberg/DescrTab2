@@ -1,7 +1,6 @@
 context("Output tables to the console")
 library(magrittr)
 
-test_on_cran <- FALSE
 
 dat <- iris[iris$Species != "setosa",]
 dat$Species <- factor(as.character(dat$Species))
@@ -24,11 +23,11 @@ test_that("numeric output does not produce errors.", {
 })
 
 verify_output(
-  ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_numeric_single.txt"),
+  ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/print_numeric_single.txt"),
   descr(iris) %>% print(print_format = "numeric")
 )
 verify_output(
-  ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_numeric_group.txt"),
+  ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/print_numeric_group.txt"),
   descr(
     iris,
     "Species",
@@ -37,7 +36,7 @@ verify_output(
   ) %>% print(print_format = "numeric")
 )
 
-verify_output(ifelse(isTRUE(test_on_cran), tempfile(), "../console/print_numeric_CI.txt"),
+verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/print_numeric_CI.txt"),
               descr(dat,
                     "Species") %>% print( print_format = "numeric"))
 

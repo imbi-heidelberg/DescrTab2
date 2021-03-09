@@ -73,7 +73,7 @@ depending on the print_format option. This object is then printed in an appropri
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.6</span>
       </span>
     </div>
 
@@ -235,7 +235,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \endlastfoot
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Sepal.Length}}\\*
-#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{3} \textless0.001\textsuperscript{tt1}\\*
+#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{3}\textless0.001\textsuperscript{tt1}\\*
 #&gt; \hspace{1em}mean &amp; 5.8 &amp; \\*
 #&gt; \hspace{1em}sd &amp; 0.83 &amp; \\*
 #&gt; \hspace{1em}median &amp; 5.8 &amp; \\*
@@ -243,7 +243,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \hspace{1em}min - max &amp; 4.3 -- 7.9 &amp; \\ \noalign{\vskip 0pt plus 12pt}
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Sepal.Width}}\\*
-#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{2} \textless0.001\textsuperscript{tt1}\\*
+#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{2}\textless0.001\textsuperscript{tt1}\\*
 #&gt; \hspace{1em}mean &amp; 3.1 &amp; \\*
 #&gt; \hspace{1em}sd &amp; 0.44 &amp; \\*
 #&gt; \hspace{1em}median &amp; 3 &amp; \\*
@@ -251,7 +251,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \hspace{1em}min - max &amp; 2 -- 4.4 &amp; \\ \noalign{\vskip 0pt plus 12pt}
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Petal.Length}}\\*
-#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{1} \textless0.001\textsuperscript{tt1}\\*
+#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{1}\textless0.001\textsuperscript{tt1}\\*
 #&gt; \hspace{1em}mean &amp; 3.8 &amp; \\*
 #&gt; \hspace{1em}sd &amp; 1.8 &amp; \\*
 #&gt; \hspace{1em}median &amp; 4.3 &amp; \\*
@@ -273,7 +273,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
 #&gt; \multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
 #&gt; \end{longtable}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"html"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;"&gt;
+</div><div class='output co'>#&gt; &lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
 #&gt;  &lt;thead&gt;
 #&gt; &lt;tr&gt;
 #&gt; &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"&gt;&lt;div style=""&gt;Variables&lt;/div&gt;&lt;/th&gt;
@@ -429,9 +429,9 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt;   &lt;/tr&gt;
 #&gt; &lt;/tbody&gt;
 #&gt; &lt;tfoot&gt;
-#&gt; &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;
+#&gt; &lt;tr&gt;&lt;td style="padding: 0; border: 0;" colspan="100%"&gt;
 #&gt; &lt;sup&gt;tt1&lt;/sup&gt; Students one-sample t-test&lt;/td&gt;&lt;/tr&gt;
-#&gt; &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;
+#&gt; &lt;tr&gt;&lt;td style="padding: 0; border: 0;" colspan="100%"&gt;
 #&gt; &lt;sup&gt;chi1&lt;/sup&gt; Chi-squared goodness-of-fit test&lt;/td&gt;&lt;/tr&gt;
 #&gt; &lt;/tfoot&gt;
 #&gt; &lt;/table&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format<span class='op'>=</span><span class='st'>"word"</span><span class='op'>)</span>
@@ -504,7 +504,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \endlastfoot
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Sepal.Length}}\\*
-#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{3} \textless0.001\textsuperscript{tt1}\\*
+#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{3}\textless0.001\textsuperscript{tt1}\\*
 #&gt; \hspace{1em}mean &amp; 5.8 &amp; \\*
 #&gt; \hspace{1em}sd &amp; 0.83 &amp; \\*
 #&gt; \hspace{1em}median &amp; 5.8 &amp; \\*
@@ -512,7 +512,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \hspace{1em}min - max &amp; 4.3 -- 7.9 &amp; \\ \noalign{\vskip 0pt plus 12pt}
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Sepal.Width}}\\*
-#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{2} \textless0.001\textsuperscript{tt1}\\*
+#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{2}\textless0.001\textsuperscript{tt1}\\*
 #&gt; \hspace{1em}mean &amp; 3.1 &amp; \\*
 #&gt; \hspace{1em}sd &amp; 0.44 &amp; \\*
 #&gt; \hspace{1em}median &amp; 3 &amp; \\*
@@ -520,7 +520,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 #&gt; \hspace{1em}min - max &amp; 2 -- 4.4 &amp; \\ \noalign{\vskip 0pt plus 12pt}
 #&gt; \addlinespace[0.3em]
 #&gt; \multicolumn{3}{l}{\textbf{Petal.Length}}\\*
-#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{1} \textless0.001\textsuperscript{tt1}\\*
+#&gt; \hspace{1em}N &amp; 150 &amp; \vphantom{1}\textless0.001\textsuperscript{tt1}\\*
 #&gt; \hspace{1em}mean &amp; 3.8 &amp; \\*
 #&gt; \hspace{1em}sd &amp; 1.8 &amp; \\*
 #&gt; \hspace{1em}median &amp; 4.3 &amp; \\*

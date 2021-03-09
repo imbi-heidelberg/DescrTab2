@@ -49,7 +49,18 @@ utils::globalVariables(".")
 #' \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 #' \item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
 #' should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent}
-#' \item{\code{omit_missings_in_categorical_var}} (logical) controls whether to omit missing values in categorical variables completely.
+#' \item{\code{percent_suffix}}{ (character) the symbol to be used where "\%" is appropriate, sensible choices are usually "\%" (default) or "" (i.e., empty string) }
+#' \item{\code{row_percent}}{ (logical) controls wheter percentages of regular categorical variables should be calculated column-wise (default) or row-wise}
+#' \item{\code{Nmiss_row_percent}}{ (logical) controls whether percentages of the "Nmiss"-statistic (number of missing values) should be calculated column-wise (default) or row-wise}
+#' \item{\code{absolute_relative_frequency_mode}}{ (character)  controls how to display frequencies.
+#' It may be set to one of the following options:
+#' \itemize{
+#' \item{\code{"both"}}{ will display absolute and relative frequencies.}
+#' \item{\code{"only_absolute"}}{ will only display absolute frequencies. }
+#' \item{\code{"only_relative"}}{ will only display relative frequencies. }
+#'   }
+#'  }
+#' \item{\code{omit_missings_in_categorical_var}}{ (logical) controls whether to omit missing values in categorical variables completely.}
 #' \item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
 #' It may be set to one of the following options:
 #' \itemize{
@@ -199,6 +210,14 @@ descr <-
              omit_Nmiss_if_0 = TRUE,
              omit_missings_in_group = TRUE,
              percent_accuracy=NULL,
+             percent_suffix="%",
+             row_percent=FALSE,
+             Nmiss_row_percent=FALSE,
+             absolute_relative_frequency_mode = c(
+               "both",
+               "only_absolute",
+               "only_relative"
+             ),
              omit_missings_in_categorical_var = FALSE,
              categorical_missing_percent_mode = c(
                "no_missing_percent",
@@ -232,11 +251,8 @@ descr <-
            ...) {
 
 
-
-
     # Coerce dataset to tibble
     dat %<>% as_tibble()
-
 
     # Check for empty strings
     if(any(dat=="", na.rm = TRUE)){
@@ -1515,6 +1531,7 @@ create_character_subtable.cont_summary <-
            format_summary_stats,
            format_p,
            reshape_rows) {
+    DescrVarObj_unformatted <- DescrVarObj
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
     if (format_options[["omit_Nmiss_if_0"]] == TRUE) {
@@ -1560,13 +1577,14 @@ create_character_subtable.cont_summary <-
 
       if (!is.null(DescrVarObj[["results"]][["Total"]][["Nmiss"]])) {
         DescrVarObj[["results"]][["Total"]][["Nmiss"]] <-
-          paste0(
-            DescrVarObj[["results"]][["Total"]][["Nmiss"]],
-            " (",
-            scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][["Total"]][["Nmiss"]] /
-                                      DescrVarObj[["variable_lengths"]][["Total"]][["N"]]),
-            ")"
-          )
+          format_freqs(DescrVarObj[["results"]][["Total"]][["Nmiss"]],
+                       ifelse(format_options[["Nmiss_row_percent"]]==TRUE,
+                              DescrVarObj_unformatted[["results"]][["Total"]][["Nmiss"]],
+                              DescrVarObj_unformatted[["variable_lengths"]][["Total"]][["N"]]),
+                       format_options[["absolute_relative_frequency_mode"]],
+                       format_options[["percent_accuracy"]],
+                       format_options[["percent_suffix"]]
+                       )
       }
 
       for (summary_stat in setdiff(summary_stat_names, "Nmiss")) {
@@ -1610,12 +1628,13 @@ create_character_subtable.cont_summary <-
 
         if (!is.null(DescrVarObj[["results"]][[group]][["Nmiss"]])) {
           DescrVarObj[["results"]][[group]][["Nmiss"]] <-
-            paste0(
-              DescrVarObj[["results"]][[group]][["Nmiss"]],
-              " (",
-              scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][[group]][["Nmiss"]] /
-                                        DescrVarObj[["variable_lengths"]][[group]][["N"]]),
-              ")"
+            format_freqs(DescrVarObj[["results"]][[group]][["Nmiss"]],
+                         ifelse(format_options[["Nmiss_row_percent"]]==TRUE,
+                                DescrVarObj_unformatted[["results"]][["Total"]][["Nmiss"]],
+                                DescrVarObj_unformatted[["variable_lengths"]][[group]][["N"]]),
+                         format_options[["absolute_relative_frequency_mode"]],
+                         format_options[["percent_accuracy"]],
+                         format_options[["percent_suffix"]]
             )
         }
 
@@ -1704,7 +1723,7 @@ create_character_subtable.cat_summary <-
            format_p,
            reshape_rows) {
     ## Remember: Category levels may not be names "N"
-
+    DescrVarObj_unformatted <- DescrVarObj
 
     cat_names <- DescrVarObj[["variable_levels"]]
     cat_names_nonmissing <- setdiff(cat_names, "(Missing)")
@@ -1731,7 +1750,6 @@ create_character_subtable.cat_summary <-
         format_summary_stats[[summary_stat]](DescrVarObj[["results"]][["Total"]][["summary_stats"]][[summary_stat]])
     }
 
-
     for (reshape_name in names(reshape_rows)) {
       reshape <- reshape_rows[[reshape_name]]
 
@@ -1750,11 +1768,13 @@ create_character_subtable.cat_summary <-
 
     for (cat_name in cat_names_nonmissing) {
       DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] <-
-        paste0(
-          DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
-          " (",
-          scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] / N_nonmissing)  ,
-          ")"
+        format_freqs(DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
+                     ifelse(format_options[["row_percent"]]==TRUE,
+                            DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
+                            N_nonmissing),
+                     format_options[["absolute_relative_frequency_mode"]],
+                     format_options[["percent_accuracy"]],
+                     format_options[["percent_suffix"]]
         )
     }
 
@@ -1767,10 +1787,14 @@ create_character_subtable.cat_summary <-
 
       } else{
         DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] <-
-          paste0(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]],
-                 " (",
-                 scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]] / N_total)  ,
-                 ")")
+          format_freqs(DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]],
+                       ifelse(format_options[["Nmiss_row_percent"]]==TRUE,
+                              DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][["(Missing)"]],
+                              N_total),
+                       format_options[["absolute_relative_frequency_mode"]],
+                       format_options[["percent_accuracy"]],
+                       format_options[["percent_suffix"]]
+          )
       }
     }
 
@@ -1828,14 +1852,15 @@ create_character_subtable.cat_summary <-
       }
 
 
-
       for (cat_name in cat_names_nonmissing) {
         DescrVarObj[["results"]][[group]][["categories"]][[cat_name]] <-
-          paste0(
-            DescrVarObj[["results"]][[group]][["categories"]][[cat_name]],
-            " (",
-            scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][[group]][["categories"]][[cat_name]] / N_group_nonmissing),
-            ")"
+          format_freqs(DescrVarObj[["results"]][[group]][["categories"]][[cat_name]],
+                       ifelse(format_options[["row_percent"]]==TRUE,
+                              DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
+                              N_group_nonmissing),
+                       format_options[["absolute_relative_frequency_mode"]],
+                       format_options[["percent_accuracy"]],
+                       format_options[["percent_suffix"]]
           )
       }
 
@@ -1848,11 +1873,13 @@ create_character_subtable.cat_summary <-
 
         } else{
           DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] <-
-            paste0(
-              DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]],
-              " (",
-              scales::label_percent(accuracy = format_options[["percent_accuracy"]])(DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]] / N_total)  ,
-              ")"
+            format_freqs(DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]],
+                         ifelse(format_options[["Nmiss_row_percent"]]==TRUE,
+                                DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][["(Missing)"]],
+                                N_group_total),
+                         format_options[["absolute_relative_frequency_mode"]],
+                         format_options[["percent_accuracy"]],
+                         format_options[["percent_suffix"]]
             )
         }
       }
@@ -2743,13 +2770,55 @@ ignore_unused_args <- function(what, args){
 
 
 
+#' Make pretty frequencies
+#'
+#' @param numerator numeric
+#' @param denominator numeric
+#' @param absolute_relative_frequency_mode  "both","only_absolute" or "only_relative"
+#' @param percent_accuracy NULL or numeric
+#' @param percent_suffix "\%" or "" (or something else)
+#'
+#' @return Character element of formatted frequencies
+#' @importFrom scales label_percent
+format_freqs <- function(numerator,
+                         denominator = 1,
+                         absolute_relative_frequency_mode = c(
+                           "both",
+                           "only_absolute",
+                           "only_relative"),
+                         percent_accuracy = NULL,
+                         percent_suffix = "%"
+
+){
+  absolute_relative_frequency_mode <- absolute_relative_frequency_mode[1]
+  if (absolute_relative_frequency_mode == "both"){
+    paste0(
+      numerator,
+      " (",
+      scales::label_percent(accuracy = percent_accuracy,
+                            suffix = percent_suffix)(numerator / denominator),
+      ")"
+    )
+  } else if (absolute_relative_frequency_mode == "only_absolute"){
+    as.character(numerator)
+  } else if (absolute_relative_frequency_mode == "only_relative"){
+    scales::label_percent(accuracy = percent_accuracy,
+                          suffix = percent_suffix)(numerator / denominator)
+  } else{
+    stop(paste(as.character(absolute_relative_frequency_mode), "is not a valid value for absolute_relative_frequency_mode."))
+  }
+}
 
 
-
-
-
-
-
-
+#' Function that returns true in CRAN submission
+#'
+#' @return TRUE for CRAN submission, FALSE otherwise
+write_in_tmpfile_for_cran <- function(){
+  if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    return(invisible(FALSE))
+  } else{
+    TRUE
+  }
+}
 
 

@@ -3,5 +3,5 @@
   Variables    first     second    Total      p      Test           CI          
 1  var                                                                          
 2    Approve    944 (59~  880 (55~  1824 (57~  <0.0~  Exact McNema~  Prop. dif.~
-3    Disappro~  656 (41~  720 (45~  1376 (43~                        [0.0052, 0~
+3    Disappro~  656 (41~  720 (45~  1376 (43~                        [0.0058, 0~
 

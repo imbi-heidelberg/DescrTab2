@@ -77,7 +77,7 @@ are used for continuous variables and confidence intervals for the Hodge-Lehman 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.6</span>
       </span>
     </div>
 
@@ -173,6 +173,8 @@ are used for continuous variables and confidence intervals for the Hodge-Lehman 
   format_p <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/label_pvalue.html'>pvalue_format</a></span><span class='op'>(</span><span class='op'>)</span>,
   format_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>print_p <span class='op'>=</span> <span class='cn'>TRUE</span>, print_CI <span class='op'>=</span> <span class='cn'>TRUE</span>, combine_mean_sd <span class='op'>=</span> <span class='cn'>FALSE</span>,
     omit_Nmiss_if_0 <span class='op'>=</span> <span class='cn'>TRUE</span>, omit_missings_in_group <span class='op'>=</span> <span class='cn'>TRUE</span>, percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>,
+    percent_suffix <span class='op'>=</span> <span class='st'>"%"</span>, row_percent <span class='op'>=</span> <span class='cn'>FALSE</span>, Nmiss_row_percent <span class='op'>=</span> <span class='cn'>FALSE</span>,
+    absolute_relative_frequency_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"both"</span>, <span class='st'>"only_absolute"</span>, <span class='st'>"only_relative"</span><span class='op'>)</span>,
     omit_missings_in_categorical_var <span class='op'>=</span> <span class='cn'>FALSE</span>, categorical_missing_percent_mode <span class='op'>=</span>
     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_missing_percent"</span>, <span class='st'>"missing_as_regular_category"</span>,
     <span class='st'>"missing_as_separate_category"</span><span class='op'>)</span><span class='op'>)</span>,
@@ -277,6 +279,16 @@ shortcut argument for the specification of an appropriate entry in the <code>res
 <li><p><code>omit_missings_in_group</code> (logical)  controls whether to omit all observations where the group variable is missing.</p></li>
 <li><p><code>percent_accuracy</code> (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
 should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent</p></li>
+<li><p><code>percent_suffix</code> (character) the symbol to be used where "%" is appropriate, sensible choices are usually "%" (default) or "" (i.e., empty string)</p></li>
+<li><p><code>row_percent</code> (logical) controls wheter percentages of regular categorical variables should be calculated column-wise (default) or row-wise</p></li>
+<li><p><code>Nmiss_row_percent</code> (logical) controls whether percentages of the "Nmiss"-statistic (number of missing values) should be calculated column-wise (default) or row-wise</p></li>
+<li><p><code>absolute_relative_frequency_mode</code> (character)  controls how to display frequencies.
+It may be set to one of the following options:
+<ul>
+<li><p><code>"both"</code> will display absolute and relative frequencies.</p></li>
+<li><p><code>"only_absolute"</code> will only display absolute frequencies.</p></li>
+<li><p><code>"only_relative"</code> will only display relative frequencies.</p></li>
+</ul></p></li>
 <li><p><code>omit_missings_in_categorical_var</code> (logical) controls whether to omit missing values in categorical variables completely.</p></li>
 <li><p><code>categorical_missing_percent_mode</code> (character)  controls how to display percentages in categorical variables with a (Missing) category.
 It may be set to one of the following options:
