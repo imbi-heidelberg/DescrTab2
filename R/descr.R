@@ -45,6 +45,8 @@ utils::globalVariables(".")
 #' \item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
 #' \item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
 #' shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
+#' \item{\code{combine_median_Q1_Q3}}{ (logical) controls whether to combine the median, Q1 and Q3 row into one median (Q1, Q3) row. This is a
+#' shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
 #' \item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
 #' \item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
 #' \item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
