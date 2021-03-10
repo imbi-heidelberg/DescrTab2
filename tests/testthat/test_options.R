@@ -176,6 +176,12 @@ test_that("combine_mean_sd works",
           ) %>% print(silent = TRUE),
           NA))
 
+test_that("combine_median_Q1_Q3 works",
+          expect_error(descr(
+            iris, format_options = c(combine_median_Q1_Q3 = TRUE)
+          ) %>% print(silent = TRUE),
+          NA))
+
 test_that("warnings about unused variable names work",
           {
           expect_warning(descr(iris, var_labels=c(a="b"))%>%
@@ -223,6 +229,11 @@ test_that("reshape_rows in var_options is properly filled with default arguments
               print(silent = TRUE)
             , NA)
 
+            expect_error(descr(iris, var_options = list(Sepal.Length = list(
+              format_options = list(combine_median_Q1_Q3 = TRUE)
+            ))) %>%
+              print(silent = TRUE)
+            , NA)
           })
 
 
@@ -254,20 +265,6 @@ test_that("Settings to determine the number of digits for perecent numbers work"
 
 
 
-
-test_that("format_freqs works",
-          {
-            expect_equal(
-              format_freqs(1, 3, "both", NULL, "%"),
-              "1 (33%)")
-            expect_equal(
-              format_freqs(1, 3, "only_absolute", NULL, "%"),
-              "1")
-            expect_equal(
-              format_freqs(1, 3, "only_relative", NULL, "%"),
-              "33%")
-          }
-)
 
 test_that("frequency formatting options work",
           {

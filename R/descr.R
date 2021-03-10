@@ -207,6 +207,7 @@ descr <-
              print_p = TRUE,
              print_CI = TRUE,
              combine_mean_sd = FALSE,
+             combine_median_Q1_Q3 = FALSE,
              omit_Nmiss_if_0 = TRUE,
              omit_missings_in_group = TRUE,
              percent_accuracy=NULL,
@@ -470,6 +471,16 @@ descr <-
       )
     }
 
+    if (isTRUE(format_options[["combine_median_Q1_Q3"]])) {
+      reshape_rows[["Q1 - Q3"]] <- NULL
+      reshape_rows[["median (Q1, Q3)"]] <- list(
+        args = c("median", "Q1", "Q3"),
+        fun = function(median, Q1, Q3)
+          paste0(median, " (", Q1, ", ", Q3, ")")
+      )
+    }
+
+
     for (var_option_name in names(var_options)) {
         if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
           if (!is.list(var_options[[var_option_name]][["summary_stats"]]) |
@@ -545,6 +556,21 @@ descr <-
             args = c("mean", "sd"),
             fun = function(mean, sd)
               paste0(mean, " \u00B1 ", sd)
+          )
+      }
+
+      if (isTRUE(var_options[[var_option_name]][["format_options"]][["combine_median_Q1_Q3"]])) {
+        name_diff <-
+          setdiff(names(reshape_rows), names(var_options[[var_option_name]][["reshape_rows"]]))
+        var_options[[var_option_name]][["reshape_rows"]][name_diff] <-
+          reshape_rows[name_diff]
+        var_options[[var_option_name]][["reshape_rows"]][["Q1 - Q3"]] <- NULL
+
+        var_options[[var_option_name]][["reshape_rows"]][["median (Q1, Q3)"]] <-
+          list(
+            args = c("median", "Q1", "Q3"),
+            fun = function(median, Q1, Q3)
+              paste0(median, " (", Q1, ", ", Q3, ")")
           )
       }
     }
@@ -1599,7 +1625,7 @@ create_character_subtable.cont_summary <-
           DescrVarObj[["results"]][["Total"]][[reshape[["args"]][[1]]]] <-
             do.call(reshape[["fun"]], DescrVarObj[["results"]][["Total"]][reshape[["args"]]])
 
-          DescrVarObj[["results"]][["Total"]][[reshape[["args"]][[-1]]]] <-
+          DescrVarObj[["results"]][["Total"]][reshape[["args"]][-1]] <-
             NULL
           name_indx <-
             which(names(DescrVarObj[["results"]][["Total"]]) == reshape[["args"]][[1]])
@@ -1651,7 +1677,7 @@ create_character_subtable.cont_summary <-
             DescrVarObj[["results"]][[group]][[reshape[["args"]][[1]]]] <-
               do.call(reshape[["fun"]], DescrVarObj[["results"]][[group]][reshape[["args"]]])
 
-            DescrVarObj[["results"]][[group]][[reshape[["args"]][[-1]]]] <-
+            DescrVarObj[["results"]][[group]][reshape[["args"]][-1]] <-
               NULL
             name_indx <-
               which(names(DescrVarObj[["results"]][[group]]) == reshape[["args"]][[1]])
@@ -1757,7 +1783,7 @@ create_character_subtable.cat_summary <-
         DescrVarObj[["results"]][["Total"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
           do.call(reshape[["fun"]], DescrVarObj[["results"]][["Total"]][["summary_stats"]][reshape[["args"]]])
 
-        DescrVarObj[["results"]][["Total"]][["summary_stats"]][reshape[["args"]][[-1]]] <-
+        DescrVarObj[["results"]][["Total"]][["summary_stats"]][reshape[["args"]][-1]] <-
           NULL
         name_indx <-
           which(names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]) == reshape[["args"]][[1]])
@@ -1842,7 +1868,7 @@ create_character_subtable.cat_summary <-
           DescrVarObj[["results"]][[group]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
             do.call(reshape[["fun"]], DescrVarObj[["results"]][[group]][["summary_stats"]][reshape[["args"]]])
 
-          DescrVarObj[["results"]][[group]][["summary_stats"]][reshape[["args"]][[-1]]] <-
+          DescrVarObj[["results"]][[group]][["summary_stats"]][reshape[["args"]][-1]] <-
             NULL
           name_indx <-
             which(names(DescrVarObj[["results"]][[group]][["summary_stats"]]) == reshape[["args"]][[1]])

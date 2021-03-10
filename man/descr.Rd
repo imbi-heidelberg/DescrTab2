@@ -25,12 +25,12 @@ descr(
     digits = 2, scientific = 3)),
   format_p = scales::pvalue_format(),
   format_options = list(print_p = TRUE, print_CI = TRUE, combine_mean_sd = FALSE,
-    omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = NULL,
-    percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,
-    absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
-    omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
-    c("no_missing_percent", "missing_as_regular_category",
-    "missing_as_separate_category")),
+    combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE,
+    percent_accuracy = NULL, percent_suffix = "\%", row_percent = FALSE,
+    Nmiss_row_percent = FALSE, absolute_relative_frequency_mode = c("both",
+    "only_absolute", "only_relative"), omit_missings_in_categorical_var = FALSE,
+    categorical_missing_percent_mode = c("no_missing_percent",
+    "missing_as_regular_category", "missing_as_separate_category")),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
     FALSE, test_override = NULL, additional_test_args = list()),

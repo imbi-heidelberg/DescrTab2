@@ -1,6 +1,10 @@
+# Version 2.0.7
+
+* Added the "combine_median_Q1_Q3" argument to format_options, which reshapes these summary statistics to "median (Q1, Q3)".
+
 # Version 2.0.6
 
-* Added the following members to format_options: percent_suffix, row_percent, Nmiss_row_percent and absolute_relative_frequency_mode. They can be used to control control how absolute and relative frequencies are displayed
+* Added the following members to format_options: percent_suffix, row_percent, Nmiss_row_percent and absolute_relative_frequency_mode. They can be used to control control how absolute and relative frequencies are displayed.
 
 # Version 2.0.5
 

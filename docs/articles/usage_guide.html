@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
       </span>
     </div>
 
@@ -88,12 +88,12 @@
 
       
 
-      </header><script src="usage_guide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="usage_guide_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2021-03-09</h4>
+            <h4 class="date">2021-03-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/usage_guide.Rmd"><code>vignettes/usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>usage_guide.Rmd</code></div>
@@ -119,14 +119,14 @@
 <h3 class="hasAnchor">
 <a href="#pdf_document" class="anchor"></a>pdf_document</h3>
 <p>Here is what you need to include in the yaml header to use <code>DescrTab2</code> inside .Rmd file with pdf_document output:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a>---</span>
-<span id="cb1-2"><a href="#cb1-2"></a>title: "DescrTab2 tutorial"</span>
-<span id="cb1-3"><a href="#cb1-3"></a>header-includes:</span>
-<span id="cb1-4"><a href="#cb1-4"></a>   - \usepackage{needspace}</span>
-<span id="cb1-5"><a href="#cb1-5"></a>   - \usepackage{longtable}</span>
-<span id="cb1-6"><a href="#cb1-6"></a>   - \usepackage{booktabs}</span>
-<span id="cb1-7"><a href="#cb1-7"></a>output: pdf_document</span>
-<span id="cb1-8"><a href="#cb1-8"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "DescrTab2 tutorial"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">header-includes:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">   - \usepackage{needspace}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">   - \usepackage{longtable}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">   - \usepackage{booktabs}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> pdf_document</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
 </div>
 <div id="html-word_document" class="section level3">
 <h3 class="hasAnchor">
@@ -138,24 +138,24 @@
 <h2 class="hasAnchor">
 <a href="#global-print_format-option" class="anchor"></a>Global print_format option</h2>
 <p>In order for <code>DescrTab2</code> to work properly with your document type of choice, you need to set the <code>print_format</code> options, preferably right at the start of your document. You can do this by typing:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>print_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span> <span class="co"># or = "word" or "tex", depending on your document type</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>print_format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span> <span class="co"># or = "word" or "tex", depending on your document type</span></code></pre></div>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>For instructive purposes, we will use the following dataset:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">]</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">]</span>
 <span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mammal"</span>, <span class="st">"Fish"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">75</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>food<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fries"</span>, <span class="st">"wedges"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>food<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fries"</span>, <span class="st">"wedges"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Make sure you include the DescrTab2 library by typing</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://imbi-heidelberg.github.io/DescrTab2/">DescrTab2</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://imbi-heidelberg.github.io/DescrTab2/">DescrTab2</a></span><span class="op">)</span></code></pre></div>
 <p>somewhere in the document before you use it. You are now ready to go! Producing beautiful descriptive tables in html and tex is now as easy as typing:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="bn">```{r, results='asis'}</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="bn">descr(dat)</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="bn">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results='asis'}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">descr(dat)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -192,7 +192,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 setosa
 </td>
 <td style="text-align:center;">
@@ -203,7 +203,7 @@ setosa
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 versicolor
 </td>
 <td style="text-align:center;">
@@ -213,7 +213,7 @@ versicolor
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 virginica
 </td>
 <td style="text-align:center;">
@@ -228,7 +228,7 @@ virginica
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -239,7 +239,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -249,7 +249,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -259,7 +259,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -269,7 +269,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -279,7 +279,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -294,7 +294,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Fish
 </td>
 <td style="text-align:center;">
@@ -305,7 +305,7 @@ Fish
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Mammal
 </td>
 <td style="text-align:center;">
@@ -320,22 +320,22 @@ Mammal
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
-0.191<sup>chi1</sup>
+0.014<sup>chi1</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -343,12 +343,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi1</sup> Chi-squared goodness-of-fit test
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>tt1</sup> Students one-sample t-test
 </td>
 </tr>
@@ -356,9 +356,9 @@ wedges
 </table>
 <p>Note the chunk option <code>results='asis'</code>. <code>DescrTab2</code> produces raw LaTeX or hmtl code. To get pandoc to render this properly, the <code>results='asis'</code> option is required. An alternative will be described later.</p>
 <p>To produce descriptive tables for a word document, a bit more typing is required:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="bn">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="bn">descr(dat) %&gt;% print() %&gt;% knitr::knit_print()</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="bn">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">descr(dat) %&gt;% print() %&gt;% knitr::knit_print()</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>When producing word tables in this fashion, you must <em>not</em> have the <code>results='asis'</code> chunk option set.</p>
 <p>Note that <code>DescrTab2</code> can also produce console output! In fact, this is the default setting (i.e. if the global <code>print_format</code> is not specified)</p>
 </div>
@@ -366,23 +366,23 @@ wedges
 <h2 class="hasAnchor">
 <a href="#accessing-table-elements" class="anchor"></a>Accessing table elements</h2>
 <p>The object returned from the <code>descr</code> function is basically just a named list. You may be interested in referencing certain summary statistics from the table in your document. To do this, you can save the list returned by <code>descr</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
 <p>You can then access the elements of the list using the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">my_table</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">mean</span>
-<span class="co">#&gt; [1] 5.843333</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_table</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">mean</span>
+<span class="co">#&gt; [1] 5.843333</span></code></pre></div>
 <p>Rstudios autocomplete suggestions are very helpful when navigating this list.</p>
 <p>The <code>print</code> function returns a formatted version of this list, which you can also save and access using the same syntax.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="specifying-a-group" class="section level2">
 <h2 class="hasAnchor">
 <a href="#specifying-a-group" class="anchor"></a>Specifying a group</h2>
 <p>Use the <code>group</code> option to specify the name of a grouping variable in your data:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -443,7 +443,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -463,7 +463,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -482,7 +482,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -501,7 +501,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -520,7 +520,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -539,7 +539,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -563,7 +563,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Fish
 </td>
 <td style="text-align:center;">
@@ -583,7 +583,7 @@ Fish
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Mammal
 </td>
 <td style="text-align:center;">
@@ -607,40 +607,40 @@ Mammal
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-23 (46%)
 </td>
 <td style="text-align:center;">
 21 (42%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.898<sup>chi2</sup>
+20 (40%)
+</td>
+<td style="text-align:center;">
+60 (40%)
+</td>
+<td style="text-align:center;">
+0.920<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
-</td>
-<td style="text-align:center;">
-27 (54%)
-</td>
-<td style="text-align:center;">
-27 (54%)
 </td>
 <td style="text-align:center;">
 29 (58%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+30 (60%)
+</td>
+<td style="text-align:center;">
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -648,12 +648,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
@@ -664,8 +664,8 @@ wedges
 <h2 class="hasAnchor">
 <a href="#assigning-labels" class="anchor"></a>Assigning labels</h2>
 <p>Use the <code>group_labels</code> option to assign group labels and the <code>var_labels</code> option to assign variable labels:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, group_labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>setosa<span class="op">=</span><span class="st">"My custom group label"</span><span class="op">)</span>, var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="st">"My custom variable label"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, group_labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>setosa<span class="op">=</span><span class="st">"My custom group label"</span><span class="op">)</span>, var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="st">"My custom variable label"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -726,7 +726,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -746,7 +746,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -765,7 +765,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -784,7 +784,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -803,7 +803,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -822,7 +822,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -846,7 +846,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Fish
 </td>
 <td style="text-align:center;">
@@ -866,7 +866,7 @@ Fish
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Mammal
 </td>
 <td style="text-align:center;">
@@ -890,40 +890,40 @@ Mammal
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-23 (46%)
 </td>
 <td style="text-align:center;">
 21 (42%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.898<sup>chi2</sup>
+20 (40%)
+</td>
+<td style="text-align:center;">
+60 (40%)
+</td>
+<td style="text-align:center;">
+0.920<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
-</td>
-<td style="text-align:center;">
-27 (54%)
-</td>
-<td style="text-align:center;">
-27 (54%)
 </td>
 <td style="text-align:center;">
 29 (58%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+30 (60%)
+</td>
+<td style="text-align:center;">
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -931,12 +931,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
@@ -947,8 +947,8 @@ wedges
 <h2 class="hasAnchor">
 <a href="#confidence-intervals-for-two-group-comparisons" class="anchor"></a>Confidence intervals for two group comparisons</h2>
 <p>For 2-group comparisons, decrtab automatically calculates confidence intervals for differences in effect measures:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"animal"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"animal"</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1008,7 +1008,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 setosa
 </td>
 <td style="text-align:center;">
@@ -1027,7 +1027,7 @@ setosa
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 versicolor
 </td>
 <td style="text-align:center;">
@@ -1045,7 +1045,7 @@ versicolor
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 virginica
 </td>
 <td style="text-align:center;">
@@ -1068,7 +1068,7 @@ virginica
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -1088,7 +1088,7 @@ Mean dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -1107,7 +1107,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -1125,7 +1125,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -1143,7 +1143,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -1161,7 +1161,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -1184,53 +1184,53 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-32 (43%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
-0.622<sup>chi2</sup>
+&gt;0.999<sup>chi2</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-43 (57%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>tt2</sup> Welchs two-sample t-test
 </td>
 </tr>
@@ -1242,8 +1242,8 @@ wedges
 <a href="#different-tests" class="anchor"></a>Different tests</h2>
 <p>There are a lot of different tests available. Check out the test_choice vignette for details: <a href="https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf" class="uri">https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf</a></p>
 <p>Here are some different tests in action:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span>, nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span>, nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1303,7 +1303,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -1323,7 +1323,7 @@ HL CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -1342,7 +1342,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -1360,7 +1360,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -1378,7 +1378,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -1396,7 +1396,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -1419,60 +1419,60 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-32 (43%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
-0.671<sup>Bolo</sup>
+&gt;0.999<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-43 (57%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>MWU</sup> Mann-Whitney U test
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>Bolo</sup> Boschloos test
 </td>
 </tr>
 </tfoot>
 </table>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">)</span>, <span class="st">"Species"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">)</span>, <span class="st">"Species"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1533,7 +1533,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -1553,7 +1553,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -1572,7 +1572,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -1591,7 +1591,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -1610,7 +1610,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -1629,7 +1629,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -1649,7 +1649,7 @@ min - max
 </tr>
 </tbody>
 <tfoot><tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>KW</sup> Kruskal-Wallis one-way ANOVA
 </td>
 </tr></tfoot>
@@ -1659,8 +1659,8 @@ min - max
 <h2 class="hasAnchor">
 <a href="#paired-observations" class="anchor"></a>Paired observations</h2>
 <p>In situations with paired data, the <code>group</code> variable usually denotes the timing of the measurement (e.g. “before” and “after” or “time 1”, “time 2”, etc.). In these scenarios, you need an additional index variable that specifies which observations from the different timepoints should be paired. The <code>test_options =list(paired=TRUE, indices = &lt;Character name of index variable name or vector of indices&gt;)</code> option can be used to specify the pairing indices, see the example below. DescrTab2 only works with data in “long format”, see e.g. <code><a href="https://rdrr.io/r/stats/reshape.html">?reshape</a></code> or <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">?tidyr::pivot_longer</a></code> for information on how to transoform your data from wide to long format.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1720,7 +1720,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -1740,7 +1740,7 @@ Mean dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -1759,7 +1759,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -1777,7 +1777,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -1795,7 +1795,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -1813,7 +1813,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -1836,61 +1836,61 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-32 (43%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
-0.749<sup>McN</sup>
+&gt;0.999<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-43 (57%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>tpar</sup> Students paired t-test
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>McN</sup> McNemars test
 </td>
 </tr>
 </tfoot>
 </table>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span>, idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="st">"idx"</span> <span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span>, idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="st">"idx"</span> <span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1950,7 +1950,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -1970,7 +1970,7 @@ Mean dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -1989,7 +1989,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -2007,7 +2007,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -2025,7 +2025,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -2043,7 +2043,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -2066,53 +2066,53 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-32 (43%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
-0.749<sup>McN</sup>
+&gt;0.999<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-43 (57%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>tpar</sup> Students paired t-test
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>McN</sup> McNemars test
 </td>
 </tr>
@@ -2123,8 +2123,8 @@ wedges
 <h2 class="hasAnchor">
 <a href="#significant-digits" class="anchor"></a>Significant digits</h2>
 <p>Every summary statistic in DescrTab2 is formatted by a corresponding formatting function. You can exchange these formatting functions as you please:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, format_summary_stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, format_summary_stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2185,7 +2185,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -2205,7 +2205,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -2224,7 +2224,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -2243,7 +2243,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -2262,7 +2262,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -2281,7 +2281,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -2305,7 +2305,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Fish
 </td>
 <td style="text-align:center;">
@@ -2325,7 +2325,7 @@ Fish
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Mammal
 </td>
 <td style="text-align:center;">
@@ -2349,40 +2349,40 @@ Mammal
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-23 (46%)
 </td>
 <td style="text-align:center;">
 21 (42%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.898<sup>chi2</sup>
+20 (40%)
+</td>
+<td style="text-align:center;">
+60 (40%)
+</td>
+<td style="text-align:center;">
+0.920<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
-</td>
-<td style="text-align:center;">
-27 (54%)
-</td>
-<td style="text-align:center;">
-27 (54%)
 </td>
 <td style="text-align:center;">
 29 (58%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+30 (60%)
+</td>
+<td style="text-align:center;">
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2390,12 +2390,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
@@ -2406,10 +2406,10 @@ wedges
 <h2 class="hasAnchor">
 <a href="#omitting-summary-statistics" class="anchor"></a>Omitting summary statistics</h2>
 <p>Let’s say you don’t want to calculate quantiles for your numeric variables. You can specify the <code>summary_stats_cont</code> option to include all summary statistics but quantiles:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, summary_stats_cont <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.N</span>, Nmiss <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Nmiss</span>, mean <span class="op">=</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, summary_stats_cont <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.N</span>, Nmiss <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Nmiss</span>, mean <span class="op">=</span>
     <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.mean</span>, sd <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.sd</span>, median <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.median</span>, min <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.min</span>, max <span class="op">=</span>
-    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.max</span><span class="op">)</span><span class="op">)</span></pre></div>
+    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.max</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2470,7 +2470,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -2490,7 +2490,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -2509,7 +2509,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -2528,7 +2528,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -2547,7 +2547,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -2571,7 +2571,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Fish
 </td>
 <td style="text-align:center;">
@@ -2591,7 +2591,7 @@ Fish
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Mammal
 </td>
 <td style="text-align:center;">
@@ -2615,40 +2615,40 @@ Mammal
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-23 (46%)
 </td>
 <td style="text-align:center;">
 21 (42%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.898<sup>chi2</sup>
+20 (40%)
+</td>
+<td style="text-align:center;">
+60 (40%)
+</td>
+<td style="text-align:center;">
+0.920<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
-</td>
-<td style="text-align:center;">
-27 (54%)
-</td>
-<td style="text-align:center;">
-27 (54%)
 </td>
 <td style="text-align:center;">
 29 (58%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+30 (60%)
+</td>
+<td style="text-align:center;">
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2656,12 +2656,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
@@ -2672,13 +2672,13 @@ wedges
 <h2 class="hasAnchor">
 <a href="#adding-summary-statistics" class="anchor"></a>Adding summary statistics</h2>
 <p>Let’s say you have a categorical variable, but for some reason it’s levels are numerals and you want to calculate the mean. No problem:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="co"># Create example dataset</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create example dataset</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">iris</span>
 <span class="va">dat2</span><span class="op">$</span><span class="va">cat_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"cat_var"</span><span class="op">)</span><span class="op">]</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="st">"Species"</span>, summary_stats_cat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean<span class="op">=</span><span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormean</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="st">"Species"</span>, summary_stats_cat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean<span class="op">=</span><span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormean</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2739,50 +2739,31 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
-1.6
+1.4
 </td>
 <td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
-1.5
+1.4
 </td>
 <td style="text-align:center;">
-0.601<sup>chi2</sup>
+0.898<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 1
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-21 (42%)
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-70 (47%)
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
-2
-</td>
-<td style="text-align:center;">
-24 (48%)
+27 (54%)
 </td>
 <td style="text-align:center;">
 29 (58%)
@@ -2791,14 +2772,33 @@ mean
 27 (54%)
 </td>
 <td style="text-align:center;">
-80 (53%)
+83 (55%)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+2
+</td>
+<td style="text-align:center;">
+23 (46%)
+</td>
+<td style="text-align:center;">
+21 (42%)
+</td>
+<td style="text-align:center;">
+23 (46%)
+</td>
+<td style="text-align:center;">
+67 (45%)
 </td>
 <td style="text-align:center;">
 </td>
 </tr>
 </tbody>
 <tfoot><tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr></tfoot>
@@ -2808,8 +2808,8 @@ mean
 <h2 class="hasAnchor">
 <a href="#combining-mean-and-sd" class="anchor"></a>Combining mean and sd</h2>
 <p>Use the <code>format_options = list(combine_mean_sd=TRUE)</code> option:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>combine_mean_sd<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span>, format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>combine_mean_sd<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2870,7 +2870,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -2890,7 +2890,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean ± sd
 </td>
 <td style="text-align:center;">
@@ -2909,7 +2909,7 @@ mean ± sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -2928,7 +2928,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -2947,7 +2947,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -2971,7 +2971,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Fish
 </td>
 <td style="text-align:center;">
@@ -2991,7 +2991,7 @@ Fish
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Mammal
 </td>
 <td style="text-align:center;">
@@ -3015,40 +3015,40 @@ Mammal
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
-</td>
-<td style="text-align:center;">
-23 (46%)
-</td>
-<td style="text-align:center;">
-23 (46%)
 </td>
 <td style="text-align:center;">
 21 (42%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.898<sup>chi2</sup>
+20 (40%)
+</td>
+<td style="text-align:center;">
+60 (40%)
+</td>
+<td style="text-align:center;">
+0.920<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
-</td>
-<td style="text-align:center;">
-27 (54%)
-</td>
-<td style="text-align:center;">
-27 (54%)
 </td>
 <td style="text-align:center;">
 29 (58%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+30 (60%)
+</td>
+<td style="text-align:center;">
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3056,12 +3056,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
@@ -3072,8 +3072,8 @@ wedges
 <h2 class="hasAnchor">
 <a href="#omitting-p-values" class="anchor"></a>Omitting p-values</h2>
 <p>You can declare the <code>format_options = list(print_p = FALSE)</code> option to omit p-values:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"animal"</span>, format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>print_p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"animal"</span>, format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>print_p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3126,7 +3126,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 setosa
 </td>
 <td style="text-align:center;">
@@ -3142,7 +3142,7 @@ setosa
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 versicolor
 </td>
 <td style="text-align:center;">
@@ -3158,7 +3158,7 @@ versicolor
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 virginica
 </td>
 <td style="text-align:center;">
@@ -3179,7 +3179,7 @@ virginica
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -3196,7 +3196,7 @@ Mean dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -3213,7 +3213,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -3229,7 +3229,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -3245,7 +3245,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -3261,7 +3261,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -3282,44 +3282,44 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-32 (43%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-43 (57%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]
+[-0.16, 0.16]
 </td>
 </tr>
 </tbody>
 </table>
 <p>Similarily for Confidence intervals:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"animal"</span>, format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>print_CI <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"animal"</span>, format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>print_CI <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3372,7 +3372,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 setosa
 </td>
 <td style="text-align:center;">
@@ -3389,7 +3389,7 @@ setosa
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 versicolor
 </td>
 <td style="text-align:center;">
@@ -3405,7 +3405,7 @@ versicolor
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 virginica
 </td>
 <td style="text-align:center;">
@@ -3426,7 +3426,7 @@ virginica
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -3443,7 +3443,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -3459,7 +3459,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -3475,7 +3475,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -3491,7 +3491,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -3507,7 +3507,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -3528,34 +3528,34 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fries
 </td>
 <td style="text-align:center;">
-32 (43%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+30 (40%)
 </td>
 <td style="text-align:center;">
-67 (45%)
+60 (40%)
 </td>
 <td style="text-align:center;">
-0.622<sup>chi2</sup>
+&gt;0.999<sup>chi2</sup>
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wedges
 </td>
 <td style="text-align:center;">
-43 (57%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+45 (60%)
 </td>
 <td style="text-align:center;">
-83 (55%)
+90 (60%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3563,12 +3563,12 @@ wedges
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>tt2</sup> Welchs two-sample t-test
 </td>
 </tr>
@@ -3579,11 +3579,11 @@ wedges
 <h2 class="hasAnchor">
 <a href="#printing-without-resultsasis" class="anchor"></a>Printing without results=‘asis’</h2>
 <p>Sometimes, e.g. if you have a loop inside your R-chunk and you want to plot graphics in between descriptive tables, it is necessary not to have the results=‘asis’ option. You can still use DescrTab2 with the following commands:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1"></a><span class="bn">```{r}</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="bn">capture.output(print(descr(dat, "Species"))) %&gt;%  knitr::raw_html() # or knitr::raw_tex() for tex</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="bn">```</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/raw_block.html">raw_html</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># or knitr::raw_tex() for tex</span></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="in">capture.output(print(descr(dat, "Species"))) %&gt;%  knitr::raw_html() # or knitr::raw_tex() for tex</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/raw_block.html">raw_html</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># or knitr::raw_tex() for tex</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3606,7 +3606,7 @@ wedges
 <tbody>
 <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>Sepal.Length</strong></td></tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> N </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> N </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> 50 </td>
@@ -3615,7 +3615,7 @@ wedges
 </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> mean </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> mean </td>
    <td style="text-align:center;"> 5 </td>
    <td style="text-align:center;"> 5.9 </td>
    <td style="text-align:center;"> 6.6 </td>
@@ -3623,7 +3623,7 @@ wedges
    <td style="text-align:center;">  </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> sd </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> sd </td>
    <td style="text-align:center;"> 0.35 </td>
    <td style="text-align:center;"> 0.52 </td>
    <td style="text-align:center;"> 0.64 </td>
@@ -3631,7 +3631,7 @@ wedges
    <td style="text-align:center;">  </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> median </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> median </td>
    <td style="text-align:center;"> 5 </td>
    <td style="text-align:center;"> 5.9 </td>
    <td style="text-align:center;"> 6.5 </td>
@@ -3639,7 +3639,7 @@ wedges
    <td style="text-align:center;">  </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> Q1 - Q3 </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
    <td style="text-align:center;"> 4.8 -- 5.2 </td>
    <td style="text-align:center;"> 5.6 -- 6.3 </td>
    <td style="text-align:center;"> 6.2 -- 6.9 </td>
@@ -3647,7 +3647,7 @@ wedges
    <td style="text-align:center;">  </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> min - max </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> min - max </td>
    <td style="text-align:center;"> 4.3 -- 5.8 </td>
    <td style="text-align:center;"> 4.9 -- 7 </td>
    <td style="text-align:center;"> 4.9 -- 7.9 </td>
@@ -3656,7 +3656,7 @@ wedges
   </tr>
 <tr grouplength="2"><td colspan="6" style="border-bottom: 1px solid;"><strong>animal</strong></td></tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> Fish </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> Fish </td>
    <td style="text-align:center;"> 25 (50%) </td>
    <td style="text-align:center;"> 25 (50%) </td>
    <td style="text-align:center;"> 25 (50%) </td>
@@ -3665,7 +3665,7 @@ wedges
 </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> Mammal </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> Mammal </td>
    <td style="text-align:center;"> 25 (50%) </td>
    <td style="text-align:center;"> 25 (50%) </td>
    <td style="text-align:center;"> 25 (50%) </td>
@@ -3674,27 +3674,27 @@ wedges
   </tr>
 <tr grouplength="2"><td colspan="6" style="border-bottom: 1px solid;"><strong>food</strong></td></tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> fries </td>
-   <td style="text-align:center;"> 23 (46%) </td>
-   <td style="text-align:center;"> 23 (46%) </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> fries </td>
    <td style="text-align:center;"> 21 (42%) </td>
-   <td style="text-align:center;"> 67 (45%) </td>
-   <td style="text-align:center;"> 0.898<sup>chi2</sup>
+   <td style="text-align:center;"> 19 (38%) </td>
+   <td style="text-align:center;"> 20 (40%) </td>
+   <td style="text-align:center;"> 60 (40%) </td>
+   <td style="text-align:center;"> 0.920<sup>chi2</sup>
 </td>
   </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1"> wedges </td>
-   <td style="text-align:center;"> 27 (54%) </td>
-   <td style="text-align:center;"> 27 (54%) </td>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1"> wedges </td>
    <td style="text-align:center;"> 29 (58%) </td>
-   <td style="text-align:center;"> 83 (55%) </td>
+   <td style="text-align:center;"> 31 (62%) </td>
+   <td style="text-align:center;"> 30 (60%) </td>
+   <td style="text-align:center;"> 90 (60%) </td>
    <td style="text-align:center;">  </td>
   </tr>
 </tbody>
 <tfoot>
-<tr><td style="padding: 0; border: 0;" colspan="100%">
+<tr><td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)</td></tr>
-<tr><td style="padding: 0; border: 0;" colspan="100%">
+<tr><td style="padding: 0; " colspan="100%">
 <sup>chi2</sup> Pearsons chi-squared test</td></tr>
 </tfoot>
 </table>
@@ -3704,14 +3704,14 @@ wedges
 <h2 class="hasAnchor">
 <a href="#controling-options-on-a-per-variable-level" class="anchor"></a>Controling options on a per-variable level</h2>
 <p>You can use the <code>var_options</code> list to control formatting and test options on a per-variable basis. Let’s say in the dataset <code>iris</code>, we want that only the <code>Sepal.Length</code> variable has more digits in the mean and a nonparametric test:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span>, var_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span>, var_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   format_summary_stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
       <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
   <span class="op">)</span>,
   test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -3772,7 +3772,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -3792,7 +3792,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -3811,7 +3811,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -3830,7 +3830,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -3849,7 +3849,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -3868,7 +3868,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -3892,7 +3892,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -3912,7 +3912,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -3931,7 +3931,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -3950,7 +3950,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -3969,7 +3969,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -3988,7 +3988,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -4012,7 +4012,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -4032,7 +4032,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -4051,7 +4051,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -4070,7 +4070,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -4089,7 +4089,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -4108,7 +4108,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -4132,7 +4132,7 @@ min - max
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -4152,7 +4152,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -4171,7 +4171,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -4190,7 +4190,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -4209,7 +4209,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -4228,7 +4228,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left:  2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -4249,12 +4249,12 @@ min - max
 </tbody>
 <tfoot>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>KW</sup> Kruskal-Wallis one-way ANOVA
 </td>
 </tr>
 <tr>
-<td style="padding: 0; border: 0;" colspan="100%">
+<td style="padding: 0; " colspan="100%">
 <sup>F</sup> F-test (ANOVA)
 </td>
 </tr>
