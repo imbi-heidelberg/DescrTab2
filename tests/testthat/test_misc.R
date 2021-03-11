@@ -48,8 +48,8 @@ test_that("write_in_tmpfile_for_cran function works",{
   if (!write_in_tmpfile_for_cran()){
   Sys.setenv("NOT_CRAN" = "")
   expect_true(write_in_tmpfile_for_cran())
-  # Sys.setenv("NOT_CRAN" = "true")
-  # expect_false(write_in_tmpfile_for_cran())
+  Sys.setenv("NOT_CRAN" = "true")
+  expect_false(write_in_tmpfile_for_cran())
   }
 })
 
