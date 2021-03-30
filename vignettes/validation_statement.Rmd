@@ -1,0 +1,56 @@
+---
+title: "Validation statement"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Liability
+
+As noted in the GPL-3 License, neither the authors nor any person or
+institution associated with the creation, production or distribution of
+`DescrTab2` is liable of any damages caused by the use of the software:
+
+> IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+> WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR
+> CONVEYS THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,
+> INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES
+> ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+> NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR
+> LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM
+> TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER
+> PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+## Unit tests
+
+`DescrTab2` features 100% `covr` unit test coverage, which means that
+each line of code is executed at least once by some automated unit test.
+Most of these unit tests only check whether the code associated with
+it produces errors. This aims to ensure that the various options in
+`DescrTab2` work error-free with a variations of possible input datasets
+and edge-cases.
+
+## Manual external software comparisons
+
+Comparisons of the results produced by `DescrTab2` with other software
+are not automated. The user may feel free to perform such comparisons by
+themselves. An exemplary comparison can be examined in this
+[document](other_software_comparison.html).
+
+## Dependencies
+
+`DescrTab2` relies on various other packages to perform its designated purpose.
+Most of the imported packages are neccesary to facilitate tasks related to
+data-wrangling and output formatting, namely `?utils`, `?dplyr`, `?rlang`, `?tibble`, `?stringr`, `?forcats`, `?magrittr`, `?tidyselect`, `?scales`, `?cli`, `?kableExtra`, `?flextable` and `?officer`.
+The pre-implemented summary statistics (mean, sd, etc.) make use of functions
+provided for this purpose in base R (see `?base` and `?stats`).
+The test functions used for the calculcation of p-values are mostly from
+base R (eg `?t.test` from `?stats`) and the recommended packages
+(e.g. `?lme` from `?nlme` for the Mixed Model Anova p-value).
+Notable exceptions are the Cochrane Q Test from the `?DescTools` package (`?DescTools::CochranQTest`)
+and the Fisher-Boschloo test from the `?exact2x2` package (`?exact2x2::boschloo`).

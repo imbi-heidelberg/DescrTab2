@@ -15,9 +15,9 @@ value N
 ;
 
 DATA  rdata ;
-INFILE  "C:/Users/z7a/Documents/DescrTab2/vignettes/validation_report/aov/aov_dat_1.csv" 
+INFILE  "E:/projects/DescrTab2/vignettes/validation_report/aov/aov_dat_1.csv" 
      DSD 
-     LRECL= 24 ;
+     LRECL= 12 ;
 INPUT
  y
  P
@@ -30,12 +30,6 @@ RUN;
 ods graphics off;
 ods html file="aov_example_1.html" path=".";
 
-
-/*PROC UNIVARIATE data=rdata;*/
-/*VAR diff;*/
-/*RUN;*/
-
-/* Type the SAS example you want to calculate here, e.g.: */
 proc anova data=rdata;
 class P;
    model y = P;

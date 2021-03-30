@@ -1,9 +1,9 @@
 ---
-title: "Validation report"
+title: "Comparison with other software"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Validation report}
+  %\VignetteIndexEntry{Comparison with other software}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,14 +18,33 @@ library(tidyverse)
 options(print_format="html")
 ```
 
-<font size="2">
+<font size="4">
 
 # Introduction
-In this document, we compare various DescrTab2 tests with their SAS equivalents.
+In this document, we compare various DescrTab2 tests and descriptive statistics
+with their SAS equivalents.
+
+These comparisons are not automated. The user may check if the results presented
+within this document are according to the users preferences.
+
+
+The datasets used in these comparisons are taken mostly from the `?help` pages
+of the underlying test functions used within `DescrTab2`. For the SAS
+comparisons, these datasets are then written to `.csv` format and read into SAS
+with help of the `?foreign` package.
+
+The origin of these datasets is described in the respective sections.
+
+# A note about the layout
+
 This document is created by including in the .html SAS output. Unfortunately, this has ugly side effects for the formatting of this document, but everything should still be readable.
 
+<font size="2">
 
 # Wilcoxon one-sample signed-rank test
+
+Dataset origin: `?wilcox.test` (accessed on R-version 4.0.3).
+
 
 ```{r wilcox.test 1 sample, results='asis'}
 
@@ -53,6 +72,7 @@ if(file.exists(sas_html)){
 
 
 # Mann-Whitney U test
+Dataset origin: `?wilcox.test` (accessed on R-version 4.0.3).
 
 ```{r wilcox.test 2 sample, results='asis'}
 
@@ -80,6 +100,9 @@ if(file.exists(sas_html)){
 ```
 
 # Kruskal-Wallis one-way ANOVA
+
+Dataset origin: `?kruskal.test` (accessed on R-version 4.0.3).
+
 
 ```{r kruskal.test, results='asis'}
 
@@ -110,6 +133,8 @@ if(file.exists(sas_html)){
 
 
 # Friedman test
+
+Dataset origin: `?friedman.test` (accessed on R-version 4.0.3).
 
 ```{r friedman.test, results='asis'}
 
@@ -150,7 +175,6 @@ descr(dat, "group", test_options = list(nonparametric=TRUE, indices=idx, paired=
 
 ```
 
-
 ```{r friedman.test SAS, echo=FALSE, results='asis'}
 URS_ID <- "friedman.test"
 sas_html <- here::here(
@@ -168,6 +192,9 @@ if(file.exists(sas_html)){
 
 # Cochrans Q test
 
+Dataset origin: This is a replicate of the dataset from the [SAS documentation
+of the Cochrane Q test from proc freq](https://documentation.sas.com/?cdcId=pgmsascdc&cdcVersion=9.4_3.4&docsetId=statug&docsetTarget=statug_freq_examples10.htm&locale=en).
+
 ```{r CochranQTest, results='asis'}
 
 d.frm <- DescTools::Untable(xtabs(c(6,2,2,6,16,4,4,6) ~ ., 
@@ -184,9 +211,8 @@ descr(dat, "time", test_options = list(indices=idx, paired=TRUE))
 
 ```
 
-
 ```{r CochranQTest SAS, echo=FALSE, results='asis'}
-URS_ID <- "CochranQTest"
+URS_ID <- "CochraneQTest"
 sas_html <- here::here(
     "vignettes",
     "validation_report",
@@ -201,6 +227,10 @@ if(file.exists(sas_html)){
 ```
 
 # McNemars test
+
+Dataset origin: `?mcnemar.test` (accessed on R-version 4.0.3).
+Note that this dataset is not explicitly defined in `?mcnemar.test`.
+It is constructed to reflect the cross table defined there.
 
 ```{r mcnemar.test, results='asis'}
 dat <- tibble::tibble(var = c(rep("Approve", 794), rep("Approve", 150), rep("Disapprove", 86), rep("Disapprove", 570),
@@ -223,8 +253,11 @@ dat <-
     rep("Approve", 86),
     rep("Disapprove", 570)
   ))
-mcnemar.test(dat$x, dat$y, correct = FALSE)
 
+
+```
+```{r mcnemar.test2}
+mcnemar.test(dat$x, dat$y, correct = FALSE)
 ```
 
 
@@ -245,7 +278,10 @@ if(file.exists(sas_html)){
 
 # Chi-squared test
 
-```{r chisq.test, results='asis'}
+Dataset origin: "Gender-Party dataset":`?chisq.test` (accessed on R-version 4.0.3).
+"a-b dataset": selfmade.
+
+```{r chisq.test1, results='asis'}
 
 dat <- tibble(gender=c(rep("F",sum(c(762, 327, 468)) ), rep("M", sum( c(484, 239, 477)))),
               party=c(rep("Democrat", 762), rep("Independent", 327), rep("Republican", 468),
@@ -253,11 +289,15 @@ dat <- tibble(gender=c(rep("F",sum(c(762, 327, 468)) ), rep("M", sum( c(484, 239
               
 descr(dat, "gender")
 descr(dat)
+```
 
+```{r chisq.test2}
 chisq.test(dat$gender, dat$party)
 chisq.test(table(dat$gender))
 chisq.test(table(dat$party))
+```
 
+```{r chisq.test3, results='asis'}
 dat <- tibble(
   
   a = factor(c(0,
@@ -284,9 +324,7 @@ dat <- tibble(
                0))
 
 )
-
 descr(dat, "b")
-
 ```
 
 
@@ -306,8 +344,10 @@ if(file.exists(sas_html)){
 ```
 
 
-
 # t-test
+
+Dataset origin: `?t.test`, which references `?sleep`
+(accessed on R-version 4.0.3).
 
 ```{r t.test, results='asis'}
 
@@ -339,11 +379,15 @@ if(file.exists(sas_html)){
 
 # F-test
 
+Dataset origin: Modified version of `?datasets::npk`. `npk` is used in `?aov`
+(accessed on R-version 4.0.3).
+
 ```{r aov, results='asis'}
 
 dat <- data.frame(
-    y = c(449, 413, 326, 409, 358, 291, 341, 278, 312)/12,
-    P = ordered(gl(3, 3)), N = ordered(gl(3, 1, 9))
+  y = npk$yield,
+  P = ordered(gl(3, 24)),
+  N = ordered(gl(3, 1, 24))
 )
               
 descr(dat[, c("y", "P")], "P") 
@@ -368,6 +412,8 @@ if(file.exists(sas_html)){
 ```
 
 # Mixed model ANOVA
+Dataset origin: Modified version of `?nlme::Orthodont`. `Orthodont` is used in
+`?lme` (accessed on R-version 4.0.3).
 
 ```{r mixed, results='asis'}
 
@@ -401,18 +447,23 @@ if(file.exists(sas_html)){
 ```
 
 # Boschloos test
+Dataset origin: selfmade.
+
 
 DescrTab2 uses the exact2x2::boschloo with option `tsmethod=central`  to calculate p-values. There is no comparison for this option readily available.
 ```{r boschloo1, results='asis'}
 dat <- tibble(gender=factor(c("M", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F")),
               party=factor(c("A", "A", "B", "B", "B", "B", "A", "A", "A", "B", "B")))
 descr(dat, "gender", test_options = c(exact=TRUE))
+```
+
+```{r boschloo2}
 exact2x2::boschloo(3, 5, 2, 6, tsmethod="central")
 ```
 
 However, we can compare the exact2x2::boschloo with `tsmethod=minlike` to `Exact::exact.test`:
 
-```{r boschloo2}
+```{r boschloo3}
 exact2x2::boschloo(3, 5, 2, 6, tsmethod="minlike")
 Exact::exact.test(table(dat), method="boschloo", to.plot = FALSE)
 ```

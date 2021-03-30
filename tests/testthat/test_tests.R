@@ -496,9 +496,9 @@ verify_output(
 ## ----aov, results='asis'----------------------------------------------------------------------------
 
 dat <- data.frame(
-  y = c(449, 413, 326, 409, 358, 291, 341, 278, 312) / 12,
-  P = ordered(gl(3, 3)),
-  N = ordered(gl(3, 1, 9))
+  y = npk$yield,
+  P = ordered(gl(3, 24)),
+  N = ordered(gl(3, 1, 24))
 )
 
 
