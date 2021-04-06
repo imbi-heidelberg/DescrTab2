@@ -18,7 +18,6 @@ library(tidyverse)
 options(print_format="html")
 ```
 
-<font size="4">
 
 # Introduction
 In this document, we compare various DescrTab2 tests and descriptive statistics
@@ -39,7 +38,6 @@ The origin of these datasets is described in the respective sections.
 
 This document is created by including in the .html SAS output. Unfortunately, this has ugly side effects for the formatting of this document, but everything should still be readable.
 
-<font size="2">
 
 # Wilcoxon one-sample signed-rank test
 
