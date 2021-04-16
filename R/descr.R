@@ -2073,11 +2073,12 @@ escape_latex_symbols <- function(tibl) {
         str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("_"), fixed("\\_"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("&"), fixed("\\&"))
     }
   }
   tibl
 }
-
 
 create_test_abbreviations <- function(test_names) {
   erg <- character()

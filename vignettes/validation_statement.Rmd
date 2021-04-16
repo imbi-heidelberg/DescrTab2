@@ -50,7 +50,7 @@ data-wrangling and output formatting, namely `?utils`, `?dplyr`, `?rlang`, `?tib
 The pre-implemented summary statistics (mean, sd, etc.) make use of functions
 provided for this purpose in base R (see `?base` and `?stats`).
 The test functions used for the calculcation of p-values are mostly from
-base R (eg `?t.test` from `?stats`) and the recommended packages
+base R (e.g. `?t.test` from `?stats`) and the recommended packages
 (e.g. `?lme` from `?nlme` for the Mixed Model Anova p-value).
 Notable exceptions are the Cochrane Q Test from the `?DescTools` package (`?DescTools::CochranQTest`)
 and the Fisher-Boschloo test from the `?exact2x2` package (`?exact2x2::boschloo`).
