@@ -1,3 +1,7 @@
+# Version 2.0.9
+
+* Fixed a bug with print_CI = FALSE option in format_options.
+
 # Version 2.0.8
 
 * "&" signs in factor labels are now properly escaped in LaTeX code.
