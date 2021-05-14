@@ -1,7 +1,10 @@
 > descr(dat, "group", test_options = list(paired = TRUE, exact = TRUE, indices = c(
 +   1:1600, 1:1600))) %>% print()
-  Variables    first     second    Total      p      Test           CI          
+Message: You specified paired tests and did not explicitly
+specify format_options$print_Total. print_Total is set to FALSE.
+
+  Variables      first      second     p       Test               CI            
 1  var                                                                          
-2    Approve    944 (59~  880 (55~  1824 (57~  <0.0~  Exact McNema~  Prop. dif.~
-3    Disappro~  656 (41~  720 (45~  1376 (43~                        [0.0058, 0~
+2    Approve      944 (59%~  880 (55%~  <0.00~  Exact McNemars t~  Prop. dif. C~
+3    Disapprove   656 (41%~  720 (45%~                             [0.021, 0.05~
 

@@ -1,11 +1,14 @@
 > descr(dat[, c("Sex", "distance")], "Sex", test_options = list(paired = TRUE,
 +   indices = dat$Subject)) %>% print()
-  Variables     Male       Female    Divers    Total     p      Test            
-1  distance                                                                     
-2    N           64         44        64        172       0.00~  Mixed model AN~
-3    mean        25         23        25        24                              
-4    sd          2.9        2.4       2.9       3                               
-5    median      25         23        25        24                              
-6    Q1 - Q3     23 -- 26   21 -- 2~  23 -- 2~  22 -- 2~                        
-7    min - max   17 -- 32   16 -- 2~  17 -- 3~  16 -- 3~                        
+Message: You specified paired tests and did not explicitly
+specify format_options$print_Total. print_Total is set to FALSE.
+
+  Variables     Male       Female     Divers     p       Test               
+1  distance                                                                 
+2    N           64         44         64         0.003   Mixed model ANOVA 
+3    mean        25         23         25                                   
+4    sd          2.9        2.4        2.9                                  
+5    median      25         23         25                                   
+6    Q1 - Q3     23 -- 26   21 -- 24   23 -- 27                             
+7    min - max   17 -- 32   16 -- 28   17 -- 32                             
 

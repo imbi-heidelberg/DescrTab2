@@ -42,7 +42,7 @@
 38    Q3            1.8   NA         <NA>                            
 39    min           0.1   NA         <NA>                            
 40    max           2.5   NA         <NA>                            
-41  Species        NA      1.00e+  0 Chi-squared goodness-of-fit test
+41  Species        NA      1   e+  0 Chi-squared goodness-of-fit test
 42    setosa       50     NA         <NA>                            
 43    versicolor   50     NA         <NA>                            
 44    virginica    50     NA         <NA>                            

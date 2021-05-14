@@ -41,6 +41,8 @@ utils::globalVariables(".")
 #' @section Formatting options:
 #' Further formatting options can be specified in the \code{format_options} list. It contains the following members:
 #' \itemize{
+#' \item{\code{print_Total}}{ (logical) controls whether to print the "Total" column. If print_Total = NULL, print_Total will be set
+#' to TRUE if test_options$paired == FALSE, else it will be set to FALSE.}
 #' \item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
 #' \item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
 #' \item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
@@ -206,6 +208,7 @@ descr <-
            ),
            format_p = scales::pvalue_format(),
            format_options = list(
+             print_Total=NULL,
              print_p = TRUE,
              print_CI = TRUE,
              combine_mean_sd = FALSE,
@@ -257,6 +260,13 @@ descr <-
     # Coerce dataset to tibble
     dat %<>% as_tibble()
 
+    # Coerce all date columns to factors
+    if (isTRUE(any(sapply(dat, function(x)inherits(x, "Date"))))){
+      warning("Your dataset contains variables of type 'Date'. These are automatically converted to factors")
+      dat %<>% mutate(across(where(function(x)inherits(x, "Date")), function(x)
+        x %>% as.factor() %>% fct_explicit_na()))
+    }
+
     # Check for empty strings
     if(any(dat=="", na.rm = TRUE)){
       if (any(dat=="(empty)", na.rm = TRUE)){
@@ -290,6 +300,8 @@ descr <-
       test_options[["indices"]] <- dat %>% pull(!!idx_name)
       dat %<>% select(-!!idx_name)
     }
+
+
 
     ### Is group either null or a length one character or numeric?
     if (!is.null(group) &
@@ -461,6 +473,14 @@ descr <-
     }
     test_options <-
       fill_list_with_default_arguments(test_options, descr, "test_options")
+
+    if (isTRUE(test_options[["paired"]]) && is.null(format_options[["print_Total"]])){
+      message("You specified paired tests and did not explicitly
+specify format_options$print_Total. print_Total is set to FALSE.")
+      format_options[["print_Total"]] <- FALSE
+    } else if (!isTRUE(test_options[["paired"]]) && is.null(format_options[["print_Total"]])){
+      format_options[["print_Total"]] <- TRUE
+    }
 
     reshape_rows <-
       fill_list_with_default_arguments(reshape_rows, descr, "reshape_rows")
@@ -1085,6 +1105,11 @@ create_DescrPrint <- function(DescrListObj, print_format) {
     tibl %<>% select(-"Test")
   }
 
+  if (isTRUE(DescrListObj[["format"]][["options"]][["print_Total"]] == FALSE)) {
+    tibl %<>% select(-"Total")
+    group_labels <- group_labels[group_labels!="Total"]
+  }
+
   if (isTRUE(DescrListObj[["format"]][["options"]][["print_CI"]] == FALSE)) {
     tibl %<>% select(-"CI")
   }
@@ -1201,8 +1226,9 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
   actual_colnames <- names(tibl[!indx_varnames, ])
 
+
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
+    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
@@ -1294,7 +1320,7 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
   actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
+    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
@@ -1359,8 +1385,8 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
 
   actual_colnames <- DescrPrintObj[["group_names"]]
   N_numbers <-
-    c(paste0("(N=", DescrPrintObj[["group"]][["lengths"]], ")"))
-  names(N_numbers) <- unlist(DescrPrintObj[["group_labels"]])
+    c(paste0("(N=", DescrPrintObj[["group"]][["lengths"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)], ")"))
+  names(N_numbers) <- unlist(DescrPrintObj[["group_labels"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)] )
 
   ft <- tibl2 %>%
     flextable() %>%
@@ -2640,7 +2666,9 @@ test_cat <-
             tmp2 <-
               tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
 
-            stopifnot(tmp1$idx == tmp2$idx)
+            if (any(tmp1$idx != tmp2$idx)){
+              stop("Your data is not properly matched. Maybe some pairs contain missings?")
+            }
             cont.table <- table(tmp1$var, tmp2$var)
 
             arglist <- modifyList(
@@ -2655,7 +2683,7 @@ test_cat <-
 
             list(
               p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
-              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+              CI = exact2x2::mcnemarExactDP(n =sum(cont.table), x = cont.table[1,2], m =cont.table[1,2] + cont.table[2,1])$conf.int,
               CI_name = "Prop. dif. CI"
             )
           },
@@ -2690,7 +2718,9 @@ test_cat <-
             tmp2 <-
               tmp %>% filter(group == levels(group)[2]) %>% arrange("idx")
 
-            stopifnot(tmp1$idx == tmp2$idx)
+            if (any(tmp1$idx != tmp2$idx)){
+              stop("Your data is not properly matched. Maybe some pairs contain missings?")
+            }
             cont.table <- table(tmp1$var, tmp2$var)
 
             arglist <- modifyList(
@@ -2699,7 +2729,9 @@ test_cat <-
               ),
               as.list(test_options[["additional_test_args"]])
             )
-
+            warning("Confidence intervals for differences in proportions ignore the paired structure of the data.
+Use Exact McNemars test if you want confidence intervals which use the test statistic of the
+exact McNemars test.")
             list(
               p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
               CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,

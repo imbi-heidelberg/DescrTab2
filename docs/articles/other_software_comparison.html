@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.9</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Comparison with other software</h1>
             
-            <h4 class="date">2021-04-16</h4>
+            <h4 class="date">2021-05-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/other_software_comparison.Rmd"><code>vignettes/other_software_comparison.Rmd</code></a></small>
       <div class="hidden name"><code>other_software_comparison.Rmd</code></div>
@@ -6080,7 +6080,9 @@ var _ie64 = _info.indexOf("x64") > 0
               group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Round Out"</span>, <span class="fl">22</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Narrow Angle"</span>, <span class="fl">22</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Wide Angle"</span>, <span class="fl">22</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -6106,11 +6108,6 @@ Wide Angle
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
-Total
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
 p
 </div>
 </th>
@@ -6128,15 +6125,12 @@ p
 (N=22)
 </th>
 <th style="text-align:center;">
-(N=66)
-</th>
-<th style="text-align:center;">
 </th>
 </tr>
 </thead>
 <tbody>
 <tr grouplength="6">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>var</strong>
 </td>
 </tr>
@@ -6154,18 +6148,12 @@ N
 22
 </td>
 <td style="text-align:center;">
-66
-</td>
-<td style="text-align:center;">
 0.004<sup>Frie</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
-</td>
-<td style="text-align:center;">
-5.5
 </td>
 <td style="text-align:center;">
 5.5
@@ -6193,9 +6181,6 @@ sd
 0.27
 </td>
 <td style="text-align:center;">
-0.27
-</td>
-<td style="text-align:center;">
 </td>
 </tr>
 <tr>
@@ -6210,9 +6195,6 @@ median
 </td>
 <td style="text-align:center;">
 5.4
-</td>
-<td style="text-align:center;">
-5.5
 </td>
 <td style="text-align:center;">
 </td>
@@ -6231,9 +6213,6 @@ Q1 - Q3
 5.3 – 5.5
 </td>
 <td style="text-align:center;">
-5.4 – 5.6
-</td>
-<td style="text-align:center;">
 </td>
 </tr>
 <tr>
@@ -6248,9 +6227,6 @@ min - max
 </td>
 <td style="text-align:center;">
 5 – 6.2
-</td>
-<td style="text-align:center;">
-5 – 6.3
 </td>
 <td style="text-align:center;">
 </td>
@@ -7988,7 +7964,9 @@ var _ie64 = _info.indexOf("x64") > 0
 <span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">d.long</span><span class="op">$</span><span class="va">id</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">d.long</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>time<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>, resp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"time"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"time"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8014,11 +7992,6 @@ C
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
-Total
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
 p
 </div>
 </th>
@@ -8036,15 +8009,12 @@ p
 (N=46)
 </th>
 <th style="text-align:center;">
-(N=138)
-</th>
-<th style="text-align:center;">
 </th>
 </tr>
 </thead>
 <tbody>
 <tr grouplength="2">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>resp</strong>
 </td>
 </tr>
@@ -8062,9 +8032,6 @@ F
 16 (35%)
 </td>
 <td style="text-align:center;">
-72 (52%)
-</td>
-<td style="text-align:center;">
 0.014<sup>CocQ</sup>
 </td>
 </tr>
@@ -8080,9 +8047,6 @@ U
 </td>
 <td style="text-align:center;">
 30 (65%)
-</td>
-<td style="text-align:center;">
-66 (48%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -9790,7 +9754,12 @@ var _ie64 = _info.indexOf("x64") > 0
                       <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span><span class="op">)</span>,
               group<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="fl">1600</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"second"</span>,<span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
               
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span>
+<span class="co">#&gt; Warning in test_cat(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.</span>
+<span class="co">#&gt; Use Exact McNemars test if you want confidence intervals which use the test statistic of the</span>
+<span class="co">#&gt; exact McNemars test.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -9807,11 +9776,6 @@ first
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
 second
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
-Total
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -9835,9 +9799,6 @@ CI
 (N=1600)
 </th>
 <th style="text-align:center;">
-(N=3200)
-</th>
-<th style="text-align:center;">
 </th>
 <th style="text-align:center;">
 </th>
@@ -9845,7 +9806,7 @@ CI
 </thead>
 <tbody>
 <tr grouplength="2">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>var</strong>
 </td>
 </tr>
@@ -9858,9 +9819,6 @@ Approve
 </td>
 <td style="text-align:center;">
 880 (55%)
-</td>
-<td style="text-align:center;">
-1824 (57%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>McN</sup>
@@ -9880,9 +9838,6 @@ Disapprove
 720 (45%)
 </td>
 <td style="text-align:center;">
-1376 (43%)
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 [0.0058, 0.076]
@@ -9896,7 +9851,9 @@ Disapprove
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, exact<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, exact<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -9913,11 +9870,6 @@ first
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
 second
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
-Total
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -9941,9 +9893,6 @@ CI
 (N=1600)
 </th>
 <th style="text-align:center;">
-(N=3200)
-</th>
-<th style="text-align:center;">
 </th>
 <th style="text-align:center;">
 </th>
@@ -9951,7 +9900,7 @@ CI
 </thead>
 <tbody>
 <tr grouplength="2">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>var</strong>
 </td>
 </tr>
@@ -9964,9 +9913,6 @@ Approve
 </td>
 <td style="text-align:center;">
 880 (55%)
-</td>
-<td style="text-align:center;">
-1824 (57%)
 </td>
 <td style="text-align:center;">
 &lt;0.001<sup>eMcN</sup>
@@ -9986,12 +9932,9 @@ Disapprove
 720 (45%)
 </td>
 <td style="text-align:center;">
-1376 (43%)
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-[0.0058, 0.076]
+[0.021, 0.059]
 </td>
 </tr>
 </tbody>
@@ -14992,7 +14935,9 @@ min - max
 </tr></tfoot>
 </table>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -15009,11 +14954,6 @@ Variables
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
 2
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
-Total
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -15037,9 +14977,6 @@ CI
 (N=10)
 </th>
 <th style="text-align:center;">
-(N=20)
-</th>
-<th style="text-align:center;">
 </th>
 <th style="text-align:center;">
 </th>
@@ -15047,7 +14984,7 @@ CI
 </thead>
 <tbody>
 <tr grouplength="6">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>extra</strong>
 </td>
 </tr>
@@ -15060,9 +14997,6 @@ N
 </td>
 <td style="text-align:center;">
 10
-</td>
-<td style="text-align:center;">
-20
 </td>
 <td style="text-align:center;">
 0.003<sup>tpar</sup>
@@ -15082,9 +15016,6 @@ mean
 2.3
 </td>
 <td style="text-align:center;">
-1.5
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 [-2.5, -0.7]
@@ -15096,9 +15027,6 @@ sd
 </td>
 <td style="text-align:center;">
 1.8
-</td>
-<td style="text-align:center;">
-2
 </td>
 <td style="text-align:center;">
 2
@@ -15119,9 +15047,6 @@ median
 1.8
 </td>
 <td style="text-align:center;">
-0.95
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -15137,9 +15062,6 @@ Q1 - Q3
 0.8 – 4.4
 </td>
 <td style="text-align:center;">
--0.05 – 3.4
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -15153,9 +15075,6 @@ min - max
 </td>
 <td style="text-align:center;">
 -0.1 – 5.5
-</td>
-<td style="text-align:center;">
--1.6 – 5.5
 </td>
 <td style="text-align:center;">
 </td>
@@ -19714,7 +19633,9 @@ var _ie64 = _info.indexOf("x64") > 0
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>
 
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sex"</span>, <span class="st">"distance"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"Sex"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">Subject</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sex"</span>, <span class="st">"distance"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"Sex"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">Subject</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -19740,11 +19661,6 @@ Divers
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
-Total
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
 p
 </div>
 </th>
@@ -19762,15 +19678,12 @@ p
 (N=64)
 </th>
 <th style="text-align:center;">
-(N=172)
-</th>
-<th style="text-align:center;">
 </th>
 </tr>
 </thead>
 <tbody>
 <tr grouplength="6">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>distance</strong>
 </td>
 </tr>
@@ -19786,9 +19699,6 @@ N
 </td>
 <td style="text-align:center;">
 64
-</td>
-<td style="text-align:center;">
-172
 </td>
 <td style="text-align:center;">
 0.003<sup>MiAn</sup>
@@ -19808,9 +19718,6 @@ mean
 25
 </td>
 <td style="text-align:center;">
-24
-</td>
-<td style="text-align:center;">
 </td>
 </tr>
 <tr>
@@ -19825,9 +19732,6 @@ sd
 </td>
 <td style="text-align:center;">
 2.9
-</td>
-<td style="text-align:center;">
-3
 </td>
 <td style="text-align:center;">
 </td>
@@ -19846,9 +19750,6 @@ median
 25
 </td>
 <td style="text-align:center;">
-24
-</td>
-<td style="text-align:center;">
 </td>
 </tr>
 <tr>
@@ -19865,9 +19766,6 @@ Q1 - Q3
 23 – 27
 </td>
 <td style="text-align:center;">
-22 – 26
-</td>
-<td style="text-align:center;">
 </td>
 </tr>
 <tr>
@@ -19882,9 +19780,6 @@ min - max
 </td>
 <td style="text-align:center;">
 17 – 32
-</td>
-<td style="text-align:center;">
-16 – 32
 </td>
 <td style="text-align:center;">
 </td>

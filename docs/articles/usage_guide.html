@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.9</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2021-04-16</h4>
+            <h4 class="date">2021-05-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/usage_guide.Rmd"><code>vignettes/usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>usage_guide.Rmd</code></div>
@@ -618,16 +618,16 @@ fries
 25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+28 (56%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.652<sup>chi2</sup>
+0.829<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -638,10 +638,10 @@ wedges
 25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+22 (44%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -714,10 +714,9 @@ p
 (N=50)
 </th>
 <th style="text-align:center;">
-(N=50)
+(N=150)
 </th>
 <th style="text-align:center;">
-(N=150)
 </th>
 <th style="text-align:center;">
 </th>
@@ -901,16 +900,16 @@ fries
 25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+28 (56%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.652<sup>chi2</sup>
+0.829<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -921,10 +920,10 @@ wedges
 25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+22 (44%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -1192,16 +1191,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-39 (52%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+36 (48%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.870<sup>chi2</sup>
+0.252<sup>chi2</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1212,10 +1211,10 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-36 (48%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -1223,7 +1222,7 @@ wedges
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.17, 0.15]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -1427,16 +1426,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-39 (52%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+36 (48%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.918<sup>Bolo</sup>
+0.278<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1447,10 +1446,10 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-36 (48%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -1458,7 +1457,7 @@ wedges
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.17, 0.15]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -1664,7 +1663,12 @@ min - max
 <a href="#paired-observations" class="anchor"></a>Paired observations</h2>
 <p>In situations with paired data, the <code>group</code> variable usually denotes the timing of the measurement (e.g. “before” and “after” or “time 1”, “time 2”, etc.). In these scenarios, you need an additional index variable that specifies which observations from the different timepoints should be paired. The <code>test_options =list(paired=TRUE, indices = &lt;Character name of index variable name or vector of indices&gt;)</code> option can be used to specify the pairing indices, see the example below. DescrTab2 only works with data in “long format”, see e.g. <code><a href="https://rdrr.io/r/stats/reshape.html">?reshape</a></code> or <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">?tidyr::pivot_longer</a></code> for information on how to transoform your data from wide to long format.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span>
+<span class="co">#&gt; Warning in test_cat(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.</span>
+<span class="co">#&gt; Use Exact McNemars test if you want confidence intervals which use the test statistic of the</span>
+<span class="co">#&gt; exact McNemars test.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1681,11 +1685,6 @@ Before
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
 After
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
-Total
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -1709,9 +1708,6 @@ CI
 (N=75)
 </th>
 <th style="text-align:center;">
-(N=150)
-</th>
-<th style="text-align:center;">
 </th>
 <th style="text-align:center;">
 </th>
@@ -1719,7 +1715,7 @@ CI
 </thead>
 <tbody>
 <tr grouplength="6">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Sepal.Length</strong>
 </td>
 </tr>
@@ -1734,9 +1730,6 @@ N
 75
 </td>
 <td style="text-align:center;">
-150
-</td>
-<td style="text-align:center;">
 0.937<sup>tpar</sup>
 </td>
 <td style="text-align:center;">
@@ -1746,9 +1739,6 @@ Mean dif. CI
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
-</td>
-<td style="text-align:center;">
-5.8
 </td>
 <td style="text-align:center;">
 5.8
@@ -1773,9 +1763,6 @@ sd
 0.81
 </td>
 <td style="text-align:center;">
-0.83
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -1786,9 +1773,6 @@ median
 </td>
 <td style="text-align:center;">
 5.7
-</td>
-<td style="text-align:center;">
-5.8
 </td>
 <td style="text-align:center;">
 5.8
@@ -1809,9 +1793,6 @@ Q1 - Q3
 5.1 – 6.5
 </td>
 <td style="text-align:center;">
-5.1 – 6.4
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -1827,15 +1808,12 @@ min - max
 4.4 – 7.7
 </td>
 <td style="text-align:center;">
-4.3 – 7.9
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
 </tr>
 <tr grouplength="2">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>food</strong>
 </td>
 </tr>
@@ -1844,16 +1822,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-39 (52%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-79 (53%)
-</td>
-<td style="text-align:center;">
-&gt;0.999<sup>McN</sup>
+0.310<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1864,18 +1839,15 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-36 (48%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-35 (47%)
-</td>
-<td style="text-align:center;">
-71 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.17, 0.15]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -1894,7 +1866,12 @@ wedges
 </table>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span>, idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="st">"idx"</span> <span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span>, idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="st">"idx"</span> <span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; You specified paired tests and did not explicitly</span>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span>
+<span class="co">#&gt; Warning in test_cat(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.</span>
+<span class="co">#&gt; Use Exact McNemars test if you want confidence intervals which use the test statistic of the</span>
+<span class="co">#&gt; exact McNemars test.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1911,11 +1888,6 @@ Before
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
 <div style="">
 After
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
-<div style="">
-Total
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
@@ -1939,9 +1911,6 @@ CI
 (N=75)
 </th>
 <th style="text-align:center;">
-(N=150)
-</th>
-<th style="text-align:center;">
 </th>
 <th style="text-align:center;">
 </th>
@@ -1949,7 +1918,7 @@ CI
 </thead>
 <tbody>
 <tr grouplength="6">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>Sepal.Length</strong>
 </td>
 </tr>
@@ -1964,9 +1933,6 @@ N
 75
 </td>
 <td style="text-align:center;">
-150
-</td>
-<td style="text-align:center;">
 0.937<sup>tpar</sup>
 </td>
 <td style="text-align:center;">
@@ -1976,9 +1942,6 @@ Mean dif. CI
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
-</td>
-<td style="text-align:center;">
-5.8
 </td>
 <td style="text-align:center;">
 5.8
@@ -2003,9 +1966,6 @@ sd
 0.81
 </td>
 <td style="text-align:center;">
-0.83
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -2016,9 +1976,6 @@ median
 </td>
 <td style="text-align:center;">
 5.7
-</td>
-<td style="text-align:center;">
-5.8
 </td>
 <td style="text-align:center;">
 5.8
@@ -2039,9 +1996,6 @@ Q1 - Q3
 5.1 – 6.5
 </td>
 <td style="text-align:center;">
-5.1 – 6.4
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -2057,15 +2011,12 @@ min - max
 4.4 – 7.7
 </td>
 <td style="text-align:center;">
-4.3 – 7.9
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
 </tr>
 <tr grouplength="2">
-<td colspan="6" style="border-bottom: 1px solid;">
+<td colspan="5" style="border-bottom: 1px solid;">
 <strong>food</strong>
 </td>
 </tr>
@@ -2074,16 +2025,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-39 (52%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+36 (48%)
 </td>
 <td style="text-align:center;">
-79 (53%)
-</td>
-<td style="text-align:center;">
-&gt;0.999<sup>McN</sup>
+0.310<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -2094,18 +2042,15 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-36 (48%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-35 (47%)
-</td>
-<td style="text-align:center;">
-71 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.17, 0.15]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -2360,16 +2305,16 @@ fries
 25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+28 (56%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.652<sup>chi2</sup>
+0.829<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2380,10 +2325,10 @@ wedges
 25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+22 (44%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -2626,16 +2571,16 @@ fries
 25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+28 (56%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.652<sup>chi2</sup>
+0.829<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2646,10 +2591,10 @@ wedges
 25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+22 (44%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -2747,19 +2692,19 @@ p
 mean
 </td>
 <td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+1.5
+</td>
+<td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
 1.5
 </td>
 <td style="text-align:center;">
-1.4
-</td>
-<td style="text-align:center;">
-1.5
-</td>
-<td style="text-align:center;">
-0.473<sup>chi2</sup>
+0.707<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2767,16 +2712,16 @@ mean
 1
 </td>
 <td style="text-align:center;">
-23 (46%)
+22 (44%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2786,16 +2731,16 @@ mean
 2
 </td>
 <td style="text-align:center;">
-27 (54%)
+28 (56%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3026,16 +2971,16 @@ fries
 25 (50%)
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+28 (56%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.652<sup>chi2</sup>
+0.829<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3046,10 +2991,10 @@ wedges
 25 (50%)
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+22 (44%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -3290,10 +3235,10 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-39 (52%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+36 (48%)
 </td>
 <td style="text-align:center;">
 79 (53%)
@@ -3307,16 +3252,16 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-36 (48%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
 71 (47%)
 </td>
 <td style="text-align:center;">
-[-0.17, 0.15]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -3536,16 +3481,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-39 (52%)
+43 (57%)
 </td>
 <td style="text-align:center;">
-40 (53%)
+36 (48%)
 </td>
 <td style="text-align:center;">
 79 (53%)
 </td>
 <td style="text-align:center;">
-0.870<sup>chi2</sup>
+0.252<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3553,10 +3498,10 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-36 (48%)
+32 (43%)
 </td>
 <td style="text-align:center;">
-35 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
 71 (47%)
@@ -3680,17 +3625,17 @@ wedges
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1"> fries </td>
    <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 29 (58%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
+   <td style="text-align:center;"> 26 (52%) </td>
+   <td style="text-align:center;"> 28 (56%) </td>
    <td style="text-align:center;"> 79 (53%) </td>
-   <td style="text-align:center;"> 0.652<sup>chi2</sup>
+   <td style="text-align:center;"> 0.829<sup>chi2</sup>
 </td>
   </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1"> wedges </td>
    <td style="text-align:center;"> 25 (50%) </td>
-   <td style="text-align:center;"> 21 (42%) </td>
-   <td style="text-align:center;"> 25 (50%) </td>
+   <td style="text-align:center;"> 24 (48%) </td>
+   <td style="text-align:center;"> 22 (44%) </td>
    <td style="text-align:center;"> 71 (47%) </td>
    <td style="text-align:center;">  </td>
   </tr>

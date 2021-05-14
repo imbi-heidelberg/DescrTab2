@@ -24,12 +24,12 @@ descr(
     function(x) format(x, digits = 2,      scientific = 3), CI = function(x) format(x,
     digits = 2, scientific = 3)),
   format_p = scales::pvalue_format(),
-  format_options = list(print_p = TRUE, print_CI = TRUE, combine_mean_sd = FALSE,
-    combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE,
-    percent_accuracy = NULL, percent_suffix = "\%", row_percent = FALSE,
-    Nmiss_row_percent = FALSE, absolute_relative_frequency_mode = c("both",
-    "only_absolute", "only_relative"), omit_missings_in_categorical_var = FALSE,
-    categorical_missing_percent_mode = c("no_missing_percent",
+  format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
+    combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE,
+    omit_missings_in_group = TRUE, percent_accuracy = NULL, percent_suffix = "\%",
+    row_percent = FALSE, Nmiss_row_percent = FALSE, absolute_relative_frequency_mode =
+    c("both", "only_absolute", "only_relative"), omit_missings_in_categorical_var =
+    FALSE, categorical_missing_percent_mode = c("no_missing_percent",
     "missing_as_regular_category", "missing_as_separate_category")),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
@@ -101,6 +101,8 @@ The \code{format_p} function converts p-values to character strings, e.g. 0.05 -
 
 Further formatting options can be specified in the \code{format_options} list. It contains the following members:
 \itemize{
+\item{\code{print_Total}}{ (logical) controls whether to print the "Total" column. If print_Total = NULL, print_Total will be set
+to TRUE if test_options$paired == FALSE, else it will be set to FALSE.}
 \item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
 \item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
 \item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a

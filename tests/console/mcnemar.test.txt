@@ -1,7 +1,14 @@
 > descr(dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1:
 +   1600))) %>% print()
-  Variables     first     second     Total     p       Test        CI           
+Message: You specified paired tests and did not explicitly
+specify format_options$print_Total. print_Total is set to FALSE.
+
+Warning in test_cat(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.
+Use Exact McNemars test if you want confidence intervals which use the test statistic of the
+exact McNemars test.
+
+  Variables      first       second      p       Test           CI              
 1  var                                                                          
-2    Approve     944 (59~  880 (55%~  1824 (5~  <0.00~  McNemars ~  Prop. dif. ~
-3    Disapprov~  656 (41~  720 (45%~  1376 (4~                      [0.0058, 0.~
+2    Approve      944 (59%)   880 (55%)   <0.00~  McNemars tes~  Prop. dif. CI  
+3    Disapprove   656 (41%)   720 (45%)                          [0.0058, 0.076~
 

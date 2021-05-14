@@ -285,11 +285,10 @@ dat <-
   )
 
 test_that("mcnemar.test works",
-          expect_error(descr(
+          expect_message(expect_warning(descr(
             dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1:1600))
           ) %>%
-            print(silent = TRUE),
-          NA))
+            print(silent = TRUE))))
 
 test_that("exact2x2 mcnemar test works",
           expect_error(descr(

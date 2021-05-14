@@ -79,7 +79,7 @@ are used for continuous variables and confidence intervals for the Hodge-Lehman 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.9</span>
       </span>
     </div>
 
@@ -176,12 +176,12 @@ are used for continuous variables and confidence intervals for the Hodge-Lehman 
     <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>2</span>,      scientific <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>, CI <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>,
     digits <span class='op'>=</span> <span class='fl'>2</span>, scientific <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,
   format_p <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/label_pvalue.html'>pvalue_format</a></span><span class='op'>(</span><span class='op'>)</span>,
-  format_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>print_p <span class='op'>=</span> <span class='cn'>TRUE</span>, print_CI <span class='op'>=</span> <span class='cn'>TRUE</span>, combine_mean_sd <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    combine_median_Q1_Q3 <span class='op'>=</span> <span class='cn'>FALSE</span>, omit_Nmiss_if_0 <span class='op'>=</span> <span class='cn'>TRUE</span>, omit_missings_in_group <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>, percent_suffix <span class='op'>=</span> <span class='st'>"%"</span>, row_percent <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    Nmiss_row_percent <span class='op'>=</span> <span class='cn'>FALSE</span>, absolute_relative_frequency_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"both"</span>,
-    <span class='st'>"only_absolute"</span>, <span class='st'>"only_relative"</span><span class='op'>)</span>, omit_missings_in_categorical_var <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    categorical_missing_percent_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_missing_percent"</span>,
+  format_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>print_Total <span class='op'>=</span> <span class='cn'>NULL</span>, print_p <span class='op'>=</span> <span class='cn'>TRUE</span>, print_CI <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    combine_mean_sd <span class='op'>=</span> <span class='cn'>FALSE</span>, combine_median_Q1_Q3 <span class='op'>=</span> <span class='cn'>FALSE</span>, omit_Nmiss_if_0 <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    omit_missings_in_group <span class='op'>=</span> <span class='cn'>TRUE</span>, percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>, percent_suffix <span class='op'>=</span> <span class='st'>"%"</span>,
+    row_percent <span class='op'>=</span> <span class='cn'>FALSE</span>, Nmiss_row_percent <span class='op'>=</span> <span class='cn'>FALSE</span>, absolute_relative_frequency_mode <span class='op'>=</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"both"</span>, <span class='st'>"only_absolute"</span>, <span class='st'>"only_relative"</span><span class='op'>)</span>, omit_missings_in_categorical_var <span class='op'>=</span>
+    <span class='cn'>FALSE</span>, categorical_missing_percent_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no_missing_percent"</span>,
     <span class='st'>"missing_as_regular_category"</span>, <span class='st'>"missing_as_separate_category"</span><span class='op'>)</span><span class='op'>)</span>,
   test_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>paired <span class='op'>=</span> <span class='cn'>FALSE</span>, nonparametric <span class='op'>=</span> <span class='cn'>FALSE</span>, exact <span class='op'>=</span> <span class='cn'>FALSE</span>, indices <span class='op'>=</span>
     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, include_group_missings_in_test <span class='op'>=</span> <span class='cn'>FALSE</span>, include_categorical_missings_in_test <span class='op'>=</span>
@@ -276,6 +276,8 @@ The <code>format_p</code> function converts p-values to character strings, e.g. 
     
 
 <p>Further formatting options can be specified in the <code>format_options</code> list. It contains the following members:</p><ul>
+<li><p><code>print_Total</code> (logical) controls whether to print the "Total" column. If print_Total = NULL, print_Total will be set
+to TRUE if test_options$paired == FALSE, else it will be set to FALSE.</p></li>
 <li><p><code>print_p</code> (logical) controls whether to print the p-value column.</p></li>
 <li><p><code>print_CI</code> (logical) controls whether to print the confidence intervals for group-differences.</p></li>
 <li><p><code>combine_mean_sd</code> (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
