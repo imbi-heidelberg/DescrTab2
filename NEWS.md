@@ -1,10 +1,14 @@
-# Version 2.0.9
+# Version 2.0.10
 
 * Added the ability to suppress the "Total" column via the format_options(print_Total = FALSE) option.
 * Exact McNemars test will now calculate confidence intervals for rate differences by leveraging the distribution of the
 test statistic.
 * Using (non-exact) McNemars test will now produce a warning, that the confidence intervals for the differences in rates do not consider the paired structure of the data.
 * Datasets containing variables which inherit from the "Date" class are now automatically converted to factors.
+
+# Version 2.0.9
+
+* Fixed a bug with print_CI = FALSE option in format_options.
 
 # Version 2.0.8
 

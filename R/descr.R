@@ -1111,7 +1111,14 @@ create_DescrPrint <- function(DescrListObj, print_format) {
   }
 
   if (isTRUE(DescrListObj[["format"]][["options"]][["print_CI"]] == FALSE)) {
-    tibl %<>% select(-"CI")
+    if (print_format == "numeric"){
+      if ("CI_upper" %in% names(tibl) && "CI_lower" %in% names(tibl)){
+        tibl %<>% select(-c("CI_upper", "CI_lower"))
+      }
+    } else{
+      if ("CI" %in% names(tibl))
+      tibl %<>% select(-"CI")
+    }
   }
 
   names(tibl)[names(tibl) %in% group_names] <- group_labels

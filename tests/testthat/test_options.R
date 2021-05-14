@@ -23,6 +23,20 @@ test_that("Confidence intervals",
             NA)
 
             expect_error(descr(
+              dat ,
+              "Species",
+              format_options = list(print_CI = FALSE)
+            ) %>%  print(silent = TRUE, print_format="numeric"),
+            NA)
+
+            expect_error(descr(
+              dat %>% select(-"Species") ,
+              "animal",
+              format_options = list(print_CI = FALSE)
+            ) %>%  print(silent = TRUE, print_format="console"),
+            NA)
+
+            expect_error(descr(
               dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
               "animal",
               ) %>%  print(silent = TRUE),
