@@ -1,3 +1,7 @@
+# Version 2.0.11
+
+* Fixed a bug with paired data, where some of the pairs contain missing. In some cases, tests were not calculated and a misleading error message was produced.
+
 # Version 2.0.10
 
 * Added the ability to suppress the "Total" column via the format_options(print_Total = FALSE) option.

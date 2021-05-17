@@ -2530,15 +2530,32 @@ test_cat <-
            var_name = NULL) {
     # decide how to handle missings
     if (!is.null(group)) {
-      tibl <- tibble(var = var, group = group)
+
+      paired_test <-
+        !is.null(test_options[["indices"]]) &&
+        test_options[["paired"]]
+      if (paired_test) {
+        tibl <-
+          tibble(var = var,
+                 group = group,
+                 id = test_options[["indices"]])
+      } else{
+        tibl <- tibble(var = var, group = group)
+      }
+
+      # tibl <- tibble(var = var, group = group)
       if (!isTRUE(test_options[["include_group_missings_in_test"]])) {
         tibl %<>% filter(group != "(Missing)")
       }
       if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
         tibl %<>% filter(var != "(Missing)")
       }
+
       var <- tibl %>% pull(var) %>% droplevels()
       group <- tibl %>% pull(group)  %>% droplevels()
+      if (paired_test){
+        test_options[["indices"]]<- tibl %>% pull(id)
+      }
 
       n_levels_group <- length(levels(group))
       n_levels_var <- length(levels(var))
