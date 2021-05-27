@@ -2003,7 +2003,12 @@ create_character_subtable.cat_summary <-
 }
 
 .mean <- function(var) {
-  mean(var, na.rm = TRUE)
+  ret <- base::mean(var, na.rm = TRUE)
+  if (is.nan(ret)){
+    return(NA_real_)
+  } else{
+    return(ret)
+  }
 }
 
 .sd <- function(var) {
@@ -2217,7 +2222,6 @@ test_cont <-
         tibl %<>% filter(group != "(Missing)")
       }
 
-
       tibl %<>% filter(!is.na(var))
 
       var <- tibl %>% pull(var)
@@ -2247,15 +2251,6 @@ test_cont <-
           )
         )
         test <- "No appropriate test available."
-        # } else if (!is.null(group) && nrow(table(var, group)) == 1) {
-        #   warning(
-        #     paste0(
-        #       "Skipping test for variable ",
-        #       var_name,
-        #       " because it is essentially constantin some group."
-        #     )
-        #   )
-        #   test <- "No appropriate test available."
       } else if (isTRUE(test_options[["nonparametric"]] == TRUE)) {
         # ordinal variable
         if (isTRUE(test_options[["paired"]] == TRUE)) {
@@ -2905,5 +2900,11 @@ write_in_tmpfile_for_cran <- function(){
     TRUE
   }
 }
+
+
+# descr_format <- function(x, forced_decimals = ){
+#
+# }
+
 
 

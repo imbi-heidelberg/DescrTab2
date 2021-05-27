@@ -1,3 +1,7 @@
+# Version 2.0.12
+
+* .mean now returns NA_real_ in cases were NaN was previously returned.
+
 # Version 2.0.11
 
 * Fixed a bug with paired data, where some of the pairs contain missing. In some cases, tests were not calculated and a misleading error message was produced.
