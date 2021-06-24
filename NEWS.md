@@ -1,3 +1,8 @@
+# Version 2.1
+
+* knit_print now works properly. R chunks in .Rmd documents don't need the results = 'asis' option anymore.
+* 
+
 # Version 2.0.12
 
 * .mean now returns NA_real_ in cases were NaN was previously returned.

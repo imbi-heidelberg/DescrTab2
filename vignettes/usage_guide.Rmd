@@ -25,39 +25,28 @@ It supports a variety of different customization options and can be used
 in .Rmd files in conjunction with knitr.
 
 ## Preamble settings
+`DescrTab2` works in your R-console, as well as in `.Rmd` documents corresponding to output formats
+of the type `pdf_documument`, `html_document` and `word_document`.
+For example, if your YAML-header looks like the example below, `DescrTab2` should automagically detect the output format and possibly load the required LaTeX packages.
 
-### imbi_report
-You're all set. Everything is already included.
-
-### pdf_document
-Here is what you need to include in the yaml header to use `DescrTab2` inside .Rmd file with pdf_document output:
 
 ````markdown
 ---
 title: "DescrTab2 tutorial"
-header-includes:
-   - \usepackage{needspace}
-   - \usepackage{longtable}
-   - \usepackage{booktabs}
 output: pdf_document
 ---
 ````
 
-### html & word_document
-No special preamble needed. Make sure you have pandoc version >= 2.0 installed on your system.
-
-## Global print_format option
-In order for `DescrTab2` to work properly with your document type of choice, you need to set the `print_format` options, preferably right at the start of your document. You can do this by typing:
-
-```{r, echo=TRUE, message=FALSE}
-options(print_format = "html") # or = "word" or "tex", depending on your document type
-```
-
-
 ## Getting started
+Make sure you include the DescrTab2 library by typing 
+
+```{r, echo=TRUE}
+library(DescrTab2)
+```
+somewhere in the document before you use it. You are now ready to go!
+
 
 For instructive purposes, we will use the following dataset:
-
 ```{r}
 dat <- iris[, c("Species", "Sepal.Length")]
 dat %<>% mutate(animal= c("Mammal", "Fish") %>% rep(75) %>% factor())
@@ -65,40 +54,11 @@ dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
 ```
 
 
-Make sure you include the DescrTab2 library by typing 
-
-```{r, echo=TRUE}
-library(DescrTab2)
-```
-
-
-somewhere in the document before you use it. You are now ready to go! Producing beautiful descriptive tables in html and tex is now as easy as typing:
-
-````markdown
-`r ''````{r, results='asis'}
-descr(dat)
-`r ''````
-````
+Producing beautiful descriptive tablesis now as easy as typing:
 
 ```{r, results='asis', echo=F}
 descr(dat)
 ```
-
-
-Note the chunk option `results='asis'`. `DescrTab2` produces raw LaTeX or hmtl code. To get pandoc to render this properly, the `results='asis'` option is required. An alternative will be described later.
-
-
-To produce descriptive tables for a word document, a bit more typing is required:
-
-````markdown
-`r ''````{r}
-descr(dat) %>% print() %>% knitr::knit_print()
-`r ''````
-````
-
-When producing word tables in this fashion, you must *not* have the `results='asis'` chunk option set.
-
-Note that `DescrTab2` can also produce console output! In fact, this is the default setting (i.e. if the global `print_format` is not specified)
 
 
 ## Accessing table elements
