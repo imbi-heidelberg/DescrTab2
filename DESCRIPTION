@@ -44,7 +44,7 @@ Imports:
     scales,
     cli,
     kableExtra,
-    flextable,
+    flextable (>= 0.6.6),
     officer
 VignetteBuilder: knitr
 License: GPL (>=3)

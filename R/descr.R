@@ -1384,7 +1384,7 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
   invisible(DescrPrintObj)
 }
 
-#' @importFrom flextable flextable bold padding add_header border_inner align autofit flextable_to_rmd
+#' @importFrom flextable flextable bold padding add_header border_inner align autofit
 #' @importFrom officer fp_border
 #' @importFrom utils capture.output head tail
 print_word <- function(DescrPrintObj, silent = FALSE) {
@@ -2196,9 +2196,9 @@ escape_latex_symbols <- function(tibl) {
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("$"), fixed("\\$"))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless"))
+        str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless "))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
+        str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater "))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("_"), fixed("\\_"))
       tibl[i, j] <-
