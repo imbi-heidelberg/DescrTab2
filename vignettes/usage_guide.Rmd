@@ -39,6 +39,8 @@ header-includes:
    - \usepackage{needspace}
    - \usepackage{longtable}
    - \usepackage{booktabs}
+   - \usepackage{setspace}
+   - \usepackage{array}
 output: pdf_document
 ---
 ````
