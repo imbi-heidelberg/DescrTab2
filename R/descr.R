@@ -1218,7 +1218,7 @@ print_console <- function(DescrPrintObj,
   invisible(DescrPrintObj)
 }
 
-#' @importFrom kableExtra kbl kable_styling add_header_above
+#' @importFrom kableExtra kbl kable_styling add_header_above column_spec
 #' @importFrom utils capture.output head tail
 print_tex <- function(DescrPrintObj, silent = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
@@ -1226,8 +1226,6 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
-
-  names(lengths) <- c(labels)
 
   indx_varnames <- logical()
   for (i in 1:length(DescrPrintObj$variables)) {
@@ -1265,8 +1263,16 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
+
   tibl <- escape_latex_symbols(tibl)
 
+  width <- min(max(c( (sapply(labels, str_length)+1) %/% 2,
+                      (sapply(tibl[[1]][!indx_varnames] , str_length)+ 1) %/% 2, 1)), 15)
+
+  names(lengths) <- sapply(double_escape_latex_symbols(tibble(labels))[[1]],
+                           inMinipage2,
+                           width = paste0(width + 1, "em"))
+  tibl[!indx_varnames,1] <- sapply(tibl[[1]][!indx_varnames], inMinipage, width = paste0(width, "em"))
 
   tex <- tibl[!indx_varnames, ] %>%
     kbl(
@@ -1283,7 +1289,8 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
       .
     ) %>%
-    kableExtra::pack_rows(index = lengths) %>%
+    column_spec(1, width =  paste0(width+1, "em")) %>%
+    kableExtra::pack_rows(index = lengths, latex_gap_space = "0.5cm", escape = FALSE) %>%
     add_header_above(actual_colnames, line = FALSE, align = alig2) %>%
     kable_styling(latex_options = "repeat_header",
                   repeat_header_continued = FALSE) %>%
@@ -1373,6 +1380,7 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
       .
     ) %>%
+    column_spec(1, width = "4.2cm") %>%
     kableExtra::pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = FALSE, align = alig2)
 
@@ -2188,11 +2196,31 @@ create_character_subtable.cat_summary <-
   }
 }
 
+double_escape_latex_symbols <- function(tibl){
+  for (i in 1:nrow(tibl)) {
+    for (j in 1:ncol(tibl)) {
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("%"), fixed("\\\\%"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("$"), fixed("\\\\$"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("<"), fixed("\\\\textless"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed(">"), fixed("\\\\textgreater"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("_"), fixed("\\\\_"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("&"), fixed("\\\\&"))
+    }
+  }
+  tibl
+}
 
 escape_latex_symbols <- function(tibl) {
   for (i in 1:nrow(tibl)) {
     for (j in 1:ncol(tibl)) {
-      tibl[i, j] <- str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("$"), fixed("\\$"))
       tibl[i, j] <-
@@ -2960,20 +2988,26 @@ format_freqs <- function(numerator,
                          percent_suffix = "%"
 
 ){
+  if (denominator == 0){
+    relfreq <- 0
+  } else{
+    relfreq <- numerator / denominator
+  }
+
   absolute_relative_frequency_mode <- absolute_relative_frequency_mode[1]
   if (absolute_relative_frequency_mode == "both"){
     paste0(
       numerator,
       " (",
       scales::label_percent(accuracy = percent_accuracy,
-                            suffix = percent_suffix)(numerator / denominator),
+                            suffix = percent_suffix)(relfreq),
       ")"
     )
   } else if (absolute_relative_frequency_mode == "only_absolute"){
     as.character(numerator)
   } else if (absolute_relative_frequency_mode == "only_relative"){
     scales::label_percent(accuracy = percent_accuracy,
-                          suffix = percent_suffix)(numerator / denominator)
+                          suffix = percent_suffix)(relfreq)
   } else{
     stop(paste(as.character(absolute_relative_frequency_mode), "is not a valid value for absolute_relative_frequency_mode."))
   }
@@ -3231,6 +3265,36 @@ good_format <- function(x,
 
 
 
+
+
+
+
+
+
+#' Wrap cell text in minipage environment
+#'
+#' https://stackoverflow.com/a/50892682
+#'
+inMinipage <- function(x, width){
+  paste0("\\begin{minipage}[t]{",
+         width,
+         "}\\raggedright\\setstretch{0.5}",
+         x,
+         "\\vspace{0.75ex}\\end{minipage}")
+}
+
+
+#' Wrap cell text in minipage environment
+#'
+#' https://stackoverflow.com/a/50892682
+#'
+inMinipage2 <- function(x, width) {
+  paste0("\\\\begin{minipage}[t]{",
+         width,
+         "}\\\\raggedright ",
+         x,
+         "\\\\end{minipage}")
+}
 
 
 
