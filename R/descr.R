@@ -2936,13 +2936,9 @@ write_in_tmpfile_for_cran <- function(){
 }
 
 
-# descr_format <- function(x, forced_decimals = ){
-#
-# }
-
-
 #' Wrap cell text in minipage environment
-#'
+#' @param x text to be placed in minipage
+#' @param width width adjustment
 #' https://stackoverflow.com/a/50892682
 #'
 inMinipage <- function(x, width){
@@ -2956,6 +2952,8 @@ inMinipage <- function(x, width){
 
 #' Wrap cell text in minipage environment
 #'
+#' @param x text to be placed in minipage
+#' @param width width adjustment
 #' https://stackoverflow.com/a/50892682
 #'
 inMinipage2 <- function(x, width) {
@@ -2965,10 +2963,4 @@ inMinipage2 <- function(x, width) {
          x,
          "\\\\end{minipage}")
 }
-
-
-
-
-
-
 

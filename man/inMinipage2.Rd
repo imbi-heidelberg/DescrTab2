@@ -6,6 +6,12 @@
 \usage{
 inMinipage2(x, width)
 }
+\arguments{
+\item{x}{text to be placed in minipage}
+
+\item{width}{width adjustment
+https://stackoverflow.com/a/50892682}
+}
 \description{
-https://stackoverflow.com/a/50892682
+Wrap cell text in minipage environment
 }
