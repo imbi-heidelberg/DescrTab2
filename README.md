@@ -1,11 +1,10 @@
 <!-- badges: start -->
 [![R build status](https://github.com/imbi-heidelberg/DescrTab2/workflows/R-CMD-check/badge.svg)](https://github.com/imbi-heidelberg/DescrTab2/actions)
-<!-- badges: end -->
-
 [![codecov](https://codecov.io/gh/imbi-heidelberg/DescrTab2/branch/master/graph/badge.svg)](https://codecov.io/gh/imbi-heidelberg/DescrTab2)
 [![CRAN Version](https://www.r-pkg.org/badges/version/DescrTab2)](https://www.r-pkg.org/badges/version/DescrTab2)
 [![Downloads CRAN](https://cranlogs.r-pkg.org/badges/grand-total/DescrTab2)](https://cranlogs.r-pkg.org/badges/grand-total/DescrTab2)
 [![License](https://img.shields.io/cran/l/DescrTab2)](https://img.shields.io/cran/l/DescrTab2)
+<!-- badges: end -->
 
 
 # DescrTab2
