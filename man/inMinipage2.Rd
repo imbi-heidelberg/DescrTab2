@@ -2,7 +2,7 @@
 % Please edit documentation in R/descr.R
 \name{inMinipage2}
 \alias{inMinipage2}
-\title{Wrap cell text in minipage environment}
+\title{Wrap cell text in minipage LaTeX environment}
 \usage{
 inMinipage2(x, width)
 }
@@ -13,5 +13,5 @@ inMinipage2(x, width)
 https://stackoverflow.com/a/50892682}
 }
 \description{
-Wrap cell text in minipage environment
+Wrap cell text in minipage LaTeX environment
 }
