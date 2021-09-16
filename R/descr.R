@@ -2936,7 +2936,7 @@ write_in_tmpfile_for_cran <- function(){
 }
 
 
-#' Wrap cell text in minipage environment
+#' Wrap cell text in minipage LaTeX environment
 #' @param x text to be placed in minipage
 #' @param width width adjustment
 #' https://stackoverflow.com/a/50892682
@@ -2950,7 +2950,7 @@ inMinipage <- function(x, width){
 }
 
 
-#' Wrap cell text in minipage environment
+#' Wrap cell text in minipage LaTeX environment
 #'
 #' @param x text to be placed in minipage
 #' @param width width adjustment

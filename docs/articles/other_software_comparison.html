@@ -92,12 +92,12 @@
 
       
 
-      </header><script src="other_software_comparison_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="other_software_comparison_files/header-attrs-2.8.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Comparison with other software</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-09-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/other_software_comparison.Rmd"><code>vignettes/other_software_comparison.Rmd</code></a></small>
       <div class="hidden name"><code>other_software_comparison.Rmd</code></div>
@@ -123,13 +123,13 @@
 <h1 class="hasAnchor">
 <a href="#wilcoxon-one-sample-signed-rank-test" class="anchor"></a>Wilcoxon one-sample signed-rank test</h1>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/wilcox.test.html">?wilcox.test</a></code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.83</span>,  <span class="fl">0.50</span>,  <span class="fl">1.62</span>,  <span class="fl">2.48</span>, <span class="fl">1.68</span>, <span class="fl">1.88</span>, <span class="fl">1.55</span>, <span class="fl">3.06</span>, <span class="fl">1.30</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.878</span>, <span class="fl">0.647</span>, <span class="fl">0.598</span>, <span class="fl">2.05</span>, <span class="fl">1.06</span>, <span class="fl">1.29</span>, <span class="fl">1.06</span>, <span class="fl">3.14</span>, <span class="fl">1.29</span><span class="op">)</span>
 <span class="va">dat_wilcox.test_1_sample</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>diff <span class="op">=</span> <span class="va">x</span><span class="op">-</span><span class="va">y</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_wilcox.test_1_sample</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_wilcox.test_1_sample</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -166,7 +166,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -177,7 +177,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -187,7 +187,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -197,7 +197,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -207,7 +207,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -217,7 +217,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -2168,14 +2168,14 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#mann-whitney-u-test" class="anchor"></a>Mann-Whitney U test</h1>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/wilcox.test.html">?wilcox.test</a></code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.83</span>, <span class="fl">1.89</span>, <span class="fl">1.04</span>, <span class="fl">1.45</span>, <span class="fl">1.38</span>, <span class="fl">1.91</span>, <span class="fl">1.64</span>, <span class="fl">0.73</span>, <span class="fl">1.46</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.15</span>, <span class="fl">0.88</span>, <span class="fl">0.90</span>, <span class="fl">0.74</span>, <span class="fl">1.21</span><span class="op">)</span>
 <span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Trt"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Ctrl"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">dat_wilcox.test_2_sample</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>var<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>, group<span class="op">=</span><span class="va">group</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_wilcox.test_2_sample</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_wilcox.test_2_sample</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -2235,7 +2235,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -2255,7 +2255,7 @@ HL CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -2274,7 +2274,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -2292,7 +2292,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -2310,7 +2310,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -2328,7 +2328,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -4167,15 +4167,15 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#kruskal-wallis-one-way-anova" class="anchor"></a>Kruskal-Wallis one-way ANOVA</h1>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/kruskal.test.html">?kruskal.test</a></code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.9</span>, <span class="fl">3.0</span>, <span class="fl">2.5</span>, <span class="fl">2.6</span>, <span class="fl">3.2</span><span class="op">)</span> <span class="co"># normal subjects</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3.8</span>, <span class="fl">2.7</span>, <span class="fl">4.0</span>, <span class="fl">2.4</span><span class="op">)</span>      <span class="co"># with obstructive airway disease</span>
 <span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.8</span>, <span class="fl">3.4</span>, <span class="fl">3.7</span>, <span class="fl">2.2</span>, <span class="fl">2.0</span><span class="op">)</span> <span class="co"># with asbestosis</span>
 <span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Trt"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Ctrl"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">dat_kruskal.test</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>var<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,<span class="va">z</span><span class="op">)</span>, group<span class="op">=</span><span class="va">group</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_kruskal.test</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> </pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat_kruskal.test</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -4236,7 +4236,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -4256,7 +4256,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -4275,7 +4275,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -4294,7 +4294,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -4313,7 +4313,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -4332,7 +4332,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -6045,8 +6045,8 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#friedman-test" class="anchor"></a>Friedman test</h1>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/friedman.test.html">?friedman.test</a></code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">RoundingTimes</span> <span class="op">&lt;-</span>
 <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5.40</span>, <span class="fl">5.50</span>, <span class="fl">5.55</span>,
          <span class="fl">5.85</span>, <span class="fl">5.70</span>, <span class="fl">5.75</span>,
@@ -6082,7 +6082,7 @@ var _ie64 = _info.indexOf("x64") > 0
 
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
-<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></pre></div>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -6135,7 +6135,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -6152,7 +6152,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -6168,7 +6168,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -6184,7 +6184,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -6200,7 +6200,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -6216,7 +6216,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -7952,8 +7952,8 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#cochrans-q-test" class="anchor"></a>Cochrans Q test</h1>
 <p>Dataset origin: This is a replicate of the dataset from the <a href="https://documentation.sas.com/?cdcId=pgmsascdc&amp;cdcVersion=9.4_3.4&amp;docsetId=statug&amp;docsetTarget=statug_freq_examples10.htm&amp;locale=en">SAS documentation of the Cochrane Q test from proc freq</a>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">d.frm</span> <span class="op">&lt;-</span> <span class="fu">DescTools</span><span class="fu">::</span><span class="fu"><a href="https://andrisignorell.github.io/DescTools/reference/Untable.html">Untable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">6</span>,<span class="fl">16</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, 
     <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"F"</span>,<span class="st">"U"</span><span class="op">)</span><span class="op">)</span>, times<span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, 
     colnames <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
@@ -7966,7 +7966,7 @@ var _ie64 = _info.indexOf("x64") > 0
 
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"time"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>indices<span class="op">=</span><span class="va">idx</span>, paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
-<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></pre></div>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -8019,7 +8019,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 F
 </td>
 <td style="text-align:center;">
@@ -8036,7 +8036,7 @@ F
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 U
 </td>
 <td style="text-align:center;">
@@ -9749,8 +9749,8 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#mcnemars-test" class="anchor"></a>McNemars test</h1>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/mcnemar.test.html">?mcnemar.test</a></code> (accessed on R-version 4.0.3). Note that this dataset is not explicitly defined in <code><a href="https://rdrr.io/r/stats/mcnemar.test.html">?mcnemar.test</a></code>. It is constructed to reflect the cross table defined there.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>,
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>,
                       <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span><span class="op">)</span>,
               group<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="fl">1600</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"second"</span>,<span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
               
@@ -9759,7 +9759,7 @@ var _ie64 = _info.indexOf("x64") > 0
 <span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span>
 <span class="co">#&gt; Warning in test_cat(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.</span>
 <span class="co">#&gt; Use Exact McNemars test if you want confidence intervals which use the test statistic of the</span>
-<span class="co">#&gt; exact McNemars test.</span></pre></div>
+<span class="co">#&gt; exact McNemars test.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -9811,7 +9811,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Approve
 </td>
 <td style="text-align:center;">
@@ -9828,7 +9828,7 @@ Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Disapprove
 </td>
 <td style="text-align:center;">
@@ -9850,10 +9850,10 @@ Disapprove
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, exact<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, exact<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1600</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">1600</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
-<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></pre></div>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -9905,7 +9905,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Approve
 </td>
 <td style="text-align:center;">
@@ -9922,7 +9922,7 @@ Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Disapprove
 </td>
 <td style="text-align:center;">
@@ -9944,8 +9944,8 @@ Disapprove
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span>
   <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>,
@@ -9958,14 +9958,14 @@ Disapprove
     <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">150</span><span class="op">)</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">86</span><span class="op">)</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>
-  <span class="op">)</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">x</span>, <span class="va">dat</span><span class="op">$</span><span class="va">y</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">x</span>, <span class="va">dat</span><span class="op">$</span><span class="va">y</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  McNemar's Chi-squared test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  dat$x and dat$y</span>
-<span class="co">#&gt; McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05</span></pre></div>
+<span class="co">#&gt; McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05</span></code></pre></div>
 
 
 
@@ -11874,13 +11874,13 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#chi-squared-test" class="anchor"></a>Chi-squared test</h1>
 <p>Dataset origin: “Gender-Party dataset”:<code><a href="https://rdrr.io/r/stats/chisq.test.html">?chisq.test</a></code> (accessed on R-version 4.0.3). “a-b dataset”: selfmade.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"F"</span>,<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">762</span>, <span class="fl">327</span>, <span class="fl">468</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">484</span>, <span class="fl">239</span>, <span class="fl">477</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
               party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Democrat"</span>, <span class="fl">762</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Independent"</span>, <span class="fl">327</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Republican"</span>, <span class="fl">468</span><span class="op">)</span>,
                       <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Democrat"</span>, <span class="fl">484</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Independent"</span>, <span class="fl">239</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Republican"</span>, <span class="fl">477</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
               
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -11940,7 +11940,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Democrat
 </td>
 <td style="text-align:center;">
@@ -11959,7 +11959,7 @@ Democrat
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Independent
 </td>
 <td style="text-align:center;">
@@ -11977,7 +11977,7 @@ Independent
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Republican
 </td>
 <td style="text-align:center;">
@@ -12001,8 +12001,8 @@ Republican
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -12039,7 +12039,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 F
 </td>
 <td style="text-align:center;">
@@ -12050,7 +12050,7 @@ F
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 M
 </td>
 <td style="text-align:center;">
@@ -12065,7 +12065,7 @@ M
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Democrat
 </td>
 <td style="text-align:center;">
@@ -12076,7 +12076,7 @@ Democrat
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Independent
 </td>
 <td style="text-align:center;">
@@ -12086,7 +12086,7 @@ Independent
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Republican
 </td>
 <td style="text-align:center;">
@@ -12102,8 +12102,8 @@ Republican
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gender</span>, <span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gender</span>, <span class="va">dat</span><span class="op">$</span><span class="va">party</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Pearson's Chi-squared test</span>
 <span class="co">#&gt; </span>
@@ -12120,9 +12120,9 @@ Republican
 <span class="co">#&gt;  Chi-squared test for given probabilities</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  table(dat$party)</span>
-<span class="co">#&gt; X-squared = 252.68, df = 2, p-value &lt; 2.2e-16</span></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
+<span class="co">#&gt; X-squared = 252.68, df = 2, p-value &lt; 2.2e-16</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   
   a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,
                <span class="fl">0</span>,
@@ -12152,7 +12152,7 @@ Republican
 <span class="co">#&gt; Warning in (function (x, y = NULL, correct = TRUE, p = rep(1/length(x), : Chi-</span>
 <span class="co">#&gt; squared approximation may be incorrect</span>
 <span class="co">#&gt; Warning in stats::prop.test(table(var, group), correct = FALSE): Chi-squared</span>
-<span class="co">#&gt; approximation may be incorrect</span></pre></div>
+<span class="co">#&gt; approximation may be incorrect</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -12212,7 +12212,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 0
 </td>
 <td style="text-align:center;">
@@ -12232,7 +12232,7 @@ Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 1
 </td>
 <td style="text-align:center;">
@@ -14647,12 +14647,12 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#t-test" class="anchor"></a>t-test</h1>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/t.test.html">?t.test</a></code>, which references <code><a href="https://rdrr.io/r/datasets/sleep.html">?sleep</a></code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sleep</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"extra"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">]</span>
               
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="st">"extra"</span><span class="op">]</span><span class="op">)</span> </pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="st">"extra"</span><span class="op">]</span><span class="op">)</span> </code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -14689,7 +14689,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -14700,7 +14700,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -14710,7 +14710,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -14720,7 +14720,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -14730,7 +14730,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -14740,7 +14740,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -14756,8 +14756,8 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -14817,7 +14817,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -14837,7 +14837,7 @@ Mean dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -14856,7 +14856,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -14874,7 +14874,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -14892,7 +14892,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -14910,7 +14910,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -14934,10 +14934,10 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"group"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
-<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></pre></div>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -14989,7 +14989,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -15006,7 +15006,7 @@ Mean dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -15022,7 +15022,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -15037,7 +15037,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -15052,7 +15052,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -15067,7 +15067,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -17251,15 +17251,15 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#f-test" class="anchor"></a>F-test</h1>
 <p>Dataset origin: Modified version of <code><a href="https://rdrr.io/r/datasets/npk.html">?datasets::npk</a></code>. <code>npk</code> is used in <code><a href="https://rdrr.io/r/stats/aov.html">?aov</a></code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   y <span class="op">=</span> <span class="va">npk</span><span class="op">$</span><span class="va">yield</span>,
   P <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">24</span><span class="op">)</span><span class="op">)</span>,
   N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/gl.html">gl</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">24</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
               
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"P"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"P"</span><span class="op">)</span> </pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"P"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"P"</span><span class="op">)</span> </code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -17320,7 +17320,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -17340,7 +17340,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -17359,7 +17359,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -17378,7 +17378,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -17397,7 +17397,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -17416,7 +17416,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -17441,8 +17441,8 @@ min - max
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"N"</span><span class="op">)</span> </pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"N"</span><span class="op">)</span> </code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -17503,7 +17503,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -17523,7 +17523,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -17542,7 +17542,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -17561,7 +17561,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -17580,7 +17580,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -17599,7 +17599,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -19622,8 +19622,8 @@ var _ie64 = _info.indexOf("x64") > 0
 <h1 class="hasAnchor">
 <a href="#mixed-model-anova" class="anchor"></a>Mixed model ANOVA</h1>
 <p>Dataset origin: Modified version of <code><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">?nlme::Orthodont</a></code>. <code>Orthodont</code> is used in <code>?lme</code> (accessed on R-version 4.0.3).</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html">Orthodont</a></span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">64</span>,<span class="op">]</span>
 <span class="va">dat2</span><span class="op">$</span><span class="va">Sex</span> <span class="op">&lt;-</span> <span class="st">"Divers"</span>
@@ -19635,7 +19635,7 @@ var _ie64 = _info.indexOf("x64") > 0
 
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sex"</span>, <span class="st">"distance"</span><span class="op">)</span><span class="op">]</span>, <span class="st">"Sex"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">Subject</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
-<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></pre></div>
+<span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -19688,7 +19688,7 @@ p
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 N
 </td>
 <td style="text-align:center;">
@@ -19705,7 +19705,7 @@ N
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 mean
 </td>
 <td style="text-align:center;">
@@ -19721,7 +19721,7 @@ mean
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 sd
 </td>
 <td style="text-align:center;">
@@ -19737,7 +19737,7 @@ sd
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 median
 </td>
 <td style="text-align:center;">
@@ -19753,7 +19753,7 @@ median
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Q1 - Q3
 </td>
 <td style="text-align:center;">
@@ -19769,7 +19769,7 @@ Q1 - Q3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 min - max
 </td>
 <td style="text-align:center;">
@@ -21747,12 +21747,12 @@ var _ie64 = _info.indexOf("x64") > 0
 <a href="#boschloos-test" class="anchor"></a>Boschloos test</h1>
 <p>Dataset origin: selfmade.</p>
 <p>DescrTab2 uses the exact2x2::boschloo with option <code>tsmethod=central</code> to calculate p-values. There is no comparison for this option readily available.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>gender<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
               party<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"gender"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning in stats::prop.test(table(var, group), correct = FALSE): Chi-squared</span>
-<span class="co">#&gt; approximation may be incorrect</span></pre></div>
+<span class="co">#&gt; approximation may be incorrect</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -21812,7 +21812,7 @@ CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 A
 </td>
 <td style="text-align:center;">
@@ -21832,7 +21832,7 @@ Prop. dif. CI
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 B
 </td>
 <td style="text-align:center;">
@@ -21857,8 +21857,8 @@ B
 </td>
 </tr></tfoot>
 </table>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"central"</span><span class="op">)</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"central"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Boschloo's test</span>
 <span class="co">#&gt; </span>
@@ -21869,10 +21869,10 @@ B
 <span class="co">#&gt;  NA NA</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt; p2(1-p1)/[p1(1-p2)] </span>
-<span class="co">#&gt;           0.3333333</span></pre></div>
+<span class="co">#&gt;           0.3333333</span></code></pre></div>
 <p>However, we can compare the exact2x2::boschloo with <code>tsmethod=minlike</code> to <code><a href="https://rdrr.io/pkg/Exact/man/exact.test.html">Exact::exact.test</a></code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"minlike"</span><span class="op">)</span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">exact2x2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">boschloo</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, tsmethod<span class="op">=</span><span class="st">"minlike"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Boschloo's test</span>
 <span class="co">#&gt; </span>
@@ -21894,7 +21894,7 @@ B
 <span class="co">#&gt; alternative hypothesis: true difference in proportion is not equal to 0</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt; difference in proportion </span>
-<span class="co">#&gt;                0.2666667</span></pre></div>
+<span class="co">#&gt;                0.2666667</span></code></pre></div>
 </div>
   </div>
 
