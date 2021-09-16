@@ -1,7 +1,10 @@
 # Version 2.1
 
 * knit_print now works properly. R chunks in .Rmd documents don't need the results = 'asis' option anymore.
-* 
+
+# Version 2.0.13
+
+* LaTeX tables will now properly wrap the names of long factor levels and long variable names.
 
 # Version 2.0.12
 

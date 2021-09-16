@@ -41,6 +41,7 @@ NULL
       usepackage_latex("makecell")
       usepackage_latex("xcolor")
       usepackage_latex("needspace")
+      usepackage_latex("setspace")
     }
   }
 }

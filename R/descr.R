@@ -185,27 +185,37 @@ descr <-
            summary_stats_cat = list(),
 
            format_summary_stats = list(
-             N = prettyNum,
-             Nmiss = prettyNum,
-             mean = sigfig,
-             sd = sigfig,
-             median = prettyNum,
-             Q1 = prettyNum,
-             Q3 = prettyNum,
-             min = prettyNum,
-             max = prettyNum,
-             CI = sigfig
+             N = function(x)
+               format(x, digits = 2, scientific = 3),
+             Nmiss = function(x)
+               format(x, digits = 2, scientific = 3),
+             mean = function(x)
+               format(x, digits = 2, scientific = 3),
+             sd = function(x)
+               format(x, digits = 2, scientific = 3),
+             median = function(x)
+               format(x, digits = 2, scientific = 3),
+             Q1 = function(x)
+               format(x, digits = 2, scientific = 3),
+             Q3 = function(x)
+               format(x, digits = 2, scientific = 3),
+             min = function(x)
+               format(x, digits = 2, scientific = 3),
+             max = function(x)
+               format(x, digits = 2, scientific = 3),
+             CI = function(x)
+               format(x, digits = 2, scientific = 3)
            ),
            format_p = scales::pvalue_format(),
            format_options = list(
              print_Total=NULL,
              print_p = TRUE,
              print_CI = TRUE,
-             combine_mean_sd = TRUE,
-             combine_median_Q1_Q3 = TRUE,
+             combine_mean_sd = FALSE,
+             combine_median_Q1_Q3 = FALSE,
              omit_Nmiss_if_0 = TRUE,
              omit_missings_in_group = TRUE,
-             percent_accuracy=0.1,
+             percent_accuracy=NULL,
              percent_suffix="%",
              row_percent=FALSE,
              Nmiss_row_percent=FALSE,
@@ -219,8 +229,7 @@ descr <-
                "no_missing_percent",
                "missing_as_regular_category",
                "missing_as_separate_category"
-             ),
-             replace_empty_string_with_NA = TRUE
+             )
            ),
 
            test_options = list(
@@ -251,6 +260,27 @@ descr <-
     # Coerce dataset to tibble
     dat %<>% as_tibble()
 
+    # Coerce all date columns to factors
+    if (isTRUE(any(sapply(dat, function(x)inherits(x, "Date"))))){
+      warning("Your dataset contains variables of type 'Date'. These are automatically converted to factors")
+      dat %<>% mutate(across(where(function(x)inherits(x, "Date")), function(x)
+        x %>% as.factor() %>% fct_explicit_na()))
+    }
+
+    # Check for empty strings
+    if(any(dat=="", na.rm = TRUE)){
+      if (any(dat=="(empty)", na.rm = TRUE)){
+        stop('Your data contains both "" (i.e. empty strings) and "(empty)". This would lead to conflicts. Rename your "" data. ')
+      }
+
+      warning('Your data contains "" (i.e., emtpy strings). If "" is used to code missings, you should
+              recode this to a more meaningful name. "" was converted to "(empty)".')
+      dat %<>% mutate(across(where(function(x)is.factor(x) ), function(x) fct_recode(x, "(empty)"="" ) ),
+                    across(where(is.character), function(x) if_else(x=="", "(empty)", x) )
+      )
+    }
+
+
     # Format options have to be cleaned first, because the next data cleaning step depends on them
     format_options %<>% as.list()
 
@@ -261,40 +291,6 @@ descr <-
     }
     format_options <-
       fill_list_with_default_arguments(format_options, descr, "format_options")
-
-    # Extract labels from dataset if available
-    var_labels %<>% as.list()
-    extracted_labels <- extract_labels(dat)
-    name_differences_labels <- setdiff(names(extracted_labels), names(var_labels))
-    var_labels[name_differences_labels] <-
-      extracted_labels[name_differences_labels]
-    dat %<>% mutate(across(where(function(x)inherits(x, "labelled")),
-                           function(x){class(x) <- class(x)[class(x)!="labelled"];x}))
-
-    # Coerce all date columns to factors
-    if (isTRUE(any(sapply(dat, function(x)inherits(x, "Date"))))){
-      warning("Your dataset contains variables of type 'Date'. These are automatically converted to factors")
-      dat %<>% mutate(across(where(function(x)inherits(x, "Date")), function(x)
-        x %>% as.factor() %>% fct_explicit_na()))
-    }
-
-    # Check for empty strings
-    if(any(dat=="", na.rm = TRUE)){
-      if (isTRUE(format_options[["replace_empty_string_with_NA"]])){
-        dat %<>% mutate(across(everything(), ~na_if(., "")))
-      } else{
-        if (any(dat=="(empty)", na.rm = TRUE)){
-          stop('Your data contains both "" (i.e. empty strings) and "(empty)". This would lead to conflicts. Rename your "" data. ')
-        }
-
-        warning('Your data contains "" (i.e., emtpy strings). If "" is used to code missings, you should
-              recode this to a more meaningful name. "" was converted to "(empty)".')
-        dat %<>% mutate(across(where(function(x)is.factor(x) ), function(x) fct_recode(x, "(empty)"="" ) ),
-                        across(where(is.character), function(x) if_else(x=="", "(empty)", x) )
-        )
-      }
-    }
-
 
     test_options %<>% as.list()
     if (is.character(test_options[["indices"]]) &&
@@ -370,6 +366,7 @@ descr <-
     # Input option cleaning (except format_options, which were cleaned in the beginning)
     ## If options lists were passed as named named vectors, coerce to list
     group_labels %<>% as.list()
+    var_labels %<>% as.list()
     var_options <- lapply(var_options, as.list)
 
 
@@ -1137,29 +1134,18 @@ create_DescrPrint <- function(DescrListObj, print_format) {
 }
 
 
+
 print_numeric <- function(DescrPrintObj,
                           silent = FALSE,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
                           print_red_NA = FALSE) {
-
   tibl <- DescrPrintObj[["tibble"]]
-  var_names <- names(DescrPrintObj[["variables"]])
-  lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
-
-  names(lengths) <- c(labels)
-
-  indx_varnames <- logical()
-  for (i in 1:length(DescrPrintObj$variables)) {
-    indx_varnames <-
-      c(indx_varnames, c(TRUE, rep(FALSE, DescrPrintObj$lengths[[i]] - 1)))
-  }
-
   c1 <- tibl %>% pull(1)
-  c1[!indx_varnames] <- paste0("  ", c1[!indx_varnames])
+  c1 <- ifelse(c1 %in% labels, c1, paste0("  ", c1))
   tibl[, 1] <- c1
 
   print_format <- format(tibl,
@@ -1185,23 +1171,11 @@ print_console <- function(DescrPrintObj,
                           width = NULL,
                           n_extra = NULL,
                           print_red_NA = FALSE) {
-
   tibl <- DescrPrintObj[["tibble"]]
-  var_names <- names(DescrPrintObj[["variables"]])
-  lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
-
-  names(lengths) <- c(labels)
-
-  indx_varnames <- logical()
-  for (i in 1:length(DescrPrintObj$variables)) {
-    indx_varnames <-
-      c(indx_varnames, c(TRUE, rep(FALSE, DescrPrintObj$lengths[[i]] - 1)))
-  }
-
   c1 <- tibl %>% pull(1)
-  c1[!indx_varnames] <- paste0("  ", c1[!indx_varnames])
+  c1 <- ifelse(c1 %in% labels, c1, paste0("  ", c1))
   tibl[, 1] <- c1
 
   print_format <- format(tibl,
@@ -1218,7 +1192,7 @@ print_console <- function(DescrPrintObj,
   invisible(DescrPrintObj)
 }
 
-#' @importFrom kableExtra kbl kable_styling add_header_above
+#' @importFrom kableExtra kbl kable_styling add_header_above column_spec
 #' @importFrom utils capture.output head tail
 print_tex <- function(DescrPrintObj, silent = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
@@ -1226,8 +1200,6 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
-
-  names(lengths) <- c(labels)
 
   indx_varnames <- logical()
   for (i in 1:length(DescrPrintObj$variables)) {
@@ -1265,8 +1237,16 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
+
   tibl <- escape_latex_symbols(tibl)
 
+  width <- min(max(c( (sapply(labels, str_length)+1) %/% 2,
+                      (sapply(tibl[[1]][!indx_varnames] , str_length)+ 1) %/% 2, 1)), 15)
+
+  names(lengths) <- sapply(double_escape_latex_symbols(tibble(labels))[[1]],
+                           inMinipage2,
+                           width = paste0(width + 1, "em"))
+  tibl[!indx_varnames,1] <- sapply(tibl[[1]][!indx_varnames], inMinipage, width = paste0(width, "em"))
 
   tex <- tibl[!indx_varnames, ] %>%
     kbl(
@@ -1283,7 +1263,8 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
       .
     ) %>%
-    kableExtra::pack_rows(index = lengths) %>%
+    column_spec(1, width =  paste0(width+1, "em")) %>%
+    kableExtra::pack_rows(index = lengths, latex_gap_space = "0.5cm", escape = FALSE) %>%
     add_header_above(actual_colnames, line = FALSE, align = alig2) %>%
     kable_styling(latex_options = "repeat_header",
                   repeat_header_continued = FALSE) %>%
@@ -1304,12 +1285,13 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
       )
     )
   }
-
   tex <- c("\\needspace{2cm}", tex)
-  DescrPrintObj[["tex"]] <- tex
   if (!silent) {
     cli::cat_line(tex)
   }
+
+  DescrPrintObj[["tex"]] <- tex
+
   invisible(DescrPrintObj)
 }
 
@@ -1373,14 +1355,16 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
       kableExtra::footnote(., symbol = c(tests), symbol_manual = test_abbrev),
       .
     ) %>%
+    column_spec(1, width = "4.2cm") %>%
     kableExtra::pack_rows(index = lengths) %>%
     add_header_above(actual_colnames, line = FALSE, align = alig2)
 
-
-  DescrPrintObj[["html"]] <- html
   if (!silent) {
     cli::cat_line(html)
   }
+
+  DescrPrintObj[["html"]] <- html
+
   invisible(DescrPrintObj)
 }
 
@@ -1451,79 +1435,13 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
     autofit()
 
   DescrPrintObj[["ft"]] <- ft
+
   if (!silent) {
-    print(ft)
-  }
-  invisible(DescrPrintObj)
-}
-
-
-#' S3 override for knit_print function for DescrList objects.
-#'
-#' @return
-#' @export
-#'
-knit_print.DescrList <-
-  function(x,
-           print_format = options("print_format")[[1]],
-           silent = FALSE,
-           ...) {
-
-  DescrListObj <- x
-
-  # if no printing format was set, print to console
-  if (is.null(print_format)) {
-    print_format <- "console"
-  }
-
-  # Preprocessing of the DescrListObj for printing.
-  # In this step, formatting rules are applied.
-  DescrPrintObj <- create_DescrPrint(DescrListObj, print_format)
-
-  # Print the DescrPrint object
-  knit_print(DescrPrintObj,
-        print_format = print_format,
-        silent = silent,
-        ...)
-}
-
-
-#' S3 override for knit_print function for DescrPrint objects.
-#'
-#' @return
-#' @export
-#'
-#' @importFrom knitr knit_print asis_output opts_knit opts_current fig_path
-#' @importFrom rmarkdown pandoc_version
-knit_print.DescrPrint <- function(x,
-                                     print_format = print_format,
-                                     silent = silent,
-                                     ...) {
-  if (knitr::is_html_output()) {
-    str <- print.DescrPrintCharacter(x,
-                                     print_format = "html",
-                              silent = TRUE)[["html"]]
-    knit_print(asis_output(str))
-
-  } else if(knitr::is_latex_output()){
-    str <- print.DescrPrintCharacter(x,
-                                     print_format = "tex",
-                              silent = TRUE)[["tex"]]
-    knit_print(asis_output(str))
-
-  } else if(knitr::pandoc_to("docx")){
-    ft <- print.DescrPrintCharacter(x,
-                                    print_format = "word",
-                              silent = TRUE)[["ft"]]
-    is_bookdown <- isTRUE(opts_knit$get('bookdown.internal.label'))
-    pandoc2 <- pandoc_version() >= numeric_version("2.0")
-    str <- flextable_to_rmd(ft, bookdown = is_bookdown, pandoc2 = pandoc2, print = FALSE)
-    knit_print(asis_output(str))
+    return(ft)
   } else{
-    print(x,...)
+    return(DescrPrintObj)
   }
 }
-
 
 
 create_numeric_subtable <- function(DescrVarObj,
@@ -2188,17 +2106,37 @@ create_character_subtable.cat_summary <-
   }
 }
 
+double_escape_latex_symbols <- function(tibl){
+  for (i in 1:nrow(tibl)) {
+    for (j in 1:ncol(tibl)) {
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("%"), fixed("\\\\%"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("$"), fixed("\\\\$"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("<"), fixed("\\\\textless"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed(">"), fixed("\\\\textgreater"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("_"), fixed("\\\\_"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("&"), fixed("\\\\&"))
+    }
+  }
+  tibl
+}
 
 escape_latex_symbols <- function(tibl) {
   for (i in 1:nrow(tibl)) {
     for (j in 1:ncol(tibl)) {
-      tibl[i, j] <- str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("$"), fixed("\\$"))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless "))
+        str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless"))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater "))
+        str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("_"), fixed("\\_"))
       tibl[i, j] <-
@@ -2960,20 +2898,26 @@ format_freqs <- function(numerator,
                          percent_suffix = "%"
 
 ){
+  if (denominator == 0){
+    relfreq <- 0
+  } else{
+    relfreq <- numerator / denominator
+  }
+
   absolute_relative_frequency_mode <- absolute_relative_frequency_mode[1]
   if (absolute_relative_frequency_mode == "both"){
     paste0(
       numerator,
       " (",
       scales::label_percent(accuracy = percent_accuracy,
-                            suffix = percent_suffix)(numerator / denominator),
+                            suffix = percent_suffix)(relfreq),
       ")"
     )
   } else if (absolute_relative_frequency_mode == "only_absolute"){
     as.character(numerator)
   } else if (absolute_relative_frequency_mode == "only_relative"){
     scales::label_percent(accuracy = percent_accuracy,
-                          suffix = percent_suffix)(numerator / denominator)
+                          suffix = percent_suffix)(relfreq)
   } else{
     stop(paste(as.character(absolute_relative_frequency_mode), "is not a valid value for absolute_relative_frequency_mode."))
   }
@@ -2992,245 +2936,35 @@ write_in_tmpfile_for_cran <- function(){
 }
 
 
-#' Remove the label attribute from data
-#'
-#' @param dat dataset or vector
-#'
-#' @return unlabelled dataset or vector
-#' @export
-#'
-#' @examples
-#' a <- c(1,2)
-#' attr(a, "label") <- "b"
-#' unlabel(a)
-unlabel <- function(dat){
-  unlab <- function(x){
-    class(x) <- class(x)[class(x)!="labelled"]
-    attr(x, "label") <- NULL
-    x
-  }
+# descr_format <- function(x, forced_decimals = ){
+#
+# }
 
-  if (is.vector(dat)){
-    return(unlab(dat))
-  } else{
-    data_nolab <- data %>% as_tibble() %>%
-      transmute(across(everything(), unlab))
-    return(data_nolab)
-  }
-}
 
-#' Extract the label attributes from data
+#' Wrap cell text in minipage environment
 #'
-#' @param dat dataset or vector
+#' https://stackoverflow.com/a/50892682
 #'
-#' @return list of labels
-#' @export
-#'
-#' @examples
-#' a <- c(1,2)
-#' attr(a, "label") <- "b"
-#' unlabel(a)
-extract_labels <- function(dat){
-  if (inherits(dat, "list")| inherits(dat, "data.frame")|inherits(dat, "tbl")){
-    extracted_labels <- lapply(dat, function(x)attr(x, "label"))
-    extracted_labels <- extracted_labels[!sapply(extracted_labels, is.null) &
-                                           !sapply(extracted_labels, function(x)isTRUE(trimws(x)==""))]
-    }else{
-      nm <- deparse(substitute(dat))
-      extracted_labels <- list(nm = attr(dat, "label"))
-      extracted_labels <- extracted_labels[!sapply(extracted_labels, is.null) &
-                                             !sapply(extracted_labels, function(x)isTRUE(trimws(x)==""))]
-    }
-  return(extracted_labels)
+inMinipage <- function(x, width){
+  paste0("\\begin{minipage}[t]{",
+         width,
+         "}\\raggedright\\setstretch{0.5}",
+         x,
+         "\\vspace{0.75ex}\\end{minipage}")
 }
 
 
-#' Convencience function to load redcap datasets
+#' Wrap cell text in minipage environment
 #'
-#' @param path_to_redcap_script
+#' https://stackoverflow.com/a/50892682
 #'
-#' @return tibble with data
-#' @export
-#' @examples
-#' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
-#' read_redcap_formatted(path_to_redcap_script)
-read_redcap_formatted <- function(path_to_redcap_script = NULL){
-  stopifnot(is.character(path_to_redcap_script))
-  source(path_to_redcap_script, encoding = "UTF-8", local=TRUE)
-  data <- as_tibble(data)
-  colnames_data <- names(data)
-  for (colname in colnames_data){
-    if (str_detect(colname, "\\.factor$")){
-      fac <- data[[colname]]
-      label(fac) <- label(data[[str_remove(colname, "\\.factor$")]])
-      data[str_remove(colname, "\\.factor$")] <- fac
-      data <- data[names(data)!= colname]
-    }
-  }
-  data
+inMinipage2 <- function(x, width) {
+  paste0("\\\\begin{minipage}[t]{",
+         width,
+         "}\\\\raggedright ",
+         x,
+         "\\\\end{minipage}")
 }
-
-
-#' Convencience function to load sas datasets
-#'
-#' @param path_to_dat path to .sas7bdat file
-#' @param path_to_format path to .sas7bcat file
-#'
-#' @return tibble with data
-#' @export
-#'
-#' @examples
-#' path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
-#' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' read_sas(path_to_dat, pat_to_format)
-#' @importFrom haven read_sas
-#'
-read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL){
-  erg <- read_sas(path_to_dat,
-                  path_to_format)
-  erg <- erg %>%
-    mutate(across(where(function(x)inherits(x, "haven_labelled")), as_factor))
-  erg
-}
-
-#' Digits before decimal -1
-#'
-#' @details
-#' https://stackoverflow.com/questions/47190693/count-the-number-of-integer-digits
-#'
-#' @param x
-#'
-#' @return
-#'
-n_int_digits = function(x) {
-  result = floor(log10(abs(x)))
-  result[!is.finite(result)] = 0
-  result
-}
-
-#' Format number to a specified number of digits, considering threshold for usage of scientific notation
-#'
-#' @param x
-#' @param digits
-#'
-#' @return
-#' @export
-#'
-#' @examples
-sigfig <- function(x, digits = 3,
-                   scientific_high_threshold = 6,
-                   scientific_low_threshold = -6,
-                   force_0_behind_0 = FALSE){
-  if (is.na(x)){
-    return("NA")
-  } else if (is.numeric(x)){
-    if (n_int_digits(x) + 0.5 > scientific_high_threshold){
-      return(format(x, scientific = TRUE, digits = digits))
-    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold){
-      return(format(x, scientific = TRUE, digits = digits))
-    }
-  if (n_int_digits(x) + 1.5 > digits){
-    if (abs(x)> 2^52){
-      warning("Integers larger than 2^52 might not have an exact floating point represntation.")
-    }
-      return(format(round(x), scientific = FALSE))
-  } else{
-    ret <- gsub("\\.$", "", formatC(signif(x,digits=digits), digits=digits, format="fg", flag="#"))
-    if (isTRUE(force_0_behind_0) & ret == "0"){
-      return(format(0, nsmall=digits))
-    } else{
-      return(ret)
-    }
-  }
-  }
-}
-
-#' Generator function for nice formatting functions
-#' @param x
-#' @param digits
-#'
-#' @return
-#' @export
-#'
-#' @examples
-sigfig_gen <- function(digits = 3,
-                   scientific_high_threshold = 6,
-                   scientific_low_threshold = -6,
-                   force_0_behind_0 = FALSE){
-
-  return(
-    function(x){
-      return(sigfig(x,
-                    scientific_high_threshold = scientific_high_threshold,
-                    scientific_low_threshold = scientific_low_threshold,
-                    force_0_behind_0 = force_0_behind_0))
-    }
-  )
-}
-
-
-
-good_format <- function(x,
-                        force_digits = NULL,
-                        soft_digit_suggestion = 4,
-                        nsig,
-                        scientific_low_threshold = 1e5,
-                        scientific_high_threshold = 1e-5,
-                        force_nonscientific = FALSE
-) {
-  if (is.na(x)){
-    return("NA")
-  } else if (is.numeric(x)){
-
-    if (isTRUE(force_nonscientific)){
-      if (!is.null(force_digits)){
-        format(round(x, force_digits), nsmall = force_digits)
-      } else{
-
-      }
-    } else{
-      if (!is.null(force_digits)){
-        format(round(x, force_digits), nsmall = force_digits)
-      } else if (scientific_high_threshold >= abs(x)){
-
-      } else if (scientific_low_threshold <= abs(x)){
-
-      } else if (abs(x)>=1) {
-        formatC(
-          round(x, digits = max(0, soft_digit_suggestion - floor(log10(x)))),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      }
-
-      if (abs(x) < .5) {
-        formatC(
-          signif(x, digits = 4),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      } else if (abs(x) >= 100) {
-        formatC(signif(x, digits = 4), digits = 4, format = "fg")
-      }
-      else{
-        formatC(
-          signif(x, digits = 4),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      }
-    }
-  } else{
-    x
-  }
-}
-
-
-
-
 
 
 
