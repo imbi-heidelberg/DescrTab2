@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • DescrTab2devel</title>
+<title>Changelog • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -72,8 +72,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">DescrTab2devel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.13</span>
+        <a class="navbar-link" href="../index.html">DescrTab2</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -142,35 +142,40 @@
 
     <div id="version-21" class="section level1">
 <h1 class="page-header" data-toc-text="2.1">
-<a href="#version-21" class="anchor"></a>Version 2.1</h1>
+<a href="#version-21" class="anchor"></a>Version 2.1<small> Unreleased </small>
+</h1>
 <ul>
 <li>knit_print now works properly. R chunks in .Rmd documents don’t need the results = ‘asis’ option anymore.</li>
 </ul>
 </div>
     <div id="version-2013" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.13">
-<a href="#version-2013" class="anchor"></a>Version 2.0.13</h1>
+<a href="#version-2013" class="anchor"></a>Version 2.0.13<small> Unreleased </small>
+</h1>
 <ul>
 <li>LaTeX tables will now properly wrap the names of long factor levels and long variable names.</li>
 </ul>
 </div>
     <div id="version-2012" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.12">
-<a href="#version-2012" class="anchor"></a>Version 2.0.12</h1>
+<a href="#version-2012" class="anchor"></a>Version 2.0.12<small> Unreleased </small>
+</h1>
 <ul>
 <li>.mean now returns NA_real_ in cases were NaN was previously returned.</li>
 </ul>
 </div>
     <div id="version-2011" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.11">
-<a href="#version-2011" class="anchor"></a>Version 2.0.11</h1>
+<a href="#version-2011" class="anchor"></a>Version 2.0.11<small> Unreleased </small>
+</h1>
 <ul>
 <li>Fixed a bug with paired data, where some of the pairs contain missing. In some cases, tests were not calculated and a misleading error message was produced.</li>
 </ul>
 </div>
     <div id="version-2010" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.10">
-<a href="#version-2010" class="anchor"></a>Version 2.0.10</h1>
+<a href="#version-2010" class="anchor"></a>Version 2.0.10<small> Unreleased </small>
+</h1>
 <ul>
 <li>Added the ability to suppress the “Total” column via the format_options(print_Total = FALSE) option.</li>
 <li>Exact McNemars test will now calculate confidence intervals for rate differences by leveraging the distribution of the test statistic.</li>
@@ -180,42 +185,48 @@
 </div>
     <div id="version-209" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.9">
-<a href="#version-209" class="anchor"></a>Version 2.0.9</h1>
+<a href="#version-209" class="anchor"></a>Version 2.0.9<small> Unreleased </small>
+</h1>
 <ul>
 <li>Fixed a bug with print_CI = FALSE option in format_options.</li>
 </ul>
 </div>
     <div id="version-208" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.8">
-<a href="#version-208" class="anchor"></a>Version 2.0.8</h1>
+<a href="#version-208" class="anchor"></a>Version 2.0.8<small> Unreleased </small>
+</h1>
 <ul>
 <li>“&amp;” signs in factor labels are now properly escaped in LaTeX code.</li>
 </ul>
 </div>
     <div id="version-207" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.7">
-<a href="#version-207" class="anchor"></a>Version 2.0.7</h1>
+<a href="#version-207" class="anchor"></a>Version 2.0.7<small> 2021-03-15 </small>
+</h1>
 <ul>
 <li>Added the “combine_median_Q1_Q3” argument to format_options, which reshapes these summary statistics to “median (Q1, Q3)”.</li>
 </ul>
 </div>
     <div id="version-206" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.6">
-<a href="#version-206" class="anchor"></a>Version 2.0.6</h1>
+<a href="#version-206" class="anchor"></a>Version 2.0.6<small> Unreleased </small>
+</h1>
 <ul>
 <li>Added the following members to format_options: percent_suffix, row_percent, Nmiss_row_percent and absolute_relative_frequency_mode. They can be used to control control how absolute and relative frequencies are displayed.</li>
 </ul>
 </div>
     <div id="version-205" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.5">
-<a href="#version-205" class="anchor"></a>Version 2.0.5</h1>
+<a href="#version-205" class="anchor"></a>Version 2.0.5<small> Unreleased </small>
+</h1>
 <ul>
 <li>Added documentation for confidence intervals.</li>
 </ul>
 </div>
     <div id="version-204" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.4">
-<a href="#version-204" class="anchor"></a>Version 2.0.4</h1>
+<a href="#version-204" class="anchor"></a>Version 2.0.4<small> Unreleased </small>
+</h1>
 <ul>
 <li>All tests that previously used continuity correction by default do <em>not</em> use continuity correction anymore.</li>
 <li>Added the <code>additional_test_args</code> argument to <code>test_options</code>. This lets the user pass arguments to the underlying test functions, e.g. <code>additional_test_args = list(correct=TRUE)</code> to request continuity correction in <code>chisq.test</code>.</li>
@@ -223,7 +234,8 @@
 </div>
     <div id="version-203" class="section level1">
 <h1 class="page-header" data-toc-text="2.0.3">
-<a href="#version-203" class="anchor"></a>Version 2.0.3</h1>
+<a href="#version-203" class="anchor"></a>Version 2.0.3<small> 2020-12-16 </small>
+</h1>
 <ul>
 <li>First cran release.</li>
 </ul>
