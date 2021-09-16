@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Function reference" />
 
@@ -71,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.13</span>
       </span>
     </div>
 
@@ -79,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,21 +99,27 @@
       <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_html.html">Test choice</a>
+      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
+    </li>
+    <li>
+      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
       <a href="../articles/usage_guide.html">Usage guidance</a>
     </li>
     <li>
-      <a href="../articles/validation_report.html">Validation report</a>
+      <a href="../articles/validation_statement.html">Validation statement</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/imbi-heidelberg/DescrTab2/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -154,15 +162,45 @@
       <tr>
         
         <td>
+          <p><code><a href="descr.html">descr()</a></code> </p>
+        </td>
+        <td><p>Calculate descriptive statistics</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="DescrTab2.html">DescrTab2</a></code> </p>
         </td>
         <td><p>DescrTab2</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="descr.html">descr()</a></code> </p>
+          <p><code><a href="farrington.manning.html">farrington.manning()</a></code> </p>
         </td>
-        <td><p>Calculate descriptive statistics</p></td>
+        <td><p>Farrington-Manning test for rate difference</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_freqs.html">format_freqs()</a></code> </p>
+        </td>
+        <td><p>Make pretty frequencies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ignore_unused_args.html">ignore_unused_args()</a></code> </p>
+        </td>
+        <td><p>do.call but without an error for unused arguments</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="inMinipage.html">inMinipage()</a></code> </p>
+        </td>
+        <td><p>Wrap cell text in minipage LaTeX environment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="inMinipage2.html">inMinipage2()</a></code> </p>
+        </td>
+        <td><p>Wrap cell text in minipage LaTeX environment</p></td>
       </tr><tr>
         
         <td>
@@ -180,13 +218,19 @@
         <td>
           <p><code><a href="test_cat.html">test_cat()</a></code> </p>
         </td>
-        <td><p>calculate a statistical test for a numerical variable.</p></td>
+        <td><p>Calculate a statistical test for a categorical variable.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="test_cont.html">test_cont()</a></code> </p>
         </td>
-        <td><p>calculate a statistical test for a numerical variable.</p></td>
+        <td><p>Calculate a statistical test for a numerical variable.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="write_in_tmpfile_for_cran.html">write_in_tmpfile_for_cran()</a></code> </p>
+        </td>
+        <td><p>Function that returns true in CRAN submission</p></td>
       </tr>
     </tbody>
     </table>
@@ -202,11 +246,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

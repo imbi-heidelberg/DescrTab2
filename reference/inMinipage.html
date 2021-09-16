@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data that is made to look like clinical data. — madeUpData • DescrTab2</title>
+<title>Wrap cell text in minipage LaTeX environment — inMinipage • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -38,9 +38,11 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
-<meta property="og:title" content="Data that is made to look like clinical data. — madeUpData" />
-<meta property="og:description" content="For teaching purposes" />
+<meta property="og:title" content="Wrap cell text in minipage LaTeX environment — inMinipage" />
+<meta property="og:description" content="Wrap cell text in minipage LaTeX environment" />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.13</span>
       </span>
     </div>
 
@@ -80,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,19 +97,33 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/maintenance_guide.html">DescrTab2 maintenance guidance</a>
+      <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
     </li>
     <li>
-      <a href="../articles/usage_guide.html">DescrTab2 usage guidance</a>
+      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
     </li>
     <li>
-      <a href="../articles/validation_report.html">Validation report</a>
+      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
+    </li>
+    <li>
+      <a href="../articles/usage_guide.html">Usage guidance</a>
+    </li>
+    <li>
+      <a href="../articles/validation_statement.html">Validation statement</a>
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/imbi-heidelberg/DescrTab2/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -121,29 +137,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data that is made to look like clinical data.</h1>
-    
-    <div class="hidden name"><code>madeUpData.Rd</code></div>
+    <h1>Wrap cell text in minipage LaTeX environment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
+    <div class="hidden name"><code>inMinipage.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>For teaching purposes</p>
+    <p>Wrap cell text in minipage LaTeX environment</p>
     </div>
 
-    <pre class="usage"><span class='no'>madeUpData</span></pre>
+    <pre class="usage"><span class='fu'>inMinipage</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>width</span><span class='op'>)</span></pre>
 
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 200 rows and 5 variables:</p><dl'>
-  <dt>group</dt><dd><p>control or treatment</p></dd>
-  <dt>gender</dt><dd><p>male or female</p></dd>
-  <dt>age</dt><dd><p>number between 15-90</p></dd>
-  <dt>blood_hg</dt><dd><p>Number between 50 and 150</p></dd>
-  <dt>QoL_score</dt><dd><p>sad, normal or happy</p></dd>
-  ...
-
-</dl>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>text to be placed in minipage</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>width adjustment
+https://stackoverflow.com/a/50892682</p></td>
+    </tr>
+    </table>
 
 
   </div>
@@ -157,11 +174,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

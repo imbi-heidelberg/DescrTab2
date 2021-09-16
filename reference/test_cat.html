@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>calculate a statistical test for a numerical variable. — test_cat • DescrTab2</title>
+<title>Calculate a statistical test for a categorical variable. — test_cat • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -38,9 +38,11 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
-<meta property="og:title" content="calculate a statistical test for a numerical variable. — test_cat" />
-<meta property="og:description" content="calculate a statistical test for a numerical variable." />
+<meta property="og:title" content="Calculate a statistical test for a categorical variable. — test_cat" />
+<meta property="og:description" content="Calculate a statistical test for a categorical variable." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.13</span>
       </span>
     </div>
 
@@ -80,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -98,21 +100,27 @@
       <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_html.html">Test choice</a>
+      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
+    </li>
+    <li>
+      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
       <a href="../articles/usage_guide.html">Usage guidance</a>
     </li>
     <li>
-      <a href="../articles/validation_report.html">Validation report</a>
+      <a href="../articles/validation_statement.html">Validation statement</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/imbi-heidelberg/DescrTab2/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,16 +137,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>calculate a statistical test for a numerical variable.</h1>
+    <h1>Calculate a statistical test for a categorical variable.</h1>
     <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
     <div class="hidden name"><code>test_cat.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>calculate a statistical test for a numerical variable.</p>
+    <p>Calculate a statistical test for a categorical variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>test_cat</span>(<span class='kw'>var</span>, group = <span class='kw'>NULL</span>, test_options = <span class='kw'>NULL</span>, test = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>test_cat</span><span class='op'>(</span>
+  <span class='va'>var</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  test_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  test <span class='op'>=</span> <span class='cn'>NULL</span>,
+  var_name <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +173,10 @@
       <th>test</th>
       <td><p>Name of a statistical test.</p></td>
     </tr>
+    <tr>
+      <th>var_name</th>
+      <td><p>Name of variable to be tested (only used in warning messages).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -166,8 +184,8 @@
     <p>A list of test test results.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>cat_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))
-<span class='fu'>test_cat</span>(<span class='kw'>cat_var</span>)
+    <pre class="examples"><div class='input'><span class='va'>cat_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>test_cat</span><span class='op'>(</span><span class='va'>cat_var</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; $p
 #&gt; [1] 1
 #&gt; 
@@ -186,11 +204,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lorenz Uhlmann, Csilla van Lunteren.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

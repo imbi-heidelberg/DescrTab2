@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prints all possible tests names — print_test_names • DescrTab2</title>
+<title>do.call but without an error for unused arguments — ignore_unused_args • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Prints all possible tests names — print_test_names" />
-<meta property="og:description" content="Prints all possible tests names" />
+<meta property="og:title" content="do.call but without an error for unused arguments — ignore_unused_args" />
+<meta property="og:description" content="do.call but without an error for unused arguments" />
 
 
 
@@ -137,40 +137,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prints all possible tests names</h1>
+    <h1>do.call but without an error for unused arguments</h1>
     <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
-    <div class="hidden name"><code>print_test_names.Rd</code></div>
+    <div class="hidden name"><code>ignore_unused_args.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Prints all possible tests names</p>
+    <p>do.call but without an error for unused arguments</p>
     </div>
 
-    <pre class="usage"><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ignore_unused_args</span><span class='op'>(</span><span class='va'>what</span>, <span class='va'>args</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>what</th>
+      <td><p>either a function or a non-empty character string naming the function to be called.</p></td>
+    </tr>
+    <tr>
+      <th>args</th>
+      <td><p>a list of arguments to the function call. The names attribute of args gives the argument names.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the names of all possible test names you can specify.</p>
+    <p>The result of the (evaluated) function call.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "Cochrans Q test"                     
-#&gt;  [2] "McNemars test"                       
-#&gt;  [3] "Chi-squared goodness-of-fit test"    
-#&gt;  [4] "Pearsons chi-squared test"           
-#&gt;  [5] "Exact McNemars test"                 
-#&gt;  [6] "Boschloos test"                      
-#&gt;  [7] "Friedman test"                       
-#&gt;  [8] "Wilcoxon two-sample signed-rank test"
-#&gt;  [9] "Wilcoxon one-sample signed-rank test"
-#&gt; [10] "Mann-Whitney U test"                 
-#&gt; [11] "Kruskal-Wallis one-way ANOVA"        
-#&gt; [12] "Students paired t-test"              
-#&gt; [13] "Mixed model ANOVA"                   
-#&gt; [14] "Students one-sample t-test"          
-#&gt; [15] "Welchs two-sample t-test"            
-#&gt; [16] "F-test (ANOVA)"                      </div></pre>
+    <pre class="examples"><div class='input'><span class='co'># works:</span>
+<span class='fu'>DescrTab2</span><span class='fu'>:::</span><span class='fu'>ignore_unused_args</span><span class='op'>(</span><span class='va'>chisq.test</span>,
+ <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, abc<span class='op'>=</span><span class='fl'>3</span> <span class='op'>)</span> <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; 
+#&gt; 	Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  structure(c(2L, 1L, 2L, 2L, 2L, 1L), .Label = c("0", "1"), class = "factor") and structure(c(1L, 2L, 2L, 1L, 2L, 1L), .Label = c("0", "1"), class = "factor")
+#&gt; X-squared = 0, df = 1, p-value = 1
+#&gt; </div><div class='input'>
+<span class='co'># would produce error:</span>
+<span class='co'># do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

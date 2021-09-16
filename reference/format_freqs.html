@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prints all possible tests names — print_test_names • DescrTab2</title>
+<title>Make pretty frequencies — format_freqs • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Prints all possible tests names — print_test_names" />
-<meta property="og:description" content="Prints all possible tests names" />
+<meta property="og:title" content="Make pretty frequencies — format_freqs" />
+<meta property="og:description" content="Make pretty frequencies" />
 
 
 
@@ -137,40 +137,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prints all possible tests names</h1>
+    <h1>Make pretty frequencies</h1>
     <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
-    <div class="hidden name"><code>print_test_names.Rd</code></div>
+    <div class="hidden name"><code>format_freqs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Prints all possible tests names</p>
+    <p>Make pretty frequencies</p>
     </div>
 
-    <pre class="usage"><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>format_freqs</span><span class='op'>(</span>
+  <span class='va'>numerator</span>,
+  denominator <span class='op'>=</span> <span class='fl'>1</span>,
+  absolute_relative_frequency_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"both"</span>, <span class='st'>"only_absolute"</span>, <span class='st'>"only_relative"</span><span class='op'>)</span>,
+  percent_accuracy <span class='op'>=</span> <span class='cn'>NULL</span>,
+  percent_suffix <span class='op'>=</span> <span class='st'>"%"</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>numerator</th>
+      <td><p>numeric</p></td>
+    </tr>
+    <tr>
+      <th>denominator</th>
+      <td><p>numeric</p></td>
+    </tr>
+    <tr>
+      <th>absolute_relative_frequency_mode</th>
+      <td><p>"both","only_absolute" or "only_relative"</p></td>
+    </tr>
+    <tr>
+      <th>percent_accuracy</th>
+      <td><p>NULL or numeric</p></td>
+    </tr>
+    <tr>
+      <th>percent_suffix</th>
+      <td><p>"%" or "" (or something else)</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the names of all possible test names you can specify.</p>
+    <p>Character element of formatted frequencies</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "Cochrans Q test"                     
-#&gt;  [2] "McNemars test"                       
-#&gt;  [3] "Chi-squared goodness-of-fit test"    
-#&gt;  [4] "Pearsons chi-squared test"           
-#&gt;  [5] "Exact McNemars test"                 
-#&gt;  [6] "Boschloos test"                      
-#&gt;  [7] "Friedman test"                       
-#&gt;  [8] "Wilcoxon two-sample signed-rank test"
-#&gt;  [9] "Wilcoxon one-sample signed-rank test"
-#&gt; [10] "Mann-Whitney U test"                 
-#&gt; [11] "Kruskal-Wallis one-way ANOVA"        
-#&gt; [12] "Students paired t-test"              
-#&gt; [13] "Mixed model ANOVA"                   
-#&gt; [14] "Students one-sample t-test"          
-#&gt; [15] "Welchs two-sample t-test"            
-#&gt; [16] "F-test (ANOVA)"                      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

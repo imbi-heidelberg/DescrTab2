@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prints all possible tests names — print_test_names • DescrTab2</title>
+<title>Changelog • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Prints all possible tests names — print_test_names" />
-<meta property="og:description" content="Prints all possible tests names" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -61,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -137,46 +136,110 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prints all possible tests names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
-    <div class="hidden name"><code>print_test_names.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>Prints all possible tests names</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span></pre>
-
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns the names of all possible test names you can specify.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "Cochrans Q test"                     
-#&gt;  [2] "McNemars test"                       
-#&gt;  [3] "Chi-squared goodness-of-fit test"    
-#&gt;  [4] "Pearsons chi-squared test"           
-#&gt;  [5] "Exact McNemars test"                 
-#&gt;  [6] "Boschloos test"                      
-#&gt;  [7] "Friedman test"                       
-#&gt;  [8] "Wilcoxon two-sample signed-rank test"
-#&gt;  [9] "Wilcoxon one-sample signed-rank test"
-#&gt; [10] "Mann-Whitney U test"                 
-#&gt; [11] "Kruskal-Wallis one-way ANOVA"        
-#&gt; [12] "Students paired t-test"              
-#&gt; [13] "Mixed model ANOVA"                   
-#&gt; [14] "Students one-sample t-test"          
-#&gt; [15] "Welchs two-sample t-test"            
-#&gt; [16] "F-test (ANOVA)"                      </div></pre>
+    <div id="version-2013" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.13">
+<a href="#version-2013" class="anchor"></a>Version 2.0.13<small> Unreleased </small>
+</h1>
+<ul>
+<li>LaTeX tables will now properly wrap the names of long factor levels and long variable names.</li>
+</ul>
+</div>
+    <div id="version-2012" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.12">
+<a href="#version-2012" class="anchor"></a>Version 2.0.12<small> Unreleased </small>
+</h1>
+<ul>
+<li>.mean now returns NA_real_ in cases were NaN was previously returned.</li>
+</ul>
+</div>
+    <div id="version-2011" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.11">
+<a href="#version-2011" class="anchor"></a>Version 2.0.11<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fixed a bug with paired data, where some of the pairs contain missing. In some cases, tests were not calculated and a misleading error message was produced.</li>
+</ul>
+</div>
+    <div id="version-2010" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.10">
+<a href="#version-2010" class="anchor"></a>Version 2.0.10<small> Unreleased </small>
+</h1>
+<ul>
+<li>Added the ability to suppress the “Total” column via the format_options(print_Total = FALSE) option.</li>
+<li>Exact McNemars test will now calculate confidence intervals for rate differences by leveraging the distribution of the test statistic.</li>
+<li>Using (non-exact) McNemars test will now produce a warning, that the confidence intervals for the differences in rates do not consider the paired structure of the data.</li>
+<li>Datasets containing variables which inherit from the “Date” class are now automatically converted to factors.</li>
+</ul>
+</div>
+    <div id="version-209" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.9">
+<a href="#version-209" class="anchor"></a>Version 2.0.9<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fixed a bug with print_CI = FALSE option in format_options.</li>
+</ul>
+</div>
+    <div id="version-208" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.8">
+<a href="#version-208" class="anchor"></a>Version 2.0.8<small> Unreleased </small>
+</h1>
+<ul>
+<li>“&amp;” signs in factor labels are now properly escaped in LaTeX code.</li>
+</ul>
+</div>
+    <div id="version-207" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.7">
+<a href="#version-207" class="anchor"></a>Version 2.0.7<small> 2021-03-15 </small>
+</h1>
+<ul>
+<li>Added the “combine_median_Q1_Q3” argument to format_options, which reshapes these summary statistics to “median (Q1, Q3)”.</li>
+</ul>
+</div>
+    <div id="version-206" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.6">
+<a href="#version-206" class="anchor"></a>Version 2.0.6<small> Unreleased </small>
+</h1>
+<ul>
+<li>Added the following members to format_options: percent_suffix, row_percent, Nmiss_row_percent and absolute_relative_frequency_mode. They can be used to control control how absolute and relative frequencies are displayed.</li>
+</ul>
+</div>
+    <div id="version-205" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.5">
+<a href="#version-205" class="anchor"></a>Version 2.0.5<small> Unreleased </small>
+</h1>
+<ul>
+<li>Added documentation for confidence intervals.</li>
+</ul>
+</div>
+    <div id="version-204" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.4">
+<a href="#version-204" class="anchor"></a>Version 2.0.4<small> Unreleased </small>
+</h1>
+<ul>
+<li>All tests that previously used continuity correction by default do <em>not</em> use continuity correction anymore.</li>
+<li>Added the <code>additional_test_args</code> argument to <code>test_options</code>. This lets the user pass arguments to the underlying test functions, e.g. <code>additional_test_args = list(correct=TRUE)</code> to request continuity correction in <code>chisq.test</code>.</li>
+</ul>
+</div>
+    <div id="version-203" class="section level1">
+<h1 class="page-header" data-toc-text="2.0.3">
+<a href="#version-203" class="anchor"></a>Version 2.0.3<small> 2020-12-16 </small>
+</h1>
+<ul>
+<li>First cran release.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
