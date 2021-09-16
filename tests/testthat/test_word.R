@@ -1,4 +1,3 @@
-context("Output flextables in word_document .Rmd files")
 
 
 

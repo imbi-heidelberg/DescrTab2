@@ -1,5 +1,3 @@
-context("Test input that should produce errors.")
-
 library(magrittr)
 library(tibble)
 

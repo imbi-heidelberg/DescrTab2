@@ -1,5 +1,3 @@
-context("Text if edge cases are handled properly")
-
 library(dplyr)
 
 dat <-
@@ -16,20 +14,21 @@ test_that("No test is performed when there is only one nonmissing observation in
 dat <- iris %>% mutate(cat= factor(rep(c("a", "b", "c"), 50)) )
 test_that("No test is calculated if a test is requested that is not implemented",
           {
-            expect_error(descr(dat, "Species", test_options = list(exact=TRUE, paired=TRUE, indices=c(1:50, 1:50, 1:50))), NA)
-            expect_error(descr(dat, "Species", test_options = list(exact=TRUE, paired=FALSE)), NA)
-                         expect_error(descr(dat, "Species", test_options = list(exact=FALSE, paired=TRUE, indices=c(1:50, 1:50, 1:50))), NA)
+            expect_error(descr(dat, "Species", test_options = list(exact=TRUE, paired=TRUE, indices=c(1:50, 1:50, 1:50)),
+                               format_options=list(print_Total=FALSE)), NA)
+            expect_error(descr(dat, "Species", test_options = list(exact=TRUE, paired=FALSE),
+                               format_options=list(print_Total=FALSE)), NA)
+                         expect_error(descr(dat, "Species", test_options = list(exact=FALSE, paired=TRUE, indices=c(1:50, 1:50, 1:50)),
+                                            format_options=list(print_Total=FALSE)), NA)
           }
           )
-
-
 
 
 dat <- tibble(a=c("a", ""), b=factor(c("a", "")))
 dat2 <- tibble(a=c("a", "(empty)"), b=factor(c("a", "")))
 test_that("Empty strings are handled correctly",
           {
-            expect_warning(descr(dat))
+            expect_warning(expect_warning(expect_warning(descr(dat))))
             expect_error(descr(dat2))
           }
 )

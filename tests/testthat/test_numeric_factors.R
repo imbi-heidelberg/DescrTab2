@@ -1,5 +1,3 @@
-context("Test if continuous tests and summary statistics work for factors.")
-
 library(magrittr)
 
 dat <- iris[iris$Species != "setosa", ]

@@ -1,4 +1,3 @@
-context("Output tables to the console")
 library(magrittr)
 
 

@@ -1,4 +1,3 @@
-context("Test various options")
 library(magrittr)
 
 dat <- iris[, c("Species", "Sepal.Length")]

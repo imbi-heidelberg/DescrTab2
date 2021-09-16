@@ -1,4 +1,3 @@
-context("Test miscellaneous functions")
 library(magrittr)
 
 

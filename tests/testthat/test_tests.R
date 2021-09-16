@@ -1,4 +1,3 @@
-context("Test statistical tests that produce p-values.")
 options(print_format = "console")
 library(magrittr)
 
