@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • DescrTab2devel</title>
+<title>Load LaTeX packages — .onLoad • DescrTab2devel</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Load LaTeX packages — .onLoad" />
+<meta property="og:description" content="Load LaTeX packages" />
 
 
 
@@ -60,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -134,114 +135,28 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Load LaTeX packages</h1>
+    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/DescrTab2.R'><code>R/DescrTab2.R</code></a></small>
+    <div class="hidden name"><code>dot-onLoad.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Load LaTeX packages</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>.onLoad</span><span class='op'>(</span>libname <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"kableExtra"</span><span class='op'>)</span>, pkgname <span class='op'>=</span> <span class='st'>"kableExtra"</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="descr.html">descr()</a></code> </p>
-        </td>
-        <td><p>Calculate descriptive statistics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="DescrTab2.html">DescrTab2</a></code> </p>
-        </td>
-        <td><p>DescrTab2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dot-onLoad.html">.onLoad()</a></code> </p>
-        </td>
-        <td><p>Load LaTeX packages</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="farrington.manning.html">farrington.manning()</a></code> </p>
-        </td>
-        <td><p>Farrington-Manning test for rate difference</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="format_freqs.html">format_freqs()</a></code> </p>
-        </td>
-        <td><p>Make pretty frequencies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ignore_unused_args.html">ignore_unused_args()</a></code> </p>
-        </td>
-        <td><p>do.call but without an error for unused arguments</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inMinipage.html">inMinipage()</a></code> </p>
-        </td>
-        <td><p>Wrap cell text in minipage LaTeX environment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inMinipage2.html">inMinipage2()</a></code> </p>
-        </td>
-        <td><p>Wrap cell text in minipage LaTeX environment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.DescrList.html">print(<i>&lt;DescrList&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>S3 override for print function for DescrList objects.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print_test_names.html">print_test_names()</a></code> </p>
-        </td>
-        <td><p>Prints all possible tests names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="test_cat.html">test_cat()</a></code> </p>
-        </td>
-        <td><p>Calculate a statistical test for a categorical variable.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="test_cont.html">test_cont()</a></code> </p>
-        </td>
-        <td><p>Calculate a statistical test for a numerical variable.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="write_in_tmpfile_for_cran.html">write_in_tmpfile_for_cran()</a></code> </p>
-        </td>
-        <td><p>Function that returns true in CRAN submission</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Thanks to Hao Zhu and his package <a href='https://rdrr.io/pkg/kableExtra/man/kableExtra-package.html'>kableExtra</a>.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Hao Zhu</p>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
