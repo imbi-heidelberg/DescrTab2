@@ -6,6 +6,7 @@ dat$cat_var <- c(1, 2) %>% sample(100, TRUE) %>% factor()
 
 
 test_that("summary statistics for factors work",
+          {
           expect_error(
             descr(
               dat,
@@ -54,7 +55,8 @@ test_that("summary statistics for factors work",
             ) %>% print(silent = TRUE)
             ,
             NA
-          ))
+          )
+            })
 
 
 

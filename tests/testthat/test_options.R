@@ -57,8 +57,8 @@ test_that("Confidence intervals",
 
 
 test_that("Ommit summary stats",
-          expect_error(
-            descr(
+          {
+            expect_error(descr(
               dat,
               "Species",
               summary_stats_cont = list(
@@ -73,8 +73,8 @@ test_that("Ommit summary stats",
                   DescrTab2:::.max
               )
             ) %>% print(silent = TRUE),
-            NA
-          ))
+            NA)
+          })
 
 test_that("No p",
           {
@@ -158,7 +158,9 @@ test_that("Per-variable options",
 
 
 test_that("print_test_names works",
-          expect_type(print_test_names(), "character"))
+          {
+            expect_type(print_test_names(), "character")
+          })
 
 dat2 <- iris
 dat2$cat_var <- c(1, 2) %>% sample(150, TRUE) %>% factor()
@@ -184,16 +186,16 @@ test_that("cat_summary_stats works",
 
 
 test_that("combine_mean_sd works",
-          expect_error(descr(
-            iris, format_options = c(combine_mean_sd = TRUE)
-          ) %>% print(silent = TRUE),
-          NA))
+          {
+            expect_error(descr(iris, format_options = c(combine_mean_sd = TRUE)) %>% print(silent = TRUE),
+                         NA)
+          })
 
 test_that("combine_median_Q1_Q3 works",
-          expect_error(descr(
-            iris, format_options = c(combine_median_Q1_Q3 = TRUE)
-          ) %>% print(silent = TRUE),
-          NA))
+          {
+            expect_error(descr(iris, format_options = c(combine_median_Q1_Q3 = TRUE)) %>% print(silent = TRUE),
+                         NA)
+          })
 
 test_that("warnings about unused variable names work",
           {
@@ -214,7 +216,9 @@ test_that("function list misconfiguration leads to error",
 )
 
 test_that("check if print_red_na option works",
-          expect_type(capture.output(descr(iris) %>% print(print_format="numeric", print_red_NA=TRUE)),"character") )
+          {
+          expect_type(capture.output(descr(iris) %>% print(print_format="numeric", print_red_NA=TRUE)),"character")
+          })
 
 test_that("format_options in var_options is properly filled with default arguments",
           {

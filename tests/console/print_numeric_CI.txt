@@ -42,7 +42,7 @@
 38    Q3           1.5       2.3     2     NA        <NA>        NA      NA     
 39    min          1         1.4     1     NA        <NA>        NA      NA     
 40    max          1.8       2.5     2.5   NA        <NA>        NA      NA     
-41  cat_var       NA        NA      NA      1   e+ 0 Pearsons~   -0.196   0.196 
+41  cat_var       NA        NA      NA      1.00e+ 0 Pearsons~   -0.196   0.196 
 42    a           25        25      50     NA        <NA>        NA      NA     
 43    b           25        25      50     NA        <NA>        NA      NA     
 
