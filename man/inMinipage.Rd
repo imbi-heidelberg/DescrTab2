@@ -2,10 +2,16 @@
 % Please edit documentation in R/descr.R
 \name{inMinipage}
 \alias{inMinipage}
-\title{Wrap cell text in minipage environment}
+\title{Wrap cell text in minipage LaTeX environment}
 \usage{
 inMinipage(x, width)
 }
+\arguments{
+\item{x}{text to be placed in minipage}
+
+\item{width}{width adjustment
+https://stackoverflow.com/a/50892682}
+}
 \description{
-https://stackoverflow.com/a/50892682
+Wrap cell text in minipage LaTeX environment
 }
