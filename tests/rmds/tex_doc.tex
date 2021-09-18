@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{article}
+\title{test\_tex}
+\author{}
+\date{\vspace{-2.5em}}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -103,13 +107,9 @@
 \usepackage{booktabs}
 \usepackage{setspace}
 \usepackage{array}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-
-\title{test\_tex}
-\author{}
-\date{\vspace{-2.5em}}
 
 \begin{document}
 \maketitle
@@ -124,64 +124,170 @@
 \end{Highlighting}
 \end{Shaded}
 
-\needspace{2cm}
-
-\begin{longtable}[t]{>{\raggedright\arraybackslash}p{7em}cc}
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=150) & \\*
-\midrule
-\endfirsthead
-\multicolumn{3}{@{}l}{\textit{(continued)}}\\*
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=150) & \\*
-\midrule
-\endhead
-
-\endfoot
-\bottomrule
-\endlastfoot
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{3} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.83 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 5.1 -- 6.4 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{2} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.1 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.44 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 2.8 -- 3.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{1} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 4.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 1.6 -- 5.1 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 1.2 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.76 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 1.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 0.3 -- 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Species\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}setosa\vspace{0.75ex}\end{minipage} & 50 (33\%) & \textgreater0.999\textsuperscript{chi1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}versicolor\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}virginica\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*
-\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
-\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
-\end{longtable}
+\begin{verbatim}
+## <table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+##  <thead>
+## <tr>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+## </tr>
+##   <tr>
+##    <th style="text-align:left;">  </th>
+##    <th style="text-align:center;"> (N=150) </th>
+##    <th style="text-align:center;">  </th>
+##   </tr>
+##  </thead>
+## <tbody>
+##   <tr grouplength="6"><td colspan="3" style="border-bottom: 1px solid;"><strong>Sepal.Length</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>tt1</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 5.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.83 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 5.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 5.1 -- 6.4 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 4.3 -- 7.9 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="6"><td colspan="3" style="border-bottom: 1px solid;"><strong>Sepal.Width</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>tt1</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 3.1 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.44 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 2.8 -- 3.3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 2 -- 4.4 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="6"><td colspan="3" style="border-bottom: 1px solid;"><strong>Petal.Length</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>tt1</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 3.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 1.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 4.3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 1.6 -- 5.1 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 1 -- 6.9 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="6"><td colspan="3" style="border-bottom: 1px solid;"><strong>Petal.Width</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>tt1</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 1.2 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.76 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 1.3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 0.3 -- 1.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 0.1 -- 2.5 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="3"><td colspan="3" style="border-bottom: 1px solid;"><strong>Species</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> setosa </td>
+##    <td style="text-align:center;"> 50 (33%) </td>
+##    <td style="text-align:center;"> &gt;0.999<sup>chi1</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> versicolor </td>
+##    <td style="text-align:center;"> 50 (33%) </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> virginica </td>
+##    <td style="text-align:center;"> 50 (33%) </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+## </tbody>
+## <tfoot>
+## <tr><td style="padding: 0; " colspan="100%">
+## <sup>tt1</sup> Students one-sample t-test</td></tr>
+## <tr><td style="padding: 0; " colspan="100%">
+## <sup>chi1</sup> Chi-squared goodness-of-fit test</td></tr>
+## </tfoot>
+## </table>
+\end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -194,180 +300,227 @@
 \end{Highlighting}
 \end{Shaded}
 
-\needspace{2cm}
-
-\begin{longtable}[t]{>{\raggedright\arraybackslash}p{13em}ccccc}
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{My custom group label} & \multicolumn{1}{c}{versicolor} & \multicolumn{1}{c}{virginica} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=50) & (N=50) & (N=150) &  & \\*
-\midrule
-\endfirsthead
-\multicolumn{6}{@{}l}{\textit{(continued)}}\\*
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{My custom group label} & \multicolumn{1}{c}{versicolor} & \multicolumn{1}{c}{virginica} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=50) & (N=50) & (N=150) &  & \\*
-\midrule
-\endhead
-
-\endfoot
-\bottomrule
-\endlastfoot
-\addlinespace[0.5cm]
-\multicolumn{6}{l}{\textbf{\begin{minipage}[t]{13em}\raggedright My custom variable label\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 50 & 50 & 50 & 150 & \vphantom{3} \textless0.001\textsuperscript{F}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 5 & 5.9 & 6.6 & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.35 & 0.52 & 0.64 & 0.83 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 5 & 5.9 & 6.5 & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 4.8 -- 5.2 & 5.6 -- 6.3 & 6.2 -- 6.9 & 5.1 -- 6.4 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 4.3 -- 5.8 & 4.9 -- 7 & 4.9 -- 7.9 & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{6}{l}{\textbf{\begin{minipage}[t]{13em}\raggedright Sepal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 50 & 50 & 50 & 150 & \vphantom{2} \textless0.001\textsuperscript{F}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.4 & 2.8 & 3 & 3.1 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.38 & 0.31 & 0.32 & 0.44 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 3.4 & 2.8 & 3 & 3 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 3.2 -- 3.7 & 2.5 -- 3 & 2.8 -- 3.2 & 2.8 -- 3.3 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 2.3 -- 4.4 & 2 -- 3.4 & 2.2 -- 3.8 & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{6}{l}{\textbf{\begin{minipage}[t]{13em}\raggedright Petal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 50 & 50 & 50 & 150 & \vphantom{1} \textless0.001\textsuperscript{F}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 1.5 & 4.3 & 5.6 & 3.8 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.17 & 0.47 & 0.55 & 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 1.5 & 4.3 & 5.5 & 4.3 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 1.4 -- 1.6 & 4 -- 4.6 & 5.1 -- 5.9 & 1.6 -- 5.1 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 1 -- 1.9 & 3 -- 5.1 & 4.5 -- 6.9 & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
-\addlinespace[0.5cm]
-\multicolumn{6}{l}{\textbf{\begin{minipage}[t]{13em}\raggedright Petal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 50 & 50 & 50 & 150 & \textless0.001\textsuperscript{F}\\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 0.25 & 1.3 & 2 & 1.2 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.11 & 0.2 & 0.27 & 0.76 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 0.2 & 1.3 & 2 & 1.3 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 0.2 -- 0.3 & 1.2 -- 1.5 & 1.8 -- 2.3 & 0.3 -- 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{12em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 0.1 -- 0.6 & 1 -- 1.8 & 1.4 -- 2.5 & 0.1 -- 2.5 & \\*
-\multicolumn{6}{l}{\rule{0pt}{1em}\textsuperscript{F} F-test (ANOVA)}\\*
-\end{longtable}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{descr}\NormalTok{(iris) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{capture.output}\NormalTok{(}\FunctionTok{print}\NormalTok{(.)) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ knitr}\SpecialCharTok{::}\FunctionTok{raw\_latex}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\needspace{2cm}
-
-\begin{longtable}[t]{>{\raggedright\arraybackslash}p{7em}cc}
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=150) & \\*
-\midrule
-\endfirsthead
-\multicolumn{3}{@{}l}{\textit{(continued)}}\\*
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=150) & \\*
-\midrule
-\endhead
-
-\endfoot
-\bottomrule
-\endlastfoot
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{3} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.83 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 5.1 -- 6.4 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{2} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.1 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.44 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 2.8 -- 3.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{1} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 4.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 1.6 -- 5.1 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 1.2 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.76 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 1.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 0.3 -- 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Species\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}setosa\vspace{0.75ex}\end{minipage} & 50 (33\%) & \textgreater0.999\textsuperscript{chi1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}versicolor\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}virginica\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*
-\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
-\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
-\end{longtable}
-\needspace{2cm}
-
-\begin{longtable}[t]{>{\raggedright\arraybackslash}p{7em}cc}
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=150) & \\*
-\midrule
-\endfirsthead
-\multicolumn{3}{@{}l}{\textit{(continued)}}\\*
-\toprule
-\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\*
- & (N=150) & \\*
-\midrule
-\endhead
-
-\endfoot
-\bottomrule
-\endlastfoot
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{3} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.83 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 5.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 5.1 -- 6.4 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{2} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.1 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.44 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 2.8 -- 3.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Length\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{1} \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 4.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 1.6 -- 5.1 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Width\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \textless0.001\textsuperscript{tt1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 1.2 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.76 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 1.3 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 0.3 -- 1.8 & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}
-\addlinespace[0.5cm]
-\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Species\end{minipage}}}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}setosa\vspace{0.75ex}\end{minipage} & 50 (33\%) & \textgreater0.999\textsuperscript{chi1}\\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}versicolor\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*
-\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}virginica\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*
-\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*
-\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*
-\end{longtable}
+\begin{verbatim}
+## <table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+##  <thead>
+## <tr>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">My custom group label</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">versicolor</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">virginica</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+## <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+## </tr>
+##   <tr>
+##    <th style="text-align:left;">  </th>
+##    <th style="text-align:center;"> (N=50) </th>
+##    <th style="text-align:center;"> (N=50) </th>
+##    <th style="text-align:center;"> (N=150) </th>
+##    <th style="text-align:center;">  </th>
+##    <th style="text-align:center;">  </th>
+##   </tr>
+##  </thead>
+## <tbody>
+##   <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>My custom variable label</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>F</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 5 </td>
+##    <td style="text-align:center;"> 5.9 </td>
+##    <td style="text-align:center;"> 6.6 </td>
+##    <td style="text-align:center;"> 5.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.35 </td>
+##    <td style="text-align:center;"> 0.52 </td>
+##    <td style="text-align:center;"> 0.64 </td>
+##    <td style="text-align:center;"> 0.83 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 5 </td>
+##    <td style="text-align:center;"> 5.9 </td>
+##    <td style="text-align:center;"> 6.5 </td>
+##    <td style="text-align:center;"> 5.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 4.8 -- 5.2 </td>
+##    <td style="text-align:center;"> 5.6 -- 6.3 </td>
+##    <td style="text-align:center;"> 6.2 -- 6.9 </td>
+##    <td style="text-align:center;"> 5.1 -- 6.4 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 4.3 -- 5.8 </td>
+##    <td style="text-align:center;"> 4.9 -- 7 </td>
+##    <td style="text-align:center;"> 4.9 -- 7.9 </td>
+##    <td style="text-align:center;"> 4.3 -- 7.9 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>Sepal.Width</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>F</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 3.4 </td>
+##    <td style="text-align:center;"> 2.8 </td>
+##    <td style="text-align:center;"> 3 </td>
+##    <td style="text-align:center;"> 3.1 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.38 </td>
+##    <td style="text-align:center;"> 0.31 </td>
+##    <td style="text-align:center;"> 0.32 </td>
+##    <td style="text-align:center;"> 0.44 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 3.4 </td>
+##    <td style="text-align:center;"> 2.8 </td>
+##    <td style="text-align:center;"> 3 </td>
+##    <td style="text-align:center;"> 3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 3.2 -- 3.7 </td>
+##    <td style="text-align:center;"> 2.5 -- 3 </td>
+##    <td style="text-align:center;"> 2.8 -- 3.2 </td>
+##    <td style="text-align:center;"> 2.8 -- 3.3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 2.3 -- 4.4 </td>
+##    <td style="text-align:center;"> 2 -- 3.4 </td>
+##    <td style="text-align:center;"> 2.2 -- 3.8 </td>
+##    <td style="text-align:center;"> 2 -- 4.4 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>Petal.Length</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>F</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 1.5 </td>
+##    <td style="text-align:center;"> 4.3 </td>
+##    <td style="text-align:center;"> 5.6 </td>
+##    <td style="text-align:center;"> 3.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.17 </td>
+##    <td style="text-align:center;"> 0.47 </td>
+##    <td style="text-align:center;"> 0.55 </td>
+##    <td style="text-align:center;"> 1.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 1.5 </td>
+##    <td style="text-align:center;"> 4.3 </td>
+##    <td style="text-align:center;"> 5.5 </td>
+##    <td style="text-align:center;"> 4.3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 1.4 -- 1.6 </td>
+##    <td style="text-align:center;"> 4 -- 4.6 </td>
+##    <td style="text-align:center;"> 5.1 -- 5.9 </td>
+##    <td style="text-align:center;"> 1.6 -- 5.1 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 1 -- 1.9 </td>
+##    <td style="text-align:center;"> 3 -- 5.1 </td>
+##    <td style="text-align:center;"> 4.5 -- 6.9 </td>
+##    <td style="text-align:center;"> 1 -- 6.9 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>Petal.Width</strong></td></tr>
+## <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 50 </td>
+##    <td style="text-align:center;"> 150 </td>
+##    <td style="text-align:center;"> &lt;0.001<sup>F</sup> </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+##    <td style="text-align:center;"> 0.25 </td>
+##    <td style="text-align:center;"> 1.3 </td>
+##    <td style="text-align:center;"> 2 </td>
+##    <td style="text-align:center;"> 1.2 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+##    <td style="text-align:center;"> 0.11 </td>
+##    <td style="text-align:center;"> 0.2 </td>
+##    <td style="text-align:center;"> 0.27 </td>
+##    <td style="text-align:center;"> 0.76 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+##    <td style="text-align:center;"> 0.2 </td>
+##    <td style="text-align:center;"> 1.3 </td>
+##    <td style="text-align:center;"> 2 </td>
+##    <td style="text-align:center;"> 1.3 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+##    <td style="text-align:center;"> 0.2 -- 0.3 </td>
+##    <td style="text-align:center;"> 1.2 -- 1.5 </td>
+##    <td style="text-align:center;"> 1.8 -- 2.3 </td>
+##    <td style="text-align:center;"> 0.3 -- 1.8 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+##   <tr>
+##    <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+##    <td style="text-align:center;"> 0.1 -- 0.6 </td>
+##    <td style="text-align:center;"> 1 -- 1.8 </td>
+##    <td style="text-align:center;"> 1.4 -- 2.5 </td>
+##    <td style="text-align:center;"> 0.1 -- 2.5 </td>
+##    <td style="text-align:center;">  </td>
+##   </tr>
+## </tbody>
+## <tfoot><tr><td style="padding: 0; " colspan="100%">
+## <sup>F</sup> F-test (ANOVA)</td></tr></tfoot>
+## </table>
+\end{verbatim}
 
 \end{document}

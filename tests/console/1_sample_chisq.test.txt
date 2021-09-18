@@ -1,10 +1,47 @@
 > descr(dat) %>% print()
-  Variables       Total        p        Test                              
-1  gender                                                                 
-2    F             1557 (56%)   <0.001   Chi-squared goodness-of-fit test 
-3    M             1200 (44%)                                             
-4  party                                                                  
-5    Democrat      1246 (45%)   <0.001   Chi-squared goodness-of-fit test 
-6    Independent   566 (21%)                                              
-7    Republican    945 (34%)                                              
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> (N=2757) </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: 1px solid;"><strong>gender</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> F </td>
+   <td style="text-align:center;"> 1557 (56%) </td>
+   <td style="text-align:center;"> &lt;0.001<sup>chi1</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> M </td>
+   <td style="text-align:center;"> 1200 (44%) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr grouplength="3"><td colspan="3" style="border-bottom: 1px solid;"><strong>party</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Democrat </td>
+   <td style="text-align:center;"> 1246 (45%) </td>
+   <td style="text-align:center;"> &lt;0.001<sup>chi1</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Independent </td>
+   <td style="text-align:center;"> 566 (21%) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Republican </td>
+   <td style="text-align:center;"> 945 (34%) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup>chi1</sup> Chi-squared goodness-of-fit test</td></tr></tfoot>
+</table>
 

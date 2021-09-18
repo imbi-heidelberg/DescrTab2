@@ -3,12 +3,69 @@
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
-  Variables     `Round Out`  `Narrow Angle` `Wide Angle` p       Test           
-1  var                                                                          
-2    N           22           22             22           0.003   Friedman test 
-3    mean        5.6          5.5            5.5                                
-4    sd          0.27         0.26           0.27                               
-5    median      5.5          5.5            5.4                                
-6    Q1 - Q3     5.5 -- 5.7   5.5 -- 5.6     5.4 -- 5.6                         
-7    min - max   5.1 -- 6.3   5 -- 6.3       5 -- 6.3                           
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Round Out</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Narrow Angle</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Wide Angle</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> (N=22) </th>
+   <th style="text-align:center;"> (N=22) </th>
+   <th style="text-align:center;"> (N=22) </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="6"><td colspan="5" style="border-bottom: 1px solid;"><strong>var</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+   <td style="text-align:center;"> 22 </td>
+   <td style="text-align:center;"> 22 </td>
+   <td style="text-align:center;"> 22 </td>
+   <td style="text-align:center;"> 0.003<sup>Frie</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+   <td style="text-align:center;"> 5.6 </td>
+   <td style="text-align:center;"> 5.5 </td>
+   <td style="text-align:center;"> 5.5 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+   <td style="text-align:center;"> 0.27 </td>
+   <td style="text-align:center;"> 0.26 </td>
+   <td style="text-align:center;"> 0.27 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+   <td style="text-align:center;"> 5.5 </td>
+   <td style="text-align:center;"> 5.5 </td>
+   <td style="text-align:center;"> 5.4 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+   <td style="text-align:center;"> 5.5 -- 5.7 </td>
+   <td style="text-align:center;"> 5.5 -- 5.6 </td>
+   <td style="text-align:center;"> 5.4 -- 5.6 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+   <td style="text-align:center;"> 5.1 -- 6.3 </td>
+   <td style="text-align:center;"> 5 -- 6.3 </td>
+   <td style="text-align:center;"> 5 -- 6.3 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup>Frie</sup> Friedman test</td></tr></tfoot>
+</table>
 

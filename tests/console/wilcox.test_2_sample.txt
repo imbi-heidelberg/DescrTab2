@@ -1,11 +1,76 @@
 > descr(dat_wilcox.test_2_sample, "group", test_options = c(nonparametric = TRUE)) %>%
 +   print()
-  Variables    Trt        Ctrl       Total      p      Test           CI        
-1  var                                                                          
-2    N          10         5          15         0.25~  Mann-Whitney~  HL CI    
-3    mean       1.3        0.98       1.2                              [-0.15, ~
-4    sd         0.44       0.2        0.4                                       
-5    median     1.4        0.9        1.1                                       
-6    Q1 - Q3    0.83 -- ~  0.88 -- ~  0.83 -- ~                                 
-7    min - ma~  0.73 -- ~  0.74 -- ~  0.73 -- ~                                 
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Trt</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Ctrl</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">CI</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> (N=10) </th>
+   <th style="text-align:center;"> (N=5) </th>
+   <th style="text-align:center;"> (N=15) </th>
+   <th style="text-align:center;">  </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>var</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+   <td style="text-align:center;"> 10 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 15 </td>
+   <td style="text-align:center;"> 0.254<sup>MWU</sup> </td>
+   <td style="text-align:center;"> HL CI </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+   <td style="text-align:center;"> 1.3 </td>
+   <td style="text-align:center;"> 0.98 </td>
+   <td style="text-align:center;"> 1.2 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> [-0.15, 0.76] </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+   <td style="text-align:center;"> 0.44 </td>
+   <td style="text-align:center;"> 0.2 </td>
+   <td style="text-align:center;"> 0.4 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+   <td style="text-align:center;"> 1.4 </td>
+   <td style="text-align:center;"> 0.9 </td>
+   <td style="text-align:center;"> 1.1 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+   <td style="text-align:center;"> 0.83 -- 1.6 </td>
+   <td style="text-align:center;"> 0.88 -- 1.1 </td>
+   <td style="text-align:center;"> 0.83 -- 1.5 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+   <td style="text-align:center;"> 0.73 -- 1.9 </td>
+   <td style="text-align:center;"> 0.74 -- 1.2 </td>
+   <td style="text-align:center;"> 0.73 -- 1.9 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup>MWU</sup> Mann-Whitney U test</td></tr></tfoot>
+</table>
 

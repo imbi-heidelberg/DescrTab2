@@ -1,4 +1,3 @@
-options(print_format = "console")
 library(magrittr)
 
 
@@ -317,23 +316,26 @@ test_that("mcnemar.test works",
           )))})
 
 test_that("exact2x2 mcnemar test works",
+          {
           expect_error(descr(
             dat, "group", test_options = list(
               paired = TRUE,
               exact = TRUE,
               indices = c(1:1600, 1:1600)
-            )
+            ),
+            format_options = list(print_Total = FALSE)
           ),
-          NA))
+          NA)})
 
 test_that("exact2x2 mcnemar test errors if you forget to specify indices",
+          {
           expect_message(descr(
             dat, "group", test_options = list(
               paired = TRUE,
               exact = T
-            )
-          ) %>%
-            print(silent = TRUE)))
+            ),
+            format_options = list(print_Total = FALSE)
+          ))})
 
 
 
@@ -380,22 +382,35 @@ dat <-
 
 
 test_that("chisq.test 1 sample test works",
+          {
           expect_error(descr(dat) %>%
                          print(silent = TRUE),
-                       NA))
+                       NA)})
 
 test_that("chisq.test more sample test works",
-          expect_error(descr(dat, "gender") %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+          expect_error(descr(dat, "gender"),
+                       NA)})
 
 
-verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/1_sample_chisq.test.txt"),
-              descr(dat)
-              %>% print())
+verify_output(
+  ifelse(
+    isTRUE(write_in_tmpfile_for_cran()),
+    tempfile(),
+    "../console/1_sample_chisq.test.txt"
+  ),
+  descr(dat)
+  %>% print()
+)
 
-verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/more_sample_chisq.test.txt"),
-              descr(dat, "gender") %>% print())
+verify_output(
+  ifelse(
+    isTRUE(write_in_tmpfile_for_cran()),
+    tempfile(),
+    "../console/more_sample_chisq.test.txt"
+  ),
+  descr(dat, "gender") %>% print()
+)
 
 
 ## ----t.test, results='asis'-------------------------------------------------------------------------
@@ -404,82 +419,96 @@ dat <- sleep[, c("extra", "group")]
 
 
 test_that("t.test 1 sample test works",
-          expect_error(descr(dat[, "extra"]) %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat[, "extra"]) %>%
+                           print(silent = TRUE),
+                         NA)
+          })
 
 test_that("t.test 1 sample works",
-          expect_error(
-            descr(
+          {
+            expect_error(descr(
               dat[, "extra", drop = F] %>% mutate(extra = factor(extra)),
               test_options = list(test_override = "Students one-sample t-test")
             ) %>%
               print(silent = TRUE),
-            NA
-          ))
+            NA)
+          })
 
 test_that("t.test 2 sample works",
-          expect_error(descr(dat, "group") %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat, "group"),
+                         NA)
+          })
 
 test_that("t.test 2 sample works if specifically requrested",
-          expect_error(descr(dat, "group", var_options=list(extra=list(test_override = "Welchs two-sample t-test"))) %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat, "group", var_options = list(
+              extra = list(test_override = "Welchs two-sample t-test")
+            )) %>%
+              print(silent = TRUE),
+            NA)
+          })
+
+test_that("t.test 2 sample for factor variables works",
+          {
+            expect_error(descr(
+              dat %>% mutate(extra = factor(extra)),
+              "group",
+              test_options = list(
+                paired = TRUE,
+                indices = rep(1:10, 2),
+                test_override  = "Welchs two-sample t-test"
+              ),
+              format_options = list(print_Total = FALSE)
+            ),
+            NA)
+          })
 
 
-test_that(
-  "t.test 2 sample for factor variables works",
-  expect_error(
-    descr(
-      dat %>% mutate(extra = factor(extra)),
-      "group",
-      test_options = list(
-        paired = TRUE,
-        indices = rep(1:10, 2),
-        test_override  = "Welchs two-sample t-test"
-      )
-    ) %>%
-      print(silent = TRUE),
-    NA
-  )
-)
-
-
-test_that("t.test paired 2 sample test works",
-          expect_error(descr(
-            dat, "group", test_options = list(paired = TRUE, indices = rep(1:10, 2))
-          ) %>%
-            print(silent = TRUE),
-          NA))
 
 test_that("t.test paired 2 sample test works",
+          {
+            expect_error(descr(
+              dat,
+              "group",
+              test_options = list(
+                paired = TRUE,
+                indices = rep(1:10, 2)
+              ),
+              format_options = list(print_Total = FALSE)
+            ), NA)
+          })
+
+test_that("t.test paired 2 sample test works",
+          {
           expect_error(
             descr(
               dat %>% mutate(indices = rep(1:10, 2)),
               "group",
-              test_options = list(paired = TRUE, indices = "indices")
-            ) %>%
-              print(silent = TRUE),
+              test_options = list(paired = TRUE, indices = "indices"),
+              format_options = list(print_Total = FALSE)
+            ),
             NA
-          ))
+          )})
 
 
 test_that("t.test paired 2 sample test works with missings",
+          {
           expect_warning(
             descr(
               dat %>% mutate(indices = rep(1:10, 2)) %>% mutate(extra = if_else(row_number()==1, NA_real_, extra )),
               "group",
-              test_options = list(paired = TRUE, indices = "indices")
-            ) %>%
-              print(silent = TRUE)
-          ))
+              test_options = list(paired = TRUE, indices = "indices"),
+              format_options = list(print_Total = FALSE)
+            )
+          )})
 
 
 
 test_that(
   "t.test paired 2 sample test for factor variables works",
+  {
   expect_error(
     descr(
       dat %>% mutate(extra = factor(extra)),
@@ -488,15 +517,12 @@ test_that(
         paired = TRUE,
         indices = rep(1:10, 2),
         test_override  = "Students paired t-test"
-      )
-    ) %>%
-      print(silent = TRUE),
+      ),
+      format_options = list(print_Total = FALSE)
+    ),
     NA
-  )
+  )}
 )
-
-
-
 
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/1_sample_t.test.txt"),
               descr(dat)
@@ -526,22 +552,24 @@ dat <- data.frame(
 )
 
 
+
 test_that("f.test test works",
-          expect_error(descr(dat[, c("y", "P")], "P") %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat[, c("y", "P")], "P"),
+                         NA)
+          })
 
 
 test_that("f.test test works",
+          {
           expect_error(
             descr(
               dat[, c("y", "P")] %>% mutate(y = factor(y)) ,
               "P",
               test_options = list(test_override = "F-test (ANOVA)")
-            ) %>%
-              print(silent = TRUE),
+            ) ,
             NA
-          ))
+          )})
 
 
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/f.test.txt"),
@@ -563,16 +591,18 @@ dat <- as_tibble(dat)
 
 
 test_that("mixed_model test works",
+          {
           expect_error(descr(
             dat[, c("Sex", "distance")],
             "Sex",
             test_options = list(paired = TRUE, indices =
-                                  dat$Subject)
-          ) %>%
-            print(silent = TRUE),
-          NA))
+                                  dat$Subject),
+            format_options = list(print_Total = FALSE)
+          ),
+          NA)})
 
 test_that("mixed_model test works",
+          {
           expect_error(
             descr(
               dat[, c("Sex", "distance")] %>% mutate(distance = factor(distance)),
@@ -582,11 +612,11 @@ test_that("mixed_model test works",
                 indices =
                   dat$Subject,
                 test_override = "Mixed model ANOVA"
-              )
-            ) %>%
-              print(silent = TRUE),
+              ),
+              format_options = list(print_Total = FALSE)
+            ),
             NA
-          ))
+          )})
 
 
 
@@ -615,9 +645,10 @@ dat <-
 ## boschloo
 
 test_that("boschloo test works",
+          {
           expect_error(descr(dat, "gender", test_options = c(exact = TRUE)) %>%
                          print(silent = TRUE),
-                       NA))
+                       NA)})
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/boschloo.txt"),
               descr(dat, "gender", test_options = c(exact = TRUE)) %>% print())
 

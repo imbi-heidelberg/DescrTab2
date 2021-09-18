@@ -16,7 +16,7 @@
 #' @name DescrTab2
 NULL
 
-
+# nocov start
 #' Load LaTeX packages
 #'
 #' @parm libname library name
@@ -47,4 +47,4 @@ NULL
     }
   }
 }
-
+# nocov end

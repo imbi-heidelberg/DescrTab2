@@ -1,11 +1,76 @@
 > descr(dat_kruskal.test, "group", test_options = c(nonparametric = TRUE)) %>%
 +   print()
-  Variables    Trt       Ctrl      Placebo    Total    p      Test              
-1  var                                                                          
-2    N          5         4         5          14       0.68~  Kruskal-Wallis o~
-3    mean       2.8       3.2       2.8        2.9                              
-4    sd         0.29      0.79      0.74       0.61                             
-5    median     2.9       3.2       2.8        2.8                              
-6    Q1 - Q3    2.6 -- ~  2.5 -- ~  2.2 -- 3~  2.5 --~                          
-7    min - ma~  2.5 -- ~  2.4 -- ~  2 -- 3.7   2 -- 4                           
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Trt</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Ctrl</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Placebo</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> (N=5) </th>
+   <th style="text-align:center;"> (N=4) </th>
+   <th style="text-align:center;"> (N=5) </th>
+   <th style="text-align:center;"> (N=14) </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="6"><td colspan="6" style="border-bottom: 1px solid;"><strong>var</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 14 </td>
+   <td style="text-align:center;"> 0.680<sup>KW</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+   <td style="text-align:center;"> 2.8 </td>
+   <td style="text-align:center;"> 3.2 </td>
+   <td style="text-align:center;"> 2.8 </td>
+   <td style="text-align:center;"> 2.9 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+   <td style="text-align:center;"> 0.29 </td>
+   <td style="text-align:center;"> 0.79 </td>
+   <td style="text-align:center;"> 0.74 </td>
+   <td style="text-align:center;"> 0.61 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+   <td style="text-align:center;"> 2.9 </td>
+   <td style="text-align:center;"> 3.2 </td>
+   <td style="text-align:center;"> 2.8 </td>
+   <td style="text-align:center;"> 2.8 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+   <td style="text-align:center;"> 2.6 -- 3 </td>
+   <td style="text-align:center;"> 2.5 -- 3.9 </td>
+   <td style="text-align:center;"> 2.2 -- 3.4 </td>
+   <td style="text-align:center;"> 2.5 -- 3.4 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+   <td style="text-align:center;"> 2.5 -- 3.2 </td>
+   <td style="text-align:center;"> 2.4 -- 4 </td>
+   <td style="text-align:center;"> 2 -- 3.7 </td>
+   <td style="text-align:center;"> 2 -- 4 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup>KW</sup> Kruskal-Wallis one-way ANOVA</td></tr></tfoot>
+</table>
 

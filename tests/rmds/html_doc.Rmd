@@ -3,24 +3,16 @@ title: "test_html"
 output: html_document
 ---
 
-
-
-
-
-
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(magrittr)
 library(kableExtra)
 library(DescrTab2)
-options(print_format = "html")
 ```
 
 
-```{r with results asis, results='asis'}
+```{r with results asis}
 
 descr(iris)
 descr(
@@ -31,6 +23,3 @@ descr(
 )
 ```
 
-```{r without results asis}
-descr(iris) %>% capture.output(print(.)) %>%   knitr::raw_html()
-```

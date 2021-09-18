@@ -1,13 +1,66 @@
 > descr(dat) %>% print()
-   Variables     Total          p        Test                              
- 1  extra                                                                  
- 2    N           20             0.003    Students one-sample t-test       
- 3    mean        1.5                                                      
- 4    sd          2                                                        
- 5    median      0.95                                                     
- 6    Q1 - Q3     -0.05 -- 3.4                                             
- 7    min - max   -1.6 -- 5.5                                              
- 8  group                                                                  
- 9    1           10 (50%)       >0.999   Chi-squared goodness-of-fit test 
-10    2           10 (50%)                                                 
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> (N=20) </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="6"><td colspan="3" style="border-bottom: 1px solid;"><strong>extra</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+   <td style="text-align:center;"> 20 </td>
+   <td style="text-align:center;"> 0.003<sup>tt1</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+   <td style="text-align:center;"> 1.5 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+   <td style="text-align:center;"> 0.95 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+   <td style="text-align:center;"> -0.05 -- 3.4 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+   <td style="text-align:center;"> -1.6 -- 5.5 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: 1px solid;"><strong>group</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> 1 </td>
+   <td style="text-align:center;"> 10 (50%) </td>
+   <td style="text-align:center;"> &gt;0.999<sup>chi1</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> 2 </td>
+   <td style="text-align:center;"> 10 (50%) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>tt1</sup> Students one-sample t-test</td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>chi1</sup> Chi-squared goodness-of-fit test</td></tr>
+</tfoot>
+</table>
 

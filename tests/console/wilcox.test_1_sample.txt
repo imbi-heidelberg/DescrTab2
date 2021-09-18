@@ -1,10 +1,51 @@
 > descr(dat, test_options = c(nonparametric = TRUE)) %>% print()
-  Variables     Total          p       Test                                  
-1  diff                                                                      
-2    N           9              0.039   Wilcoxon one-sample signed-rank test 
-3    mean        0.43                                                        
-4    sd          0.43                                                        
-5    median      0.49                                                        
-6    Q1 - Q3     0.01 -- 0.62                                                
-7    min - max   -0.15 -- 1                                                  
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> (N=9) </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="6"><td colspan="3" style="border-bottom: 1px solid;"><strong>diff</strong></td></tr>
+<tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> N </td>
+   <td style="text-align:center;"> 9 </td>
+   <td style="text-align:center;"> 0.039<sup>Wil1</sup> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> mean </td>
+   <td style="text-align:center;"> 0.43 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> sd </td>
+   <td style="text-align:center;"> 0.43 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> median </td>
+   <td style="text-align:center;"> 0.49 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Q1 - Q3 </td>
+   <td style="text-align:center;"> 0.01 -- 0.62 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> min - max </td>
+   <td style="text-align:center;"> -0.15 -- 1 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup>Wil1</sup> Wilcoxon one-sample signed-rank test</td></tr></tfoot>
+</table>
 

@@ -18,11 +18,10 @@ library(tidyverse)
 library(magrittr)
 library(kableExtra)
 library(DescrTab2)
-options(print_format = "tex")
 ```
 
 
-```{r with results asis, results='asis'}
+```{r with results asis}
 
 descr(iris)
 descr(
@@ -31,8 +30,4 @@ descr(
   group_labels = list(setosa = "My custom group label"),
   var_options = list(Sepal.Length = list(label = "My custom variable label"))
 )
-```
-
-```{r without results asis}
-descr(iris) %>% capture.output(print(.)) %>% knitr::raw_latex()
 ```
