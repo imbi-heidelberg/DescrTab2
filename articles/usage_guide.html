@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2021-09-18</h4>
+            <h4 class="date">2021-09-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/usage_guide.Rmd"><code>vignettes/usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>usage_guide.Rmd</code></div>
@@ -114,11 +114,15 @@
 <div id="preamble-settings" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preamble-settings" class="anchor"></a>Preamble settings</h2>
-<p><code>DescrTab2</code> works in your R-console, as well as in <code>.Rmd</code> documents corresponding to output formats of the type <code>pdf_documument</code>, <code>html_document</code> and <code>word_document</code>. For example, if your YAML-header looks like the example below, <code>DescrTab2</code> should automagically detect the output format and possibly load the required LaTeX packages.</p>
+<p><code>DescrTab2</code> works in your R-console, as well as in <code>.Rmd</code> documents corresponding to output formats of the type <code>pdf_documument</code>, <code>html_document</code> and <code>word_document</code>. It even supports YAML-headers with multiple output formats! For example, if your YAML-header looks like the example below, <code>DescrTab2</code> should automagically detect the output format depending on the rendering option you choose from the dropdown menue (the arrow next to the “Knit” button on the top menue bar).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "DescrTab2 tutorial"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> pdf_document</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  word_document: default</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf_document: default</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html_document: default</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>Required LaTeX packages should be loaded automatically as well when rendering as a pdf.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -132,7 +136,7 @@
 <code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">]</span>
 <span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mammal"</span>, <span class="st">"Fish"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">75</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>food<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fries"</span>, <span class="st">"wedges"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Producing beautiful descriptive tablesis now as easy as typing:</p>
+<p>Producing beautiful descriptive tables is now as easy as typing:</p>
 <table class="table table">
 <thead>
 <tr>
@@ -301,10 +305,10 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.514<sup>chi1</sup>
+0.744<sup>chi1</sup>
 </td>
 </tr>
 <tr>
@@ -312,7 +316,7 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -581,19 +585,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.167<sup>chi2</sup>
+0.830<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -601,16 +605,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -863,19 +867,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.167<sup>chi2</sup>
+0.830<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -883,16 +887,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1157,16 +1161,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-36 (48%)
+42 (56%)
 </td>
 <td style="text-align:center;">
 35 (47%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.870<sup>chi2</sup>
+0.253<sup>chi2</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1177,18 +1181,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-39 (52%)
+33 (44%)
 </td>
 <td style="text-align:center;">
 40 (53%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.15, 0.17]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -1392,16 +1396,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-36 (48%)
+42 (56%)
 </td>
 <td style="text-align:center;">
 35 (47%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.931<sup>Bolo</sup>
+0.282<sup>Bolo</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1412,18 +1416,18 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-39 (52%)
+33 (44%)
 </td>
 <td style="text-align:center;">
 40 (53%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.15, 0.17]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -1788,13 +1792,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-36 (48%)
+42 (56%)
 </td>
 <td style="text-align:center;">
 35 (47%)
 </td>
 <td style="text-align:center;">
-&gt;0.999<sup>McN</sup>
+0.310<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -1805,7 +1809,7 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-39 (52%)
+33 (44%)
 </td>
 <td style="text-align:center;">
 40 (53%)
@@ -1813,7 +1817,7 @@ wedges
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.15, 0.17]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -1991,13 +1995,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-36 (48%)
+42 (56%)
 </td>
 <td style="text-align:center;">
 35 (47%)
 </td>
 <td style="text-align:center;">
-&gt;0.999<sup>McN</sup>
+0.310<sup>McN</sup>
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -2008,7 +2012,7 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-39 (52%)
+33 (44%)
 </td>
 <td style="text-align:center;">
 40 (53%)
@@ -2016,7 +2020,7 @@ wedges
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-[-0.15, 0.17]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -2268,19 +2272,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.167<sup>chi2</sup>
+0.830<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2288,16 +2292,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2534,19 +2538,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.167<sup>chi2</sup>
+0.830<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2554,16 +2558,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2670,7 +2674,7 @@ mean
 1.5
 </td>
 <td style="text-align:center;">
-0.707<sup>chi2</sup>
+0.974<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2681,13 +2685,13 @@ mean
 26 (52%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-76 (51%)
+77 (51%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2700,13 +2704,13 @@ mean
 24 (48%)
 </td>
 <td style="text-align:center;">
-27 (54%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-23 (46%)
+25 (50%)
 </td>
 <td style="text-align:center;">
-74 (49%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2934,19 +2938,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-29 (58%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-22 (44%)
+27 (54%)
 </td>
 <td style="text-align:center;">
-20 (40%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.167<sup>chi2</sup>
+0.830<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2954,16 +2958,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-21 (42%)
+24 (48%)
 </td>
 <td style="text-align:center;">
-28 (56%)
+23 (46%)
 </td>
 <td style="text-align:center;">
-30 (60%)
+26 (52%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3201,13 +3205,13 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-36 (48%)
+42 (56%)
 </td>
 <td style="text-align:center;">
 35 (47%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
 Prop. dif. CI
@@ -3218,16 +3222,16 @@ Prop. dif. CI
 wedges
 </td>
 <td style="text-align:center;">
-39 (52%)
+33 (44%)
 </td>
 <td style="text-align:center;">
 40 (53%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
-[-0.15, 0.17]
+[-0.066, 0.25]
 </td>
 </tr>
 </tbody>
@@ -3447,16 +3451,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-36 (48%)
+42 (56%)
 </td>
 <td style="text-align:center;">
 35 (47%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+77 (51%)
 </td>
 <td style="text-align:center;">
-0.870<sup>chi2</sup>
+0.253<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3464,13 +3468,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-39 (52%)
+33 (44%)
 </td>
 <td style="text-align:center;">
 40 (53%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+73 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3490,36 +3494,11 @@ wedges
 </tfoot>
 </table>
 </div>
-<div id="printing-without-resultsasis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#printing-without-resultsasis" class="anchor"></a>Printing without results=‘asis’</h2>
-<p>Sometimes, e.g. if you have a loop inside your R-chunk and you want to plot graphics in between descriptive tables, it is necessary not to have the results=‘asis’ option. You can still use DescrTab2 with the following commands:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="in">capture.output(print(descr(dat, "Species"))) %&gt;%  knitr::raw_html() # or knitr::raw_tex() for tex</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/raw_block.html">raw_html</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># or knitr::raw_tex() for tex</span></code></pre></div>
-   Variables    setosa    versicolor  virginica  Total    p      Test           
- 1  Sepal.Leng~                                                                 
- 2    N          50        50          50         150      &lt;0.0~  F-test (ANOVA~
- 3    mean       5         5.9         6.6        5.8                           
- 4    sd         0.35      0.52        0.64       0.83                          
- 5    median     5         5.9         6.5        5.8                           
- 6    Q1 - Q3    4.8 -- ~  5.6 -- 6.~  6.2 -- 6~  5.1 --~                       
- 7    min - ma~  4.3 -- ~  4.9 -- 7    4.9 -- 7~  4.3 --~                       
- 8  animal                                                                      
- 9    Fish       25 (50%~  25 (50%)    25 (50%)   75 (50~  &gt;0.9~  Pearsons chi-~
-10    Mammal     25 (50%~  25 (50%)    25 (50%)   75 (50~                       
-11  food                                                                        
-12    fries      29 (58%~  22 (44%)    20 (40%)   71 (47~  0.16~  Pearsons chi-~
-13    wedges     21 (42%~  28 (56%)    30 (60%)   79 (53~                       
-<p>In word documents this is irrelevant, because you never have to specify <code>results='asis'</code></p>
-</div>
 <div id="controling-options-on-a-per-variable-level" class="section level2">
 <h2 class="hasAnchor">
 <a href="#controling-options-on-a-per-variable-level" class="anchor"></a>Controling options on a per-variable level</h2>
 <p>You can use the <code>var_options</code> list to control formatting and test options on a per-variable basis. Let’s say in the dataset <code>iris</code>, we want that only the <code>Sepal.Length</code> variable has more digits in the mean and a nonparametric test:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span>, var_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   format_summary_stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
