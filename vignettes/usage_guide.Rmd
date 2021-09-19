@@ -25,17 +25,26 @@ It supports a variety of different customization options and can be used
 in .Rmd files in conjunction with knitr.
 
 ## Preamble settings
-`DescrTab2` works in your R-console, as well as in `.Rmd` documents corresponding to output formats
-of the type `pdf_documument`, `html_document` and `word_document`.
-For example, if your YAML-header looks like the example below, `DescrTab2` should automagically detect the output format and possibly load the required LaTeX packages.
+`DescrTab2` works in your R-console, as well as in `.Rmd` documents corresponding to
+output formats of the type `pdf_documument`, `html_document` and `word_document`.
+It even supports YAML-headers with multiple output formats!
+For example, if your YAML-header looks like the example below, `DescrTab2` should automagically detect the output format
+depending on the rendering option you choose from the dropdown menue (the arrow next to the "Knit" button on the top menue bar).
+
 
 
 ````markdown
 ---
 title: "DescrTab2 tutorial"
-output: pdf_document
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
 ---
 ````
+
+Required LaTeX packages should be loaded automatically as well
+when rendering as a pdf.
 
 ## Getting started
 Make sure you include the DescrTab2 library by typing 
@@ -54,7 +63,7 @@ dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
 ```
 
 
-Producing beautiful descriptive tablesis now as easy as typing:
+Producing beautiful descriptive tables is now as easy as typing:
 
 ```{r, results='asis', echo=F}
 descr(dat)
@@ -183,22 +192,6 @@ descr(dat, "animal", format_options = list(print_CI = FALSE))
 ```
 
 
-## Printing without results='asis'
-Sometimes, e.g. if you have a loop inside your R-chunk and you want to plot graphics in between descriptive tables, it is necessary not to have the results='asis' option. You can still use DescrTab2 with the following commands:
-
-````markdown
-`r ''````{r}
-capture.output(print(descr(dat, "Species"))) %>%  knitr::raw_html() # or knitr::raw_tex() for tex
-`r ''````
-````
-
-```{r}
-capture.output(print(descr(dat, "Species"))) %>%  knitr::raw_html() # or knitr::raw_tex() for tex
-```
-
-In word documents this is irrelevant, because you never have to specify `results='asis'`
-
-
 ## Controling options on a per-variable level
 You can use the `var_options` list to control formatting and test options on a per-variable basis.
 Let's say in the dataset `iris`, we want that only the `Sepal.Length` variable has more digits in the mean and a nonparametric test:
@@ -213,13 +206,4 @@ descr(iris, "Species", var_options = list(Sepal.Length = list(
   test_options = c(nonparametric = TRUE)
 )))
 ```
-
-
-
-
-
-
-
-
-
 
