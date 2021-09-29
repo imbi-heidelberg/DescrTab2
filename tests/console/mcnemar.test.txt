@@ -7,41 +7,8 @@ Warning in test_cat(var, group, test_options, test_override, var_name): Confiden
 Use Exact McNemars test if you want confidence intervals which use the test statistic of the
 exact McNemars test.
 
-<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
- <thead>
-<tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">first</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">second</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">CI</div></th>
-</tr>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:center;"> (N=1600) </th>
-   <th style="text-align:center;"> (N=1600) </th>
-   <th style="text-align:center;">  </th>
-   <th style="text-align:center;">  </th>
-  </tr>
- </thead>
-<tbody>
-  <tr grouplength="2"><td colspan="5" style="border-bottom: 1px solid;"><strong>var</strong></td></tr>
-<tr>
-   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Approve </td>
-   <td style="text-align:center;"> 944 (59%) </td>
-   <td style="text-align:center;"> 880 (55%) </td>
-   <td style="text-align:center;"> &lt;0.001<sup>McN</sup> </td>
-   <td style="text-align:center;"> Prop. dif. CI </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Disapprove </td>
-   <td style="text-align:center;"> 656 (41%) </td>
-   <td style="text-align:center;"> 720 (45%) </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> [0.0058, 0.076] </td>
-  </tr>
-</tbody>
-<tfoot><tr><td style="padding: 0; " colspan="100%">
-<sup>McN</sup> McNemars test</td></tr></tfoot>
-</table>
+  Variables      first       second      p        Test            CI            
+1  var                                                                          
+2    Approve      944 (59%)   880 (55%)   <0.001   McNemars test   Prop. dif. C~
+3    Disapprove   656 (41%)   720 (45%)                            [0.0058, 0.0~
 

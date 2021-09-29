@@ -33,7 +33,11 @@ test_that("Empty strings are handled correctly",
           }
 )
 
-
-
+set.seed(123)
+# Copied from https://stackoverflow.com/a/21502397
+dat <- data.frame(sample(seq(as.Date('1999/01/01'), as.Date('2000/01/01'), by="day"), 100))
+test_that("Date variables throw warnings.",{
+          expect_warning(expect_warning(descr(dat)))
+})
 
 

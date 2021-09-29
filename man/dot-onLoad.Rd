@@ -6,6 +6,11 @@
 \usage{
 .onLoad(libname = find.package("kableExtra"), pkgname = "kableExtra")
 }
+\arguments{
+\item{libname}{library name}
+
+\item{pkgname}{package name}
+}
 \description{
 Load LaTeX packages
 }

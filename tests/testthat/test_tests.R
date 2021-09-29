@@ -30,7 +30,9 @@ y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 group <- c(rep("Trt", length(x)), rep("Ctrl", length(y)))
 dat_wilcox.test_2_sample <- tibble(var = c(x, y), group = group)
 dat_wilcox.test_2_sample_paired <-
-  tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)))
+  tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)) )
+dat_wilcox.test_2_sample_paired2 <-
+  tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)), ID = factor(rep(1:10, 2)) )
 
 test_that("wilcox.test_2_sample",
           {
@@ -54,7 +56,7 @@ test_that("wilcox.test_2_sample categorical",
             NA
           )})
 
-test_that("wilcox.test_2_sample paired",
+test_that("wilcox.test_2_sample paired with ID in options",
           {
           expect_error(
             descr(
@@ -66,9 +68,25 @@ test_that("wilcox.test_2_sample paired",
                 indices = rep(1:10, 2)
               ),
               format_options = list(print_Total = FALSE)
-            ) %>% print(silent = TRUE),
+            ),
             NA
           )})
+
+test_that("wilcox.test_2_sample paired with ID in dataset",
+          {
+            expect_error(
+              descr(
+                dat_wilcox.test_2_sample_paired2,
+                "group",
+                test_options = list(
+                  nonparametric = TRUE,
+                  paired = TRUE,
+                  indices = "ID"
+                ),
+                format_options = list(print_Total = FALSE)
+              ),
+              NA
+            )})
 
 test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
           {

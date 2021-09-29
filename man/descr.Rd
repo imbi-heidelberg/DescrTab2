@@ -15,14 +15,15 @@ descr(
     DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
     DescrTab2:::.max),
   summary_stats_cat = list(),
-  format_summary_stats = list(N = function(x) format(x, digits = 2, scientific = 3),
-    Nmiss = function(x) format(x, digits = 2, scientific = 3), mean = function(x)
-    format(x, digits = 2, scientific = 3), sd = function(x) format(x, digits = 2,
-    scientific = 3), median = function(x) format(x, digits = 2, scientific = 3), Q1 =
-    function(x) format(x, digits = 2, scientific = 3), Q3 = function(x) format(x, digits
-    = 2, scientific = 3), min = function(x) format(x, digits = 2, scientific = 3), max =
-    function(x) format(x, digits = 2,      scientific = 3), CI = function(x) format(x,
-    digits = 2, scientific = 3)),
+  format_summary_stats = list(N = function(x) {     format(x, digits = 2, scientific =
+    3) }, Nmiss = function(x) {     format(x, digits = 2, scientific = 3) }, mean =
+    function(x) {     format(x, digits = 2, scientific = 3) }, sd = function(x) {    
+    format(x, digits = 2, scientific = 3) }, median = function(x) {     format(x, digits
+    = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2, scientific = 3)
+    }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) }, min = function(x)
+    {     format(x, digits = 2, scientific = 3) }, max = function(x) {     format(x,
+    digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits = 2,
+    scientific = 3) }),
   format_p = scales::pvalue_format(),
   format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
     combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE,
@@ -34,9 +35,9 @@ descr(
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
     FALSE, test_override = NULL, additional_test_args = list()),
-  reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3)
-    paste0(Q1, " -- ", Q3)), `min - max` = list(args = c("min", "max"), fun =
-    function(min, max) paste0(min, " -- ", max))),
+  reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
+      paste0(Q1, " -- ", Q3) }), `min - max` = list(args = c("min", "max"), fun =
+    function(min, max) {     paste0(min, " -- ", max) })),
   ...
 )
 }
@@ -209,8 +210,6 @@ DescrList <- descr(iris)
 DescrList$variables$results$Sepal.Length$Total$mean
 print(DescrList)
 descr(iris, "Species")
-
-
 }
 \references{
 [1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774

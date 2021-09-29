@@ -19,8 +19,8 @@ NULL
 # nocov start
 #' Load LaTeX packages
 #'
-#' @parm libname library name
-#' @parm pkgname package name
+#' @param libname library name
+#' @param pkgname package name
 #' @details Thanks to Hao Zhu and his package \link[kableExtra]{kableExtra}.
 #' @author Hao Zhu
 #' @importFrom kableExtra usepackage_latex

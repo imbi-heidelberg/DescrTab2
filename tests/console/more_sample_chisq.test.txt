@@ -1,51 +1,7 @@
 > descr(dat, "gender") %>% print()
-<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
- <thead>
-<tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: left; " colspan="1"><div style="">Variables</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">F</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">M</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">Total</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">p</div></th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="">CI</div></th>
-</tr>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:center;"> (N=1557) </th>
-   <th style="text-align:center;"> (N=1200) </th>
-   <th style="text-align:center;"> (N=2757) </th>
-   <th style="text-align:center;">  </th>
-   <th style="text-align:center;">  </th>
-  </tr>
- </thead>
-<tbody>
-  <tr grouplength="3"><td colspan="6" style="border-bottom: 1px solid;"><strong>party</strong></td></tr>
-<tr>
-   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Democrat </td>
-   <td style="text-align:center;"> 762 (49%) </td>
-   <td style="text-align:center;"> 484 (40%) </td>
-   <td style="text-align:center;"> 1246 (45%) </td>
-   <td style="text-align:center;"> &lt;0.001<sup>chi2</sup> </td>
-   <td style="text-align:center;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Independent </td>
-   <td style="text-align:center;"> 327 (21%) </td>
-   <td style="text-align:center;"> 239 (20%) </td>
-   <td style="text-align:center;"> 566 (21%) </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 4.2cm; padding-left: 2em;" indentlevel="1"> Republican </td>
-   <td style="text-align:center;"> 468 (30%) </td>
-   <td style="text-align:center;"> 477 (40%) </td>
-   <td style="text-align:center;"> 945 (34%) </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-  </tr>
-</tbody>
-<tfoot><tr><td style="padding: 0; " colspan="100%">
-<sup>chi2</sup> Pearsons chi-squared test</td></tr></tfoot>
-</table>
+  Variables       F           M           Total        p        Test       CI   
+1  party                                                                        
+2    Democrat      762 (49%)   484 (40%)   1246 (45%)   <0.001   Pearsons~      
+3    Independent   327 (21%)   239 (20%)   566 (21%)                            
+4    Republican    468 (30%)   477 (40%)   945 (34%)                            
 

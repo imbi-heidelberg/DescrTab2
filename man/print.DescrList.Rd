@@ -33,17 +33,16 @@ what you would usually want, the second type is mostly for debugging purposes. A
 be printed as html, tex code, as a flextable object or simply to the console.
 }
 \examples{
-print(descr(iris), print_format="console")
-print(descr(iris), print_format="tex")
-print(descr(iris), print_format="html")
-print(descr(iris), print_format="word")
-print(descr(iris), print_format="numeric")
-options(print_format="tex")
+print(descr(iris), print_format = "console")
+print(descr(iris), print_format = "tex")
+print(descr(iris), print_format = "html")
+print(descr(iris), print_format = "word")
+print(descr(iris), print_format = "numeric")
+options(print_format = "tex")
 descr(iris)
-options(print_format="console")
+options(print_format = "console")
 descr(iris)
 DescrPrint <- print(descr(iris))
 DescrPrint$variables$results$Sepal.Length$Total$mean
 print(DescrPrint)
-
 }

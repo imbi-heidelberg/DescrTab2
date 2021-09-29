@@ -9,3 +9,4 @@ index.Rmd
 ^docs$
 ^pkgdown$
 ^\.github$
+inst/.lintr$

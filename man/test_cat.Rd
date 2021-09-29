@@ -32,5 +32,4 @@ Calculate a statistical test for a categorical variable.
 \examples{
 cat_var <- factor(c("a", "b", "c"))
 test_cat(cat_var)
-
 }

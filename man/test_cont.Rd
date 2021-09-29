@@ -30,7 +30,6 @@ A list of test test results.
 Calculate a statistical test for a numerical variable.
 }
 \examples{
-cont_var <- c(1,2,3)
+cont_var <- c(1, 2, 3)
 test_cont(cont_var)
-
 }
