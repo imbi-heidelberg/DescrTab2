@@ -6,8 +6,17 @@
 \usage{
 \method{knit_print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
-\value{
+\arguments{
+\item{x}{a}
 
+\item{print_format}{b}
+
+\item{silent}{c}
+
+\item{...}{abc}
+}
+\value{
+outputs formatted table depending on the environment (.RMD) which it is called from
 }
 \description{
 S3 override for knit_print function for DescrList objects.

@@ -22,12 +22,10 @@ Depends:
 Suggests:
     testthat,
     covr,
-    knitr,
-    rmarkdown,
-	tidyverse,
-	here,
-	shiny,
-	Exact
+  	tidyverse,
+  	here,
+  	shiny,
+  	Exact
 Imports:
     stats,
     utils,
@@ -45,7 +43,9 @@ Imports:
     cli,
     kableExtra,
     flextable (>= 0.6.6),
-    officer
+    officer,
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
 License: GPL (>=3)
 Copyright: This package contains codes copyrighted by third parites. See file COPYRIGHTS for details.

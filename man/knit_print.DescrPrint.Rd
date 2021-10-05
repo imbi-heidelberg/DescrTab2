@@ -6,8 +6,17 @@
 \usage{
 \method{knit_print}{DescrPrint}(x, print_format = print_format, silent = silent, ...)
 }
-\value{
+\arguments{
+\item{x}{a}
 
+\item{print_format}{b}
+
+\item{silent}{c}
+
+\item{...}{abc}
+}
+\value{
+outputs formatted table depending on the environment (.RMD) which it is called from
 }
 \description{
 S3 override for knit_print function for DescrPrint objects.

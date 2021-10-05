@@ -1508,9 +1508,12 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
 
 #' S3 override for knit_print function for DescrList objects.
 #'
-#' @return
+#' @param x a
+#' @param print_format b
+#' @param silent c
+#' @param ... abc
+#' @return outputs formatted table depending on the environment (.RMD) which it is called from
 #' @export
-#'
 knit_print.DescrList <-
   function(x,
            print_format = options("print_format")[[1]],
@@ -1538,11 +1541,15 @@ knit_print.DescrList <-
 
 #' S3 override for knit_print function for DescrPrint objects.
 #'
-#' @return
+#' @param x a
+#' @param print_format b
+#' @param silent c
+#' @param ... abc
+#' @return outputs formatted table depending on the environment (.RMD) which it is called from
 #' @export
-#'
 #' @importFrom knitr knit_print asis_output opts_knit opts_current fig_path
 #' @importFrom rmarkdown pandoc_version
+#' @importFrom flextable flextable_to_rmd
 knit_print.DescrPrint <- function(x,
                                      print_format = print_format,
                                      silent = silent,
