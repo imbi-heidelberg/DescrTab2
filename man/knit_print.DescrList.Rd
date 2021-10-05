@@ -5,10 +5,16 @@
 \title{S3 override for knit_print function for DescrList objects.}
 \usage{
 \method{knit_print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
+
+\method{knit_print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
 \value{
 
+
+
 }
 \description{
+S3 override for knit_print function for DescrList objects.
+
 S3 override for knit_print function for DescrList objects.
 }

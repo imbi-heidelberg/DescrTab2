@@ -42,7 +42,8 @@
   
 
 <meta property="og:title" content="S3 override for print function for DescrPrint objects — print.DescrPrint" />
-<meta property="og:description" content="S3 override for print function for DescrPrint objects" />
+<meta property="og:description" content="S3 override for print function for DescrPrint objects
+S3 override for print function for DescrPrint objects" />
 
 
 
@@ -144,9 +145,13 @@
 
     <div class="ref-description">
     <p>S3 override for print function for DescrPrint objects</p>
+<p>S3 override for print function for DescrPrint objects</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for DescrPrint</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, print_format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"print_format"</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for DescrPrint</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, print_format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"print_format"</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -173,6 +178,7 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A DescrPrint object which can be printed in various formats.</p>
+<p>A DescrPrint object which can be printed in various formats.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
@@ -585,8 +591,417 @@
 #&gt; </span><span style='color: #949494;'># ... with 22 more rows</span><span>
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "DescrPrint"          "DescrPrintCharacter" "list"               </div><div class='input'>
-</div></span></pre>
+#&gt; [1] "DescrPrint"          "DescrPrintCharacter" "list"               </div><div class='input'><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Variables      Total        p        Test                              
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #949494;'> </span><span>Sepal.Length</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>5.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>0.83</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>5.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>5.1 -- 6.4</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>4.3 -- 7.9</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> </span><span style='color: #949494;'> </span><span>Sepal.Width</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>3.1</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>0.44</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>3</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>2.8 -- 3.3</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>2 -- 4.4</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> </span><span style='color: #949494;'> </span><span>Petal.Length</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>17</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>3.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>18</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>1.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>19</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>4.3</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>20</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>1.6 -- 5.1</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>21</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>1 -- 6.9</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>22</span><span> </span><span style='color: #949494;'> </span><span>Petal.Width</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>23</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>24</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>1.2</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>25</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>0.76</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>26</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>1.3</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>27</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>0.3 -- 1.8</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>28</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>0.1 -- 2.5</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>29</span><span> </span><span style='color: #949494;'> </span><span>Species</span><span style='color: #949494;'> </span><span>      </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>30</span><span> </span><span style='color: #949494;'> </span><span>  setosa</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>50 (33%)</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'> </span><span>&gt;0.999</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Chi-squared goodness-of-fit test</span><span style='color: #949494;'> </span><span>
+#&gt; </span><span style='color: #BCBCBC;'>31</span><span> </span><span style='color: #949494;'> </span><span>  versicolor</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>50 (33%)</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>32</span><span> </span><span style='color: #949494;'> </span><span>  virginica</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>50 (33%)</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                </div><div class='input'><span class='va'>DescrPrint</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Variables      Total        p        Test                              
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #949494;'> </span><span>Sepal.Length</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>5.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>0.83</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>5.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>5.1 -- 6.4</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>4.3 -- 7.9</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> </span><span style='color: #949494;'> </span><span>Sepal.Width</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>3.1</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>0.44</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>3</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>2.8 -- 3.3</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>2 -- 4.4</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> </span><span style='color: #949494;'> </span><span>Petal.Length</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>17</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>3.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>18</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>1.8</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>19</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>4.3</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>20</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>1.6 -- 5.1</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>21</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>1 -- 6.9</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>22</span><span> </span><span style='color: #949494;'> </span><span>Petal.Width</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>23</span><span> </span><span style='color: #949494;'> </span><span>  N</span><span style='color: #949494;'> </span><span>          </span><span style='color: #949494;'> </span><span>150</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'> </span><span>&lt;0.001</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Students one-sample t-test</span><span style='color: #949494;'> </span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>24</span><span> </span><span style='color: #949494;'> </span><span>  mean</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'> </span><span>1.2</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>25</span><span> </span><span style='color: #949494;'> </span><span>  sd</span><span style='color: #949494;'> </span><span>         </span><span style='color: #949494;'> </span><span>0.76</span><span style='color: #949494;'> </span><span>       </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>26</span><span> </span><span style='color: #949494;'> </span><span>  median</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>1.3</span><span style='color: #949494;'> </span><span>        </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>27</span><span> </span><span style='color: #949494;'> </span><span>  Q1 - Q3</span><span style='color: #949494;'> </span><span>    </span><span style='color: #949494;'> </span><span>0.3 -- 1.8</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>28</span><span> </span><span style='color: #949494;'> </span><span>  min - max</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>0.1 -- 2.5</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>29</span><span> </span><span style='color: #949494;'> </span><span>Species</span><span style='color: #949494;'> </span><span>      </span><span style='color: #949494;'>  </span><span>           </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>30</span><span> </span><span style='color: #949494;'> </span><span>  setosa</span><span style='color: #949494;'> </span><span>     </span><span style='color: #949494;'> </span><span>50 (33%)</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'> </span><span>&gt;0.999</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>Chi-squared goodness-of-fit test</span><span style='color: #949494;'> </span><span>
+#&gt; </span><span style='color: #BCBCBC;'>31</span><span> </span><span style='color: #949494;'> </span><span>  versicolor</span><span style='color: #949494;'> </span><span> </span><span style='color: #949494;'> </span><span>50 (33%)</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                
+#&gt; </span><span style='color: #BCBCBC;'>32</span><span> </span><span style='color: #949494;'> </span><span>  virginica</span><span style='color: #949494;'> </span><span>  </span><span style='color: #949494;'> </span><span>50 (33%)</span><span style='color: #949494;'> </span><span>   </span><span style='color: #949494;'>  </span><span>       </span><span style='color: #949494;'>  </span><span>                                </div><div class='input'><span class='va'>DescrPrint</span><span class='op'>$</span><span class='va'>variables</span><span class='op'>$</span><span class='va'>results</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>$</span><span class='va'>Total</span><span class='op'>$</span><span class='va'>mean</span>
+</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>DescrPrint</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $variables
+#&gt; $variables$Sepal.Length
+#&gt; $results
+#&gt; $results$Total
+#&gt; $results$Total$N
+#&gt; [1] "150"
+#&gt; 
+#&gt; $results$Total$mean
+#&gt; [1] "5.8"
+#&gt; 
+#&gt; $results$Total$sd
+#&gt; [1] "0.83"
+#&gt; 
+#&gt; $results$Total$median
+#&gt; [1] "5.8"
+#&gt; 
+#&gt; $results$Total$`Q1 - Q3`
+#&gt; [1] "5.1 -- 6.4"
+#&gt; 
+#&gt; $results$Total$`min - max`
+#&gt; [1] "4.3 -- 7.9"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $test_list
+#&gt; $test_list$p
+#&gt; [1] 3.331256e-129
+#&gt; 
+#&gt; $test_list$test_name
+#&gt; [1] "Students one-sample t-test"
+#&gt; 
+#&gt; 
+#&gt; $variable_name
+#&gt; [1] "Sepal.Length"
+#&gt; 
+#&gt; $variable_options
+#&gt; $variable_options$label
+#&gt; [1] "Sepal.Length"
+#&gt; 
+#&gt; 
+#&gt; $variable_lengths
+#&gt; $variable_lengths$Total
+#&gt; $variable_lengths$Total$N
+#&gt; [1] 150
+#&gt; 
+#&gt; $variable_lengths$Total$Nmiss
+#&gt; [1] 0
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $label
+#&gt; [1] "Sepal.Length"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "cont_summary" "list"        
+#&gt; 
+#&gt; $variables$Sepal.Width
+#&gt; $results
+#&gt; $results$Total
+#&gt; $results$Total$N
+#&gt; [1] "150"
+#&gt; 
+#&gt; $results$Total$mean
+#&gt; [1] "3.1"
+#&gt; 
+#&gt; $results$Total$sd
+#&gt; [1] "0.44"
+#&gt; 
+#&gt; $results$Total$median
+#&gt; [1] "3"
+#&gt; 
+#&gt; $results$Total$`Q1 - Q3`
+#&gt; [1] "2.8 -- 3.3"
+#&gt; 
+#&gt; $results$Total$`min - max`
+#&gt; [1] "2 -- 4.4"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $test_list
+#&gt; $test_list$p
+#&gt; [1] 8.004458e-129
+#&gt; 
+#&gt; $test_list$test_name
+#&gt; [1] "Students one-sample t-test"
+#&gt; 
+#&gt; 
+#&gt; $variable_name
+#&gt; [1] "Sepal.Width"
+#&gt; 
+#&gt; $variable_options
+#&gt; $variable_options$label
+#&gt; [1] "Sepal.Width"
+#&gt; 
+#&gt; 
+#&gt; $variable_lengths
+#&gt; $variable_lengths$Total
+#&gt; $variable_lengths$Total$N
+#&gt; [1] 150
+#&gt; 
+#&gt; $variable_lengths$Total$Nmiss
+#&gt; [1] 0
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $label
+#&gt; [1] "Sepal.Width"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "cont_summary" "list"        
+#&gt; 
+#&gt; $variables$Petal.Length
+#&gt; $results
+#&gt; $results$Total
+#&gt; $results$Total$N
+#&gt; [1] "150"
+#&gt; 
+#&gt; $results$Total$mean
+#&gt; [1] "3.8"
+#&gt; 
+#&gt; $results$Total$sd
+#&gt; [1] "1.8"
+#&gt; 
+#&gt; $results$Total$median
+#&gt; [1] "4.3"
+#&gt; 
+#&gt; $results$Total$`Q1 - Q3`
+#&gt; [1] "1.6 -- 5.1"
+#&gt; 
+#&gt; $results$Total$`min - max`
+#&gt; [1] "1 -- 6.9"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $test_list
+#&gt; $test_list$p
+#&gt; [1] 2.166017e-57
+#&gt; 
+#&gt; $test_list$test_name
+#&gt; [1] "Students one-sample t-test"
+#&gt; 
+#&gt; 
+#&gt; $variable_name
+#&gt; [1] "Petal.Length"
+#&gt; 
+#&gt; $variable_options
+#&gt; $variable_options$label
+#&gt; [1] "Petal.Length"
+#&gt; 
+#&gt; 
+#&gt; $variable_lengths
+#&gt; $variable_lengths$Total
+#&gt; $variable_lengths$Total$N
+#&gt; [1] 150
+#&gt; 
+#&gt; $variable_lengths$Total$Nmiss
+#&gt; [1] 0
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $label
+#&gt; [1] "Petal.Length"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "cont_summary" "list"        
+#&gt; 
+#&gt; $variables$Petal.Width
+#&gt; $results
+#&gt; $results$Total
+#&gt; $results$Total$N
+#&gt; [1] "150"
+#&gt; 
+#&gt; $results$Total$mean
+#&gt; [1] "1.2"
+#&gt; 
+#&gt; $results$Total$sd
+#&gt; [1] "0.76"
+#&gt; 
+#&gt; $results$Total$median
+#&gt; [1] "1.3"
+#&gt; 
+#&gt; $results$Total$`Q1 - Q3`
+#&gt; [1] "0.3 -- 1.8"
+#&gt; 
+#&gt; $results$Total$`min - max`
+#&gt; [1] "0.1 -- 2.5"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $test_list
+#&gt; $test_list$p
+#&gt; [1] 2.659021e-42
+#&gt; 
+#&gt; $test_list$test_name
+#&gt; [1] "Students one-sample t-test"
+#&gt; 
+#&gt; 
+#&gt; $variable_name
+#&gt; [1] "Petal.Width"
+#&gt; 
+#&gt; $variable_options
+#&gt; $variable_options$label
+#&gt; [1] "Petal.Width"
+#&gt; 
+#&gt; 
+#&gt; $variable_lengths
+#&gt; $variable_lengths$Total
+#&gt; $variable_lengths$Total$N
+#&gt; [1] 150
+#&gt; 
+#&gt; $variable_lengths$Total$Nmiss
+#&gt; [1] 0
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $label
+#&gt; [1] "Petal.Width"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "cont_summary" "list"        
+#&gt; 
+#&gt; $variables$Species
+#&gt; $results
+#&gt; $results$Total
+#&gt; $results$Total$summary_stats
+#&gt; list()
+#&gt; 
+#&gt; $results$Total$categories
+#&gt; $results$Total$categories$setosa
+#&gt; [1] "50 (33%)"
+#&gt; 
+#&gt; $results$Total$categories$versicolor
+#&gt; [1] "50 (33%)"
+#&gt; 
+#&gt; $results$Total$categories$virginica
+#&gt; [1] "50 (33%)"
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $test_list
+#&gt; $test_list$p
+#&gt; [1] 1
+#&gt; 
+#&gt; $test_list$test_name
+#&gt; [1] "Chi-squared goodness-of-fit test"
+#&gt; 
+#&gt; 
+#&gt; $variable_name
+#&gt; [1] "Species"
+#&gt; 
+#&gt; $variable_levels
+#&gt; [1] "setosa"     "versicolor" "virginica" 
+#&gt; 
+#&gt; $variable_options
+#&gt; $variable_options$label
+#&gt; [1] "Species"
+#&gt; 
+#&gt; 
+#&gt; $variable_lengths
+#&gt; $variable_lengths$Total
+#&gt; $variable_lengths$Total$N
+#&gt; [1] 150
+#&gt; 
+#&gt; $variable_lengths$Total$Nmiss
+#&gt; [1] 0
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $label
+#&gt; [1] "Species"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "cat_summary" "list"       
+#&gt; 
+#&gt; 
+#&gt; $lengths
+#&gt; $lengths$Sepal.Length
+#&gt; [1] 7
+#&gt; 
+#&gt; $lengths$Sepal.Width
+#&gt; [1] 7
+#&gt; 
+#&gt; $lengths$Petal.Length
+#&gt; [1] 7
+#&gt; 
+#&gt; $lengths$Petal.Width
+#&gt; [1] 7
+#&gt; 
+#&gt; $lengths$Species
+#&gt; [1] 4
+#&gt; 
+#&gt; 
+#&gt; $group
+#&gt; $group$labels
+#&gt; list()
+#&gt; 
+#&gt; $group$lengths
+#&gt; Total 
+#&gt;   150 
+#&gt; 
+#&gt; 
+#&gt; $group_names
+#&gt; [1] "Total"
+#&gt; 
+#&gt; $group_labels
+#&gt; [1] "Total"
+#&gt; 
+#&gt; $labels
+#&gt; $labels$Sepal.Length
+#&gt; [1] "Sepal.Length"
+#&gt; 
+#&gt; $labels$Sepal.Width
+#&gt; [1] "Sepal.Width"
+#&gt; 
+#&gt; $labels$Petal.Length
+#&gt; [1] "Petal.Length"
+#&gt; 
+#&gt; $labels$Petal.Width
+#&gt; [1] "Petal.Width"
+#&gt; 
+#&gt; $labels$Species
+#&gt; [1] "Species"
+#&gt; 
+#&gt; 
+#&gt; $tibble
+#&gt; </span><span style='color: #949494;'># A tibble: 32 x 4</span><span>
+#&gt;    Variables    Total        p        Test                        
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                       
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Sepal.Length </span><span style='color: #949494;'>""</span><span>           </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> N            </span><span style='color: #949494;'>"</span><span>150</span><span style='color: #949494;'>"</span><span>        </span><span style='color: #949494;'>"</span><span>&lt;0.001</span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>Students one-sample t-test</span><span style='color: #949494;'>"</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> mean         </span><span style='color: #949494;'>"</span><span>5.8</span><span style='color: #949494;'>"</span><span>        </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> sd           </span><span style='color: #949494;'>"</span><span>0.83</span><span style='color: #949494;'>"</span><span>       </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> median       </span><span style='color: #949494;'>"</span><span>5.8</span><span style='color: #949494;'>"</span><span>        </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Q1 - Q3      </span><span style='color: #949494;'>"</span><span>5.1 -- 6.4</span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> min - max    </span><span style='color: #949494;'>"</span><span>4.3 -- 7.9</span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Sepal.Width  </span><span style='color: #949494;'>""</span><span>           </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> N            </span><span style='color: #949494;'>"</span><span>150</span><span style='color: #949494;'>"</span><span>        </span><span style='color: #949494;'>"</span><span>&lt;0.001</span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>Students one-sample t-test</span><span style='color: #949494;'>"</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> mean         </span><span style='color: #949494;'>"</span><span>3.1</span><span style='color: #949494;'>"</span><span>        </span><span style='color: #949494;'>""</span><span>       </span><span style='color: #949494;'>""</span><span>                          
+#&gt; </span><span style='color: #949494;'># ... with 22 more rows</span><span>
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "DescrPrint"          "DescrPrintCharacter" "list"               </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

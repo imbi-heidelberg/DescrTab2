@@ -5,10 +5,16 @@
 \title{S3 override for knit_print function for DescrPrint objects.}
 \usage{
 \method{knit_print}{DescrPrint}(x, print_format = print_format, silent = silent, ...)
+
+\method{knit_print}{DescrPrint}(x, print_format = print_format, silent = silent, ...)
 }
 \value{
 
+
+
 }
 \description{
+S3 override for knit_print function for DescrPrint objects.
+
 S3 override for knit_print function for DescrPrint objects.
 }

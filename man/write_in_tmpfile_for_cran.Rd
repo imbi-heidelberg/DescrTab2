@@ -5,10 +5,16 @@
 \title{Function that returns true in CRAN submission}
 \usage{
 write_in_tmpfile_for_cran()
+
+write_in_tmpfile_for_cran()
 }
 \value{
 TRUE for CRAN submission, FALSE otherwise
+
+TRUE for CRAN submission, FALSE otherwise
 }
 \description{
+Function that returns true in CRAN submission
+
 Function that returns true in CRAN submission
 }
