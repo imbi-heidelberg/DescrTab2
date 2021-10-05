@@ -1170,6 +1170,8 @@ print_numeric <- function(DescrPrintObj,
                           n_extra = NULL,
                           print_red_NA = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
+  var_names <- names(DescrPrintObj[["variables"]])
+  lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
   c1 <- tibl %>% pull(1)
@@ -1205,6 +1207,8 @@ print_console <- function(DescrPrintObj,
                           n_extra = NULL,
                           print_red_NA = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
+  var_names <- names(DescrPrintObj[["variables"]])
+  lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
   c1 <- tibl %>% pull(1)
@@ -1500,6 +1504,75 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
     return(DescrPrintObj)
   }
 }
+
+
+#' S3 override for knit_print function for DescrList objects.
+#'
+#' @return
+#' @export
+#'
+knit_print.DescrList <-
+  function(x,
+           print_format = options("print_format")[[1]],
+           silent = FALSE,
+           ...) {
+
+  DescrListObj <- x
+
+  # if no printing format was set, print to console
+  if (is.null(print_format)) {
+    print_format <- "console"
+  }
+
+  # Preprocessing of the DescrListObj for printing.
+  # In this step, formatting rules are applied.
+  DescrPrintObj <- create_DescrPrint(DescrListObj, print_format)
+
+  # Print the DescrPrint object
+  knit_print(DescrPrintObj,
+        print_format = print_format,
+        silent = silent,
+        ...)
+}
+
+
+#' S3 override for knit_print function for DescrPrint objects.
+#'
+#' @return
+#' @export
+#'
+#' @importFrom knitr knit_print asis_output opts_knit opts_current fig_path
+#' @importFrom rmarkdown pandoc_version
+knit_print.DescrPrint <- function(x,
+                                     print_format = print_format,
+                                     silent = silent,
+                                     ...) {
+  if (knitr::is_html_output()) {
+    str <- print.DescrPrintCharacter(x,
+                                     print_format = "html",
+                              silent = TRUE)[["html"]]
+    knit_print(asis_output(str))
+
+  } else if(knitr::is_latex_output()){
+    print("latex")
+    str <- print.DescrPrintCharacter(x,
+                                     print_format = "tex",
+                              silent = TRUE)[["tex"]]
+    knit_print(asis_output(str))
+
+  } else if(knitr::pandoc_to("docx")){
+    ft <- print.DescrPrintCharacter(x,
+                                    print_format = "word",
+                              silent = TRUE)[["ft"]]
+    is_bookdown <- isTRUE(opts_knit$get('bookdown.internal.label'))
+    pandoc2 <- pandoc_version() >= numeric_version("2.0")
+    str <- flextable_to_rmd(ft, bookdown = is_bookdown, pandoc2 = pandoc2, print = FALSE)
+    knit_print(asis_output(str))
+  } else{
+    print(x,...)
+  }
+}
+
 
 
 create_numeric_subtable <- function(DescrVarObj,

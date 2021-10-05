@@ -18,12 +18,14 @@ library(tidyverse)
 library(magrittr)
 library(kableExtra)
 library(DescrTab2)
+library(knitr)
 ```
 
 
 ```{r with results asis}
 
 descr(iris)
+
 descr(
   iris,
   "Species",
