@@ -13,6 +13,9 @@
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/dot-onLoad.html</loc>
   </url>
   <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/extract_labels.html</loc>
+  </url>
+  <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/farrington.manning.html</loc>
   </url>
   <url>
@@ -28,6 +31,15 @@
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/inMinipage2.html</loc>
   </url>
   <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/knit_print.DescrList.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/knit_print.DescrPrint.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/n_int_digits.html</loc>
+  </url>
+  <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/print.DescrList.html</loc>
   </url>
   <url>
@@ -35,6 +47,18 @@
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/print_test_names.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/read_redcap_formatted.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/read_sas_formatted.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/sigfig.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/sigfig_gen.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/test_cat.html</loc>

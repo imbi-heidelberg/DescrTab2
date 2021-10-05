@@ -5,6 +5,8 @@
 \title{Wrap cell text in minipage LaTeX environment}
 \usage{
 inMinipage(x, width)
+
+inMinipage(x, width)
 }
 \arguments{
 \item{x}{text to be placed in minipage}
@@ -13,5 +15,7 @@ inMinipage(x, width)
 https://stackoverflow.com/a/50892682}
 }
 \description{
+Wrap cell text in minipage LaTeX environment
+
 Wrap cell text in minipage LaTeX environment
 }
