@@ -1,7 +1,7 @@
 > descr(dat) %>% print()
    Variables     Total          p        Test                              
  1  extra                                                                  
- 2    N           20             0.003    Students one-sample t-test       
+ 2    N           20             0.003    Student's one-sample t-test      
  3    mean        1.5                                                      
  4    sd          2                                                        
  5    median      0.95                                                     

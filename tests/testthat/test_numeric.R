@@ -1,4 +1,4 @@
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 
 dat <- iris[iris$Species != "setosa",]

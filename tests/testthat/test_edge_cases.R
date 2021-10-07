@@ -1,4 +1,4 @@
-library(dplyr)
+library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 
 dat <-
   iris %>% mutate(Sepal.Length = if_else(Species == "setosa", NA_real_, Sepal.Length)) %>%
@@ -28,8 +28,9 @@ dat <- tibble(a=c("a", ""), b=factor(c("a", "")))
 dat2 <- tibble(a=c("a", "(empty)"), b=factor(c("a", "")))
 test_that("Empty strings are handled correctly",
           {
-            expect_warning(expect_warning(expect_warning(descr(dat))))
-            expect_error(descr(dat2))
+            expect_warning(expect_warning(descr(dat)))
+            expect_error(descr(dat2, format_options=list(replace_empty_string_with_NA=FALSE)) )
+            expect_warning(expect_warning(descr(dat2)))
           }
 )
 

@@ -1,5 +1,5 @@
-library(magrittr)
-library(tibble)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
+library(tibble, quietly = TRUE, warn.conflicts = FALSE)
 
 test_that("Empty dataset produces error",
           {
@@ -72,10 +72,10 @@ test_that("test override is check",
 test_that("test error catch mechanism works",
           {
             expect_message(descr(iris, "Species",  var_options = list(
-              Sepal.Length = list(test_override = "Welchs two-sample t-test")
+              Sepal.Length = list(test_override = "Welch's two-sample t-test")
             )))
             expect_message(expect_warning(descr(iris,  var_options = list(
-              Species = list(test_override = "Pearsons chi-squared test")
+              Species = list(test_override = "Pearson's chi-squared test")
             ))))
           })
 

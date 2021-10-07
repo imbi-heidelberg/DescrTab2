@@ -1,4 +1,4 @@
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 dat <- iris[, c("Species", "Sepal.Length")]
 dat %<>% mutate(animal = c("Mammal", "Fish") %>% rep(75) %>% factor())

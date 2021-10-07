@@ -107,22 +107,6 @@
 \usepackage{booktabs}
 \usepackage{setspace}
 \usepackage{array}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
-\usepackage{needspace}
-\usepackage{setspace}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -136,17 +120,13 @@
 }
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{knit\_print}\NormalTok{(}\FunctionTok{descr}\NormalTok{(iris))}
+\FunctionTok{descr}\NormalTok{(iris)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] "latex"
-\end{verbatim}
-
 \needspace{2cm}
 
-\begin{longtable}[t]{>{\raggedright\arraybackslash}p{7em}cc}\toprule\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\* & (N=150) & \\*\midrule\endfirsthead\multicolumn{3}{@{}l}{\textit{(continued)}}\\*\toprule\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\* & (N=150) & \\*\midrule\endhead\endfoot\bottomrule\endlastfoot\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Length\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{3} \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 5.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.83 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 5.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 5.1 -- 6.4 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Width\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{2} \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.1 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.44 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 2.8 -- 3.3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Length\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{1} \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 1.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 4.3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 1.6 -- 5.1 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Width\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 1.2 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.76 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 1.3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 0.3 -- 1.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Species\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}setosa\vspace{0.75ex}\end{minipage} & 50 (33\%) & \textgreater0.999\textsuperscript{chi1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}versicolor\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}virginica\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Students one-sample t-test}\\*\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*\end{longtable}
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{7em}cc}\toprule\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\* & (N=150) & \\*\midrule\endfirsthead\multicolumn{3}{@{}l}{\textit{(continued)}}\\*\toprule\multicolumn{1}{l}{Variables} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{p} \\* & (N=150) & \\*\midrule\endhead\endfoot\bottomrule\endlastfoot\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Length\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{3} \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 5.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.83 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 5.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 5.1 -- 6.4 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 4.3 -- 7.9 & \\ \noalign{\vskip 0pt plus 12pt}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Sepal.Width\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{2} \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.1 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.44 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 2.8 -- 3.3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 2 -- 4.4 & \\ \noalign{\vskip 0pt plus 12pt}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Length\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \vphantom{1} \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 3.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 1.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 4.3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 1.6 -- 5.1 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 1 -- 6.9 & \\ \noalign{\vskip 0pt plus 12pt}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Petal.Width\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}N\vspace{0.75ex}\end{minipage} & 150 & \textless0.001\textsuperscript{tt1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}mean\vspace{0.75ex}\end{minipage} & 1.2 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}sd\vspace{0.75ex}\end{minipage} & 0.76 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}median\vspace{0.75ex}\end{minipage} & 1.3 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}Q1 - Q3\vspace{0.75ex}\end{minipage} & 0.3 -- 1.8 & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}min - max\vspace{0.75ex}\end{minipage} & 0.1 -- 2.5 & \\ \noalign{\vskip 0pt plus 12pt} \noalign{\penalty-5000}\addlinespace[0.5cm]\multicolumn{3}{l}{\textbf{\begin{minipage}[t]{7em}\raggedright Species\end{minipage}}}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}setosa\vspace{0.75ex}\end{minipage} & 50 (33\%) & \textgreater0.999\textsuperscript{chi1}\\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}versicolor\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*\hspace{1em}\begin{minipage}[t]{6em}\raggedright\setstretch{0.5}virginica\vspace{0.75ex}\end{minipage} & 50 (33\%) & \\*\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{tt1} Student's one-sample t-test}\\*\multicolumn{3}{l}{\rule{0pt}{1em}\textsuperscript{chi1} Chi-squared goodness-of-fit test}\\*\end{longtable}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -158,10 +138,6 @@
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] "latex"
-\end{verbatim}
 
 \needspace{2cm}
 

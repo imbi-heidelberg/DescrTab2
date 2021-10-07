@@ -1,4 +1,4 @@
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 
 x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
@@ -447,7 +447,7 @@ test_that("t.test 1 sample works",
           {
             expect_error(descr(
               dat[, "extra", drop = F] %>% mutate(extra = factor(extra)),
-              test_options = list(test_override = "Students one-sample t-test")
+              test_options = list(test_override = "Student's one-sample t-test")
             ) %>%
               print(silent = TRUE),
             NA)
@@ -462,7 +462,7 @@ test_that("t.test 2 sample works",
 test_that("t.test 2 sample works if specifically requrested",
           {
             expect_error(descr(dat, "group", var_options = list(
-              extra = list(test_override = "Welchs two-sample t-test")
+              extra = list(test_override = "Welch's two-sample t-test")
             )) %>%
               print(silent = TRUE),
             NA)
@@ -476,7 +476,7 @@ test_that("t.test 2 sample for factor variables works",
               test_options = list(
                 paired = TRUE,
                 indices = rep(1:10, 2),
-                test_override  = "Welchs two-sample t-test"
+                test_override  = "Welch's two-sample t-test"
               ),
               format_options = list(print_Total = FALSE)
             ),
@@ -534,7 +534,7 @@ test_that(
       test_options = list(
         paired = TRUE,
         indices = rep(1:10, 2),
-        test_override  = "Students paired t-test"
+        test_override  = "Student's paired t-test"
       ),
       format_options = list(print_Total = FALSE)
     ),

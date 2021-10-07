@@ -1,4 +1,4 @@
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 test_that("numeric output does not produce errors.", {
   expect_error(descr(iris) %>% print(silent = TRUE, print_format = "console"), NA)

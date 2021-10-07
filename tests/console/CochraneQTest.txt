@@ -2,8 +2,8 @@
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
-  Variables A          B          C          p       Test             
-1  resp                                                               
-2    F       28 (61%)   28 (61%)   16 (35%)   0.014   Cochrans Q test 
-3    U       18 (39%)   18 (39%)   30 (65%)                           
+  Variables A          B          C          p       Test              
+1  resp                                                                
+2    F       28 (61%)   28 (61%)   16 (35%)   0.014   Cochran's Q test 
+3    U       18 (39%)   18 (39%)   30 (65%)                            
 
