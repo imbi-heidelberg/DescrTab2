@@ -5,8 +5,6 @@
 \title{S3 override for print function for DescrList objects.}
 \usage{
 \method{print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
-
-\method{print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}
@@ -24,18 +22,8 @@ You can use the \code{print_format} option to control the output type. If you us
 you can set the clobal option \code{option(print_format="tex")} or \code{option(print_format="html")} or
 \code{option(print_format="word")} depending on your document type. This way, all your tables will be printed in the
 right format by default inside this document.
-
-A DescrPrint object which can be printed in various formats.
-
-You can use the \code{print_format} option to control the output type. If you use 'DescrTab2' inside an .Rmd document,
-you can set the clobal option \code{option(print_format="tex")} or \code{option(print_format="html")} or
-\code{option(print_format="word")} depending on your document type. This way, all your tables will be printed in the
-right format by default inside this document.
 }
 \description{
-This function takes a DescrList object and converts it to either a DescrPrintCharacter or DescrPrintNumeric object,
-depending on the print_format option. This object is then printed in an appropriate format.
-
 This function takes a DescrList object and converts it to either a DescrPrintCharacter or DescrPrintNumeric object,
 depending on the print_format option. This object is then printed in an appropriate format.
 }
@@ -43,24 +31,8 @@ depending on the print_format option. This object is then printed in an appropri
 There is no way to convert between DescrPrintCharacter and DescrPrintNumeric objects. The first type is for
 what you would usually want, the second type is mostly for debugging purposes. A DescrPrintCharacter object can
 be printed as html, tex code, as a flextable object or simply to the console.
-
-There is no way to convert between DescrPrintCharacter and DescrPrintNumeric objects. The first type is for
-what you would usually want, the second type is mostly for debugging purposes. A DescrPrintCharacter object can
-be printed as html, tex code, as a flextable object or simply to the console.
 }
 \examples{
-print(descr(iris), print_format = "console")
-print(descr(iris), print_format = "tex")
-print(descr(iris), print_format = "html")
-print(descr(iris), print_format = "word")
-print(descr(iris), print_format = "numeric")
-options(print_format = "tex")
-descr(iris)
-options(print_format = "console")
-descr(iris)
-DescrPrint <- print(descr(iris))
-DescrPrint$variables$results$Sepal.Length$Total$mean
-print(DescrPrint)
 print(descr(iris), print_format = "console")
 print(descr(iris), print_format = "tex")
 print(descr(iris), print_format = "html")

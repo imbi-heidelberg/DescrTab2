@@ -5,20 +5,13 @@
 \title{Prints all possible tests names}
 \usage{
 print_test_names()
-
-print_test_names()
 }
 \value{
-Returns the names of all possible test names you can specify.
-
 Returns the names of all possible test names you can specify.
 }
 \description{
 Prints all possible tests names
-
-Prints all possible tests names
 }
 \examples{
-print_test_names()
 print_test_names()
 }

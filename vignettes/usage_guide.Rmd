@@ -107,6 +107,14 @@ Use the `group_labels` option to assign group labels and the `var_labels` option
 descr(dat, "Species", group_labels=list(setosa="My custom group label"), var_labels = list(Sepal.Length = "My custom variable label"))
 ```
 
+## Assigning a table caption
+Use the `caption` member of the `format_options` argument to assign a table caption:
+
+```{r, results='asis'}
+descr(dat, "Species", format_options = list(caption="Description of our example dataset."))
+```
+
+
 ## Confidence intervals for two group comparisons
 For 2-group comparisons, decrtab automatically calculates confidence intervals for differences in effect measures:
 

@@ -31,3 +31,6 @@ Generator function for nice formatting functions
 
 Generator function for nice formatting functions
 }
+\examples{
+plot(c(1,2,3))
+}

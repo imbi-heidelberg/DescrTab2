@@ -303,6 +303,37 @@ test_that("row_percent works",
 )
 
 
+test_that("caption works",
+          {
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                caption = "Animal table caption"
+              )) %>%  print(silent = TRUE, print_format = "console"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                caption = "Animal table caption"
+              )) %>%  print(silent = TRUE, print_format = "tex"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                caption = "Animal table caption"
+              )) %>%  print(silent = TRUE, print_format = "word"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                print_p = FALSE, print_CI = FALSE
+              )) %>%  print(silent = TRUE, print_format = "html"),
+              NA
+            )
+          }
+)
 
 
 

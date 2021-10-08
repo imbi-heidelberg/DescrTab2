@@ -5,8 +5,6 @@
 \title{S3 override for knit_print function for DescrList objects.}
 \usage{
 \method{knit_print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
-
-\method{knit_print}{DescrList}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
 \arguments{
 \item{x}{a}
@@ -15,18 +13,11 @@
 
 \item{silent}{c}
 
-<<<<<<< HEAD
 \item{...}{abc}
 }
 \value{
 outputs formatted table depending on the environment (.RMD) which it is called from
-=======
-
-
->>>>>>> 84e37d303bfcd68b0cacacb1d30b76e570f01328
 }
 \description{
-S3 override for knit_print function for DescrList objects.
-
 S3 override for knit_print function for DescrList objects.
 }

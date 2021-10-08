@@ -16,7 +16,6 @@ list of labels
 Extract the label attributes from data
 }
 \examples{
-a <- c(1,2)
+a <- c(1, 2)
 attr(a, "label") <- "b"
-unlabel(a)
 }

@@ -21,5 +21,14 @@ descr(
   group_labels = list(setosa = "My custom group label"),
   var_options = list(Sepal.Length = list(label = "My custom variable label"))
 )
+
+descr(
+  iris,
+  "Species",
+  group_labels = list(setosa = "My custom group label"),
+  var_options = list(Sepal.Length = list(label = "My custom variable label")),
+  format_options=list(caption="Test Caption")
+)
+
 ```
 

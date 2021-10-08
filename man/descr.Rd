@@ -31,45 +31,7 @@ descr(
     row_percent = FALSE, Nmiss_row_percent = FALSE, absolute_relative_frequency_mode =
     c("both", "only_absolute", "only_relative"), omit_missings_in_categorical_var =
     FALSE, categorical_missing_percent_mode = c("no_missing_percent",
-    "missing_as_regular_category", "missing_as_separate_category"),     
-    replace_empty_string_with_NA = TRUE),
-  test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
-    c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
-    FALSE, test_override = NULL, additional_test_args = list()),
-  reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
-      paste0(Q1, " -- ", Q3) }), `min - max` = list(args = c("min", "max"), fun =
-    function(min, max) {     paste0(min, " -- ", max) })),
-  ...
-)
-
-descr(
-  dat,
-  group = NULL,
-  group_labels = list(),
-  var_labels = list(),
-  var_options = list(),
-  summary_stats_cont = list(N = DescrTab2:::.N, Nmiss = DescrTab2:::.Nmiss, mean =
-    DescrTab2:::.mean, sd = DescrTab2:::.sd, median = DescrTab2:::.median, Q1 =
-    DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
-    DescrTab2:::.max),
-  summary_stats_cat = list(),
-  format_summary_stats = list(N = function(x) {     format(x, digits = 2, scientific =
-    3) }, Nmiss = function(x) {     format(x, digits = 2, scientific = 3) }, mean =
-    function(x) {     format(x, digits = 2, scientific = 3) }, sd = function(x) {    
-    format(x, digits = 2, scientific = 3) }, median = function(x) {     format(x, digits
-    = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2, scientific = 3)
-    }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) }, min = function(x)
-    {     format(x, digits = 2, scientific = 3) }, max = function(x) {     format(x,
-    digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits = 2,
-    scientific = 3) }),
-  format_p = scales::pvalue_format(),
-  format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
-    combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE,
-    omit_missings_in_group = TRUE, percent_accuracy = NULL, percent_suffix = "\%",
-    row_percent = FALSE, Nmiss_row_percent = FALSE, absolute_relative_frequency_mode =
-    c("both", "only_absolute", "only_relative"), omit_missings_in_categorical_var =
-    FALSE, categorical_missing_percent_mode = c("no_missing_percent",
-    "missing_as_regular_category", "missing_as_separate_category"),     
+    "missing_as_regular_category", "missing_as_separate_category"),      caption = NULL,
     replace_empty_string_with_NA = TRUE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
@@ -112,19 +74,8 @@ These options are specified in this argument. See the details and examples for m
 Returns a A \code{DescrList} object, which is a named list of descriptive statistics
 which can be passed along to the print function to create
 pretty summary tables.
-
-Returns a A \code{DescrList} object, which is a named list of descriptive statistics
-which can be passed along to the print function to create
-pretty summary tables.
 }
 \description{
-Generate a list of descriptive statistics. By default, the function calculates summary statistics such as mean,
-standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
-for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
-For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell. In particular,
-Wilson score intervals [1] from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
-are used for continuous variables and confidence intervals for the Hodge-Lehman estimator [2] from \link[stats]{wilcox.test} are used for ordinal variables.
-
 Generate a list of descriptive statistics. By default, the function calculates summary statistics such as mean,
 standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
 for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
@@ -136,21 +87,9 @@ are used for continuous variables and confidence intervals for the Hodge-Lehman 
 
 \code{group_labels} and \code{var_labels} need to be named lists of character elements. The names of the list elements have to match the variable
 names in your dataset. The values of the list elements are the labels that will be assigned to these variables when printing.
-
-
-\code{group_labels} and \code{var_labels} need to be named lists of character elements. The names of the list elements have to match the variable
-names in your dataset. The values of the list elements are the labels that will be assigned to these variables when printing.
 }
 
 \section{Custom summary statistics}{
-
-\code{summary_stats_cont} and \code{summary_stats_cat} are both named lists of functions. The names of the list elements are
-what will be displayed in the leftmost column of the descriptive table. These functions should take a vector and return
-a value. \cr
-Each summary statistic has to have an associated formatting function in the \code{format_summary_stats} list.
-The functions in \code{format_summary_stats} take a numeric value and convert it to a character string, e.g. 0.2531235 -> "0.2". \cr
-The \code{format_p} function converts p-values to character strings, e.g. 0.05 -> "0.05" or 0.000001 -> "<0.001".
-
 
 \code{summary_stats_cont} and \code{summary_stats_cat} are both named lists of functions. The names of the list elements are
 what will be displayed in the leftmost column of the descriptive table. These functions should take a vector and return
@@ -200,66 +139,16 @@ they will become "A": 10 (33\%), "B": 10 (33\%), "(Missing)": 10 (33\% purposes.
 all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
 observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
 and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%), "(Missing)": 10 (33\%)}
+
+\item{\code{"caption"}}{ adds a table caption to the LaTeX, Word or PDf document}
   }
  }
-}
-
-
-Further formatting options can be specified in the \code{format_options} list. It contains the following members:
-\itemize{
-\item{\code{print_Total}}{ (logical) controls whether to print the "Total" column. If print_Total = NULL, print_Total will be set
-to TRUE if test_options$paired == FALSE, else it will be set to FALSE.}
-\item{\code{print_p}}{ (logical) controls whether to print the p-value column.}
-\item{\code{print_CI}}{ (logical) controls whether to print the confidence intervals for group-differences.}
-\item{\code{combine_mean_sd}}{ (logical) controls whether to combine the mean and sd row into one mean ± sd row. This is a
-shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
-\item{\code{combine_median_Q1_Q3}}{ (logical) controls whether to combine the median, Q1 and Q3 row into one median (Q1, Q3) row. This is a
-shortcut argument for the specification of an appropriate entry in the \code{reshape_rows} argument.}
-\item{\code{omit_Nmiss_if_0}}{ (logical)  controls whether to omit the Nmiss row in continuous variables there are no missings in the variable.}
-\item{\code{omit_missings_in_group}}{ (logical)  controls whether to omit all observations where the group variable is missing.}
-\item{\code{percent_accuracy}}{ (numeric)  A number to round to. Use (e.g.) 0.01 to show 2 decimal places of precision. If NULL, the default, uses a heuristic that
-should ensure breaks have the minimum number of digits needed to show the difference between adjacent values. See documentation of scales::label_percent}
-\item{\code{percent_suffix}}{ (character) the symbol to be used where "\%" is appropriate, sensible choices are usually "\%" (default) or "" (i.e., empty string) }
-\item{\code{row_percent}}{ (logical) controls wheter percentages of regular categorical variables should be calculated column-wise (default) or row-wise}
-\item{\code{Nmiss_row_percent}}{ (logical) controls whether percentages of the "Nmiss"-statistic (number of missing values) should be calculated column-wise (default) or row-wise}
-\item{\code{absolute_relative_frequency_mode}}{ (character)  controls how to display frequencies.
-It may be set to one of the following options:
-\itemize{
-\item{\code{"both"}}{ will display absolute and relative frequencies.}
-\item{\code{"only_absolute"}}{ will only display absolute frequencies. }
-\item{\code{"only_relative"}}{ will only display relative frequencies. }
-  }
- }
-\item{\code{omit_missings_in_categorical_var}}{ (logical) controls whether to omit missing values in categorical variables completely.}
-\item{\code{categorical_missing_percent_mode}}{ (character)  controls how to display percentages in categorical variables with a (Missing) category.
-It may be set to one of the following options:
-\itemize{
-\item{\code{"no_missing_percent"}}{ omits a percentage in the missing category entirely.}
-\item{\code{"missing_as_regular_category"}}{ treats (Missing) as a regular category for \%-calculation
-This means that if You have three categories: "A" with 10 counts, "B" with 10 counts and "(Missing)" with 10 counts,
-they will become "A": 10 (33\%), "B": 10 (33\%), "(Missing)": 10 (33\% purposes.)}
-
-\item{\code{"missing_as_separat_category"}}{ calculates (Missing) percentages with respect to
-all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
-observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
-and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%), "(Missing)": 10 (33\%)}
-  }
- }
+\item{\code{replace_empty_string_with_NA}}{ (logical) controls whether empty strings ("") should be replaced
+with missing value (\code{NA_character_}).}
 }
 }
 
 \section{Test options}{
-
-\code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
-\code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
-\url{https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
-specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
-Use \code{print_test_names()} to see a list of all available test names. If \code{paired = TRUE} is specified, you need to supply an index variable
-\code{indices} that specifies which datapoints in your dataset are paired. \code{indices} may either be a length one character vector that describes
-the name of the index variable in your dataset, or a vector containing the respective indices. See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
-for a bit more explanation. The optional list \code{additional_test_args} can be used to pass arguments along to test functions,
-e.g. \code{additional_test_args=list(correct=TRUE)} will request continuity correction if available.
-
 
 \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
 \code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
@@ -291,55 +180,19 @@ You can replace \code{<Your options here>} with the following options:
 \item{\code{test_override}}{ manually specify the name of the test you want to apply. You can see a list of choices
 by typing \code{print_test_names()}. Possible choices are:
 \itemize{
-\item{\code{"Cochrans Q test"}}{ }
-\item{\code{"McNemars test"}}{ }
+\item{\code{"Cochran's Q test"}}{ }
+\item{\code{"McNemar's test"}}{ }
 \item{\code{"Chi-squared goodness-of-fit test"}}{ }
-\item{\code{"Pearsons chi-squared test"}}{ }
-\item{\code{"Exact McNemars test"}}{ }
-\item{\code{"Boschloos test"}}{ }
-\item{\code{"Wilcoxon one-sample signed-rank test"}}{ }
-\item{\code{"Mann-Whitney U test"}}{ }
-\item{\code{"Kruskal-Wallis one-way ANOVA"}}{ }
-\item{\code{"Students paired t-test"}}{ }
+\item{\code{"Pearson's chi-squared test"}}{ }
+\item{\code{"Exact McNemar's test"}}{ }
+\item{\code{"Boschloo's test"}}{ }
+\item{\code{"Wilcoxon's one-sample signed-rank test"}}{ }
+\item{\code{"Mann-Whitney's U test"}}{ }
+\item{\code{"Kruskal-Wallis's one-way ANOVA"}}{ }
+\item{\code{"Student's paired t-test"}}{ }
 \item{\code{"Mixed model ANOVA"}}{ }
-\item{\code{"Students one-sample t-test"}}{ }
-\item{\code{"Welchs two-sample t-test"}}{ }
-\item{\code{"F-test (ANOVA)"}}{ }
-  }
- }
-}
-
-
-The \code{var_options} list can be used to conduct customizations that should only apply to a single variable and leave
-the rest of the table unchanged. \cr
-\code{var_options} is a list of named lists. This means that each member of \code{var_options} is itself a list again.
-The names of the list elements of \code{var_options} determine the variables to which the options will apply.
-Let's say you have an \code{age} variable in your dataset. To change 'descr' options only for \code{age}, you will need to pass
-a list of the form \code{var_options = list(age = list(<Your options here>))}. \cr
-You can replace \code{<Your options here>} with the following options:
-\itemize{
-\item{\code{label}}{ a character string containing the label for the variable}
-\item{\code{summary_stats}}{ a list of summary statistics. See section "Custom summary statistics"}
-\item{\code{format_summary_stats}}{ a list of formatting functions for summary statistics. See section "Custom summary statistics"}
-\item{\code{format_p}}{ a function to format p-values. See section "Custom summary statistics"}
-\item{\code{format_options}}{ a list of formatting options. See section "Formatting options"}
-\item{\code{test_options}}{ a list of test options. See section "Test options"}
-\item{\code{test_override}}{ manually specify the name of the test you want to apply. You can see a list of choices
-by typing \code{print_test_names()}. Possible choices are:
-\itemize{
-\item{\code{"Cochrans Q test"}}{ }
-\item{\code{"McNemars test"}}{ }
-\item{\code{"Chi-squared goodness-of-fit test"}}{ }
-\item{\code{"Pearsons chi-squared test"}}{ }
-\item{\code{"Exact McNemars test"}}{ }
-\item{\code{"Boschloos test"}}{ }
-\item{\code{"Wilcoxon one-sample signed-rank test"}}{ }
-\item{\code{"Mann-Whitney U test"}}{ }
-\item{\code{"Kruskal-Wallis one-way ANOVA"}}{ }
-\item{\code{"Students paired t-test"}}{ }
-\item{\code{"Mixed model ANOVA"}}{ }
-\item{\code{"Students one-sample t-test"}}{ }
-\item{\code{"Welchs two-sample t-test"}}{ }
+\item{\code{"Student's one-sample t-test"}}{ }
+\item{\code{"Welch's two-sample t-test"}}{ }
 \item{\code{"F-test (ANOVA)"}}{ }
   }
  }
@@ -347,14 +200,6 @@ by typing \code{print_test_names()}. Possible choices are:
 }
 
 \section{Combining rows}{
-
-The \code{reshape_rows} argument offers a framework for combining multiple rows of the output table into a single one.
-\code{reshape_rows} is a named list of lists. The names of it's member-lists determine the name that will be displayed
-as the name of the combined summary stats in the table (e.g. "mean ± sd "). The member lists need to contain two
-elements: \code{args}, contains the names of the summary statistics to be combined as characters, and
-\code{fun} which contains a function to combine these summary stats. The argument names of this function need to match
-the character strings specified in \code{args}. Check out the default options for an exemplary definition.
-
 
 The \code{reshape_rows} argument offers a framework for combining multiple rows of the output table into a single one.
 \code{reshape_rows} is a named list of lists. The names of it's member-lists determine the name that will be displayed
@@ -370,18 +215,8 @@ DescrList <- descr(iris)
 DescrList$variables$results$Sepal.Length$Total$mean
 print(DescrList)
 descr(iris, "Species")
-descr(iris)
-DescrList <- descr(iris)
-DescrList$variables$results$Sepal.Length$Total$mean
-print(DescrList)
-descr(iris, "Species")
 }
 \references{
-[1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774
-
-
-[2] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
-
 [1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774
 
 

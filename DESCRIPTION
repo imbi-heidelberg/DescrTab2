@@ -45,7 +45,9 @@ Imports:
     flextable (>= 0.6.6),
     officer,
     knitr,
-    rmarkdown
+    rmarkdown,
+    haven,
+    Hmisc
 VignetteBuilder: knitr
 License: GPL (>=3)
 Copyright: This package contains codes copyrighted by third parites. See file COPYRIGHTS for details.

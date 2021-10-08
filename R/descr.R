@@ -77,6 +77,8 @@ utils::globalVariables(".")
 #' all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
 #' observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
 #' and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%), "(Missing)": 10 (33\%)}
+#'
+#' \item{\code{"caption"}}{ adds a table caption to the LaTeX, Word or PDf document}
 #'   }
 #'  }
 #' \item{\code{replace_empty_string_with_NA}}{ (logical) controls whether empty strings ("") should be replaced
@@ -238,6 +240,7 @@ descr <-
                "missing_as_regular_category",
                "missing_as_separate_category"
              ),
+             caption = NULL,
              replace_empty_string_with_NA = TRUE
            ),
            test_options = list(
@@ -275,8 +278,13 @@ descr <-
     name_differences_labels <- setdiff(names(extracted_labels), names(var_labels))
     var_labels[name_differences_labels] <-
       extracted_labels[name_differences_labels]
-    dat %<>% mutate(across(where(function(x)inherits(x, "labelled")),
-                           function(x){class(x) <- class(x)[class(x)!="labelled"];x}))
+    dat %<>% mutate(across(
+      where(function(x) inherits(x, "labelled")),
+      function(x) {
+        class(x) <- class(x)[class(x) != "labelled"]
+        x
+      }
+    ))
 
     # Coerce all date columns to factors
     if (isTRUE(any(sapply(dat, function(x) inherits(x, "Date"))))) {
@@ -292,7 +300,7 @@ descr <-
 
     ### Is format_options a named list?
     if (length(format_options) > 0 &&
-        is.null(names(format_options))) {
+      is.null(names(format_options))) {
       warning("names(format_options) cannot be empty. Ignoring the format_options option.")
     }
     format_options <-
@@ -300,18 +308,21 @@ descr <-
 
 
     # Check for empty strings
-    if(any(dat=="", na.rm = TRUE)){
-      if (isTRUE(format_options[["replace_empty_string_with_NA"]])){
-        dat %<>% mutate(across(everything(), ~na_if(., "")))
-        dat %<>% mutate(across(where(function(x){"" %in% levels(x)} ), ~fct_drop(., c("") )))
-      } else{
-        if (any(dat=="(empty)", na.rm = TRUE)){
+    if (any(dat == "", na.rm = TRUE)) {
+      if (isTRUE(format_options[["replace_empty_string_with_NA"]])) {
+        dat %<>% mutate(across(everything(), ~ na_if(., "")))
+        dat %<>% mutate(across(where(function(x) {
+          "" %in% levels(x)
+        }), ~ fct_drop(., c(""))))
+      } else {
+        if (any(dat == "(empty)", na.rm = TRUE)) {
           stop('Your data contains both "" (i.e. empty strings) and "(empty)". This would lead to conflicts. Rename your "" data. ')
         }
         warning('Your data contains "" (i.e., emtpy strings). If "" is used to code missings, you should
               recode it. DescrTab2 assumes "" is supposed to mean something, and converted it to "(empty)".')
-        dat %<>% mutate(across(where(function(x)is.factor(x) ), function(x) fct_recode(x, "(empty)"="" ) ),
-                        across(where(is.character), function(x) if_else(x=="", "(empty)", x) )
+        dat %<>% mutate(
+          across(where(function(x) is.factor(x)), function(x) fct_recode(x, "(empty)" = "")),
+          across(where(is.character), function(x) if_else(x == "", "(empty)", x))
         )
       }
     }
@@ -319,8 +330,8 @@ descr <-
 
     test_options %<>% as.list()
     if (is.character(test_options[["indices"]]) &&
-        length(test_options[["indices"]]) == 1 &&
-        test_options[["indices"]] %in% names(dat)) {
+      length(test_options[["indices"]]) == 1 &&
+      test_options[["indices"]] %in% names(dat)) {
       idx_name <- test_options[["indices"]]
       test_options[["indices"]] <- dat %>% pull(!!idx_name)
       dat %<>% select(-!!idx_name)
@@ -330,8 +341,8 @@ descr <-
 
     ### Is group either null or a length one character or numeric?
     if (!is.null(group) &
-        !((is.character(group) |
-           is.numeric(group)) & length(group) == 1)) {
+      !((is.character(group) |
+        is.numeric(group)) & length(group) == 1)) {
       stop(
         "group has to be either NULL or a character specifiying the name of the group variable,
         or a length one numeric specifying the column number of the group variable"
@@ -432,18 +443,18 @@ descr <-
     }
     ### is summary_stats_cont a list of functions?
     if (!is.list(summary_stats_cont) |
-        !all(sapply(summary_stats_cont, is.function))) {
+      !all(sapply(summary_stats_cont, is.function))) {
       stop("summary_stats_cont must be a list of functions.")
     }
     ### is summary_stats_cat an empty list or a  list of functions?
     if ((length(summary_stats_cat) > 0) &
-        (!is.list(summary_stats_cat) |
-         !all(sapply(summary_stats_cat, is.function)))) {
+      (!is.list(summary_stats_cat) |
+        !all(sapply(summary_stats_cat, is.function)))) {
       stop("summary_stats_cat must be a list of functions.")
     }
     ### Is summary_stats_cat a named list?
     if (length(summary_stats_cat) > 0 &&
-        is.null(names(summary_stats_cat))) {
+      is.null(names(summary_stats_cat))) {
       warning(
         "names(summary_stats_cat) cannot be empty. Ignoring the summary_stats_cat option."
       )
@@ -454,12 +465,12 @@ descr <-
     }
     ### is format_summary_stats a list of functions?
     if (!is.list(format_summary_stats) |
-        !all(sapply(format_summary_stats, is.function))) {
+      !all(sapply(format_summary_stats, is.function))) {
       stop("format_summary_stats must be a list of functions.")
     }
     ### Is format_summary_stats a named list?
     if (length(format_summary_stats) > 0 &&
-        is.null(names(format_summary_stats))) {
+      is.null(names(format_summary_stats))) {
       warning(
         "names(format_summary_stats) cannot be empty. Ignoring the format_summary_stats option."
       )
@@ -542,12 +553,12 @@ specify format_options$print_Total. print_Total is set to FALSE.")
     for (var_option_name in names(var_options)) {
       if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
         if (!is.list(var_options[[var_option_name]][["summary_stats"]]) |
-            !all(sapply(var_options[[var_option_name]][["summary_stats"]], is.function))) {
+          !all(sapply(var_options[[var_option_name]][["summary_stats"]], is.function))) {
           stop("summary_stats in var_options must be a list of functions.")
         }
       }
       if (!is.null(var_options[[var_option_name]][["summary_stats"]]) ||
-          !is.null(var_options[[var_option_name]][["format_summary_stats"]])) {
+        !is.null(var_options[[var_option_name]][["format_summary_stats"]])) {
         name_diff <-
           setdiff(names(format_summary_stats), names(var_options[[var_option_name]][["format_summary_stats"]]))
         var_options[[var_option_name]][["format_summary_stats"]][name_diff] <-
@@ -673,20 +684,20 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       if (is.factor(var)) {
         # Analyze categorical variable
         var_descr <- descr_cat(var,
-                               group_var,
-                               var_name,
-                               summary_stats_cat,
-                               var_options = var_options[[var_name]],
-                               test_options
+          group_var,
+          var_name,
+          summary_stats_cat,
+          var_options = var_options[[var_name]],
+          test_options
         )
       } else if (is.numeric(var)) {
         # Analyze continuous variable
         var_descr <- descr_cont(var,
-                                group_var,
-                                var_name,
-                                summary_stats_cont,
-                                var_options = var_options[[var_name]],
-                                test_options
+          group_var,
+          var_name,
+          summary_stats_cont,
+          var_options = var_options[[var_name]],
+          test_options
         )
       }
       # Append result of analysis to list
@@ -962,9 +973,9 @@ print.DescrList <- function(x,
 
   # Print the DescrPrint object
   print(DescrPrintObj,
-        print_format = print_format,
-        silent = silent,
-        ...
+    print_format = print_format,
+    silent = silent,
+    ...
   )
 }
 
@@ -1016,10 +1027,10 @@ print.DescrPrintCharacter <- function(x,
                                       silent = FALSE,
                                       ...) {
   ret <- switch(print_format,
-                tex = print_tex(x, silent),
-                html = print_html(x, silent),
-                word = print_word(x, silent),
-                print_console(x, silent, ...)
+    tex = print_tex(x, silent),
+    html = print_html(x, silent),
+    word = print_word(x, silent),
+    print_console(x, silent, ...)
   )
   invisible(ret)
 }
@@ -1035,8 +1046,8 @@ print.DescrPrintNumeric <- function(x,
 
 create_DescrPrint <- function(DescrListObj, print_format) {
   create_subtable <- switch(print_format,
-                            numeric = create_numeric_subtable,
-                            create_character_subtable
+    numeric = create_numeric_subtable,
+    create_character_subtable
   )
 
   var_names <- names(DescrListObj[["variables"]])
@@ -1113,7 +1124,7 @@ create_DescrPrint <- function(DescrListObj, print_format) {
   printObj[["variables"]] <- list()
   printObj[["lengths"]] <- list()
   printObj[["group"]] <- DescrListObj[["group"]]
-
+  printObj[["caption"]] <- DescrListObj[["format"]][["options"]][["caption"]]
   printObj[["group_names"]] <- group_names
 
 
@@ -1168,8 +1179,8 @@ create_DescrPrint <- function(DescrListObj, print_format) {
   printObj[["tibble"]] <- tibl
 
   attr(printObj, "class") <- switch(print_format,
-                                    numeric = c("DescrPrint", "DescrPrintNumeric", "list"),
-                                    c("DescrPrint", "DescrPrintCharacter", "list")
+    numeric = c("DescrPrint", "DescrPrintNumeric", "list"),
+    c("DescrPrint", "DescrPrintCharacter", "list")
   )
 
   printObj
@@ -1200,9 +1211,9 @@ print_numeric <- function(DescrPrintObj,
   tibl[, 1] <- c1
 
   print_format <- format(tibl,
-                         n = n,
-                         width = width,
-                         n_extra = n_extra
+    n = n,
+    width = width,
+    n_extra = n_extra
   ) %>% str_replace_all(pattern = fixed('"'), fixed(" "))
 
   if (!silent) {
@@ -1244,9 +1255,9 @@ print_console <- function(DescrPrintObj,
   tibl[, 1] <- c1
 
   print_format <- format(tibl,
-                         n = n,
-                         width = width,
-                         n_extra = n_extra
+    n = n,
+    width = width,
+    n_extra = n_extra
   ) %>%
     .[-c(1, 3)] %>%
     str_replace_all(pattern = fixed('"'), fixed(" "))
@@ -1267,6 +1278,7 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
   names(lengths) <- c(labels)
+  caption <- DescrPrintObj[["caption"]]
 
   indx_varnames <- logical()
   for (i in 1:length(DescrPrintObj$variables)) {
@@ -1316,8 +1328,8 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   )), 15)
 
   names(lengths) <- sapply(double_escape_latex_symbols(tibble(labels))[[1]],
-                           inMinipage2,
-                           width = paste0(width + 1, "em")
+    inMinipage2,
+    width = paste0(width + 1, "em")
   )
   tibl[!indx_varnames, 1] <- sapply(tibl[[1]][!indx_varnames], inMinipage, width = paste0(width, "em"))
 
@@ -1329,7 +1341,8 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
       linesep = "",
       align = alig,
       escape = FALSE,
-      col.names = N_numbers
+      col.names = N_numbers,
+      caption = caption
     ) %>%
     `if`(
       print_footnotes,
@@ -1383,6 +1396,7 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
 
 
   labels <- unlist(unlist(DescrPrintObj[["labels"]]))
+  caption <- DescrPrintObj[["caption"]]
   names(lengths) <- c(labels)
 
   indx_varnames <- logical()
@@ -1429,7 +1443,8 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
       linesep = "",
       align = alig,
       escape = FALSE,
-      col.names = N_numbers
+      col.names = N_numbers,
+      caption = caption
     ) %>%
     kable_styling() %>%
     `if`(
@@ -1455,6 +1470,7 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
 #' @importFrom utils capture.output head tail
 print_word <- function(DescrPrintObj, silent = FALSE) {
   tibl <- DescrPrintObj[["tibble"]]
+  caption <- DescrPrintObj[["caption"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
   names(lengths) <- c(var_names)
@@ -1521,6 +1537,10 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
       )
     }
   }
+  if (!is.null(caption)) {
+    ft <- flextable::set_caption(ft, caption)
+  }
+
 
   ft <- ft %>%
     autofit()
@@ -1549,7 +1569,6 @@ knit_print.DescrList <-
            print_format = options("print_format")[[1]],
            silent = FALSE,
            ...) {
-
     DescrListObj <- x
 
     # if no printing format was set, print to console
@@ -1563,9 +1582,10 @@ knit_print.DescrList <-
 
     # Print the DescrPrint object
     knit_print(DescrPrintObj,
-               print_format = print_format,
-               silent = silent,
-               ...)
+      print_format = print_format,
+      silent = silent,
+      ...
+    )
   }
 
 
@@ -1587,27 +1607,27 @@ knit_print.DescrPrint <- function(x,
                                   ...) {
   if (knitr::is_html_output()) {
     str <- print.DescrPrintCharacter(x,
-                                     print_format = "html",
-                                     silent = TRUE)[["html"]]
+      print_format = "html",
+      silent = TRUE
+    )[["html"]]
     knit_print(asis_output(str))
-
-  } else if(knitr::is_latex_output()){
-
+  } else if (knitr::is_latex_output()) {
     str <- print.DescrPrintCharacter(x,
-                                     print_format = "tex",
-                                     silent = TRUE)[["tex"]]
+      print_format = "tex",
+      silent = TRUE
+    )[["tex"]]
     knit_print(asis_output(str))
-
-  } else if(knitr::pandoc_to("docx")){
+  } else if (knitr::pandoc_to("docx")) {
     ft <- print.DescrPrintCharacter(x,
-                                    print_format = "word",
-                                    silent = TRUE)[["ft"]]
-    is_bookdown <- isTRUE(opts_knit$get('bookdown.internal.label'))
+      print_format = "word",
+      silent = TRUE
+    )[["ft"]]
+    is_bookdown <- isTRUE(opts_knit$get("bookdown.internal.label"))
     pandoc2 <- pandoc_version() >= numeric_version("2.0")
     str <- flextable_to_rmd(ft, bookdown = is_bookdown, pandoc2 = pandoc2, print = FALSE)
     knit_print(asis_output(str))
-  } else{
-    print(x,...)
+  } else {
+    print(x, ...)
   }
 }
 
@@ -1824,8 +1844,8 @@ create_character_subtable.cont_summary <-
           format_freqs(
             DescrVarObj[["results"]][["Total"]][["Nmiss"]],
             ifelse(format_options[["Nmiss_row_percent"]] == TRUE,
-                   DescrVarObj_unformatted[["results"]][["Total"]][["Nmiss"]],
-                   DescrVarObj_unformatted[["variable_lengths"]][["Total"]][["N"]]
+              DescrVarObj_unformatted[["results"]][["Total"]][["Nmiss"]],
+              DescrVarObj_unformatted[["variable_lengths"]][["Total"]][["N"]]
             ),
             format_options[["absolute_relative_frequency_mode"]],
             format_options[["percent_accuracy"]],
@@ -1877,8 +1897,8 @@ create_character_subtable.cont_summary <-
             format_freqs(
               DescrVarObj[["results"]][[group]][["Nmiss"]],
               ifelse(format_options[["Nmiss_row_percent"]] == TRUE,
-                     DescrVarObj_unformatted[["results"]][["Total"]][["Nmiss"]],
-                     DescrVarObj_unformatted[["variable_lengths"]][[group]][["N"]]
+                DescrVarObj_unformatted[["results"]][["Total"]][["Nmiss"]],
+                DescrVarObj_unformatted[["variable_lengths"]][[group]][["N"]]
               ),
               format_options[["absolute_relative_frequency_mode"]],
               format_options[["percent_accuracy"]],
@@ -1931,13 +1951,13 @@ create_character_subtable.cont_summary <-
           format_p(DescrVarObj[["test_list"]]$p)
         },
         rep("", length_tibl -
-              2)
+          2)
       ))
       tibl %<>% bind_cols(Test = c(
         "",
         DescrVarObj[["test_list"]]$test_name,
         rep("", length_tibl -
-              2)
+          2)
       ))
 
       if (length(groups) == 2) {
@@ -1960,7 +1980,7 @@ create_character_subtable.cont_summary <-
           CI_name,
           CI,
           rep("", length_tibl -
-                3)
+            3)
         ))
       }
     }
@@ -1995,7 +2015,7 @@ create_character_subtable.cat_summary <-
       sum(unlist(DescrVarObj[["results"]][["Total"]][["categories"]][cat_names]))
 
     if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
-        format_options[["omit_missings_in_categorical_var"]] == FALSE) {
+      format_options[["omit_missings_in_categorical_var"]] == FALSE) {
       N_nonmissing <- N_total
     } else {
       N_nonmissing <-
@@ -2029,8 +2049,8 @@ create_character_subtable.cat_summary <-
         format_freqs(
           DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
           ifelse(format_options[["row_percent"]] == TRUE,
-                 DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
-                 N_nonmissing
+            DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
+            N_nonmissing
           ),
           format_options[["absolute_relative_frequency_mode"]],
           format_options[["percent_accuracy"]],
@@ -2049,8 +2069,8 @@ create_character_subtable.cat_summary <-
           format_freqs(
             DescrVarObj[["results"]][["Total"]][["categories"]][["(Missing)"]],
             ifelse(format_options[["Nmiss_row_percent"]] == TRUE,
-                   DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][["(Missing)"]],
-                   N_total
+              DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][["(Missing)"]],
+              N_total
             ),
             format_options[["absolute_relative_frequency_mode"]],
             format_options[["percent_accuracy"]],
@@ -2087,7 +2107,7 @@ create_character_subtable.cat_summary <-
         sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][cat_names]))
 
       if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
-          format_options[["omit_missings_in_categorical_var"]] == FALSE) {
+        format_options[["omit_missings_in_categorical_var"]] == FALSE) {
         N_group_nonmissing <- N_group_total
       } else {
         N_group_nonmissing <-
@@ -2122,8 +2142,8 @@ create_character_subtable.cat_summary <-
           format_freqs(
             DescrVarObj[["results"]][[group]][["categories"]][[cat_name]],
             ifelse(format_options[["row_percent"]] == TRUE,
-                   DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
-                   N_group_nonmissing
+              DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
+              N_group_nonmissing
             ),
             format_options[["absolute_relative_frequency_mode"]],
             format_options[["percent_accuracy"]],
@@ -2142,8 +2162,8 @@ create_character_subtable.cat_summary <-
             format_freqs(
               DescrVarObj[["results"]][[group]][["categories"]][["(Missing)"]],
               ifelse(format_options[["Nmiss_row_percent"]] == TRUE,
-                     DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][["(Missing)"]],
-                     N_group_total
+                DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][["(Missing)"]],
+                N_group_total
               ),
               format_options[["absolute_relative_frequency_mode"]],
               format_options[["percent_accuracy"]],
@@ -2171,13 +2191,13 @@ create_character_subtable.cat_summary <-
         format_p(DescrVarObj[["test_list"]]$p)
       },
       rep("", length_tibl -
-            2)
+        2)
     ))
     tibl %<>% bind_cols(Test = c(
       "",
       DescrVarObj[["test_list"]]$test_name,
       rep("", length_tibl -
-            2)
+        2)
     ))
 
 
@@ -2201,7 +2221,7 @@ create_character_subtable.cat_summary <-
         CI_name,
         CI,
         rep("", length_tibl -
-              3)
+          3)
       ))
     }
     return(list(
@@ -2240,17 +2260,17 @@ create_character_subtable.cat_summary <-
 
 .Q1 <- function(var) {
   stats::quantile(var,
-                  probs = 0.25,
-                  na.rm = TRUE,
-                  type = 2
+    probs = 0.25,
+    na.rm = TRUE,
+    type = 2
   )
 }
 
 .Q3 <- function(var) {
   stats::quantile(var,
-                  probs = 0.75,
-                  na.rm = TRUE,
-                  type = 2
+    probs = 0.75,
+    na.rm = TRUE,
+    type = 2
   )
 }
 
@@ -2386,23 +2406,23 @@ create_test_abbreviations <- function(test_names) {
   erg <- character()
   for (test in test_names) {
     abbrev <- switch(test,
-                     `Cochran's Q test` = "CocQ",
-                     `McNemar's test` = "McN",
-                     `Chi-squared goodness-of-fit test` = "chi1",
-                     `Pearson's chi-squared test` = "chi2",
-                     `Exact McNemar's test` = "eMcN",
-                     `Boschloo's test` = "Bolo",
-                     `Friedman test` = "Frie",
-                     `Wilcoxon two-sample signed-rank test` = "Wil2",
-                     `Wilcoxon's one-sample signed-rank test` = "Wil1",
-                     `Mann-Whitney's U test` = "MWU",
-                     `Kruskal-Wallis's one-way ANOVA` = "KW",
-                     `Student's paired t-test` = "tpar",
-                     `Mixed model ANOVA` = "MiAn",
-                     `Student's one-sample t-test` = "tt1",
-                     `Welch's two-sample t-test` = "tt2",
-                     `F-test (ANOVA)` = "F",
-                     "Unknown test"
+      `Cochran's Q test` = "CocQ",
+      `McNemar's test` = "McN",
+      `Chi-squared goodness-of-fit test` = "chi1",
+      `Pearson's chi-squared test` = "chi2",
+      `Exact McNemar's test` = "eMcN",
+      `Boschloo's test` = "Bolo",
+      `Friedman test` = "Frie",
+      `Wilcoxon two-sample signed-rank test` = "Wil2",
+      `Wilcoxon's one-sample signed-rank test` = "Wil1",
+      `Mann-Whitney's U test` = "MWU",
+      `Kruskal-Wallis's one-way ANOVA` = "KW",
+      `Student's paired t-test` = "tpar",
+      `Mixed model ANOVA` = "MiAn",
+      `Student's one-sample t-test` = "tt1",
+      `Welch's two-sample t-test` = "tt2",
+      `F-test (ANOVA)` = "F",
+      "Unknown test"
     )
 
     erg <- c(erg, abbrev)
@@ -2470,7 +2490,7 @@ test_cont <-
     if (!is.null(group)) {
       paired_test <-
         !is.null(test_options[["indices"]]) &&
-        test_options[["paired"]]
+          test_options[["paired"]]
       if (paired_test) {
         tibl <-
           tibble(
@@ -2508,7 +2528,7 @@ test_cont <-
     # if test is not supplied, determine test
     if (is.null(test)) {
       if ((!is.null(group) &&
-           !all(table(group) > 1)) || length(var) == 1) {
+        !all(table(group) > 1)) || length(var) == 1) {
         warning(
           paste0(
             "Skipping test for variable ",
@@ -2577,207 +2597,207 @@ test_cont <-
       )
     } else {
       erg <- switch(test,
-                    `Wilcoxon two-sample signed-rank test` = {
-                      good_idx <- names(table(id)[table(id) == 2])
-                      if (!all(id %in% good_idx)) {
-                        warning("Removed paired observations with missings.")
-                      }
-                      tibl <- tibble(
-                        var = var,
-                        group = group,
-                        id = id
-                      )
-                      tibl %<>% filter(id %in% good_idx)
-                      level1 <- levels(group)[1]
-                      level2 <- levels(group)[2]
+        `Wilcoxon two-sample signed-rank test` = {
+          good_idx <- names(table(id)[table(id) == 2])
+          if (!all(id %in% good_idx)) {
+            warning("Removed paired observations with missings.")
+          }
+          tibl <- tibble(
+            var = var,
+            group = group,
+            id = id
+          )
+          tibl %<>% filter(id %in% good_idx)
+          level1 <- levels(group)[1]
+          level2 <- levels(group)[2]
 
-                      x <-
-                        tibl %>%
-                        filter(group == level1) %>%
-                        arrange(id) %>%
-                        pull(var)
-                      y <-
-                        tibl %>%
-                        filter(group == level2) %>%
-                        arrange(id) %>%
-                        pull(var)
+          x <-
+            tibl %>%
+            filter(group == level1) %>%
+            arrange(id) %>%
+            pull(var)
+          y <-
+            tibl %>%
+            filter(group == level2) %>%
+            arrange(id) %>%
+            pull(var)
 
-                      arglist <- modifyList(
-                        list(
-                          x = x,
-                          y = y,
-                          correct = FALSE,
-                          paired = TRUE
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          arglist <- modifyList(
+            list(
+              x = x,
+              y = y,
+              correct = FALSE,
+              paired = TRUE
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
-                    },
-                    `Friedman test` = {
-                      tmp <-
-                        tibble(
-                          var = var,
-                          group = group,
-                          idx = id
-                        )
+          list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
+        },
+        `Friedman test` = {
+          tmp <-
+            tibble(
+              var = var,
+              group = group,
+              idx = id
+            )
 
-                      arglist <- modifyList(
-                        list(
-                          formula = var ~ group | idx,
-                          data = tmp
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
-                      list(p = ignore_unused_args(stats::friedman.test, arglist)$p.value)
-                    },
-                    `Wilcoxon's one-sample signed-rank test` = {
-                      arglist <- modifyList(
-                        list(
-                          x = var,
-                          correct = FALSE
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
-                      list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
-                    },
-                    `Mann-Whitney's U test` = {
-                      tmp <- tibble(var = var, group = group)
-                      arglist <- modifyList(
-                        list(
-                          formula = var ~ group,
-                          conf.int = TRUE,
-                          correct = FALSE,
-                          data = tmp
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
-                      tl <- ignore_unused_args(stats::wilcox.test, arglist)
-                      list(
-                        p = tl$p.value,
-                        CI = tl$conf.int,
-                        CI_name = "HL CI"
-                      )
-                    },
-                    `Kruskal-Wallis's one-way ANOVA` = {
-                      tmp <- tibble(var = var, group = group)
-                      arglist <- modifyList(
-                        list(
-                          formula = var ~ group,
-                          data = tmp
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          arglist <- modifyList(
+            list(
+              formula = var ~ group | idx,
+              data = tmp
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
+          list(p = ignore_unused_args(stats::friedman.test, arglist)$p.value)
+        },
+        `Wilcoxon's one-sample signed-rank test` = {
+          arglist <- modifyList(
+            list(
+              x = var,
+              correct = FALSE
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
+          list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
+        },
+        `Mann-Whitney's U test` = {
+          tmp <- tibble(var = var, group = group)
+          arglist <- modifyList(
+            list(
+              formula = var ~ group,
+              conf.int = TRUE,
+              correct = FALSE,
+              data = tmp
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
+          tl <- ignore_unused_args(stats::wilcox.test, arglist)
+          list(
+            p = tl$p.value,
+            CI = tl$conf.int,
+            CI_name = "HL CI"
+          )
+        },
+        `Kruskal-Wallis's one-way ANOVA` = {
+          tmp <- tibble(var = var, group = group)
+          arglist <- modifyList(
+            list(
+              formula = var ~ group,
+              data = tmp
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      list(p = ignore_unused_args(stats::kruskal.test, arglist)$p.value)
-                    },
-                    `Student's paired t-test` = {
-                      good_idx <- names(table(id)[table(id) == 2])
-                      if (!all(id %in% good_idx)) {
-                        warning("Removed paired observations with missings.")
-                      }
-                      tibl <- tibble(
-                        var = var,
-                        group = group,
-                        id = id
-                      )
-                      tibl %<>% filter(id %in% good_idx)
-                      level1 <- levels(group)[1]
-                      level2 <- levels(group)[2]
+          list(p = ignore_unused_args(stats::kruskal.test, arglist)$p.value)
+        },
+        `Student's paired t-test` = {
+          good_idx <- names(table(id)[table(id) == 2])
+          if (!all(id %in% good_idx)) {
+            warning("Removed paired observations with missings.")
+          }
+          tibl <- tibble(
+            var = var,
+            group = group,
+            id = id
+          )
+          tibl %<>% filter(id %in% good_idx)
+          level1 <- levels(group)[1]
+          level2 <- levels(group)[2]
 
-                      x <-
-                        tibl %>%
-                        filter(group == level1) %>%
-                        arrange(id) %>%
-                        pull(var)
-                      y <-
-                        tibl %>%
-                        filter(group == level2) %>%
-                        arrange(id) %>%
-                        pull(var)
+          x <-
+            tibl %>%
+            filter(group == level1) %>%
+            arrange(id) %>%
+            pull(var)
+          y <-
+            tibl %>%
+            filter(group == level2) %>%
+            arrange(id) %>%
+            pull(var)
 
-                      arglist <- modifyList(
-                        list(
-                          x = x,
-                          y = y,
-                          paired = TRUE
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          arglist <- modifyList(
+            list(
+              x = x,
+              y = y,
+              paired = TRUE
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      tl <- ignore_unused_args(stats::t.test, arglist)
+          tl <- ignore_unused_args(stats::t.test, arglist)
 
-                      list(
-                        p = tl$p.value,
-                        CI = tl$conf.int,
-                        CI_name = "Mean dif. CI"
-                      )
-                    },
-                    `Mixed model ANOVA` = {
-                      tmp <- tibble(
-                        var = var,
-                        group = group,
-                        idx = id
-                      )
+          list(
+            p = tl$p.value,
+            CI = tl$conf.int,
+            CI_name = "Mean dif. CI"
+          )
+        },
+        `Mixed model ANOVA` = {
+          tmp <- tibble(
+            var = var,
+            group = group,
+            idx = id
+          )
 
-                      arglist <- modifyList(
-                        list(
-                          fixed = var ~ group,
-                          random = ~ 1 | idx,
-                          data = tmp
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          arglist <- modifyList(
+            list(
+              fixed = var ~ group,
+              random = ~ 1 | idx,
+              data = tmp
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      fit <-
-                        ignore_unused_args(nlme::lme, arglist)
-                      tl <- stats::anova(fit)
-                      pv <- tl$`p-value`[2]
-                      list(p = pv)
-                    },
-                    `Student's one-sample t-test` = {
-                      arglist <- modifyList(
-                        list(
-                          x = var
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          fit <-
+            ignore_unused_args(nlme::lme, arglist)
+          tl <- stats::anova(fit)
+          pv <- tl$`p-value`[2]
+          list(p = pv)
+        },
+        `Student's one-sample t-test` = {
+          arglist <- modifyList(
+            list(
+              x = var
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      list(p = ignore_unused_args(stats::t.test, arglist)$p.value)
-                    },
-                    `Welch's two-sample t-test` = {
-                      tmp <- tibble(var = var, group = group)
-                      arglist <- modifyList(
-                        list(
-                          formula = var ~ group,
-                          var.equal = FALSE,
-                          data = tmp
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          list(p = ignore_unused_args(stats::t.test, arglist)$p.value)
+        },
+        `Welch's two-sample t-test` = {
+          tmp <- tibble(var = var, group = group)
+          arglist <- modifyList(
+            list(
+              formula = var ~ group,
+              var.equal = FALSE,
+              data = tmp
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      tl <- ignore_unused_args(stats::t.test, arglist)
-                      list(
-                        p = tl$p.value,
-                        CI = tl$conf.int,
-                        CI_name = "Mean dif. CI"
-                      )
-                    },
-                    `F-test (ANOVA)` = {
-                      tmp <- tibble(var = var, group = group)
-                      arglist <- modifyList(
-                        list(
-                          formula = var ~ group,
-                          data = tmp
-                        ),
-                        as.list(test_options[["additional_test_args"]])
-                      )
+          tl <- ignore_unused_args(stats::t.test, arglist)
+          list(
+            p = tl$p.value,
+            CI = tl$conf.int,
+            CI_name = "Mean dif. CI"
+          )
+        },
+        `F-test (ANOVA)` = {
+          tmp <- tibble(var = var, group = group)
+          arglist <- modifyList(
+            list(
+              formula = var ~ group,
+              data = tmp
+            ),
+            as.list(test_options[["additional_test_args"]])
+          )
 
-                      tl <- summary(ignore_unused_args(stats::aov, arglist))[[1]]
-                      pv <- tl$`Pr(>F)`[1]
-                      list(p = pv)
-                    },
-                    list(p = NA_real_)
+          tl <- summary(ignore_unused_args(stats::aov, arglist))[[1]]
+          pv <- tl$`Pr(>F)`[1]
+          list(p = pv)
+        },
+        list(p = NA_real_)
       )
     }
 
@@ -2818,7 +2838,7 @@ test_cat <-
     if (!is.null(group)) {
       paired_test <-
         !is.null(test_options[["indices"]]) &&
-        test_options[["paired"]]
+          test_options[["paired"]]
       if (paired_test) {
         tibl <-
           tibble(
@@ -2968,154 +2988,154 @@ test_cat <-
     } else {
       erg <-
         switch(test,
-               `Exact McNemar's test` = {
-                 # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+          `Exact McNemar's test` = {
+            # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
 
-                 tmp <- tibble(
-                   var = var,
-                   group = group,
-                   idx = test_options[["indices"]]
-                 )
-                 tmp1 <-
-                   tmp %>%
-                   filter(group == levels(group)[1]) %>%
-                   arrange("idx")
-                 tmp2 <-
-                   tmp %>%
-                   filter(group == levels(group)[2]) %>%
-                   arrange("idx")
+            tmp <- tibble(
+              var = var,
+              group = group,
+              idx = test_options[["indices"]]
+            )
+            tmp1 <-
+              tmp %>%
+              filter(group == levels(group)[1]) %>%
+              arrange("idx")
+            tmp2 <-
+              tmp %>%
+              filter(group == levels(group)[2]) %>%
+              arrange("idx")
 
-                 if (any(tmp1$idx != tmp2$idx)) {
-                   stop("Your data is not properly matched. Maybe some pairs contain missings?")
-                 }
-                 cont.table <- table(tmp1$var, tmp2$var)
+            if (any(tmp1$idx != tmp2$idx)) {
+              stop("Your data is not properly matched. Maybe some pairs contain missings?")
+            }
+            cont.table <- table(tmp1$var, tmp2$var)
 
-                 arglist <- modifyList(
-                   list(
-                     x = cont.table,
-                     alternative = "two.sided",
-                     tsmethod = "central",
-                     paired = TRUE
-                   ),
-                   as.list(test_options[["additional_test_args"]])
-                 )
+            arglist <- modifyList(
+              list(
+                x = cont.table,
+                alternative = "two.sided",
+                tsmethod = "central",
+                paired = TRUE
+              ),
+              as.list(test_options[["additional_test_args"]])
+            )
 
-                 list(
-                   p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
-                   CI = exact2x2::mcnemarExactDP(n = sum(cont.table), x = cont.table[1, 2], m = cont.table[1, 2] + cont.table[2, 1])$conf.int,
-                   CI_name = "Prop. dif. CI"
-                 )
-               },
-               `Boschloo's test` = {
-                 tabl <- table(var, group)
-                 x1 <- tabl[1, 1]
-                 n1 <- sum(tabl[, 1])
-                 x2 <- tabl[1, 2]
-                 n2 <- sum(tabl[, 2])
-                 arglist <- modifyList(
-                   list(
-                     x1 = x1,
-                     n1 = n1,
-                     x2 = x2,
-                     n2 = n2
-                   ),
-                   as.list(test_options[["additional_test_args"]])
-                 )
+            list(
+              p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
+              CI = exact2x2::mcnemarExactDP(n = sum(cont.table), x = cont.table[1, 2], m = cont.table[1, 2] + cont.table[2, 1])$conf.int,
+              CI_name = "Prop. dif. CI"
+            )
+          },
+          `Boschloo's test` = {
+            tabl <- table(var, group)
+            x1 <- tabl[1, 1]
+            n1 <- sum(tabl[, 1])
+            x2 <- tabl[1, 2]
+            n2 <- sum(tabl[, 2])
+            arglist <- modifyList(
+              list(
+                x1 = x1,
+                n1 = n1,
+                x2 = x2,
+                n2 = n2
+              ),
+              as.list(test_options[["additional_test_args"]])
+            )
 
-                 list(
-                   p = ignore_unused_args(exact2x2::boschloo, arglist)$p.value,
-                   CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-                   CI_name = "Prop. dif. CI"
-                 )
-               },
-               `McNemar's test` = {
-                 tmp <- tibble(
-                   var = var,
-                   group = group,
-                   idx = test_options[["indices"]]
-                 )
-                 tmp1 <-
-                   tmp %>%
-                   filter(group == levels(group)[1]) %>%
-                   arrange("idx")
-                 tmp2 <-
-                   tmp %>%
-                   filter(group == levels(group)[2]) %>%
-                   arrange("idx")
+            list(
+              p = ignore_unused_args(exact2x2::boschloo, arglist)$p.value,
+              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+              CI_name = "Prop. dif. CI"
+            )
+          },
+          `McNemar's test` = {
+            tmp <- tibble(
+              var = var,
+              group = group,
+              idx = test_options[["indices"]]
+            )
+            tmp1 <-
+              tmp %>%
+              filter(group == levels(group)[1]) %>%
+              arrange("idx")
+            tmp2 <-
+              tmp %>%
+              filter(group == levels(group)[2]) %>%
+              arrange("idx")
 
-                 if (any(tmp1$idx != tmp2$idx)) {
-                   stop("Your data is not properly matched. Maybe some pairs contain missings?")
-                 }
-                 cont.table <- table(tmp1$var, tmp2$var)
+            if (any(tmp1$idx != tmp2$idx)) {
+              stop("Your data is not properly matched. Maybe some pairs contain missings?")
+            }
+            cont.table <- table(tmp1$var, tmp2$var)
 
-                 arglist <- modifyList(
-                   list(
-                     x = cont.table
-                   ),
-                   as.list(test_options[["additional_test_args"]])
-                 )
-                 warning("Confidence intervals for differences in proportions ignore the paired structure of the data.
+            arglist <- modifyList(
+              list(
+                x = cont.table
+              ),
+              as.list(test_options[["additional_test_args"]])
+            )
+            warning("Confidence intervals for differences in proportions ignore the paired structure of the data.
 Use Exact McNemar's test if you want confidence intervals which use the test statistic of the
 exact McNemar's test.")
-                 list(
-                   p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
-                   CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-                   CI_name = "Prop. dif. CI"
-                 )
-               },
-               `Cochran's Q test` = {
-                 tmp <- tibble(
-                   var = var,
-                   group = group,
-                   idx = test_options[["indices"]]
-                 )
+            list(
+              p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
+              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+              CI_name = "Prop. dif. CI"
+            )
+          },
+          `Cochran's Q test` = {
+            tmp <- tibble(
+              var = var,
+              group = group,
+              idx = test_options[["indices"]]
+            )
 
-                 arglist <- modifyList(
-                   list(
-                     y = var ~ group | idx,
-                     data = tmp
-                   ),
-                   as.list(test_options[["additional_test_args"]])
-                 )
+            arglist <- modifyList(
+              list(
+                y = var ~ group | idx,
+                data = tmp
+              ),
+              as.list(test_options[["additional_test_args"]])
+            )
 
-                 list(p = ignore_unused_args(DescTools::CochranQTest, arglist)$p.value)
-               },
-               `Chi-squared goodness-of-fit test` = {
-                 arglist <- modifyList(
-                   list(
-                     x = table(var),
-                     correct = FALSE
-                   ),
-                   as.list(test_options[["additional_test_args"]])
-                 )
+            list(p = ignore_unused_args(DescTools::CochranQTest, arglist)$p.value)
+          },
+          `Chi-squared goodness-of-fit test` = {
+            arglist <- modifyList(
+              list(
+                x = table(var),
+                correct = FALSE
+              ),
+              as.list(test_options[["additional_test_args"]])
+            )
 
-                 list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
-               },
-               `Pearson's chi-squared test` = {
-                 arglist <- modifyList(
-                   list(
-                     x = var,
-                     y = group,
-                     correct = FALSE
-                   ),
-                   as.list(test_options[["additional_test_args"]])
-                 )
+            list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
+          },
+          `Pearson's chi-squared test` = {
+            arglist <- modifyList(
+              list(
+                x = var,
+                y = group,
+                correct = FALSE
+              ),
+              as.list(test_options[["additional_test_args"]])
+            )
 
-                 if (n_levels_group == 2 & n_levels_var == 2) {
-                   list(
-                     p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
-                     CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-                     CI_name = "Prop. dif. CI"
-                   )
-                 } else {
-                   list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
-                 }
-               },
-               list(
-                 p = NA_real_,
-                 CI = NA_real_,
-                 CI_name = ""
-               )
+            if (n_levels_group == 2 & n_levels_var == 2) {
+              list(
+                p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
+                CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+                CI_name = "Prop. dif. CI"
+              )
+            } else {
+              list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
+            }
+          },
+          list(
+            p = NA_real_,
+            CI = NA_real_,
+            CI_name = ""
+          )
         )
     }
 
@@ -3238,19 +3258,18 @@ inMinipage <- function(x, width) {
 #' @export
 #'
 #' @examples
-#' a <- c(1,2)
+#' a <- c(1, 2)
 #' attr(a, "label") <- "b"
-#' unlabel(a)
-extract_labels <- function(dat){
-  if (inherits(dat, "list")| inherits(dat, "data.frame")|inherits(dat, "tbl")){
-    extracted_labels <- lapply(dat, function(x)attr(x, "label"))
+extract_labels <- function(dat) {
+  if (inherits(dat, "list") | inherits(dat, "data.frame") | inherits(dat, "tbl")) {
+    extracted_labels <- lapply(dat, function(x) attr(x, "label"))
     extracted_labels <- extracted_labels[!sapply(extracted_labels, is.null) &
-                                           !sapply(extracted_labels, function(x)isTRUE(trimws(x)==""))]
-  }else{
+      !sapply(extracted_labels, function(x) isTRUE(trimws(x) == ""))]
+  } else {
     nm <- deparse(substitute(dat))
     extracted_labels <- list(nm = attr(dat, "label"))
     extracted_labels <- extracted_labels[!sapply(extracted_labels, is.null) &
-                                           !sapply(extracted_labels, function(x)isTRUE(trimws(x)==""))]
+      !sapply(extracted_labels, function(x) isTRUE(trimws(x) == ""))]
   }
   return(extracted_labels)
 }
@@ -3280,17 +3299,18 @@ inMinipage2 <- function(x, width) {
 #' @examples
 #' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
 #' read_redcap_formatted(path_to_redcap_script)
-read_redcap_formatted <- function(path_to_redcap_script = NULL){
+#' @importFrom Hmisc label label<-
+read_redcap_formatted <- function(path_to_redcap_script = NULL) {
   stopifnot(is.character(path_to_redcap_script))
-  source(path_to_redcap_script, encoding = "UTF-8", local=TRUE)
+  source(path_to_redcap_script, encoding = "UTF-8", local = TRUE)
   data <- as_tibble(data)
   colnames_data <- names(data)
-  for (colname in colnames_data){
-    if (str_detect(colname, "\\.factor$")){
+  for (colname in colnames_data) {
+    if (str_detect(colname, "\\.factor$")) {
       fac <- data[[colname]]
       label(fac) <- label(data[[str_remove(colname, "\\.factor$")]])
       data[str_remove(colname, "\\.factor$")] <- fac
-      data <- data[names(data)!= colname]
+      data <- data[names(data) != colname]
     }
   }
   data
@@ -3308,14 +3328,16 @@ read_redcap_formatted <- function(path_to_redcap_script = NULL){
 #' @examples
 #' path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
 #' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' read_sas(path_to_dat, pat_to_format)
+#' haven::read_sas(path_to_dat, pat_to_format)
 #' @importFrom haven read_sas
 #'
-read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL){
-  erg <- read_sas(path_to_dat,
-                  path_to_format)
+read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL) {
+  erg <- read_sas(
+    path_to_dat,
+    path_to_format
+  )
   erg <- erg %>%
-    mutate(across(where(function(x)inherits(x, "haven_labelled")), as_factor))
+    mutate(across(where(function(x) inherits(x, "haven_labelled")), as_factor))
   erg
 }
 
@@ -3328,9 +3350,9 @@ read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL){
 #'
 #' @return
 #'
-n_int_digits = function(x) {
-  result = floor(log10(abs(x)))
-  result[!is.finite(result)] = 0
+n_int_digits <- function(x) {
+  result <- floor(log10(abs(x)))
+  result[!is.finite(result)] <- 0
   result
 }
 
@@ -3346,25 +3368,25 @@ n_int_digits = function(x) {
 sigfig <- function(x, digits = 3,
                    scientific_high_threshold = 6,
                    scientific_low_threshold = -6,
-                   force_0_behind_0 = FALSE){
-  if (is.na(x)){
+                   force_0_behind_0 = FALSE) {
+  if (is.na(x)) {
     return("NA")
-  } else if (is.numeric(x)){
-    if (n_int_digits(x) + 0.5 > scientific_high_threshold){
+  } else if (is.numeric(x)) {
+    if (n_int_digits(x) + 0.5 > scientific_high_threshold) {
       return(format(x, scientific = TRUE, digits = digits))
-    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold){
+    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold) {
       return(format(x, scientific = TRUE, digits = digits))
     }
-    if (n_int_digits(x) + 1.5 > digits){
-      if (abs(x)> 2^52){
+    if (n_int_digits(x) + 1.5 > digits) {
+      if (abs(x) > 2^52) {
         warning("Integers larger than 2^52 might not have an exact floating point represntation.")
       }
       return(format(round(x), scientific = FALSE))
-    } else{
-      ret <- gsub("\\.$", "", formatC(signif(x,digits=digits), digits=digits, format="fg", flag="#"))
-      if (isTRUE(force_0_behind_0) & ret == "0"){
-        return(format(0, nsmall=digits))
-      } else{
+    } else {
+      ret <- gsub("\\.$", "", formatC(signif(x, digits = digits), digits = digits, format = "fg", flag = "#"))
+      if (isTRUE(force_0_behind_0) & ret == "0") {
+        return(format(0, nsmall = digits))
+      } else {
         return(ret)
       }
     }
@@ -3382,14 +3404,14 @@ sigfig <- function(x, digits = 3,
 sigfig_gen <- function(digits = 3,
                        scientific_high_threshold = 6,
                        scientific_low_threshold = -6,
-                       force_0_behind_0 = FALSE){
-
+                       force_0_behind_0 = FALSE) {
   return(
-    function(x){
+    function(x) {
       return(sigfig(x,
-                    scientific_high_threshold = scientific_high_threshold,
-                    scientific_low_threshold = scientific_low_threshold,
-                    force_0_behind_0 = force_0_behind_0))
+        scientific_high_threshold = scientific_high_threshold,
+        scientific_low_threshold = scientific_low_threshold,
+        force_0_behind_0 = force_0_behind_0
+      ))
     }
   )
 }
@@ -3402,26 +3424,24 @@ good_format <- function(x,
                         nsig,
                         scientific_low_threshold = 1e5,
                         scientific_high_threshold = 1e-5,
-                        force_nonscientific = FALSE
-) {
-  if (is.na(x)){
+                        force_nonscientific = FALSE) {
+  if (is.na(x)) {
     return("NA")
-  } else if (is.numeric(x)){
-
-    if (isTRUE(force_nonscientific)){
-      if (!is.null(force_digits)){
+  } else if (is.numeric(x)) {
+    if (isTRUE(force_nonscientific)) {
+      if (!is.null(force_digits)) {
         format(round(x, force_digits), nsmall = force_digits)
-      } else{
+      } else {
 
       }
-    } else{
-      if (!is.null(force_digits)){
+    } else {
+      if (!is.null(force_digits)) {
         format(round(x, force_digits), nsmall = force_digits)
-      } else if (scientific_high_threshold >= abs(x)){
+      } else if (scientific_high_threshold >= abs(x)) {
 
-      } else if (scientific_low_threshold <= abs(x)){
+      } else if (scientific_low_threshold <= abs(x)) {
 
-      } else if (abs(x)>=1) {
+      } else if (abs(x) >= 1) {
         formatC(
           round(x, digits = max(0, soft_digit_suggestion - floor(log10(x)))),
           digits = 4,
@@ -3439,8 +3459,7 @@ good_format <- function(x,
         )
       } else if (abs(x) >= 100) {
         formatC(signif(x, digits = 4), digits = 4, format = "fg")
-      }
-      else{
+      } else {
         formatC(
           signif(x, digits = 4),
           digits = 4,
@@ -3449,7 +3468,7 @@ good_format <- function(x,
         )
       }
     }
-  } else{
+  } else {
     x
   }
 }
@@ -3465,14 +3484,16 @@ good_format <- function(x,
 #' @examples
 #' path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
 #' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' read_sas(path_to_dat, pat_to_format)
+#' haven::read_sas(path_to_dat, pat_to_format)
 #' @importFrom haven read_sas
 #'
-read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL){
-  erg <- read_sas(path_to_dat,
-                  path_to_format)
+read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL) {
+  erg <- read_sas(
+    path_to_dat,
+    path_to_format
+  )
   erg <- erg %>%
-    mutate(across(where(function(x)inherits(x, "haven_labelled")), as_factor))
+    mutate(across(where(function(x) inherits(x, "haven_labelled")), as_factor))
   erg
 }
 
@@ -3485,9 +3506,9 @@ read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL){
 #'
 #' @return
 #'
-n_int_digits = function(x) {
-  result = floor(log10(abs(x)))
-  result[!is.finite(result)] = 0
+n_int_digits <- function(x) {
+  result <- floor(log10(abs(x)))
+  result[!is.finite(result)] <- 0
   result
 }
 
@@ -3503,25 +3524,25 @@ n_int_digits = function(x) {
 sigfig <- function(x, digits = 3,
                    scientific_high_threshold = 6,
                    scientific_low_threshold = -6,
-                   force_0_behind_0 = FALSE){
-  if (is.na(x)){
+                   force_0_behind_0 = FALSE) {
+  if (is.na(x)) {
     return("NA")
-  } else if (is.numeric(x)){
-    if (n_int_digits(x) + 0.5 > scientific_high_threshold){
+  } else if (is.numeric(x)) {
+    if (n_int_digits(x) + 0.5 > scientific_high_threshold) {
       return(format(x, scientific = TRUE, digits = digits))
-    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold){
+    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold) {
       return(format(x, scientific = TRUE, digits = digits))
     }
-    if (n_int_digits(x) + 1.5 > digits){
-      if (abs(x)> 2^52){
+    if (n_int_digits(x) + 1.5 > digits) {
+      if (abs(x) > 2^52) {
         warning("Integers larger than 2^52 might not have an exact floating point represntation.")
       }
       return(format(round(x), scientific = FALSE))
-    } else{
-      ret <- gsub("\\.$", "", formatC(signif(x,digits=digits), digits=digits, format="fg", flag="#"))
-      if (isTRUE(force_0_behind_0) & ret == "0"){
-        return(format(0, nsmall=digits))
-      } else{
+    } else {
+      ret <- gsub("\\.$", "", formatC(signif(x, digits = digits), digits = digits, format = "fg", flag = "#"))
+      if (isTRUE(force_0_behind_0) & ret == "0") {
+        return(format(0, nsmall = digits))
+      } else {
         return(ret)
       }
     }
@@ -3536,17 +3557,18 @@ sigfig <- function(x, digits = 3,
 #' @export
 #'
 #' @examples
+#' plot(c(1,2,3))
 sigfig_gen <- function(digits = 3,
                        scientific_high_threshold = 6,
                        scientific_low_threshold = -6,
-                       force_0_behind_0 = FALSE){
-
+                       force_0_behind_0 = FALSE) {
   return(
-    function(x){
+    function(x) {
       return(sigfig(x,
-                    scientific_high_threshold = scientific_high_threshold,
-                    scientific_low_threshold = scientific_low_threshold,
-                    force_0_behind_0 = force_0_behind_0))
+        scientific_high_threshold = scientific_high_threshold,
+        scientific_low_threshold = scientific_low_threshold,
+        force_0_behind_0 = force_0_behind_0
+      ))
     }
   )
 }
@@ -3557,26 +3579,24 @@ good_format <- function(x,
                         nsig,
                         scientific_low_threshold = 1e5,
                         scientific_high_threshold = 1e-5,
-                        force_nonscientific = FALSE
-) {
-  if (is.na(x)){
+                        force_nonscientific = FALSE) {
+  if (is.na(x)) {
     return("NA")
-  } else if (is.numeric(x)){
-
-    if (isTRUE(force_nonscientific)){
-      if (!is.null(force_digits)){
+  } else if (is.numeric(x)) {
+    if (isTRUE(force_nonscientific)) {
+      if (!is.null(force_digits)) {
         format(round(x, force_digits), nsmall = force_digits)
-      } else{
+      } else {
 
       }
-    } else{
-      if (!is.null(force_digits)){
+    } else {
+      if (!is.null(force_digits)) {
         format(round(x, force_digits), nsmall = force_digits)
-      } else if (scientific_high_threshold >= abs(x)){
+      } else if (scientific_high_threshold >= abs(x)) {
 
-      } else if (scientific_low_threshold <= abs(x)){
+      } else if (scientific_low_threshold <= abs(x)) {
 
-      } else if (abs(x)>=1) {
+      } else if (abs(x) >= 1) {
         formatC(
           round(x, digits = max(0, soft_digit_suggestion - floor(log10(x)))),
           digits = 4,
@@ -3594,8 +3614,7 @@ good_format <- function(x,
         )
       } else if (abs(x) >= 100) {
         formatC(signif(x, digits = 4), digits = 4, format = "fg")
-      }
-      else{
+      } else {
         formatC(
           signif(x, digits = 4),
           digits = 4,
@@ -3604,7 +3623,7 @@ good_format <- function(x,
         )
       }
     }
-  } else{
+  } else {
     x
   }
 }

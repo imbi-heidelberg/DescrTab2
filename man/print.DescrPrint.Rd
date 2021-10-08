@@ -5,8 +5,6 @@
 \title{S3 override for print function for DescrPrint objects}
 \usage{
 \method{print}{DescrPrint}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
-
-\method{print}{DescrPrint}(x, print_format = options("print_format")[[1]], silent = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{DescrList} object returned from \code{\link{descr}}.}
@@ -19,19 +17,11 @@
 }
 \value{
 A DescrPrint object which can be printed in various formats.
-
-A DescrPrint object which can be printed in various formats.
 }
 \description{
 S3 override for print function for DescrPrint objects
-
-S3 override for print function for DescrPrint objects
 }
 \examples{
-descr(iris)
-DescrPrint <- print(descr(iris))
-DescrPrint$variables$results$Sepal.Length$Total$mean
-print(DescrPrint)
 descr(iris)
 DescrPrint <- print(descr(iris))
 DescrPrint$variables$results$Sepal.Length$Total$mean

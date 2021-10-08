@@ -5,25 +5,17 @@
 \title{Convencience function to load redcap datasets}
 \usage{
 read_redcap_formatted(path_to_redcap_script = NULL)
-
-read_redcap_formatted(path_to_redcap_script = NULL)
 }
 \arguments{
 \item{path_to_redcap_script}{}
 }
 \value{
 tibble with data
-
-tibble with data
 }
 \description{
 Convencience function to load redcap datasets
-
-Convencience function to load redcap datasets
 }
 \examples{
-path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
-read_redcap_formatted(path_to_redcap_script)
 path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
 read_redcap_formatted(path_to_redcap_script)
 }

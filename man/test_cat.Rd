@@ -11,14 +11,6 @@ test_cat(
   test = NULL,
   var_name = NULL
 )
-
-test_cat(
-  var,
-  group = NULL,
-  test_options = list(),
-  test = NULL,
-  var_name = NULL
-)
 }
 \arguments{
 \item{var}{A variable (a vector).}
@@ -33,17 +25,11 @@ test_cat(
 }
 \value{
 A list of test test results.
-
-A list of test test results.
 }
 \description{
 Calculate a statistical test for a categorical variable.
-
-Calculate a statistical test for a categorical variable.
 }
 \examples{
-cat_var <- factor(c("a", "b", "c"))
-test_cat(cat_var)
 cat_var <- factor(c("a", "b", "c"))
 test_cat(cat_var)
 }

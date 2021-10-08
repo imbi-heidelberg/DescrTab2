@@ -11,14 +11,6 @@ format_freqs(
   percent_accuracy = NULL,
   percent_suffix = "\%"
 )
-
-format_freqs(
-  numerator,
-  denominator = 1,
-  absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
-  percent_accuracy = NULL,
-  percent_suffix = "\%"
-)
 }
 \arguments{
 \item{numerator}{numeric}
@@ -33,11 +25,7 @@ format_freqs(
 }
 \value{
 Character element of formatted frequencies
-
-Character element of formatted frequencies
 }
 \description{
-Make pretty frequencies
-
 Make pretty frequencies
 }

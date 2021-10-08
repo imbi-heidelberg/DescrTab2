@@ -11,14 +11,6 @@ test_cont(
   test = NULL,
   var_name = NULL
 )
-
-test_cont(
-  var,
-  group = NULL,
-  test_options = list(),
-  test = NULL,
-  var_name = NULL
-)
 }
 \arguments{
 \item{var}{A variable (a vector).}
@@ -33,17 +25,11 @@ test_cont(
 }
 \value{
 A list of test test results.
-
-A list of test test results.
 }
 \description{
 Calculate a statistical test for a numerical variable.
-
-Calculate a statistical test for a numerical variable.
 }
 \examples{
-cont_var <- c(1, 2, 3)
-test_cont(cont_var)
 cont_var <- c(1, 2, 3)
 test_cont(cont_var)
 }

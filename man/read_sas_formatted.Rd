@@ -26,8 +26,8 @@ Convencience function to load sas datasets
 \examples{
 path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
 pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-read_sas(path_to_dat, pat_to_format)
+haven::read_sas(path_to_dat, pat_to_format)
 path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
 pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-read_sas(path_to_dat, pat_to_format)
+haven::read_sas(path_to_dat, pat_to_format)
 }
