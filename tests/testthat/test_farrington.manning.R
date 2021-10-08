@@ -1,6 +1,3 @@
-context("Test if farrington.manning function works.")
-
-
 x <- c(rep(TRUE, 40), rep(FALSE, 20))
 y <- c(rep(TRUE, 35), rep(FALSE, 25))
 

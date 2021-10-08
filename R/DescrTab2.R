@@ -16,3 +16,35 @@
 #' @name DescrTab2
 NULL
 
+# nocov start
+#' Load LaTeX packages
+#'
+#' @param libname library name
+#' @param pkgname package name
+#' @details Thanks to Hao Zhu and his package \link[kableExtra]{kableExtra}.
+#' @author Hao Zhu
+#' @importFrom kableExtra usepackage_latex
+.onLoad <- function(libname = find.package("kableExtra"), pkgname = "kableExtra") {
+  if (knitr::is_latex_output()) {
+    load_packages <- getOption("kableExtra.latex.load_packages", default = TRUE)
+    if (load_packages) {
+      usepackage_latex("booktabs")
+      usepackage_latex("longtable")
+      usepackage_latex("array")
+      usepackage_latex("multirow")
+      usepackage_latex("wrapfig")
+      usepackage_latex("float")
+      usepackage_latex("colortbl")
+      usepackage_latex("pdflscape")
+      usepackage_latex("tabu")
+      usepackage_latex("threeparttable")
+      usepackage_latex("threeparttablex")
+      usepackage_latex("ulem", "normalem")
+      usepackage_latex("makecell")
+      usepackage_latex("xcolor")
+      usepackage_latex("needspace")
+      usepackage_latex("setspace")
+    }
+  }
+}
+# nocov end

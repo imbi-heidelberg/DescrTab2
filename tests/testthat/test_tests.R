@@ -1,6 +1,4 @@
-context("Test statistical tests that produce p-values.")
-options(print_format = "console")
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 
 x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
@@ -9,16 +7,18 @@ dat <- tibble(diff = x - y)
 
 
 test_that("wilcox.test_1_sample does not produce error",
-          expect_error(descr(dat, test_options = c(nonparametric = TRUE)) %>% print(silent =
-                                                                                      TRUE), NA))
+          {
+            expect_error(descr(dat, test_options = c(nonparametric = TRUE)) %>% print(silent =
+                                                                                        TRUE), NA)
+          })
 
-test_that(
-  "wilcox.test_1_sample does not produce error categorical",
-  expect_error(descr(
-    dat %>% mutate(diff = ordered(diff)), test_options = c(nonparametric = TRUE)
-  ) %>% print(silent =
-                TRUE), NA)
-)
+test_that("wilcox.test_1_sample does not produce error categorical",
+          {
+            expect_error(descr(
+              dat %>% mutate(diff = ordered(diff)),
+              test_options = c(nonparametric = TRUE)
+            ), NA)
+          })
 
 
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/wilcox.test_1_sample.txt"),
@@ -30,9 +30,12 @@ y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
 group <- c(rep("Trt", length(x)), rep("Ctrl", length(y)))
 dat_wilcox.test_2_sample <- tibble(var = c(x, y), group = group)
 dat_wilcox.test_2_sample_paired <-
-  tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)))
+  tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)) )
+dat_wilcox.test_2_sample_paired2 <-
+  tibble(var = c(x, y, y), group = c(rep("Trt", 10), rep("Ctrl", 10)), ID = factor(rep(1:10, 2)) )
 
 test_that("wilcox.test_2_sample",
+          {
           expect_error(
             descr(
               dat_wilcox.test_2_sample,
@@ -40,9 +43,10 @@ test_that("wilcox.test_2_sample",
               test_options = c(nonparametric = TRUE)
             ) %>% print(silent = TRUE),
             NA
-          ))
+          )})
 
 test_that("wilcox.test_2_sample categorical",
+          {
           expect_error(
             descr(
               dat_wilcox.test_2_sample %>% mutate(var = ordered(var)),
@@ -50,9 +54,10 @@ test_that("wilcox.test_2_sample categorical",
               test_options = c(nonparametric = TRUE)
             ) %>% print(silent = TRUE),
             NA
-          ))
+          )})
 
-test_that("wilcox.test_2_sample paired",
+test_that("wilcox.test_2_sample paired with ID in options",
+          {
           expect_error(
             descr(
               dat_wilcox.test_2_sample_paired,
@@ -61,10 +66,27 @@ test_that("wilcox.test_2_sample paired",
                 nonparametric = TRUE,
                 paired = TRUE,
                 indices = rep(1:10, 2)
-              )
-            ) %>% print(silent = TRUE),
+              ),
+              format_options = list(print_Total = FALSE)
+            ),
             NA
-          ))
+          )})
+
+test_that("wilcox.test_2_sample paired with ID in dataset",
+          {
+            expect_error(
+              descr(
+                dat_wilcox.test_2_sample_paired2,
+                "group",
+                test_options = list(
+                  nonparametric = TRUE,
+                  paired = TRUE,
+                  indices = "ID"
+                ),
+                format_options = list(print_Total = FALSE)
+              ),
+              NA
+            )})
 
 test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
           {
@@ -73,8 +95,9 @@ test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
                 dat_wilcox.test_2_sample_paired,
                 "group",
                 test_options = list(nonparametric = TRUE,
-                                    paired = TRUE)
-              ) %>% print(silent = TRUE)
+                                    paired = TRUE),
+                format_options=list(print_Total=FALSE)
+              )
             )
 
 
@@ -83,14 +106,16 @@ test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
                 dat_wilcox.test_2_sample_paired %>%  mutate(var = ordered(var)),
                 "group",
                 test_options = list(nonparametric = TRUE,
-                                    paired = TRUE)
-              ) %>% print(silent = TRUE)
+                                    paired = TRUE),
+                format_options=list(print_Total=FALSE)
+              )
             )
 
 
           })
 
 test_that("wilcox.test_2_sample paired works with missings",
+          {
           expect_warning(
             descr(
               dat_wilcox.test_2_sample_paired %>% mutate(var = if_else(row_number()==1, NA_real_, var)),
@@ -99,23 +124,27 @@ test_that("wilcox.test_2_sample paired works with missings",
                 nonparametric = TRUE,
                 paired = TRUE,
                 indices = rep(1:10, 2)
-              )
-            ) %>% print(silent = TRUE)
-          ))
+              ),
+              format_options = list(print_Total=FALSE)
+            )
+          )})
 
 test_that("wilcox.test_2_sample paired categorical",
-          expect_error(
-            descr(
-              dat_wilcox.test_2_sample_paired %>% mutate(var = ordered(var)),
-              "group",
-              test_options = list(
-                nonparametric = TRUE,
-                paired = TRUE,
-                indices = rep(1:10, 2)
-              )
-            ) %>% print(silent = TRUE),
-            NA
-          ))
+          {
+            expect_error(
+              descr(
+                dat_wilcox.test_2_sample_paired %>% mutate(var = ordered(var)),
+                "group",
+                test_options = list(
+                  nonparametric = TRUE,
+                  paired = TRUE,
+                  indices = rep(1:10, 2)
+                ),
+                format_options = list(print_Total = FALSE)
+              ) %>% print(silent = TRUE),
+              NA
+            )
+          })
 
 verify_output(
   ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/wilcox.test_2_sample.txt"),
@@ -137,22 +166,28 @@ group <-
 dat_kruskal.test <- tibble(var = c(x, y, z), group = group)
 
 test_that("kruskal.test works",
-          expect_error(
-            descr(dat_kruskal.test, "group", test_options = c(nonparametric = TRUE)) %>%
-              print(silent = TRUE),
-            NA
-          ))
-
-test_that("kruskal.test works categorical",
-          expect_error(
-            descr(
-              dat_kruskal.test %>% mutate(var = ordered(var)),
+          {
+            expect_error(descr(
+              dat_kruskal.test,
               "group",
               test_options = c(nonparametric = TRUE)
             ) %>%
               print(silent = TRUE),
-            NA
-          ))
+            NA)
+          })
+
+test_that("kruskal.test works categorical",
+          {
+            expect_error(
+              descr(
+                dat_kruskal.test %>% mutate(var = ordered(var)),
+                "group",
+                test_options = c(nonparametric = TRUE)
+              ) %>%
+                print(silent = TRUE),
+              NA
+            )
+          })
 
 verify_output(
   ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/kruskal.test.txt"),
@@ -189,21 +224,28 @@ dat <-
   )
 
 
+
 test_that("friedman.test works",
-          expect_error(descr(
-            dat,
-            "group",
-            test_options = list(
-              nonparametric = TRUE,
-              indices = idx,
-              paired = T
+          {
+            expect_error(
+              descr(
+                dat,
+                "group",
+                test_options = list(
+                  nonparametric = TRUE,
+                  indices = idx,
+                  paired = T
+                ),
+                format_options = list(print_Total = FALSE)
+              ) %>%
+                print(silent = TRUE),
+              NA
             )
-          ) %>%
-            print(silent = TRUE),
-          NA))
+          })
 
 
 test_that("friedman.test works",
+          {
           expect_error(
             descr(
               dat %>% mutate(var = ordered(var)),
@@ -212,11 +254,11 @@ test_that("friedman.test works",
                 nonparametric = TRUE,
                 indices = idx,
                 paired = T
-              )
-            ) %>%
-              print(silent = TRUE),
+              ),
+              format_options=list(print_Total=FALSE)
+            ),
             NA
-          ))
+          )})
 
 
 verify_output( ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/friedman.test.txt"),
@@ -255,11 +297,12 @@ dat <-
 
 
 test_that("CochranQTest works",
+          {
           expect_error(descr(
-            dat, "time", test_options = list(indices = idx, paired = TRUE)
-          ) %>%
-            print(silent = TRUE),
-          NA))
+            dat, "time", test_options = list(indices = idx, paired = TRUE),
+            format_options=list(print_Total=FALSE)
+          ),
+          NA)})
 
 
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/CochraneQTest.txt"),
@@ -285,30 +328,32 @@ dat <-
   )
 
 test_that("mcnemar.test works",
+          {
           expect_message(expect_warning(descr(
             dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1:1600))
-          ) %>%
-            print(silent = TRUE))))
+          )))})
 
 test_that("exact2x2 mcnemar test works",
+          {
           expect_error(descr(
             dat, "group", test_options = list(
               paired = TRUE,
               exact = TRUE,
               indices = c(1:1600, 1:1600)
-            )
-          ) %>%
-            print(silent = TRUE),
-          NA))
+            ),
+            format_options = list(print_Total = FALSE)
+          ),
+          NA)})
 
 test_that("exact2x2 mcnemar test errors if you forget to specify indices",
+          {
           expect_message(descr(
             dat, "group", test_options = list(
               paired = TRUE,
               exact = T
-            )
-          ) %>%
-            print(silent = TRUE)))
+            ),
+            format_options = list(print_Total = FALSE)
+          ))})
 
 
 
@@ -355,22 +400,35 @@ dat <-
 
 
 test_that("chisq.test 1 sample test works",
+          {
           expect_error(descr(dat) %>%
                          print(silent = TRUE),
-                       NA))
+                       NA)})
 
 test_that("chisq.test more sample test works",
-          expect_error(descr(dat, "gender") %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+          expect_error(descr(dat, "gender"),
+                       NA)})
 
 
-verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/1_sample_chisq.test.txt"),
-              descr(dat)
-              %>% print())
+verify_output(
+  ifelse(
+    isTRUE(write_in_tmpfile_for_cran()),
+    tempfile(),
+    "../console/1_sample_chisq.test.txt"
+  ),
+  descr(dat)
+  %>% print()
+)
 
-verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/more_sample_chisq.test.txt"),
-              descr(dat, "gender") %>% print())
+verify_output(
+  ifelse(
+    isTRUE(write_in_tmpfile_for_cran()),
+    tempfile(),
+    "../console/more_sample_chisq.test.txt"
+  ),
+  descr(dat, "gender") %>% print()
+)
 
 
 ## ----t.test, results='asis'-------------------------------------------------------------------------
@@ -379,82 +437,96 @@ dat <- sleep[, c("extra", "group")]
 
 
 test_that("t.test 1 sample test works",
-          expect_error(descr(dat[, "extra"]) %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat[, "extra"]) %>%
+                           print(silent = TRUE),
+                         NA)
+          })
 
 test_that("t.test 1 sample works",
-          expect_error(
-            descr(
+          {
+            expect_error(descr(
               dat[, "extra", drop = F] %>% mutate(extra = factor(extra)),
-              test_options = list(test_override = "Students one-sample t-test")
+              test_options = list(test_override = "Student's one-sample t-test")
             ) %>%
               print(silent = TRUE),
-            NA
-          ))
+            NA)
+          })
 
 test_that("t.test 2 sample works",
-          expect_error(descr(dat, "group") %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat, "group"),
+                         NA)
+          })
 
 test_that("t.test 2 sample works if specifically requrested",
-          expect_error(descr(dat, "group", var_options=list(extra=list(test_override = "Welchs two-sample t-test"))) %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat, "group", var_options = list(
+              extra = list(test_override = "Welch's two-sample t-test")
+            )) %>%
+              print(silent = TRUE),
+            NA)
+          })
+
+test_that("t.test 2 sample for factor variables works",
+          {
+            expect_error(descr(
+              dat %>% mutate(extra = factor(extra)),
+              "group",
+              test_options = list(
+                paired = TRUE,
+                indices = rep(1:10, 2),
+                test_override  = "Welch's two-sample t-test"
+              ),
+              format_options = list(print_Total = FALSE)
+            ),
+            NA)
+          })
 
 
-test_that(
-  "t.test 2 sample for factor variables works",
-  expect_error(
-    descr(
-      dat %>% mutate(extra = factor(extra)),
-      "group",
-      test_options = list(
-        paired = TRUE,
-        indices = rep(1:10, 2),
-        test_override  = "Welchs two-sample t-test"
-      )
-    ) %>%
-      print(silent = TRUE),
-    NA
-  )
-)
-
-
-test_that("t.test paired 2 sample test works",
-          expect_error(descr(
-            dat, "group", test_options = list(paired = TRUE, indices = rep(1:10, 2))
-          ) %>%
-            print(silent = TRUE),
-          NA))
 
 test_that("t.test paired 2 sample test works",
+          {
+            expect_error(descr(
+              dat,
+              "group",
+              test_options = list(
+                paired = TRUE,
+                indices = rep(1:10, 2)
+              ),
+              format_options = list(print_Total = FALSE)
+            ), NA)
+          })
+
+test_that("t.test paired 2 sample test works",
+          {
           expect_error(
             descr(
               dat %>% mutate(indices = rep(1:10, 2)),
               "group",
-              test_options = list(paired = TRUE, indices = "indices")
-            ) %>%
-              print(silent = TRUE),
+              test_options = list(paired = TRUE, indices = "indices"),
+              format_options = list(print_Total = FALSE)
+            ),
             NA
-          ))
+          )})
 
 
 test_that("t.test paired 2 sample test works with missings",
+          {
           expect_warning(
             descr(
               dat %>% mutate(indices = rep(1:10, 2)) %>% mutate(extra = if_else(row_number()==1, NA_real_, extra )),
               "group",
-              test_options = list(paired = TRUE, indices = "indices")
-            ) %>%
-              print(silent = TRUE)
-          ))
+              test_options = list(paired = TRUE, indices = "indices"),
+              format_options = list(print_Total = FALSE)
+            )
+          )})
 
 
 
 test_that(
   "t.test paired 2 sample test for factor variables works",
+  {
   expect_error(
     descr(
       dat %>% mutate(extra = factor(extra)),
@@ -462,16 +534,13 @@ test_that(
       test_options = list(
         paired = TRUE,
         indices = rep(1:10, 2),
-        test_override  = "Students paired t-test"
-      )
-    ) %>%
-      print(silent = TRUE),
+        test_override  = "Student's paired t-test"
+      ),
+      format_options = list(print_Total = FALSE)
+    ),
     NA
-  )
+  )}
 )
-
-
-
 
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/1_sample_t.test.txt"),
               descr(dat)
@@ -501,22 +570,24 @@ dat <- data.frame(
 )
 
 
+
 test_that("f.test test works",
-          expect_error(descr(dat[, c("y", "P")], "P") %>%
-                         print(silent = TRUE),
-                       NA))
+          {
+            expect_error(descr(dat[, c("y", "P")], "P"),
+                         NA)
+          })
 
 
 test_that("f.test test works",
+          {
           expect_error(
             descr(
               dat[, c("y", "P")] %>% mutate(y = factor(y)) ,
               "P",
               test_options = list(test_override = "F-test (ANOVA)")
-            ) %>%
-              print(silent = TRUE),
+            ) ,
             NA
-          ))
+          )})
 
 
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/f.test.txt"),
@@ -538,16 +609,18 @@ dat <- as_tibble(dat)
 
 
 test_that("mixed_model test works",
+          {
           expect_error(descr(
             dat[, c("Sex", "distance")],
             "Sex",
             test_options = list(paired = TRUE, indices =
-                                  dat$Subject)
-          ) %>%
-            print(silent = TRUE),
-          NA))
+                                  dat$Subject),
+            format_options = list(print_Total = FALSE)
+          ),
+          NA)})
 
 test_that("mixed_model test works",
+          {
           expect_error(
             descr(
               dat[, c("Sex", "distance")] %>% mutate(distance = factor(distance)),
@@ -557,11 +630,11 @@ test_that("mixed_model test works",
                 indices =
                   dat$Subject,
                 test_override = "Mixed model ANOVA"
-              )
-            ) %>%
-              print(silent = TRUE),
+              ),
+              format_options = list(print_Total = FALSE)
+            ),
             NA
-          ))
+          )})
 
 
 
@@ -590,9 +663,10 @@ dat <-
 ## boschloo
 
 test_that("boschloo test works",
+          {
           expect_error(descr(dat, "gender", test_options = c(exact = TRUE)) %>%
                          print(silent = TRUE),
-                       NA))
+                       NA)})
 verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../console/boschloo.txt"),
               descr(dat, "gender", test_options = c(exact = TRUE)) %>% print())
 

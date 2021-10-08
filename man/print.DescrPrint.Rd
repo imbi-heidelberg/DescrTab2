@@ -26,6 +26,5 @@ descr(iris)
 DescrPrint <- print(descr(iris))
 DescrPrint$variables$results$Sepal.Length$Total$mean
 print(DescrPrint)
-
 }
 \keyword{internal}

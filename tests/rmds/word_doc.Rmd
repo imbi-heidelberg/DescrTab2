@@ -12,25 +12,27 @@ library(kableExtra)
 library(DescrTab2)
 library(flextable)
 library(knitr)
-options(print_format="word")
 ```
 
 
+```{r}
 
-
-
-
-```{r with silent}
-
-descr(iris) %>% print() %>% knit_print()
+descr(iris) 
 descr(
   iris,
   "Species",
   group_labels = list(setosa = "My custom group label"),
   var_options = list(Sepal.Length = list(label = "My custom variable label"))
-) %>% print() %>%  knit_print()
+)
+
+descr(
+  iris,
+  "Species",
+  group_labels = list(setosa = "My custom group label"),
+  var_options = list(Sepal.Length = list(label = "My custom variable label")),
+  format_options=list(caption="Test Caption")
+)
+
 ```
 
-```{r without silent}
-descr(iris) %>% print(silent=T) %>% .$ft %>% knit_print()
-```
+

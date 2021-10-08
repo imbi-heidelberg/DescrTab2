@@ -2,7 +2,7 @@
 # A tibble: 44 x 4
    Variable         Total          p Test                            
    <chr>            <dbl>      <dbl> <chr>                           
- 1  Sepal.Length   NA      3.33e-129 Students one-sample t-test      
+ 1  Sepal.Length   NA      3.33e-129 Student's one-sample t-test     
  2    N           150     NA         <NA>                            
  3    Nmiss         0     NA         <NA>                            
  4    mean          5.84  NA         <NA>                            
@@ -12,7 +12,7 @@
  8    Q3            6.4   NA         <NA>                            
  9    min           4.3   NA         <NA>                            
 10    max           7.9   NA         <NA>                            
-11  Sepal.Width    NA      8.00e-129 Students one-sample t-test      
+11  Sepal.Width    NA      8.00e-129 Student's one-sample t-test     
 12    N           150     NA         <NA>                            
 13    Nmiss         0     NA         <NA>                            
 14    mean          3.06  NA         <NA>                            
@@ -22,7 +22,7 @@
 18    Q3            3.3   NA         <NA>                            
 19    min           2     NA         <NA>                            
 20    max           4.4   NA         <NA>                            
-21  Petal.Length   NA      2.17e- 57 Students one-sample t-test      
+21  Petal.Length   NA      2.17e- 57 Student's one-sample t-test     
 22    N           150     NA         <NA>                            
 23    Nmiss         0     NA         <NA>                            
 24    mean          3.76  NA         <NA>                            
@@ -32,7 +32,7 @@
 28    Q3            5.1   NA         <NA>                            
 29    min           1     NA         <NA>                            
 30    max           6.9   NA         <NA>                            
-31  Petal.Width    NA      2.66e- 42 Students one-sample t-test      
+31  Petal.Width    NA      2.66e- 42 Student's one-sample t-test     
 32    N           150     NA         <NA>                            
 33    Nmiss         0     NA         <NA>                            
 34    mean          1.20  NA         <NA>                            

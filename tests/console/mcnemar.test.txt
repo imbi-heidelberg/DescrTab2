@@ -4,11 +4,11 @@ Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
 Warning in test_cat(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.
-Use Exact McNemars test if you want confidence intervals which use the test statistic of the
-exact McNemars test.
+Use Exact McNemar's test if you want confidence intervals which use the test statistic of the
+exact McNemar's test.
 
-  Variables      first       second      p       Test           CI              
+  Variables      first       second      p        Test             CI           
 1  var                                                                          
-2    Approve      944 (59%)   880 (55%)   <0.00~  McNemars tes~  Prop. dif. CI  
-3    Disapprove   656 (41%)   720 (45%)                          [0.0058, 0.076~
+2    Approve      944 (59%)   880 (55%)   <0.001   McNemar's test   Prop. dif. ~
+3    Disapprove   656 (41%)   720 (45%)                             [0.0058, 0.~
 

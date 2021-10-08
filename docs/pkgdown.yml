@@ -1,4 +1,4 @@
-pandoc: 2.14.0.1
+pandoc: 2.14.0.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   test_choice_tree_pdf: test_choice_tree_pdf.pdf
   usage_guide: usage_guide.html
   validation_statement: validation_statement.html
-last_built: 2021-09-16T07:26Z
+last_built: 2021-10-08T14:59Z
 urls:
   reference: https://imbi-heidelberg.github.io/DescrTab2/reference
   article: https://imbi-heidelberg.github.io/DescrTab2/articles

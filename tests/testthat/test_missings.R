@@ -1,5 +1,3 @@
-context("Test if missings are handled correctly.")
-
 library(dplyr)
 library(magrittr)
 

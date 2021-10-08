@@ -1,6 +1,4 @@
-context("Test if continuous tests and summary statistics work for factors.")
-
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 dat <- iris[iris$Species != "setosa", ]
 dat$Species <- factor(as.character(dat$Species))
@@ -8,6 +6,7 @@ dat$cat_var <- c(1, 2) %>% sample(100, TRUE) %>% factor()
 
 
 test_that("summary statistics for factors work",
+          {
           expect_error(
             descr(
               dat,
@@ -52,11 +51,12 @@ test_that("summary statistics for factors work",
                   format(x,
                          digits = 2, scientific = 3)
               ),
-              var_options = list(cat_var = list(test_override  = "Welchs two-sample t-test"))
+              var_options = list(cat_var = list(test_override  = "Welch's two-sample t-test"))
             ) %>% print(silent = TRUE)
             ,
             NA
-          ))
+          )
+            })
 
 
 

@@ -1,5 +1,4 @@
-context("Test various options")
-library(magrittr)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 dat <- iris[, c("Species", "Sepal.Length")]
 dat %<>% mutate(animal = c("Mammal", "Fish") %>% rep(75) %>% factor())
@@ -58,8 +57,8 @@ test_that("Confidence intervals",
 
 
 test_that("Ommit summary stats",
-          expect_error(
-            descr(
+          {
+            expect_error(descr(
               dat,
               "Species",
               summary_stats_cont = list(
@@ -74,8 +73,8 @@ test_that("Ommit summary stats",
                   DescrTab2:::.max
               )
             ) %>% print(silent = TRUE),
-            NA
-          ))
+            NA)
+          })
 
 test_that("No p",
           {
@@ -159,7 +158,9 @@ test_that("Per-variable options",
 
 
 test_that("print_test_names works",
-          expect_type(print_test_names(), "character"))
+          {
+            expect_type(print_test_names(), "character")
+          })
 
 dat2 <- iris
 dat2$cat_var <- c(1, 2) %>% sample(150, TRUE) %>% factor()
@@ -185,16 +186,16 @@ test_that("cat_summary_stats works",
 
 
 test_that("combine_mean_sd works",
-          expect_error(descr(
-            iris, format_options = c(combine_mean_sd = TRUE)
-          ) %>% print(silent = TRUE),
-          NA))
+          {
+            expect_error(descr(iris, format_options = c(combine_mean_sd = TRUE)) %>% print(silent = TRUE),
+                         NA)
+          })
 
 test_that("combine_median_Q1_Q3 works",
-          expect_error(descr(
-            iris, format_options = c(combine_median_Q1_Q3 = TRUE)
-          ) %>% print(silent = TRUE),
-          NA))
+          {
+            expect_error(descr(iris, format_options = c(combine_median_Q1_Q3 = TRUE)) %>% print(silent = TRUE),
+                         NA)
+          })
 
 test_that("warnings about unused variable names work",
           {
@@ -215,7 +216,9 @@ test_that("function list misconfiguration leads to error",
 )
 
 test_that("check if print_red_na option works",
-          expect_type(capture.output(descr(iris) %>% print(print_format="numeric", print_red_NA=TRUE)),"character") )
+          {
+          expect_type(capture.output(descr(iris) %>% print(print_format="numeric", print_red_NA=TRUE)),"character")
+          })
 
 test_that("format_options in var_options is properly filled with default arguments",
           {
@@ -300,6 +303,37 @@ test_that("row_percent works",
 )
 
 
+test_that("caption works",
+          {
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                caption = "Animal table caption"
+              )) %>%  print(silent = TRUE, print_format = "console"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                caption = "Animal table caption"
+              )) %>%  print(silent = TRUE, print_format = "tex"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                caption = "Animal table caption"
+              )) %>%  print(silent = TRUE, print_format = "word"),
+              NA
+            )
+
+            expect_error(
+              descr(dat, "animal", format_options = list(
+                print_p = FALSE, print_CI = FALSE
+              )) %>%  print(silent = TRUE, print_format = "html"),
+              NA
+            )
+          }
+)
 
 
 
