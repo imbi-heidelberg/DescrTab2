@@ -1,7 +1,7 @@
 # Version 2.1
 
 * knit_print now works properly. R chunks in .Rmd documents don't need the results = 'asis' option anymore.
-
+* Tables can now have captions
 
 # Version 2.0.13
 
