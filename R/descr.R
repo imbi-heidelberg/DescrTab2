@@ -15,15 +15,15 @@ utils::globalVariables(".")
 #' @param group name (as character) of the group variable in dat.
 #' @param group_labels named list of labels for the levels of the group variable in dat.
 #' @param var_labels named list of variable labels.
-#' @param var_options A named list of lists. For each variable, you can have special options that apply only to that variable.
+#' @param var_options named list of lists. For each variable, you can have special options that apply only to that variable.
 #' These options are specified in this argument. See the details and examples for more explanation.
 #' @param summary_stats_cont named list of summary statistic functions to be used for numeric variables.
 #' @param summary_stats_cat named list of summary statistic function to be used for categorical variables.
 #' @param format_summary_stats named list of formatting functions for summary statistics.
 #' @param format_p formatting function for p-values.
 #' @param format_options named list of formatting options.
-#' @param test_options A named list of test options.
-#' @param reshape_rows A named list of lists. Describes how to combine different summary statistics into the same row.
+#' @param test_options named list of test options.
+#' @param reshape_rows named list of lists. Describes how to combine different summary statistics into the same row.
 #' @param ... further argument to be passed along
 #'
 #' @section Labels:
@@ -93,7 +93,10 @@ utils::globalVariables(".")
 #' specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
 #' Use \code{print_test_names()} to see a list of all available test names. If \code{paired = TRUE} is specified, you need to supply an index variable
 #' \code{indices} that specifies which datapoints in your dataset are paired. \code{indices} may either be a length one character vector that describes
-#' the name of the index variable in your dataset, or a vector containing the respective indices. See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
+#' the name of the index variable in your dataset, or a vector containing the respective indices.
+#' If you have \code{guess_id} set to \code{TRUE} (the default), \code{DescrTab2} will try to guess
+#' the ID variable from your dataset and report a warning if it succeedes.
+#' See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
 #' for a bit more explanation. The optional list \code{additional_test_args} can be used to pass arguments along to test functions,
 #' e.g. \code{additional_test_args=list(correct=TRUE)} will request continuity correction if available.
 #'
@@ -248,6 +251,7 @@ descr <-
              nonparametric = FALSE,
              exact = FALSE,
              indices = c(),
+             guess_id = TRUE,
              include_group_missings_in_test = FALSE,
              include_categorical_missings_in_test = FALSE,
              test_override = NULL,
@@ -278,13 +282,7 @@ descr <-
     name_differences_labels <- setdiff(names(extracted_labels), names(var_labels))
     var_labels[name_differences_labels] <-
       extracted_labels[name_differences_labels]
-    dat %<>% mutate(across(
-      where(function(x) inherits(x, "labelled")),
-      function(x) {
-        class(x) <- class(x)[class(x) != "labelled"]
-        x
-      }
-    ))
+    dat %<>% unlabel()
 
     # Coerce all date columns to factors
     if (isTRUE(any(sapply(dat, function(x) inherits(x, "Date"))))) {
@@ -329,12 +327,20 @@ descr <-
 
 
     test_options %<>% as.list()
+
+    if (isTRUE(test_options[["guess_id"]])){
+      test_options[["indices"]] <- guess_ID_variable(dat)
+    }
     if (is.character(test_options[["indices"]]) &&
       length(test_options[["indices"]]) == 1 &&
       test_options[["indices"]] %in% names(dat)) {
       idx_name <- test_options[["indices"]]
       test_options[["indices"]] <- dat %>% pull(!!idx_name)
       dat %<>% select(-!!idx_name)
+
+      if (isTRUE(test_options[["guess_id"]])){
+        warning("ID variable candidate automatically extracted from the dataset.")
+      }
     }
 
 
@@ -1327,11 +1333,14 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
     (sapply(tibl[[1]][!indx_varnames], str_length) + 1) %/% 2, 1
   )), 15)
 
-  names(lengths) <- sapply(double_escape_latex_symbols(tibble(labels))[[1]],
-    inMinipage2,
-    width = paste0(width + 1, "em")
+  # For some reason, names need double escaping
+  names(lengths) <- sapply(escape_latex_symbols(tibble(labels), doubleEscape = TRUE)[[1]],
+    in_minpage,
+    width = paste0(width + 1, "em"),
+    doubleEscape = TRUE,
+    strechSpace = FALSE
   )
-  tibl[!indx_varnames, 1] <- sapply(tibl[[1]][!indx_varnames], inMinipage, width = paste0(width, "em"))
+  tibl[!indx_varnames, 1] <- sapply(tibl[[1]][!indx_varnames], in_minpage, width = paste0(width, "em"))
 
   tex <- tibl[!indx_varnames, ] %>%
     kbl(
@@ -2233,175 +2242,6 @@ create_character_subtable.cat_summary <-
 
 
 
-.N <- function(var) {
-  sum(!is.na(var))
-}
-
-.Nmiss <- function(var) {
-  sum(is.na(var))
-}
-
-.mean <- function(var) {
-  ret <- base::mean(var, na.rm = TRUE)
-  if (is.nan(ret)) {
-    return(NA_real_)
-  } else {
-    return(ret)
-  }
-}
-
-.sd <- function(var) {
-  stats::sd(var, na.rm = TRUE)
-}
-
-.median <- function(var) {
-  stats::median(var, na.rm = TRUE)
-}
-
-.Q1 <- function(var) {
-  stats::quantile(var,
-    probs = 0.25,
-    na.rm = TRUE,
-    type = 2
-  )
-}
-
-.Q3 <- function(var) {
-  stats::quantile(var,
-    probs = 0.75,
-    na.rm = TRUE,
-    type = 2
-  )
-}
-
-
-.min <- function(var) {
-  if (any(!is.na(var))) {
-    min(var, na.rm = TRUE)
-  } else {
-    NA_real_
-  }
-}
-
-.max <- function(var) {
-  if (any(!is.na(var))) {
-    max(var, na.rm = TRUE)
-  } else {
-    NA_real_
-  }
-}
-
-.mode <- function(var) {
-  ux <- unique(var)
-  ux[which.max(tabulate(match(var, ux)))]
-}
-
-.factormean <- function(var) {
-  var %>%
-    as.character() %>%
-    as.numeric() %>%
-    mean(na.rm = TRUE)
-}
-
-.factorsd <- function(var) {
-  var %>%
-    as.character() %>%
-    as.numeric() %>%
-    stats::sd(na.rm = TRUE)
-}
-
-
-.factormedian <- function(var) {
-  var %>%
-    as.character() %>%
-    as.numeric() %>%
-    stats::median(na.rm = TRUE)
-}
-
-.factorQ1 <- function(var) {
-  var %>%
-    as.character() %>%
-    as.numeric() %>%
-    stats::quantile(
-      probs = 0.25,
-      na.rm = TRUE,
-      type = 2
-    )
-}
-
-.factorQ3 <- function(var) {
-  var %>%
-    as.character() %>%
-    as.numeric() %>%
-    stats::quantile(
-      probs = 0.75,
-      na.rm = TRUE,
-      type = 2
-    )
-}
-
-.factormin <- function(var) {
-  var_num <- var %>%
-    as.character() %>%
-    as.numeric()
-  if (any(!is.na(var))) {
-    min(var_num, na.rm = TRUE)
-  } else {
-    NA_real_
-  }
-}
-
-.factormax <- function(var) {
-  var_num <- var %>%
-    as.character() %>%
-    as.numeric()
-  if (any(!is.na(var))) {
-    max(var_num, na.rm = TRUE)
-  } else {
-    NA_real_
-  }
-}
-
-double_escape_latex_symbols <- function(tibl) {
-  for (i in 1:nrow(tibl)) {
-    for (j in 1:ncol(tibl)) {
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("%"), fixed("\\\\%"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("$"), fixed("\\\\$"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("<"), fixed("\\\\textless"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed(">"), fixed("\\\\textgreater"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("_"), fixed("\\\\_"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("&"), fixed("\\\\&"))
-    }
-  }
-  tibl
-}
-
-escape_latex_symbols <- function(tibl) {
-  for (i in 1:nrow(tibl)) {
-    for (j in 1:ncol(tibl)) {
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("%"), fixed("\\%"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("$"), fixed("\\$"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("<"), fixed("\\textless"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed(">"), fixed("\\textgreater"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("_"), fixed("\\_"))
-      tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("&"), fixed("\\&"))
-    }
-  }
-  tibl
-}
-
 create_test_abbreviations <- function(test_names) {
   erg <- character()
   for (test in test_names) {
@@ -3174,456 +3014,3 @@ ignore_unused_args <- function(what, args) {
 
 
 
-#' Make pretty frequencies
-#'
-#' @param numerator numeric
-#' @param denominator numeric
-#' @param absolute_relative_frequency_mode  "both","only_absolute" or "only_relative"
-#' @param percent_accuracy NULL or numeric
-#' @param percent_suffix "\%" or "" (or something else)
-#'
-#' @return Character element of formatted frequencies
-#' @importFrom scales label_percent
-format_freqs <- function(numerator,
-                         denominator = 1,
-                         absolute_relative_frequency_mode = c(
-                           "both",
-                           "only_absolute",
-                           "only_relative"
-                         ),
-                         percent_accuracy = NULL,
-                         percent_suffix = "%") {
-  if (denominator == 0) {
-    relfreq <- 0
-  } else {
-    relfreq <- numerator / denominator
-  }
-
-  absolute_relative_frequency_mode <- absolute_relative_frequency_mode[1]
-  if (absolute_relative_frequency_mode == "both") {
-    paste0(
-      numerator,
-      " (",
-      scales::label_percent(
-        accuracy = percent_accuracy,
-        suffix = percent_suffix
-      )(relfreq),
-      ")"
-    )
-  } else if (absolute_relative_frequency_mode == "only_absolute") {
-    as.character(numerator)
-  } else if (absolute_relative_frequency_mode == "only_relative") {
-    scales::label_percent(
-      accuracy = percent_accuracy,
-      suffix = percent_suffix
-    )(relfreq)
-  } else {
-    stop(paste(as.character(absolute_relative_frequency_mode), "is not a valid value for absolute_relative_frequency_mode."))
-  }
-}
-
-
-#' Function that returns true in CRAN submission
-#'
-#' @return TRUE for CRAN submission, FALSE otherwise
-write_in_tmpfile_for_cran <- function() {
-  if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-    return(invisible(FALSE))
-  } else {
-    TRUE
-  }
-}
-
-
-#' Wrap cell text in minipage LaTeX environment
-#' @param x text to be placed in minipage
-#' @param width width adjustment
-#' https://stackoverflow.com/a/50892682
-#'
-inMinipage <- function(x, width) {
-  paste0(
-    "\\begin{minipage}[t]{",
-    width,
-    "}\\raggedright\\setstretch{0.5}",
-    x,
-    "\\vspace{0.75ex}\\end{minipage}"
-  )
-}
-
-#' Extract the label attributes from data
-#'
-#' @param dat dataset or vector
-#'
-#' @return list of labels
-#' @export
-#'
-#' @examples
-#' a <- c(1, 2)
-#' attr(a, "label") <- "b"
-extract_labels <- function(dat) {
-  if (inherits(dat, "list") | inherits(dat, "data.frame") | inherits(dat, "tbl")) {
-    extracted_labels <- lapply(dat, function(x) attr(x, "label"))
-    extracted_labels <- extracted_labels[!sapply(extracted_labels, is.null) &
-      !sapply(extracted_labels, function(x) isTRUE(trimws(x) == ""))]
-  } else {
-    nm <- deparse(substitute(dat))
-    extracted_labels <- list(nm = attr(dat, "label"))
-    extracted_labels <- extracted_labels[!sapply(extracted_labels, is.null) &
-      !sapply(extracted_labels, function(x) isTRUE(trimws(x) == ""))]
-  }
-  return(extracted_labels)
-}
-
-#' Wrap cell text in minipage LaTeX environment
-#'
-#' @param x text to be placed in minipage
-#' @param width width adjustment
-#' https://stackoverflow.com/a/50892682
-#'
-inMinipage2 <- function(x, width) {
-  paste0(
-    "\\\\begin{minipage}[t]{",
-    width,
-    "}\\\\raggedright ",
-    x,
-    "\\\\end{minipage}"
-  )
-}
-
-#' Convencience function to load redcap datasets
-#'
-#' @param path_to_redcap_script
-#'
-#' @return tibble with data
-#' @export
-#' @examples
-#' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
-#' read_redcap_formatted(path_to_redcap_script)
-#' @importFrom Hmisc label label<-
-read_redcap_formatted <- function(path_to_redcap_script = NULL) {
-  stopifnot(is.character(path_to_redcap_script))
-  source(path_to_redcap_script, encoding = "UTF-8", local = TRUE)
-  data <- as_tibble(data)
-  colnames_data <- names(data)
-  for (colname in colnames_data) {
-    if (str_detect(colname, "\\.factor$")) {
-      fac <- data[[colname]]
-      label(fac) <- label(data[[str_remove(colname, "\\.factor$")]])
-      data[str_remove(colname, "\\.factor$")] <- fac
-      data <- data[names(data) != colname]
-    }
-  }
-  data
-}
-
-
-#' Convencience function to load sas datasets
-#'
-#' @param path_to_dat path to .sas7bdat file
-#' @param path_to_format path to .sas7bcat file
-#'
-#' @return tibble with data
-#' @export
-#'
-#' @examples
-#' path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
-#' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' haven::read_sas(path_to_dat, pat_to_format)
-#' @importFrom haven read_sas
-#'
-read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL) {
-  erg <- read_sas(
-    path_to_dat,
-    path_to_format
-  )
-  erg <- erg %>%
-    mutate(across(where(function(x) inherits(x, "haven_labelled")), as_factor))
-  erg
-}
-
-#' Digits before decimal -1
-#'
-#' @details
-#' https://stackoverflow.com/questions/47190693/count-the-number-of-integer-digits
-#'
-#' @param x
-#'
-#' @return
-#'
-n_int_digits <- function(x) {
-  result <- floor(log10(abs(x)))
-  result[!is.finite(result)] <- 0
-  result
-}
-
-#' Format number to a specified number of digits, considering threshold for usage of scientific notation
-#'
-#' @param x
-#' @param digits
-#'
-#' @return
-#' @export
-#'
-#' @examples
-sigfig <- function(x, digits = 3,
-                   scientific_high_threshold = 6,
-                   scientific_low_threshold = -6,
-                   force_0_behind_0 = FALSE) {
-  if (is.na(x)) {
-    return("NA")
-  } else if (is.numeric(x)) {
-    if (n_int_digits(x) + 0.5 > scientific_high_threshold) {
-      return(format(x, scientific = TRUE, digits = digits))
-    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold) {
-      return(format(x, scientific = TRUE, digits = digits))
-    }
-    if (n_int_digits(x) + 1.5 > digits) {
-      if (abs(x) > 2^52) {
-        warning("Integers larger than 2^52 might not have an exact floating point represntation.")
-      }
-      return(format(round(x), scientific = FALSE))
-    } else {
-      ret <- gsub("\\.$", "", formatC(signif(x, digits = digits), digits = digits, format = "fg", flag = "#"))
-      if (isTRUE(force_0_behind_0) & ret == "0") {
-        return(format(0, nsmall = digits))
-      } else {
-        return(ret)
-      }
-    }
-  }
-}
-
-#' Generator function for nice formatting functions
-#' @param x
-#' @param digits
-#'
-#' @return
-#' @export
-#'
-#' @examples
-sigfig_gen <- function(digits = 3,
-                       scientific_high_threshold = 6,
-                       scientific_low_threshold = -6,
-                       force_0_behind_0 = FALSE) {
-  return(
-    function(x) {
-      return(sigfig(x,
-        scientific_high_threshold = scientific_high_threshold,
-        scientific_low_threshold = scientific_low_threshold,
-        force_0_behind_0 = force_0_behind_0
-      ))
-    }
-  )
-}
-
-
-
-good_format <- function(x,
-                        force_digits = NULL,
-                        soft_digit_suggestion = 4,
-                        nsig,
-                        scientific_low_threshold = 1e5,
-                        scientific_high_threshold = 1e-5,
-                        force_nonscientific = FALSE) {
-  if (is.na(x)) {
-    return("NA")
-  } else if (is.numeric(x)) {
-    if (isTRUE(force_nonscientific)) {
-      if (!is.null(force_digits)) {
-        format(round(x, force_digits), nsmall = force_digits)
-      } else {
-
-      }
-    } else {
-      if (!is.null(force_digits)) {
-        format(round(x, force_digits), nsmall = force_digits)
-      } else if (scientific_high_threshold >= abs(x)) {
-
-      } else if (scientific_low_threshold <= abs(x)) {
-
-      } else if (abs(x) >= 1) {
-        formatC(
-          round(x, digits = max(0, soft_digit_suggestion - floor(log10(x)))),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      }
-
-      if (abs(x) < .5) {
-        formatC(
-          signif(x, digits = 4),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      } else if (abs(x) >= 100) {
-        formatC(signif(x, digits = 4), digits = 4, format = "fg")
-      } else {
-        formatC(
-          signif(x, digits = 4),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      }
-    }
-  } else {
-    x
-  }
-}
-
-#' Convencience function to load sas datasets
-#'
-#' @param path_to_dat path to .sas7bdat file
-#' @param path_to_format path to .sas7bcat file
-#'
-#' @return tibble with data
-#' @export
-#'
-#' @examples
-#' path_to_dat <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
-#' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' haven::read_sas(path_to_dat, pat_to_format)
-#' @importFrom haven read_sas
-#'
-read_sas_formatted <- function(path_to_dat = NULL, path_to_format = NULL) {
-  erg <- read_sas(
-    path_to_dat,
-    path_to_format
-  )
-  erg <- erg %>%
-    mutate(across(where(function(x) inherits(x, "haven_labelled")), as_factor))
-  erg
-}
-
-#' Digits before decimal -1
-#'
-#' @details
-#' https://stackoverflow.com/questions/47190693/count-the-number-of-integer-digits
-#'
-#' @param x
-#'
-#' @return
-#'
-n_int_digits <- function(x) {
-  result <- floor(log10(abs(x)))
-  result[!is.finite(result)] <- 0
-  result
-}
-
-#' Format number to a specified number of digits, considering threshold for usage of scientific notation
-#'
-#' @param x
-#' @param digits
-#'
-#' @return
-#' @export
-#'
-#' @examples
-sigfig <- function(x, digits = 3,
-                   scientific_high_threshold = 6,
-                   scientific_low_threshold = -6,
-                   force_0_behind_0 = FALSE) {
-  if (is.na(x)) {
-    return("NA")
-  } else if (is.numeric(x)) {
-    if (n_int_digits(x) + 0.5 > scientific_high_threshold) {
-      return(format(x, scientific = TRUE, digits = digits))
-    } else if (n_int_digits(x) - 0.5 < scientific_low_threshold) {
-      return(format(x, scientific = TRUE, digits = digits))
-    }
-    if (n_int_digits(x) + 1.5 > digits) {
-      if (abs(x) > 2^52) {
-        warning("Integers larger than 2^52 might not have an exact floating point represntation.")
-      }
-      return(format(round(x), scientific = FALSE))
-    } else {
-      ret <- gsub("\\.$", "", formatC(signif(x, digits = digits), digits = digits, format = "fg", flag = "#"))
-      if (isTRUE(force_0_behind_0) & ret == "0") {
-        return(format(0, nsmall = digits))
-      } else {
-        return(ret)
-      }
-    }
-  }
-}
-
-#' Generator function for nice formatting functions
-#' @param x
-#' @param digits
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' plot(c(1,2,3))
-sigfig_gen <- function(digits = 3,
-                       scientific_high_threshold = 6,
-                       scientific_low_threshold = -6,
-                       force_0_behind_0 = FALSE) {
-  return(
-    function(x) {
-      return(sigfig(x,
-        scientific_high_threshold = scientific_high_threshold,
-        scientific_low_threshold = scientific_low_threshold,
-        force_0_behind_0 = force_0_behind_0
-      ))
-    }
-  )
-}
-
-good_format <- function(x,
-                        force_digits = NULL,
-                        soft_digit_suggestion = 4,
-                        nsig,
-                        scientific_low_threshold = 1e5,
-                        scientific_high_threshold = 1e-5,
-                        force_nonscientific = FALSE) {
-  if (is.na(x)) {
-    return("NA")
-  } else if (is.numeric(x)) {
-    if (isTRUE(force_nonscientific)) {
-      if (!is.null(force_digits)) {
-        format(round(x, force_digits), nsmall = force_digits)
-      } else {
-
-      }
-    } else {
-      if (!is.null(force_digits)) {
-        format(round(x, force_digits), nsmall = force_digits)
-      } else if (scientific_high_threshold >= abs(x)) {
-
-      } else if (scientific_low_threshold <= abs(x)) {
-
-      } else if (abs(x) >= 1) {
-        formatC(
-          round(x, digits = max(0, soft_digit_suggestion - floor(log10(x)))),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      }
-
-      if (abs(x) < .5) {
-        formatC(
-          signif(x, digits = 4),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      } else if (abs(x) >= 100) {
-        formatC(signif(x, digits = 4), digits = 4, format = "fg")
-      } else {
-        formatC(
-          signif(x, digits = 4),
-          digits = 4,
-          format = "fg",
-          flag = "#"
-        )
-      }
-    }
-  } else {
-    x
-  }
-}

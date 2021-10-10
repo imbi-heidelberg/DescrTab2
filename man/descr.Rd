@@ -34,8 +34,9 @@ descr(
     "missing_as_regular_category", "missing_as_separate_category"),      caption = NULL,
     replace_empty_string_with_NA = TRUE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
-    c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
-    FALSE, test_override = NULL, additional_test_args = list()),
+    guess_ID_variable(dat), include_group_missings_in_test = FALSE,
+    include_categorical_missings_in_test = FALSE, test_override = NULL,
+    additional_test_args = list()),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
       paste0(Q1, " -- ", Q3) }), `min - max` = list(args = c("min", "max"), fun =
     function(min, max) {     paste0(min, " -- ", max) })),
@@ -51,7 +52,7 @@ descr(
 
 \item{var_labels}{named list of variable labels.}
 
-\item{var_options}{A named list of lists. For each variable, you can have special options that apply only to that variable.
+\item{var_options}{named list of lists. For each variable, you can have special options that apply only to that variable.
 These options are specified in this argument. See the details and examples for more explanation.}
 
 \item{summary_stats_cont}{named list of summary statistic functions to be used for numeric variables.}
@@ -64,9 +65,9 @@ These options are specified in this argument. See the details and examples for m
 
 \item{format_options}{named list of formatting options.}
 
-\item{test_options}{A named list of test options.}
+\item{test_options}{named list of test options.}
 
-\item{reshape_rows}{A named list of lists. Describes how to combine different summary statistics into the same row.}
+\item{reshape_rows}{named list of lists. Describes how to combine different summary statistics into the same row.}
 
 \item{...}{further argument to be passed along}
 }

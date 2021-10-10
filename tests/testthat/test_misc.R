@@ -1,4 +1,4 @@
-library(magrittr, , quietly = TRUE, warn.conflicts = FALSE)
+library(magrittr, quietly = TRUE, warn.conflicts = FALSE)
 
 
 test_that("ignore_unused_args works as expected", {

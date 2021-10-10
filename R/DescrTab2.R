@@ -12,6 +12,8 @@
 #' Check out our documentation online: https://imbi-heidelberg.github.io/DescrTab2/
 #' or browse the help files in the Rstudio viewer. You can access the vignettes by typing: \code{browseVignettes("DescrTab2")}
 #'
+#' The most important function you probably want to check out is called \code{\link{descr}}.
+#'
 #' @docType package
 #' @name DescrTab2
 NULL
@@ -48,3 +50,14 @@ NULL
   }
 }
 # nocov end
+
+#' Function that returns true in CRAN submission
+#'
+#' @return TRUE for CRAN submission, FALSE otherwise
+write_in_tmpfile_for_cran <- function() {
+  if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    return(invisible(FALSE))
+  } else {
+    TRUE
+  }
+}
