@@ -65,7 +65,7 @@ dat %<>% mutate(food= c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
 
 Producing beautiful descriptive tables is now as easy as typing:
 
-```{r, results='asis', echo=F}
+```{r, results='asis'}
 descr(dat)
 ```
 
