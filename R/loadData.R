@@ -33,7 +33,7 @@ extract_labels <- function(dat) {
 #' @examples
 #' a <- c(1, 2)
 #' attr(a, "label") <- "b"
-#' identical(unlabel(a), c(1,2))
+#' identical(unlabel(a), c(1, 2))
 unlabel <- function(dat) {
   unlabel_fun <- function(x) {
     if (inherits(x, "labelled")) {
@@ -49,7 +49,6 @@ unlabel <- function(dat) {
   }
   dat
 }
-
 
 #' Convencience function to load datasets downloaded from a Redcap database
 #'
@@ -102,25 +101,27 @@ read_redcap_formatted <- function(path_to_redcap_script = NULL) {
 #' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
 #' dat <- read_redcap_formatted(path_to_redcap_script)
 #' d <- split_redcap_dataset(dat, guess_ID_variable(dat, TRUE))
-split_redcap_dataset <- function(dat, id_name = "patid"){
+split_redcap_dataset <- function(dat, id_name = "patid") {
   missings_everywhere <-
-    dat %>% select(!!id_name, where( ~ (all(is.na(.x)) | all(.x==""))  ) )
+    dat %>% select(!!id_name, where(~ (all(is.na(.x)) | all(.x == ""))))
 
   d <-
-    lapply(as.character(unique(
-      fct_explicit_na(dat$redcap_repeat_instrument)
-    )),
-    function(x) {
-      dat %>%
-        filter( fct_explicit_na(redcap_repeat_instrument) == !!x )
-    })
+    lapply(
+      as.character(unique(
+        fct_explicit_na(dat$redcap_repeat_instrument)
+      )),
+      function(x) {
+        dat %>%
+          filter(fct_explicit_na(redcap_repeat_instrument) == !!x)
+      }
+    )
 
   names(d) <-
     as.character(unique(fct_explicit_na(dat$redcap_repeat_instrument)))
-  names(d)[names(d)=="(Missing)"] <- "Singular"
+  names(d)[names(d) == "(Missing)"] <- "Singular"
 
-  d <- lapply(d, function(x){
-    x %>% select(where(~!(all(is.na(.x)) | all(.x=="")) ))
+  d <- lapply(d, function(x) {
+    x %>% select(where(~ !(all(is.na(.x)) | all(.x == ""))))
   })
 
   d[["missings_everywhere"]] <- missings_everywhere
@@ -181,45 +182,147 @@ list_freetext_markdown <- function(dat) {
 
 
 # work in progress
-parse_formats <- function(path_to_format_definition){
-  f <- readLines(file(path_to_format_definition, encoding = "ISO-8859-1")) %>%
+parse_formats <- function(path_to_format_definition, ignore_keywords = c("value")) {
+  ff <- file(path_to_format_definition, encoding = "ISO-8859-1")
+  f <- readLines(ff) %>%
     paste0(collapse = "")
+  close(ff)
 
-  tmp <- str_extract(f, "(?<=proc format).*(?=run;)")
+  # strip "proc format;" and "run;" from the file
+  tmp <- str_extract(f, "(?<=([pP][rR][oO][cC] [fF][oO][rR][mM][aA][tT])).*(?=[rR][uU][nN];)")
+  # strip all comments delminited by /*  */
+  tmp <- str_remove_all(tmp, "(?<=\\/\\*).*?(?=\\*\\/)")
+
   tmp <- strsplit(tmp, "")[[1]]
+
+
+
   i <- 1L
-  while (i<=length(tmp)){
 
-    i <- i+1L
+  strbuf <- ""
+  current_delimiter <- NULL
+  start_delim_index <- NULL
+  end_delim_index <- NULL
+  levels <- numeric()
+  labels <- character()
+  parse_varname <- TRUE
+  parse_level <- FALSE
+  parse_label <- FALSE
+
+  format_list <- list()
+  while (i <= length(tmp)) {
+    current_char <- tmp[i]
+    # if (i==15)
+    #   browser()
+    # if (i == 649) {
+    #   browser()
+    # }
+
+    if (parse_varname) {
+      strbuf <- paste0(strbuf, current_char)
+      current_word <- str_extract(strbuf, "(?<=[\\s\\;])[^\\s]+(?=\\s)")
+      if (!is.na(current_word)) {
+        if (current_word %in% ignore_keywords) {
+          strbuf <- str_replace(strbuf, "(?<=[\\s\\;])[^\\s]+(?=\\s)", "")
+        } else {
+          labels <- character()
+          if (isTRUE(str_split(current_word, "")[[1]][[1]] == "$")) {
+            char_factor <- TRUE
+            varname <- paste0(str_split(current_word, "")[[1]][-1], collapse = "")
+            levels <- character()
+          } else {
+            char_factor <- FALSE
+            varname <- current_word
+            levels <- numeric()
+          }
+          parse_varname <- FALSE
+          parse_level <- TRUE
+          strbuf <- current_char
+        }
+      }
+    }
+    if (parse_level) {
+      if (isTRUE(current_char == ";")) {
+        parse_level <- FALSE
+        parse_varname <- TRUE
+        current_delimiter <- NULL
+        format_list[[varname]] <- list(levels = levels, labels = labels)
+      }
+      if (char_factor) {
+        if (isTRUE(current_char == current_delimiter) | (isTRUE(str_detect(current_delimiter, "\\s")) && isTRUE(current_char == "="))) {
+          end_delim_index <- i
+        }
+        if (!is.null(end_delim_index)) {
+          current_level <- paste0(tmp[(start_delim_index + 1):(end_delim_index - 1)], collapse = "")
+          if (!is.na(current_level)) {
+            levels[length(levels) + 1] <- current_level
+            parse_level <- FALSE
+            parse_label <- TRUE
+            current_delimiter <- NULL
+            start_delim_index <- NULL
+            end_delim_index <- NULL
+            strbuf <- current_char
+            i <- i + 1L
+            next
+          }
+        }
+        if (is.null(current_delimiter) && isTRUE(str_detect(current_char, "[\\'\"[:alpha:]\\.]"))) {
+          if (str_detect(current_char, "[[:alpha:]\\.]")) {
+            start_delim_index <- i - 1
+            current_delimiter <- tmp[i - 1]
+          } else {
+            start_delim_index <- i
+            current_delimiter <- current_char
+          }
+        }
+      } else {
+        strbuf <- paste0(strbuf, current_char)
+        current_level <- str_extract(strbuf, "(?<=\\s)[[:digit:]\\.\\-]+(?=[\\s\\=])")
+        if (!is.na(current_level)) {
+          current_level <- if (isTRUE(current_level == ".")) NA_real_ else as.numeric(current_level)
+          levels[length(levels) + 1] <- current_level
+          parse_label <- TRUE
+          parse_level <- FALSE
+          strbuf <- current_char
+        }
+      }
+    }
+    if (parse_label) {
+      if (isTRUE(current_char == current_delimiter) | (isTRUE(str_detect(current_delimiter, "\\s")) && isTRUE(current_char == ";"))) {
+        end_delim_index <- i
+      }
+      if (!is.null(end_delim_index)) {
+        current_label <- paste0(tmp[(start_delim_index + 1):(end_delim_index - 1)], collapse = "")
+        if (!is.na(current_label)) {
+          labels[length(labels) + 1] <- current_label
+          parse_label <- FALSE
+          if (isTRUE(current_char == ";")) {
+            format_list[[varname]] <- list(levels = levels, labels = labels)
+            parse_varname <- TRUE
+          } else {
+            parse_level <- TRUE
+          }
+          current_delimiter <- NULL
+          start_delim_index <- NULL
+          end_delim_index <- NULL
+          strbuf <- current_char
+          i <- i + 1L
+          next
+        }
+      }
+      if (is.null(current_delimiter) && str_detect(current_char, "[\\'\"[:alpha:]\\.]")) {
+        if (str_detect(current_char, "[[:alpha:]\\.]")) {
+          start_delim_index <- i - 1
+          current_delimiter <- tmp[i - 1]
+        } else {
+          start_delim_index <- i
+          current_delimiter <- current_char
+        }
+      }
+    }
+    i <- i + 1L
   }
-
-  tmp <- f %>%str_remove_all("\r") %>%
-    str_remove_all("\n") %>%
-    str_remove_all("\t") %>%
-    str_extract_all("value[^;]*;") %>%
-    unlist() %>%
-    str_remove_all("value ") %>%
-    str_subset("^[^\\$]+")
-
-  fnames <- tmp %>% str_extract_all("^[:alnum:]*") %>%
-    unlist()
-
-  tmp <- tmp %>% str_remove_all("^[:alnum:]*(\\s)*")
-  levels <- tmp %>% str_extract_all("[:digit:]+(\\.[:digit:]+)*")
-  tmp <-
-    tmp %>% str_remove_all("[:digit:]+(\\.[:digit:]+)*") %>%
-    str_remove_all(";") %>%
-    str_remove_all("=")
-  labels <- tmp %>%
-    str_extract_all("'[^']*'")
-  labels <- lapply(labels, function(x) str_remove_all(x, "'"))
-
-  erg <- list()
-  for (i in seq_along(fnames)){
-    erg[[i]] <- list(levels = as.integer(levels[[i]]), labels = labels[[i]])
-  }
-  names(erg) <- fnames
-  return(erg)
+  return(format_list)
 }
 
 
@@ -233,14 +336,17 @@ parse_formats <- function(path_to_format_definition){
 #' @return NULL. Relevant code is printed to the console.
 #' @export
 #'
-codegen_load_all_sas_data <- function(dir, format = NULL){
+codegen_load_all_sas_data <- function(dir, format = NULL) {
   e <- str_subset(list.files(dir), "\\.sas7bdat$")
   p <- paste0(dir, e)
-  cat(paste0("d.", str_replace(e, "\\.sas7bdat$", ""), " <- haven::read_sas(data_file = \"", p,
-             "\", catalog_file = \"", format, "\")\n"))
+  cat(paste0(
+    "d.", str_replace(e, "\\.sas7bdat$", ""), " <- haven::read_sas(data_file = \"", p,
+    "\", catalog_file = \"", format, "\")\n"
+  ))
   cat(paste0("d <- list(", paste0("d.", str_replace(e, "\\.sas7bdat$", ""), collapse = ", "), ")\n"))
   cat(paste0("names(d) <- ", paste0("c(", paste0(paste0("\"", str_replace(e, "\\.sas7bdat$", ""), "\""),
-                                                 collapse = ", "), ")")))
+    collapse = ", "
+  ), ")")))
   return(NULL)
 }
 
@@ -257,7 +363,7 @@ codegen_load_all_sas_data <- function(dir, format = NULL){
 #' @importFrom magrittr `%>%`
 guess_ID_variable <- function(dat, suppressWarnings = FALSE) {
   original_colnames <- names(dat)
-  colnames  <- str_to_lower(original_colnames)
+  colnames <- str_to_lower(original_colnames)
   # common words to describe subject id
   ids1 <- str_detect(
     colnames,
@@ -269,7 +375,7 @@ guess_ID_variable <- function(dat, suppressWarnings = FALSE) {
   )
   # regex to catch "id" if it is not part of another word
   ids2 <- str_detect(colnames, "(?<![:alpha:])id(?![:alpha:])")
-  ids <- original_colnames[ids1|ids2]
+  ids <- original_colnames[ids1 | ids2]
   if (length(ids) > 1) {
     if (!isTRUE(suppressWarnings)) {
       warning("Multiple possible ID variables found. No candidate is chosen automatically.")
@@ -289,26 +395,26 @@ guess_ID_variable <- function(dat, suppressWarnings = FALSE) {
 }
 
 # work in progress
-split_data_from_listing <- function(dat, n_split_levels = 10, n_split_characters = 35){
+split_data_from_listing <- function(dat, n_split_levels = 10, n_split_characters = 35) {
   dat <- as_tibble(dat)
   idx_dat <- list()
   idx_list <- list()
-  for(i in 1:ncol(dat)){
+  for (i in 1:ncol(dat)) {
     too_many_levels <- (is.character(pull(dat, !!i)) | inherits(pull(dat, !!i), "Date")) &
       (length(levels(factor(pull(dat, !!i)))) > n_split_levels)
-    label_too_long <- length(attr(pull(dat, !!i), "label"))>n_split_characters
-    name_too_long <-  if (is.null(attr(pull(dat, !!i), "label") )) FALSE else length(names(dat[,i])[1])>n_split_characters
-    factor_levels_too_long <- (is.character(pull(dat, !!i)) | inherits(pull(dat, !!i), "Date") | is.factor(pull(dat, !!i)) )  &
-      any(sapply(levels(factor(pull(dat, !!i))), function(x)length(x)>n_split_characters))
+    label_too_long <- length(attr(pull(dat, !!i), "label")) > n_split_characters
+    name_too_long <- if (is.null(attr(pull(dat, !!i), "label"))) FALSE else length(names(dat[, i])[1]) > n_split_characters
+    factor_levels_too_long <- (is.character(pull(dat, !!i)) | inherits(pull(dat, !!i), "Date") | is.factor(pull(dat, !!i))) &
+      any(sapply(levels(factor(pull(dat, !!i))), function(x) length(x) > n_split_characters))
 
     if (too_many_levels | label_too_long | name_too_long | factor_levels_too_long) {
-      idx_list[[length(idx_list)+1]] <- i
-    } else{
-      idx_dat[[length(idx_dat)+1]] <- i
+      idx_list[[length(idx_list) + 1]] <- i
+    } else {
+      idx_dat[[length(idx_dat) + 1]] <- i
     }
   }
-  return(list(data = dat[,unlist(idx_dat)],
-              list = dat[,unlist(idx_list)]
-  )
-  )
+  return(list(
+    data = dat[, unlist(idx_dat)],
+    list = dat[, unlist(idx_list)]
+  ))
 }
