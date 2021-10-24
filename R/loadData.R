@@ -181,9 +181,23 @@ list_freetext_markdown <- function(dat) {
 
 
 
-# work in progress
-parse_formats <- function(path_to_format_definition, ignore_keywords = c("value")) {
-  ff <- file(path_to_format_definition, encoding = "ISO-8859-1")
+#' Parse a text file containing format information
+#'
+#' Useful to extract factor formatting information contained in a proc format SAS statement.
+#'
+#' @param path_to_format_definition (string) Path to the text file to be parsed
+#' @param ignore_keywords A vector of keywords to be ignored when searching for the name of
+#' the variable to be formatted
+#' @param encoding Encoding for the text file
+#'
+#' @return
+#' @export
+#'
+#' @examples
+parse_formats <- function(path_to_format_definition,
+                          ignore_keywords = c("value"),
+                          encoding = "ISO-8859-1") {
+  ff <- file(path_to_format_definition, encoding = encoding)
   f <- readLines(ff) %>%
     paste0(collapse = "")
   close(ff)
@@ -191,11 +205,9 @@ parse_formats <- function(path_to_format_definition, ignore_keywords = c("value"
   # strip "proc format;" and "run;" from the file
   tmp <- str_extract(f, "(?<=([pP][rR][oO][cC] [fF][oO][rR][mM][aA][tT])).*(?=[rR][uU][nN];)")
   # strip all comments delminited by /*  */
-  tmp <- str_remove_all(tmp, "(?<=\\/\\*).*?(?=\\*\\/)")
+  tmp <- str_remove_all(tmp, "\\/\\*.*?\\*\\/")
 
   tmp <- strsplit(tmp, "")[[1]]
-
-
 
   i <- 1L
 
@@ -212,11 +224,6 @@ parse_formats <- function(path_to_format_definition, ignore_keywords = c("value"
   format_list <- list()
   while (i <= length(tmp)) {
     current_char <- tmp[i]
-    # if (i==15)
-    #   browser()
-    # if (i == 649) {
-    #   browser()
-    # }
 
     if (parse_varname) {
       strbuf <- paste0(strbuf, current_char)
