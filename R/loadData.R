@@ -202,6 +202,11 @@ parse_formats <- function(path_to_format_definition,
     paste0(collapse = "")
   close(ff)
 
+
+  warning("The alogorithm to extract SAS comments in this function is not implemented well.
+This function works best if you manually remove all comments from the
+text file and make sure there are no labels containing strings of the form '/*' or '*/'.")
+
   # strip "proc format;" and "run;" from the file
   tmp <- str_extract(f, "(?<=([pP][rR][oO][cC] [fF][oO][rR][mM][aA][tT])).*(?=[rR][uU][nN];)")
   # strip all comments delminited by /*  */
