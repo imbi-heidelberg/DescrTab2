@@ -42,8 +42,10 @@ unlabel <- function(dat) {
     }
     return(x)
   }
-  if (inherits(dat, "list") | inherits(dat, "data.frame") | inherits(dat, "tbl")) {
-    dat <- lapply(dat, unlabel_fun)
+  if (inherits(dat, "data.frame") | inherits(dat, "tbl")) {
+    dat <- mutate(dat, across(everything(), unlabel_fun))
+  } else if (inherits(dat, "list")) {
+
   } else {
     dat <- unlabel_fun(dat)
   }

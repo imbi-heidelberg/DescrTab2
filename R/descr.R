@@ -293,6 +293,14 @@ descr <-
           fct_explicit_na()
       }))
     }
+    # Coerce all difftime columns to numeric
+    if (isTRUE(any(sapply(dat, function(x) inherits(x, "difftime"))))) {
+      warning("Your dataset contains variables of type 'difftime'. These are automatically converted to numerics.")
+      dat %<>% mutate(across(where(function(x) inherits(x, "difftime")), function(x) {
+        x %>%
+          as.numeric()
+      }))
+    }
     # Format options have to be cleaned first, because the next data cleaning step depends on them
     format_options %<>% as.list()
 
@@ -1326,7 +1334,7 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   N_numbers <- c(N_numbers, rep("", pad_N))
 
 
-  tibl <- escape_latex_symbols(tibl)
+  tibl <- escape_latex_symbols(tibl, numEscapes = 1)
 
   width <- min(max(c(
     (sapply(labels, str_length) + 1) %/% 2,
@@ -1334,13 +1342,15 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   )), 15)
 
   # For some reason, names need double escaping
-  names(lengths) <- sapply(escape_latex_symbols(tibble(labels), doubleEscape = TRUE)[[1]],
-    in_minpage,
-    width = paste0(width + 1, "em"),
-    doubleEscape = TRUE,
-    strechSpace = FALSE
-  )
-  tibl[!indx_varnames, 1] <- sapply(tibl[[1]][!indx_varnames], in_minpage, width = paste0(width, "em"))
+    names(lengths) <- sapply(escape_latex_symbols(tibble(labels), numEscapes = 2)[[1]],
+      in_minipage,
+      width = paste0(width + 1, "em"),
+      numEscapes = 2,
+      strechSpace = FALSE
+    )
+    tibl[!indx_varnames, 1] <- sapply(tibl[[1]][!indx_varnames], in_minipage,
+                                      width = paste0(width, "em"),
+                                      numEscapes=1)
 
   tex <- tibl[!indx_varnames, ] %>%
     kbl(

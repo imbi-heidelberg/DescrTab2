@@ -6,7 +6,7 @@ Date: 2021-05-27
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")),
              person("Lukas", "Baumann", role = c("aut"), comment = c(ORCID = "0000-0001-7931-7470")),
              person("Maximilian", "Pilz", role = c("aut"), comment = c(ORCID = "0000-0002-9685-1613")),
-             person("Lukas", "Sauer", role = c("aut")),
+             person("Lukas", "Sauer", role = c("aut"), comment= c(ORCID = "0000-0002-1340-9994")),
              person("Lorenz", "Uhlmann", role = c("ctb")),
              person("Csilla", "van Lunteren", role = c("ctb")),
              person("Kevin", "Kunzmann", role = c("ctb")),

@@ -41,4 +41,20 @@ test_that("Date variables throw warnings.",{
           expect_warning(expect_warning(descr(dat)))
 })
 
+date1 <- c(as.Date("20.01.2020", tryFormats = "%d.%m.%Y"), as.Date("21.01.2020", tryFormats = "%d.%m.%Y"))
+date2 <- c(as.Date("23.01.2020", tryFormats = "%d.%m.%Y"), as.Date("17.01.2020", tryFormats = "%d.%m.%Y"))
+datediff <- date2 - date1
+dat <- tibble(date1 = date1, date2 = date2, datediff = datediff)
+
+test_that(
+  "date and difftime is converted correctly",
+  {
+    expect_warning(expect_warning(expect_warning(expect_warning(descr(dat)))))
+  }
+)
+
+
+
+
+
 
