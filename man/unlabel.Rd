@@ -16,8 +16,3 @@ data with the labels removed
 \description{
 Remove the label attribute from data
 }
-\examples{
-a <- c(1, 2)
-attr(a, "label") <- "b"
-identical(unlabel(a), c(1, 2))
-}

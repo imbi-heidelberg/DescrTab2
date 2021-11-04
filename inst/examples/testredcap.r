@@ -1,6 +1,6 @@
 #Clear existing data and graphics
 rm(list=ls())
-graphics.off()
+#graphics.off()
 #Load Hmisc library
 library(Hmisc)
 #Read Data

@@ -24,14 +24,3 @@ A named list with format definitions
 \description{
 Useful to extract factor formatting information contained in a proc format SAS statement.
 }
-\examples{
-tmpfile <- tempfile()
-write(     "proc format;
-             value yn  1=\"yes\"
-                       0=\"no\";
-             value sex 1=\"female\"
-                       0=\"male\";
-              run;",tmpfile)
-parse_formats(tmpfile)
-
-}

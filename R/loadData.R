@@ -6,10 +6,6 @@
 #' @return list of labels
 #' @export
 #'
-#' @examples
-#' a <- c(1, 2)
-#' attr(a, "label") <- "b"
-#' identical(extract_labels(a), list(a = attr(a, "label")))
 extract_labels <- function(dat) {
   if (inherits(dat, "list") | inherits(dat, "data.frame") | inherits(dat, "tbl")) {
     extracted_labels <- lapply(dat, function(x) attr(x, "label"))
@@ -30,10 +26,6 @@ extract_labels <- function(dat) {
 #' @return data with the labels removed
 #' @export
 #'
-#' @examples
-#' a <- c(1, 2)
-#' attr(a, "label") <- "b"
-#' identical(unlabel(a), c(1, 2))
 unlabel <- function(dat) {
   unlabel_fun <- function(x) {
     if (inherits(x, "labelled")) {
@@ -66,9 +58,6 @@ unlabel <- function(dat) {
 #'
 #' @return tibble with data
 #' @export
-#' @examples
-#' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
-#' read_redcap_formatted(path_to_redcap_script)
 #' @importFrom Hmisc label label<-
 read_redcap_formatted <- function(path_to_redcap_script = NULL) {
   stopifnot(is.character(path_to_redcap_script))
@@ -99,10 +88,6 @@ read_redcap_formatted <- function(path_to_redcap_script = NULL) {
 #' @return a list of datasets separated into the categories as described
 #' @export
 #'
-#' @examples
-#' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
-#' dat <- read_redcap_formatted(path_to_redcap_script)
-#' d <- split_redcap_dataset(dat, guess_ID_variable(dat, TRUE))
 split_redcap_dataset <- function(dat, id_name = "patid") {
   missings_everywhere <-
     dat %>% select(!!id_name, where(~ (all(is.na(.x)) | all(.x == ""))))
@@ -138,10 +123,6 @@ split_redcap_dataset <- function(dat, id_name = "patid") {
 #' @return tibble with data
 #' @export
 #'
-#' @examples
-#' path_to_data <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
-#' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' haven::read_sas(path_to_data, pat_to_format)
 #' @importFrom haven read_sas
 #'
 read_sas_formatted <- function(path_to_data = NULL, path_to_format = NULL) {
@@ -193,16 +174,6 @@ list_freetext_markdown <- function(dat) {
 #' @param encoding Encoding for the text file
 #'
 #' @return A named list with format definitions
-#' @examples
-#' tmpfile <- tempfile()
-#' write(     "proc format;
-#'              value yn  1=\"yes\"
-#'                        0=\"no\";
-#'              value sex 1=\"female\"
-#'                        0=\"male\";
-#'               run;",tmpfile)
-#' parse_formats(tmpfile)
-#'
 #' @export
 parse_formats <- function(path_to_format_definition,
                           ignore_keywords = c("value"),
@@ -355,8 +326,6 @@ text file and make sure there are no labels containing strings of the form '/*' 
 #' @param format path to format file
 #'
 #' @return NULL. Relevant code is printed to the console.
-#' @examples
-#' plot(c(1,2,3))
 #' @export
 codegen_load_all_sas_data <- function(dir, format = NULL) {
   e <- str_subset(list.files(dir), "\\.sas7bdat$")
@@ -380,10 +349,6 @@ codegen_load_all_sas_data <- function(dir, format = NULL) {
 #' @return if exactly one possible
 #' @export
 #'
-#' @examples
-#' dat <- data.frame(ID = c(1,2,3,4,5),
-#'                  other = c(1,2,3,4,5))
-#' guess_ID_variable(dat)
 #' @importFrom stringr str_to_lower
 #' @importFrom magrittr `%>%`
 guess_ID_variable <- function(dat, suppressWarnings = FALSE) {
