@@ -7,7 +7,7 @@
 read_redcap_formatted(path_to_redcap_script = NULL)
 }
 \arguments{
-\item{path_to_redcap_script}{}
+\item{path_to_redcap_script}{(character) Path to the (automatically generated) redcap script for data import}
 }
 \value{
 tibble with data

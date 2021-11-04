@@ -2,16 +2,36 @@
 % Please edit documentation in R/loadData.R
 \name{parse_formats}
 \alias{parse_formats}
-\title{SAS code parser for definitions of data formats.}
+\title{Parse a text file containing format information}
 \usage{
-parse_formats(path_to_format_definition)
+parse_formats(
+  path_to_format_definition,
+  ignore_keywords = c("value"),
+  encoding = "ISO-8859-1"
+)
 }
 \arguments{
-\item{path_to_format_definition}{}
+\item{path_to_format_definition}{(string) Path to the text file to be parsed}
+
+\item{ignore_keywords}{A vector of keywords to be ignored when searching for the name of
+the variable to be formatted}
+
+\item{encoding}{Encoding for the text file}
 }
 \value{
-
+A named list with format definitions
 }
 \description{
-SAS code parser for definitions of data formats.
+Useful to extract factor formatting information contained in a proc format SAS statement.
+}
+\examples{
+tmpfile <- tempfile()
+write(     "proc format;
+             value yn  1=\"yes\"
+                       0=\"no\";
+             value sex 1=\"female\"
+                       0=\"male\";
+              run;",tmpfile)
+parse_formats(tmpfile)
+
 }

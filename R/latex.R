@@ -1,7 +1,7 @@
 #' Wrap cell text in minipage LaTeX environment with stretchy space
 #' @param text text to be placed in minipage
 #' @param width width adjustment
-#' @param doubleEscape (logical) chooses between "\\" and "\\\\"#
+#' @param numEscapes (logical) chooses between "\\" and "\\\\"#
 #' @param strechSpace (logical) will add strethcy space
 #' @return appropriate LaTeX code
 #' @references \url{https://stackoverflow.com/a/50892682}

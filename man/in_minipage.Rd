@@ -4,16 +4,16 @@
 \alias{in_minipage}
 \title{Wrap cell text in minipage LaTeX environment with stretchy space}
 \usage{
-in_minipage(x, width, doubleEscape = FALSE, strechSpace = FALSE)
+in_minipage(text, width, numEscapes = 1, strechSpace = FALSE)
 }
 \arguments{
+\item{text}{text to be placed in minipage}
+
 \item{width}{width adjustment}
 
-\item{doubleEscape}{(logical) chooses between "\\" and "\\\\"#}
+\item{numEscapes}{(logical) chooses between "\\" and "\\\\"#}
 
 \item{strechSpace}{(logical) will add strethcy space}
-
-\item{text}{text to be placed in minipage}
 }
 \value{
 appropriate LaTeX code

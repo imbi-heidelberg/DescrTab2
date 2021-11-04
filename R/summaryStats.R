@@ -72,11 +72,11 @@
 }
 
 .skew <- function(var) {
-  mean((var-.mean(var))^(3)) / (sd(var))^(3/2)
+  base::mean((var-.mean(var))^(3)) / (stats::sd(var))^(3/2)
 }
 
 .kurtosis <- function(var) {
-  mean((var-.mean(var))^(4)) / (sd(var))^(2) -3
+  base::mean((var-.mean(var))^(4)) / (stats::sd(var))^(2) -3
 }
 
 .factormean <- function(var) {

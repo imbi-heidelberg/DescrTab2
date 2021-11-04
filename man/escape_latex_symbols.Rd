@@ -4,12 +4,12 @@
 \alias{escape_latex_symbols}
 \title{Escape LaTeX Symbols}
 \usage{
-escape_latex_symbols(tibl, doubleEscape = FALSE)
+escape_latex_symbols(tibl, numEscapes = 1)
 }
 \arguments{
 \item{tibl}{A \code{tibble} filled with characters}
 
-\item{doubleEscape}{(logical) chooses between "\\" and "\\\\"#}
+\item{numEscapes}{(logical) chooses between "\\" and "\\\\"#}
 }
 \value{
 a \code{tibble} with appropriately escape LaTeX code

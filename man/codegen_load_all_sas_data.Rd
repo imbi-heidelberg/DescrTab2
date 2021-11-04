@@ -17,3 +17,6 @@ NULL. Relevant code is printed to the console.
 \description{
 This is useful if you work with lots of separate SAS datasets spread out in the same folder.
 }
+\examples{
+plot(c(1,2,3))
+}

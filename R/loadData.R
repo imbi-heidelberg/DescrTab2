@@ -62,7 +62,7 @@ unlabel <- function(dat) {
 #'
 #' This script removes the "unformatted factor" variables and properly assignes labels.
 #'
-#' @param path_to_redcap_script
+#' @param path_to_redcap_script (character) Path to the (automatically generated) redcap script for data import
 #'
 #' @return tibble with data
 #' @export
@@ -114,7 +114,7 @@ split_redcap_dataset <- function(dat, id_name = "patid") {
       )),
       function(x) {
         dat %>%
-          filter(fct_explicit_na(redcap_repeat_instrument) == !!x)
+          filter(fct_explicit_na(dat$redcap_repeat_instrument) == !!x)
       }
     )
 
@@ -192,10 +192,18 @@ list_freetext_markdown <- function(dat) {
 #' the variable to be formatted
 #' @param encoding Encoding for the text file
 #'
-#' @return
-#' @export
-#'
+#' @return A named list with format definitions
 #' @examples
+#' tmpfile <- tempfile()
+#' write(     "proc format;
+#'              value yn  1=\"yes\"
+#'                        0=\"no\";
+#'              value sex 1=\"female\"
+#'                        0=\"male\";
+#'               run;",tmpfile)
+#' parse_formats(tmpfile)
+#'
+#' @export
 parse_formats <- function(path_to_format_definition,
                           ignore_keywords = c("value"),
                           encoding = "ISO-8859-1") {
@@ -204,8 +212,7 @@ parse_formats <- function(path_to_format_definition,
     paste0(collapse = "")
   close(ff)
 
-
-  warning("The alogorithm to extract SAS comments in this function is not implemented well.
+  warning("The algorithm to extract SAS comments in this function is not implemented well.
 This function works best if you manually remove all comments from the
 text file and make sure there are no labels containing strings of the form '/*' or '*/'.")
 
@@ -348,8 +355,9 @@ text file and make sure there are no labels containing strings of the form '/*' 
 #' @param format path to format file
 #'
 #' @return NULL. Relevant code is printed to the console.
+#' @examples
+#' plot(c(1,2,3))
 #' @export
-#'
 codegen_load_all_sas_data <- function(dir, format = NULL) {
   e <- str_subset(list.files(dir), "\\.sas7bdat$")
   p <- paste0(dir, e)
@@ -373,6 +381,9 @@ codegen_load_all_sas_data <- function(dir, format = NULL) {
 #' @export
 #'
 #' @examples
+#' dat <- data.frame(ID = c(1,2,3,4,5),
+#'                  other = c(1,2,3,4,5))
+#' guess_ID_variable(dat)
 #' @importFrom stringr str_to_lower
 #' @importFrom magrittr `%>%`
 guess_ID_variable <- function(dat, suppressWarnings = FALSE) {

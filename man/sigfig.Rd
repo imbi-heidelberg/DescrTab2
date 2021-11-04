@@ -16,6 +16,12 @@ sigfig(
 \item{x}{a}
 
 \item{digits}{a}
+
+\item{scientific_high_threshold}{a}
+
+\item{scientific_low_threshold}{a}
+
+\item{force_0_behind_0}{a}
 }
 \value{
 a

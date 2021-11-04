@@ -69,6 +69,9 @@ n_int_digits <- function(x) {
 #'
 #' @param x a
 #' @param digits a
+#' @param scientific_high_threshold a
+#' @param scientific_low_threshold a
+#' @param force_0_behind_0 a
 #'
 #' @return a
 #'
@@ -101,10 +104,7 @@ sigfig <- function(x, digits = 3,
 }
 
 #' Generator function for nice formatting functions
-#' @param x a
-#' @param digits a
-#'
-#' @return a
+#' @inheritParams sigfig
 #'
 sigfig_gen <- function(digits = 3,
                        scientific_high_threshold = 6,

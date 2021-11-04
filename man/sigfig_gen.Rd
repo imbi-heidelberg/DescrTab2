@@ -14,10 +14,11 @@ sigfig_gen(
 \arguments{
 \item{digits}{a}
 
-\item{x}{a}
-}
-\value{
-a
+\item{scientific_high_threshold}{a}
+
+\item{scientific_low_threshold}{a}
+
+\item{force_0_behind_0}{a}
 }
 \description{
 Generator function for nice formatting functions

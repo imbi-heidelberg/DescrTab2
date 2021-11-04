@@ -23,5 +23,5 @@ The last parts are all the repeating instruments, which are referred to by their
 \examples{
 path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
 dat <- read_redcap_formatted(path_to_redcap_script)
-d <- split_redcap_dataset()
+d <- split_redcap_dataset(dat, guess_ID_variable(dat, TRUE))
 }

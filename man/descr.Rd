@@ -34,7 +34,7 @@ descr(
     "missing_as_regular_category", "missing_as_separate_category"),      caption = NULL,
     replace_empty_string_with_NA = TRUE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
-    guess_ID_variable(dat), include_group_missings_in_test = FALSE,
+    c(), guess_id = TRUE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
     additional_test_args = list()),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
@@ -157,7 +157,10 @@ with missing value (\code{NA_character_}).}
 specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
 Use \code{print_test_names()} to see a list of all available test names. If \code{paired = TRUE} is specified, you need to supply an index variable
 \code{indices} that specifies which datapoints in your dataset are paired. \code{indices} may either be a length one character vector that describes
-the name of the index variable in your dataset, or a vector containing the respective indices. See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
+the name of the index variable in your dataset, or a vector containing the respective indices.
+If you have \code{guess_id} set to \code{TRUE} (the default), \code{DescrTab2} will try to guess
+the ID variable from your dataset and report a warning if it succeedes.
+See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
 for a bit more explanation. The optional list \code{additional_test_args} can be used to pass arguments along to test functions,
 e.g. \code{additional_test_args=list(correct=TRUE)} will request continuity correction if available.
 }
