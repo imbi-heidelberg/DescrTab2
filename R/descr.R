@@ -7,8 +7,8 @@ utils::globalVariables(".")
 #' standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
 #' for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
 #' For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell. In particular,
-#' Wilson score intervals [1] from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
-#' are used for continuous variables and confidence intervals for the Hodge-Lehman estimator [2] from \link[stats]{wilcox.test} are used for ordinal variables.
+#' Wald confidence intervals from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
+#' are used for continuous variables and confidence intervals for the Hodges-Lehman estimator [1] from \link[stats]{wilcox.test} are used for ordinal variables.
 #'
 #' @param dat
 #' Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.
@@ -149,10 +149,9 @@ utils::globalVariables(".")
 #' which can be passed along to the print function to create
 #' pretty summary tables.
 #'
-#' @references [1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774
+#' @references
 #'
-#'
-#' [2] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
+#' [1] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
 #'
 #' @examples
 #' descr(iris)
@@ -563,6 +562,52 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       )
     }
 
+    test_abbreviations = list(
+      `Cochran's Q test` = "CocQ",
+      `McNemar's test` = "McN",
+      `Chi-squared goodness-of-fit test` = "chi1",
+      `Pearson's chi-squared test` = "chi2",
+      `Exact McNemar's test` = "eMcN",
+      `Boschloo's test` = "Bolo",
+      `Friedman test` = "Frie",
+      `Wilcoxon two-sample signed-rank test` = "Wil2",
+      `Wilcoxon's one-sample signed-rank test` = "Wil1",
+      `Mann-Whitney's U test` = "MWU",
+      `Kruskal-Wallis's one-way ANOVA` = "KW",
+      `Student's paired t-test` = "tpar",
+      `Mixed model ANOVA` = "MiAn",
+      `Student's one-sample t-test` = "tt1",
+      `Welch's two-sample t-test` = "tt2",
+      `F-test (ANOVA)` = "F",
+      `No test` = "NA"
+    )
+
+    if (!is.null(test_options[["test_override"]])) {
+      if (is.character(test_options[["test_override"]])) {
+        if (!(test_options[["test_override"]] %in% print_test_names())) {
+          warning(paste0(
+            "test_override has to be one of: ",
+            paste(print_test_names(), collapse = ", "),
+            "\n or a named list containing the members 'name', 'abbreviation', 'p', and optionally 'CI'."
+          ))
+        }
+      } else {
+        if (!is.list(test_options[["test_override"]]) ||
+            !all(c("name", "abbreviation", "p") %in% test_options[["test_override"]])) {
+          warning(paste0(
+            "test_override has to be one of: ",
+            paste(print_test_names(), collapse = ", "),
+            "\n or a named list containing the members 'name', 'abbreviation', 'p', and optionally 'CI'."
+          ))
+        } else{
+          if (!(test_options[["test_override"]][["name"]] %in% names(test_abbreviations))
+              && !(test_options[["test_override"]][["abbreviation"]] %in% test_abbreviations)){
+            test_abbreviations[[test_options[["test_override"]][["name"]]]] <-
+              test_options[["test_override"]][["abbreviation"]]
+          }
+        }
+      }
+    }
 
     for (var_option_name in names(var_options)) {
       if (!is.null(var_options[[var_option_name]][["summary_stats"]])) {
@@ -618,11 +663,29 @@ specify format_options$print_Total. print_Total is set to FALSE.")
           test_options[name_diff]
       }
       if (!is.null(var_options[[var_option_name]][["test_override"]])) {
-        if (!(var_options[[var_option_name]][["test_override"]] %in% print_test_names())) {
-          warning(paste0(
-            "test_override has to be one of: ",
-            paste(print_test_names(), collapse = ", ")
-          ))
+        if (is.character(var_options[[var_option_name]][["test_override"]])) {
+          if (!(var_options[[var_option_name]][["test_override"]] %in% print_test_names())) {
+            warning(paste0(
+              "test_override has to be one of: ",
+              paste(print_test_names(), collapse = ", "),
+              "\n or a named list containing the members 'name', 'abbreviation', 'p', and optionally 'CI'."
+            ))
+          }
+        } else {
+          if (!is.list(var_options[[var_option_name]][["test_override"]]) ||
+              !all(c("name", "abbreviation", "p") %in% var_options[[var_option_name]][["test_override"]])) {
+            warning(paste0(
+              "test_override has to be one of: ",
+              paste(print_test_names(), collapse = ", "),
+              "\n or a named list containing the members 'name', 'abbreviation', 'p', and optionally 'CI'."
+            ))
+          } else{
+            if (!(var_options[[var_option_name]][["test_override"]][["name"]] %in% names(test_abbreviations))
+            && !(var_options[[var_option_name]][["test_override"]][["abbreviation"]] %in% test_abbreviations)){
+            test_abbreviations[[var_options[[var_option_name]][["test_override"]][["name"]]]] <-
+              var_options[[var_option_name]][["test_override"]][["abbreviation"]]
+            }
+          }
         }
       }
       if (!is.null(var_options[[var_option_name]][["reshape_rows"]])) {
@@ -661,7 +724,6 @@ specify format_options$print_Total. print_Total is set to FALSE.")
           )
       }
     }
-
 
     # Create list where all results will be saved
     ergs <- list()
@@ -726,6 +788,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
     ergs[["format"]][["summary_stats"]] <- format_summary_stats
     ergs[["format"]][["options"]] <- format_options
     ergs[["format"]][["reshape_rows"]] <- reshape_rows
+    ergs[["format"]][["test_abbreviations"]] <- test_abbreviations
 
     # Make result a "DescrList" object and return
     attr(ergs, "class") <- c("DescrList", "list")
@@ -733,165 +796,92 @@ specify format_options$print_Total. print_Total is set to FALSE.")
   }
 
 
-descr_cat <-
-  function(var,
-           group,
-           var_name,
-           summary_stats = c(),
-           var_options = list(),
-           test_options = list()) {
-    erg <- list()
-    var_levels <- levels(var)
+descr_var <- function(var,
+                      group,
+                      var_name,
+                      summary_stats = c(),
+                      var_options = list(),
+                      test_options = list()) {
+  erg <- list()
+  var_levels <- levels(var)
 
-    # Summary stats choice: Special variable summary stats have precendence over global summary stats
-    if (!is.null(var_options[["summary_stats"]])) {
-      summary_stats <- var_options[["summary_stats"]]
-    }
-    # Test options choice: Special test options have precendence over global test options
-    if (!is.null(var_options[["test_options"]])) {
-      test_options <- var_options[["test_options"]]
-    }
-    # Was a specific test requested?
-    test_override <- test_options[["test_override"]]
-    if (!is.null(var_options[["test_override"]])) {
-      test_override <- var_options[["test_override"]]
-    }
+  # Summary stats choice: Special variable summary stats have precendence over global summary stats
+  if (!is.null(var_options[["summary_stats"]])) {
+    summary_stats <- var_options[["summary_stats"]]
+  }
+  # Test options choice: Special test options have precendence over global test options
+  if (!is.null(var_options[["test_options"]])) {
+    test_options <- var_options[["test_options"]]
+  }
+  # Was a specific test requested?
+  test_override <- test_options[["test_override"]]
+  if (!is.null(var_options[["test_override"]])) {
+    test_override <- var_options[["test_override"]]
+  }
 
-
-    for (group_name in levels(group)) {
-      # Subset values for the respective group
-      var_grp <- var[which(group == group_name)]
-      cat_list <- list()
-      cat_list[["summary_stats"]] <- list()
-
-      for (summary_stat_name in names(summary_stats)) {
-        cat_list[["summary_stats"]][[summary_stat_name]] <-
-          summary_stats[[summary_stat_name]](var_grp)
-      }
-
-      cat_list[["categories"]] <- list()
-      for (cat_name in var_levels) {
-        cat_list[["categories"]][[cat_name]] <- sum(var_grp == cat_name)
-      }
-      erg[["results"]][[group_name]] <- cat_list
-    }
-
-    # Caclulate summary for whole cohort
+  for (group_name in levels(group)) {
+    # Subset values for the respective group
+    var_grp <- var[which(group == group_name)]
     cat_list <- list()
     cat_list[["summary_stats"]] <- list()
 
     for (summary_stat_name in names(summary_stats)) {
       cat_list[["summary_stats"]][[summary_stat_name]] <-
-        summary_stats[[summary_stat_name]](var)
+        summary_stats[[summary_stat_name]](var_grp)
     }
+
     cat_list[["categories"]] <- list()
     for (cat_name in var_levels) {
-      cat_list[["categories"]][[cat_name]] <- sum(var == cat_name)
+      cat_list[["categories"]][[cat_name]] <- sum(var_grp == cat_name)
     }
-    erg[["results"]][["Total"]] <- cat_list
-
-    # Calculate test
-    test_list <-
-      erg[["test_list"]] <-
-      tryCatch(
-        test_cat(var, group, test_options, test_override, var_name),
-        error = function(cond) {
-          message("Error converted to warning: ", cond)
-          list(
-            p = NA_real_,
-            test_name = "Test errored, check console output.",
-            CI_name = "",
-            CI = c(NA_real_, NA_real_)
-          )
-        }
-      )
-
-    erg[["variable_name"]] <- var_name
-    erg[["variable_levels"]] <- var_levels
-    erg[["variable_options"]] <- var_options
-    erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
-
-    attr(erg, "class") <- c("cat_summary", "list")
-    erg
+    erg[["results"]][["freqs"]][[group_name]] <- cat_list
   }
 
-descr_cont <-
-  function(var,
-           group,
-           var_name,
-           summary_stats = c(),
-           var_options = list(),
-           test_options = list()) {
-    erg <- list()
+  # Calculate summary for whole cohort
+  cat_list <- list()
+  cat_list[["summary_stats"]] <- list()
 
-    # Summary stats choice: Special variable summary stats have precendence over global summary stats which in turn have precedence over
-    # the default summary stats (which are N, Nmiss, mean, sd, median, Q1, Q3, min and max).
-    # Summary stats choice: Special variable summary stats have precendence over global summary stats
-    if (!is.null(var_options[["summary_stats"]])) {
-      summary_stats <- var_options[["summary_stats"]]
-    }
-    # Test options choice: Special test options have precendence over global test options
-    if (!is.null(var_options[["test_options"]])) {
-      test_options <- var_options[["test_options"]]
-    }
-    # Was a specific test requested?
-    test_override <- test_options[["test_override"]]
-    if (!is.null(var_options[["test_override"]])) {
-      test_override <- var_options[["test_override"]]
-    }
+  for (summary_stat_name in names(summary_stats)) {
+    cat_list[["summary_stats"]][[summary_stat_name]] <-
+      summary_stats[[summary_stat_name]](var)
+  }
+  cat_list[["categories"]] <- list()
+  for (cat_name in var_levels) {
+    cat_list[["categories"]][[cat_name]] <- sum(var == cat_name)
+  }
+  erg[["results"]][["Total"]] <- cat_list
 
-
-    for (group_name in levels(group)) {
-      # Subset values for the respective group
-      var_grp <- var[which(group == group_name)]
-      group_list <- list()
-
-      for (summary_stat_name in names(summary_stats)) {
-        group_list[[summary_stat_name]] <-
-          summary_stats[[summary_stat_name]](var_grp)
-      }
-      erg[["results"]][[group_name]] <- group_list
-    }
-
-    # Calculate summary for whole cohort
-    tot_list <- list()
-
-    for (summary_stat_name in names(summary_stats)) {
-      tot_list[[summary_stat_name]] <-
-        summary_stats[[summary_stat_name]](var)
-    }
-    erg[["results"]][["Total"]] <- tot_list
-
-    # Calculate test
+  # Calculate test
+  test_list <-
     erg[["test_list"]] <-
-      tryCatch(
-        test_cont(var, group, test_options, test_override, var_name),
-        error = function(cond) {
-          message("Error converted to warning: ", cond)
-          list(
-            p = NA_real_,
-            test_name = "Test errored, check console output.",
-            CI_name = "",
-            CI = c(NA_real_, NA_real_)
-          )
-        }
-      )
-    erg[["variable_name"]] <- var_name
-    erg[["variable_options"]] <- var_options
-    erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
+    tryCatch(
+      test_sig(var, group, test_options, test_override, var_name),
+      error = function(cond) {
+        message("Error converted to warning: ", cond)
+        list(
+          p = NA_real_,
+          test_name = "Test errored, check console output.",
+          CI_name = "",
+          CI = c(NA_real_, NA_real_)
+        )
+      }
+    )
 
-    attr(erg, "class") <- c("cont_summary", "list")
-    erg
-  }
+  erg[["variable_name"]] <- var_name
+  erg[["variable_levels"]] <- var_levels
+  erg[["variable_options"]] <- var_options
+  erg[["variable_lengths"]] <- calc_variable_lengths(var, group)
 
-fill_list_with_default_arguments <-
-  function(lst, fn, default_arg_name) {
-    default_arg <- eval(formals(fn)[[default_arg_name]])
-    name_difference <- setdiff(names(default_arg), names(lst))
-    lst[name_difference] <- default_arg[name_difference]
-    lst
-  }
+  attr(erg, "class") <- c("summary_stats", "list")
+  erg
+}
 
+fill_list_with_default_arguments <- function(lst, fn, default_arg_name) {
+  default_arg <- eval(formals(fn)[[default_arg_name]])
+  name_difference <- setdiff(names(default_arg), names(lst))
+  lst[name_difference] <- default_arg[name_difference]
+  lst
+}
 
 calc_variable_lengths <- function(var, group) {
   if (is.numeric(var)) {
@@ -1311,7 +1301,7 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
       unique()
     p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
-    test_abbrev <- create_test_abbreviations(tests)
+    test_abbrev <- create_test_abbreviations(tests, DescrPrintObj[["format"]][["test_abbreviations"]])
     for (idx in p_indx) {
       tibl[idx, "p"] %<>% paste0("\\textsuperscript{", test_abbrev[match(tibl[idx, "Test"], tests)], "}")
     }
@@ -1339,7 +1329,7 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   width <- min(max(c(
     (sapply(labels, str_length) + 1) %/% 2,
     (sapply(tibl[[1]][!indx_varnames], str_length) + 1) %/% 2, 1
-  )), 15)
+  )), 6)
 
   # For some reason, names need double escaping
     names(lengths) <- sapply(escape_latex_symbols(tibble(labels), numEscapes = 2)[[1]],
@@ -1433,7 +1423,7 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
       unique()
     p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
-    test_abbrev <- create_test_abbreviations(tests)
+    test_abbrev <- create_test_abbreviations(tests, DescrPrintObj[["format"]][["test_abbreviations"]])
     for (idx in p_indx) {
       tibl[idx, "p"] %<>% paste0("<sup>", test_abbrev[match(tibl[idx, "Test"], tests)], "</sup>")
     }
@@ -1506,7 +1496,7 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
       unique()
     p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
-    test_abbrev <- create_test_abbreviations(tests)
+    test_abbrev <- create_test_abbreviations(tests, DescrPrintObj[["format"]][["test_abbreviations"]])
   } else {
     print_footnotes <- F
   }
@@ -1660,6 +1650,48 @@ create_numeric_subtable <- function(DescrVarObj,
                                     reshape_rows) {
   UseMethod("create_numeric_subtable")
 }
+
+create_numeric_subtable <-
+  function(DescrVarObj,
+           var_name,
+           format_options,
+           format_summary_stats,
+           format_p,
+           reshape_rows) {
+
+    if(isTRUE(format_options[["categories_first_summary_stats_second"]])){
+      order <- c(1:2)
+    } else{
+      order <- c(2:1)
+    }
+    cat_names <- DescrVarObj[["variable_levels"]]
+    summary_stat_names <-
+      names(DescrVarObj[["results"]][["Total"]][["summary_stats"]])
+
+    all_names <- unlist(list(summary_stat_names, cat_names)[order])
+
+    tot <-
+      c(
+        NA_real_,
+        unlist(list(
+          DescrVarObj[["results"]][["Total"]][["summary_stats"]],
+          DescrVarObj[["results"]][["Total"]][["categories"]]
+        )[order])
+      )
+
+    label <- DescrVarObj[["variable_options"]][["label"]]
+    DescrVarObj[["label"]] <- label
+
+    tibl <- tibble(Variable = c(
+      label,
+      all_names
+    ))
+
+
+
+
+
+  }
 
 
 
@@ -2251,31 +2283,11 @@ create_character_subtable.cat_summary <-
   }
 
 
-
-create_test_abbreviations <- function(test_names) {
-  erg <- character()
+create_test_abbreviations <- function(test_names, test_abbreviation_list) {
+  erg <- character(length(test_names))
   for (test in test_names) {
-    abbrev <- switch(test,
-      `Cochran's Q test` = "CocQ",
-      `McNemar's test` = "McN",
-      `Chi-squared goodness-of-fit test` = "chi1",
-      `Pearson's chi-squared test` = "chi2",
-      `Exact McNemar's test` = "eMcN",
-      `Boschloo's test` = "Bolo",
-      `Friedman test` = "Frie",
-      `Wilcoxon two-sample signed-rank test` = "Wil2",
-      `Wilcoxon's one-sample signed-rank test` = "Wil1",
-      `Mann-Whitney's U test` = "MWU",
-      `Kruskal-Wallis's one-way ANOVA` = "KW",
-      `Student's paired t-test` = "tpar",
-      `Mixed model ANOVA` = "MiAn",
-      `Student's one-sample t-test` = "tt1",
-      `Welch's two-sample t-test` = "tt2",
-      `F-test (ANOVA)` = "F",
-      "Unknown test"
-    )
-
-    erg <- c(erg, abbrev)
+    abbrev <- test_abbreviations[[test]]
+    erg[i] <- if (is.null(abbrev)) substr(test, start=1, stop = 3) else abbrev
   }
   erg
 }
@@ -2309,7 +2321,9 @@ print_test_names <- function() {
   )
 }
 
-#' Calculate a statistical test for a numerical variable.
+
+
+#' Calculates a statistical significance test
 #'
 #' @param var A variable (a vector).
 #' @param group A variable containing the grouping information.
@@ -2330,670 +2344,538 @@ print_test_names <- function() {
 #' @import forcats
 #' @import stringr
 #' @importFrom utils modifyList
-test_cont <-
-  function(var,
-           group = NULL,
-           test_options = list(),
-           test = NULL,
-           var_name = NULL) {
-    # decide how to handle missings
-    if (!is.null(group)) {
-      paired_test <-
-        !is.null(test_options[["indices"]]) &&
-          test_options[["paired"]]
-      if (paired_test) {
-        tibl <-
-          tibble(
-            var = var,
-            group = group,
-            id = test_options[["indices"]]
-          )
-      } else {
-        tibl <- tibble(var = var, group = group)
-      }
+sig_test <- function(var,
+                     group = NULL,
+                     test_options = list(),
+                     test = NULL,
+                     var_name = NULL){
 
-      if (!test_options[["include_group_missings_in_test"]]) {
-        tibl %<>% filter(group != "(Missing)")
-      }
-
-      tibl %<>% filter(!is.na(var))
-
-      var <- tibl %>% pull(var)
-      group <- tibl %>%
-        pull(group) %>%
-        droplevels()
-
-      if (paired_test) {
-        id <- tibl %>% pull(id)
-      }
-
-      n_levels_group <- length(levels(group))
-    } else {
-      tibl <- tibble(var = var)
-      tibl %<>% filter(!is.na(var))
-      var <- tibl %>% pull(var)
-      n_levels_group <- 1
-    }
-
-    # if test is not supplied, determine test
-    if (is.null(test)) {
-      if ((!is.null(group) &&
-        !all(table(group) > 1)) || length(var) == 1) {
-        warning(
-          paste0(
-            "Skipping test for variable ",
-            var_name,
-            " because it has has only 1 nonmissing observation in some group."
-          )
+  # decide how to handle missings
+  if (!is.null(group)) {
+    paired_test <-
+      !is.null(test_options[["indices"]]) &&
+        test_options[["paired"]]
+    if (paired_test) {
+      tibl <-
+        tibble(
+          var = var,
+          group = group,
+          id = test_options[["indices"]]
         )
-        test <- "No appropriate test available."
-      } else if (isTRUE(test_options[["nonparametric"]] == TRUE)) {
-        # ordinal variable
-        if (isTRUE(test_options[["paired"]] == TRUE)) {
-          # ordinal variable, paired test
-          if (is.null(test_options[["indices"]])) {
-            stop(
-              "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
-            )
-          } else {
-            if (n_levels_group == 2) {
-              test <- "Wilcoxon two-sample signed-rank test"
-            } else if (n_levels_group >= 2) {
-              test <- "Friedman test"
-            }
-          }
+    } else {
+      tibl <- tibble(var = var, group = group)
+    }
+
+    if (!isTRUE(test_options[["include_group_missings_in_test"]])) {
+      tibl %<>% filter(group != "(Missing)")
+    }
+
+    if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
+      tibl %<>% filter(var != "(Missing)")
+    }
+    tibl %<>% filter(!is.na(var))
+    var <- tibl %>%
+      pull(var) %>%
+      {
+        if (is.factor(.)) droplevels(.) else .
+      }
+    group <- tibl %>%
+      pull(group) %>%
+      droplevels()
+    if (paired_test) {
+      id <- tibl %>% pull(id)
+    }
+    n_levels_group <- length(levels(group))
+    n_levels_var <- length(levels(var))
+  } else {
+    tibl <- tibble(var = var)
+
+    if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
+      tibl %<>% filter(var != "(Missing)")
+    }
+    tibl %<>% filter(!is.na(var))
+    var <- tibl %>% pull(var)
+    n_levels_group <- 1
+    n_levels_var <- length(levels(var))
+  }
+
+  # if test is not supplied, determine test
+  if (is.null(test)) {
+    if (length(levels(var)) == 1) {
+      warning(
+        paste0(
+          "Skipping test for variable ",
+          var_name,
+          " because it has only 1 level associated with it."
+        )
+      )
+      test <- "No test"
+    } else if ((!is.null(group) &&
+      !all(table(group) > 1)) || length(var) == 1) {
+      warning(
+        paste0(
+          "Skipping test for variable ",
+          var_name,
+          " because it has has only 1 nonmissing observation in some group."
+        )
+      )
+      test <- "No test"
+    }
+  } else if ((is.numeric(var) && isTRUE(test_options[["nonparametric"]] == TRUE)) ||
+    is.ordered(var)) {
+    # ordinal variable
+    if (isTRUE(test_options[["paired"]] == TRUE)) {
+      # ordinal variable, paired test
+      if (is.null(test_options[["indices"]])) {
+        stop(
+          "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+        )
+      } else {
+        if (n_levels_group == 2) {
+          test <- "Wilcoxon two-sample signed-rank test"
+        } else if (n_levels_group >= 2) {
+          test <- "Friedman test"
+        }
+      }
+    } else {
+      # ordinal variable, independent test
+      if (is.null(group)) {
+        test <- "Wilcoxon's one-sample signed-rank test"
+      } else if (n_levels_group == 2) {
+        test <- "Mann-Whitney's U test"
+      } else if (n_levels_group >= 2) {
+        test <- "Kruskal-Wallis's one-way ANOVA"
+      }
+    }
+  } else if (is.numeric(var)) {
+    # continuous variable
+    if (isTRUE(test_options[["paired"]] == TRUE)) {
+      # continuous variable, paired test
+      if (is.null(test_options[["indices"]])) {
+        stop(
+          "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+        )
+      } else if (n_levels_group == 2) {
+        test <- "Student's paired t-test"
+      } else {
+        test <- "Mixed model ANOVA"
+      }
+    } else {
+      # continuous variable, independent test
+      if (n_levels_group == 1) {
+        test <- "Student's one-sample t-test"
+      } else if (n_levels_group == 2) {
+        test <- "Welch's two-sample t-test"
+      } else if (n_levels_group >= 3) {
+        test <- "F-test (ANOVA)"
+      } else {
+        test <- "No test"
+      }
+    }
+  } else if (is.factor(var)) {
+    # nominal variable
+    if (isTRUE(test_options[["exact"]] == TRUE)) {
+      # nominal variable, exact test
+      if (isTRUE(test_options[["paired"]] == TRUE)) {
+        # nominal variable, exact paired test
+        if (is.null(test_options[["indices"]])) {
+          stop(
+            "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+          )
+        } else if (n_levels_group == 2 & n_levels_var == 2) {
+          test <- "Exact McNemar's test"
         } else {
-          # ordinal variable, independent test
-          if (is.null(group)) {
-            test <- "Wilcoxon's one-sample signed-rank test"
-          } else if (n_levels_group == 2) {
-            test <- "Mann-Whitney's U test"
-          } else if (n_levels_group >= 2) {
-            test <- "Kruskal-Wallis's one-way ANOVA"
-          }
+          test <- "No test"
         }
       } else {
-        # continuous variable
-        if (isTRUE(test_options[["paired"]] == TRUE)) {
-          # continuous variable, paired test
-          if (is.null(test_options[["indices"]])) {
-            stop(
-              "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
-            )
-          } else if (n_levels_group == 2) {
-            test <- "Student's paired t-test"
-          } else {
-            test <- "Mixed model ANOVA"
-          }
+        # nominal variable, exact independent test
+        if (n_levels_group == 2 & n_levels_var == 2) {
+          test <- "Boschloo's test"
         } else {
-          # continuous variable, independent test
-          if (n_levels_group == 1) {
-            test <- "Student's one-sample t-test"
-          } else if (n_levels_group == 2) {
-            test <- "Welch's two-sample t-test"
-          } else if (n_levels_group >= 3) {
-            test <- "F-test (ANOVA)"
-          } else {
-            test <- "No appropriate test available."
-          }
+          test <- "No test"
+        }
+      }
+    } else {
+      # nominal variable, asymptotic test
+      if (isTRUE(test_options[["paired"]] == TRUE)) {
+        # nominal variable, asymptotic paired test
+        if (is.null(test_options[["indices"]])) {
+          stop(
+            "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
+          )
+        } else if (n_levels_group == 2 & n_levels_var == 2) {
+          test <- "McNemar's test"
+        } else if (n_levels_group >= 3 & n_levels_var == 2) {
+          test <- "Cochran's Q test"
+        } else {
+          test <- "No test"
+        }
+      } else {
+        # nominal variable, asymptotic independent test
+        if (is.null(group) | n_levels_group == 1) {
+          test <- "Chi-squared goodness-of-fit test"
+        } else if (n_levels_group >= 2) {
+          test <- "Pearson's chi-squared test"
+        } else {
+          test <- "No test"
         }
       }
     }
-    if (length(var) == 0) {
-      erg <- list(
-        p = NA_real_,
-        CI = NA_real_,
-        CI_name = ""
-      )
-    } else {
-      erg <- switch(test,
-        `Wilcoxon two-sample signed-rank test` = {
-          good_idx <- names(table(id)[table(id) == 2])
-          if (!all(id %in% good_idx)) {
-            warning("Removed paired observations with missings.")
-          }
-          tibl <- tibble(
-            var = var,
-            group = group,
-            id = id
-          )
-          tibl %<>% filter(id %in% good_idx)
-          level1 <- levels(group)[1]
-          level2 <- levels(group)[2]
-
-          x <-
-            tibl %>%
-            filter(group == level1) %>%
-            arrange(id) %>%
-            pull(var)
-          y <-
-            tibl %>%
-            filter(group == level2) %>%
-            arrange(id) %>%
-            pull(var)
-
-          arglist <- modifyList(
-            list(
-              x = x,
-              y = y,
-              correct = FALSE,
-              paired = TRUE
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
-        },
-        `Friedman test` = {
-          tmp <-
-            tibble(
-              var = var,
-              group = group,
-              idx = id
-            )
-
-          arglist <- modifyList(
-            list(
-              formula = var ~ group | idx,
-              data = tmp
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-          list(p = ignore_unused_args(stats::friedman.test, arglist)$p.value)
-        },
-        `Wilcoxon's one-sample signed-rank test` = {
-          arglist <- modifyList(
-            list(
-              x = var,
-              correct = FALSE
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-          list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
-        },
-        `Mann-Whitney's U test` = {
-          tmp <- tibble(var = var, group = group)
-          arglist <- modifyList(
-            list(
-              formula = var ~ group,
-              conf.int = TRUE,
-              correct = FALSE,
-              data = tmp
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-          tl <- ignore_unused_args(stats::wilcox.test, arglist)
-          list(
-            p = tl$p.value,
-            CI = tl$conf.int,
-            CI_name = "HL CI"
-          )
-        },
-        `Kruskal-Wallis's one-way ANOVA` = {
-          tmp <- tibble(var = var, group = group)
-          arglist <- modifyList(
-            list(
-              formula = var ~ group,
-              data = tmp
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          list(p = ignore_unused_args(stats::kruskal.test, arglist)$p.value)
-        },
-        `Student's paired t-test` = {
-          good_idx <- names(table(id)[table(id) == 2])
-          if (!all(id %in% good_idx)) {
-            warning("Removed paired observations with missings.")
-          }
-          tibl <- tibble(
-            var = var,
-            group = group,
-            id = id
-          )
-          tibl %<>% filter(id %in% good_idx)
-          level1 <- levels(group)[1]
-          level2 <- levels(group)[2]
-
-          x <-
-            tibl %>%
-            filter(group == level1) %>%
-            arrange(id) %>%
-            pull(var)
-          y <-
-            tibl %>%
-            filter(group == level2) %>%
-            arrange(id) %>%
-            pull(var)
-
-          arglist <- modifyList(
-            list(
-              x = x,
-              y = y,
-              paired = TRUE
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          tl <- ignore_unused_args(stats::t.test, arglist)
-
-          list(
-            p = tl$p.value,
-            CI = tl$conf.int,
-            CI_name = "Mean dif. CI"
-          )
-        },
-        `Mixed model ANOVA` = {
-          tmp <- tibble(
-            var = var,
-            group = group,
-            idx = id
-          )
-
-          arglist <- modifyList(
-            list(
-              fixed = var ~ group,
-              random = ~ 1 | idx,
-              data = tmp
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          fit <-
-            ignore_unused_args(nlme::lme, arglist)
-          tl <- stats::anova(fit)
-          pv <- tl$`p-value`[2]
-          list(p = pv)
-        },
-        `Student's one-sample t-test` = {
-          arglist <- modifyList(
-            list(
-              x = var
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          list(p = ignore_unused_args(stats::t.test, arglist)$p.value)
-        },
-        `Welch's two-sample t-test` = {
-          tmp <- tibble(var = var, group = group)
-          arglist <- modifyList(
-            list(
-              formula = var ~ group,
-              var.equal = FALSE,
-              data = tmp
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          tl <- ignore_unused_args(stats::t.test, arglist)
-          list(
-            p = tl$p.value,
-            CI = tl$conf.int,
-            CI_name = "Mean dif. CI"
-          )
-        },
-        `F-test (ANOVA)` = {
-          tmp <- tibble(var = var, group = group)
-          arglist <- modifyList(
-            list(
-              formula = var ~ group,
-              data = tmp
-            ),
-            as.list(test_options[["additional_test_args"]])
-          )
-
-          tl <- summary(ignore_unused_args(stats::aov, arglist))[[1]]
-          pv <- tl$`Pr(>F)`[1]
-          list(p = pv)
-        },
-        list(p = NA_real_)
-      )
-    }
-
-    erg[["test_name"]] <- test
-    erg
+  } else {
+    test <- "No test"
   }
 
 
-#' Calculate a statistical test for a categorical variable.
-#'
-#' @param var A variable (a vector).
-#' @param group A variable containing the grouping information.
-#' @param test_options Named list containing test options.
-#' @param test Name of a statistical test.
-#' @param var_name Name of variable to be tested (only used in warning messages).
-#'
-#' @return
-#' A list of test test results.
-#' @export
-#'
-#' @examples
-#' cat_var <- factor(c("a", "b", "c"))
-#' test_cat(cat_var)
-#' @import dplyr
-#' @importFrom magrittr `%<>%`
-#' @import tibble
-#' @import forcats
-#' @import stringr
-#' @importFrom DescTools CochranQTest
-#' @importFrom utils modifyList
-test_cat <-
-  function(var,
-           group = NULL,
-           test_options = list(),
-           test = NULL,
-           var_name = NULL) {
-    # decide how to handle missings
-    if (!is.null(group)) {
-      paired_test <-
-        !is.null(test_options[["indices"]]) &&
-          test_options[["paired"]]
-      if (paired_test) {
-        tibl <-
-          tibble(
-            var = var,
-            group = group,
-            id = test_options[["indices"]]
-          )
-      } else {
-        tibl <- tibble(var = var, group = group)
+  # Convert factors to numeric for nonparametric test
+  if (test %in% c(
+    "Friedman test",
+    "Wilcoxon two-sample signed-rank test",
+    "Wilcoxon's one-sample signed-rank test",
+    "Mann-Whitney's U test",
+    "Kruskal-Wallis's one-way ANOVA",
+    "Student's paired t-test",
+    "Mixed model ANOVA",
+    "Student's one-sample t-test",
+    "Welch's two-sample t-test",
+    "F-test (ANOVA)"
+  ) && is.factor(var)) {
+    var <- as.numeric(as.character(var))
+  }
+
+  erg <- switch(test,
+    `Wilcoxon two-sample signed-rank test` = {
+      good_idx <- names(table(id)[table(id) == 2])
+      if (!all(id %in% good_idx)) {
+        warning("Removed paired observations with missings.")
       }
-
-      # tibl <- tibble(var = var, group = group)
-      if (!isTRUE(test_options[["include_group_missings_in_test"]])) {
-        tibl %<>% filter(group != "(Missing)")
-      }
-      if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
-        tibl %<>% filter(var != "(Missing)")
-      }
-
-      var <- tibl %>%
-        pull(var) %>%
-        droplevels()
-      group <- tibl %>%
-        pull(group) %>%
-        droplevels()
-      if (paired_test) {
-        test_options[["indices"]] <- tibl %>% pull(id)
-      }
-
-      n_levels_group <- length(levels(group))
-      n_levels_var <- length(levels(var))
-    } else {
-      tibl <- tibble(var = var)
-
-      if (!isTRUE(test_options[["include_categorical_missings_in_test"]])) {
-        tibl %<>% filter(var != "(Missing)")
-      }
-
-      var <- tibl %>% pull(var)
-
-      n_levels_group <- 1
-      n_levels_var <- length(levels(var))
-    }
-
-    # if test is not supplied, determine test
-    if (is.null(test)) {
-      if (length(levels(var)) == 1) {
-        warning(
-          paste0(
-            "Skipping test for variable ",
-            var_name,
-            " because it has only 1 level associated with it."
-          )
+      tibl <- tibble(
+        var = var,
+        group = group,
+        id = id
+      )
+      tibl %<>% filter(id %in% good_idx)
+      level1 <- levels(group)[1]
+      level2 <- levels(group)[2]
+      x <-
+        tibl %>%
+        filter(group == level1) %>%
+        arrange(id) %>%
+        pull(var)
+      y <-
+        tibl %>%
+        filter(group == level2) %>%
+        arrange(id) %>%
+        pull(var)
+      arglist <- modifyList(
+        list(
+          x = x,
+          y = y,
+          correct = FALSE,
+          paired = TRUE
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
+    },
+    `Friedman test` = {
+      tmp <-
+        tibble(
+          var = var,
+          group = group,
+          idx = id
         )
-        test <- "No appropriate test available."
-      } else if (is.ordered(var)) {
-        # ordinal variable
-        if (isTRUE(test_options[["paired"]] == TRUE)) {
-          # ordinal variable, paired test
-          if (is.null(test_options[["indices"]])) {
-            stop(
-              "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
-            )
-          } else {
-            if (n_levels_group == 2) {
-              test <- "Wilcoxon two-sample signed-rank test"
-            } else if (n_levels_group >= 2) {
-              test <- "Friedman test"
-            }
-          }
-        } else {
-          # ordinal variable, independent test
-          if (n_levels_group == 1) {
-            test <- "Wilcoxon's one-sample signed-rank test"
-          } else if (n_levels_group == 2) {
-            test <- "Mann-Whitney's U test"
-          } else if (n_levels_group >= 2) {
-            test <- "Kruskal-Wallis's one-way ANOVA"
-          }
-        }
-      } else {
-        # nominal variable
-        if (isTRUE(test_options[["exact"]] == TRUE)) {
-          # nominal variable, exact test
-          if (isTRUE(test_options[["paired"]] == TRUE)) {
-            # nominal variable, exact paired test
-            if (is.null(test_options[["indices"]])) {
-              stop(
-                "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
-              )
-            } else if (n_levels_group == 2 & n_levels_var == 2) {
-              test <- "Exact McNemar's test"
-            } else {
-              test <- "No appropriate test available."
-            }
-          } else {
-            # nominal variable, exact independent test
-            if (n_levels_group == 2 & n_levels_var == 2) {
-              test <- "Boschloo's test"
-            } else {
-              test <- "No appropriate test available."
-            }
-          }
-        } else {
-          # nominal variable, asymptotic test
-          if (isTRUE(test_options[["paired"]] == TRUE)) {
-            # nominal variable, asymptotic paired test
-            if (is.null(test_options[["indices"]])) {
-              stop(
-                "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
-              )
-            } else if (n_levels_group == 2 & n_levels_var == 2) {
-              test <- "McNemar's test"
-            } else if (n_levels_group >= 3 & n_levels_var == 2) {
-              test <- "Cochran's Q test"
-            } else {
-              test <- "No appropriate test available."
-            }
-          } else {
-            # nominal variable, asymptotic independent test
-            if (is.null(group) | n_levels_group == 1) {
-              test <- "Chi-squared goodness-of-fit test"
-            } else if (n_levels_group >= 2) {
-              test <- "Pearson's chi-squared test"
-            } else {
-              test <- "No appropriate test available."
-            }
-          }
-        }
+      arglist <- modifyList(
+        list(
+          formula = var ~ group | idx,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(p = ignore_unused_args(stats::friedman.test, arglist)$p.value)
+    },
+    `Wilcoxon's one-sample signed-rank test` = {
+      arglist <- modifyList(
+        list(
+          x = var,
+          correct = FALSE
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(p = ignore_unused_args(stats::wilcox.test, arglist)$p.value)
+    },
+    `Mann-Whitney's U test` = {
+      tmp <- tibble(var = var, group = group)
+      arglist <- modifyList(
+        list(
+          formula = var ~ group,
+          conf.int = TRUE,
+          correct = FALSE,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      tl <- ignore_unused_args(stats::wilcox.test, arglist)
+      list(
+        p = tl$p.value,
+        CI = tl$conf.int,
+        CI_name = "HL CI"
+      )
+    },
+    `Kruskal-Wallis's one-way ANOVA` = {
+      tmp <- tibble(var = var, group = group)
+      arglist <- modifyList(
+        list(
+          formula = var ~ group,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(p = ignore_unused_args(stats::kruskal.test, arglist)$p.value)
+    },
+    `Student's paired t-test` = {
+      good_idx <- names(table(id)[table(id) == 2])
+      if (!all(id %in% good_idx)) {
+        warning("Removed paired observations with missings.")
       }
-    }
+      tibl <- tibble(
+        var = var,
+        group = group,
+        id = id
+      )
+      tibl %<>% filter(id %in% good_idx)
+      level1 <- levels(group)[1]
+      level2 <- levels(group)[2]
+      x <-
+        tibl %>%
+        filter(group == level1) %>%
+        arrange(id) %>%
+        pull(var)
+      y <-
+        tibl %>%
+        filter(group == level2) %>%
+        arrange(id) %>%
+        pull(var)
+      arglist <- modifyList(
+        list(
+          x = x,
+          y = y,
+          paired = TRUE
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      tl <- ignore_unused_args(stats::t.test, arglist)
+      list(
+        p = tl$p.value,
+        CI = tl$conf.int,
+        CI_name = "Mean dif. CI"
+      )
+    },
+    `Mixed model ANOVA` = {
+      tmp <- tibble(
+        var = var,
+        group = group,
+        idx = id
+      )
+      arglist <- modifyList(
+        list(
+          fixed = var ~ group,
+          random = ~ 1 | idx,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      fit <-
+        ignore_unused_args(nlme::lme, arglist)
+      tl <- stats::anova(fit)
+      pv <- tl$`p-value`[2]
+      list(p = pv)
+    },
+    `Student's one-sample t-test` = {
+      arglist <- modifyList(
+        list(
+          x = var
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(p = ignore_unused_args(stats::t.test, arglist)$p.value)
+    },
+    `Welch's two-sample t-test` = {
+      tmp <- tibble(var = var, group = group)
+      arglist <- modifyList(
+        list(
+          formula = var ~ group,
+          var.equal = FALSE,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      tl <- ignore_unused_args(stats::t.test, arglist)
+      list(
+        p = tl$p.value,
+        CI = tl$conf.int,
+        CI_name = "Mean dif. CI"
+      )
+    },
+    `F-test (ANOVA)` = {
+      tmp <- tibble(var = var, group = group)
+      arglist <- modifyList(
+        list(
+          formula = var ~ group,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      tl <- summary(ignore_unused_args(stats::aov, arglist))[[1]]
+      pv <- tl$`Pr(>F)`[1]
+      list(p = pv)
+    },
+    `Exact McNemar's test` = {
+      # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+      tmp <- tibble(
+        var = var,
+        group = group,
+        idx = test_options[["indices"]]
+      )
+      tmp1 <-
+        tmp %>%
+        filter(group == levels(group)[1]) %>%
+        arrange("idx")
+      tmp2 <-
+        tmp %>%
+        filter(group == levels(group)[2]) %>%
+        arrange("idx")
 
-    if (test %in% c(
-      "Friedman test",
-      "Wilcoxon two-sample signed-rank test",
-      "Wilcoxon's one-sample signed-rank test",
-      "Mann-Whitney's U test",
-      "Kruskal-Wallis's one-way ANOVA",
-      "Student's paired t-test",
-      "Mixed model ANOVA",
-      "Student's one-sample t-test",
-      "Welch's two-sample t-test",
-      "F-test (ANOVA)"
-    )) {
-      var <- as.numeric(as.character(var))
-      erg <- test_cont(var, group, test_options, test, var_name)
-    } else {
-      erg <-
-        switch(test,
-          `Exact McNemar's test` = {
-            # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
+      if (any(tmp1$idx != tmp2$idx)) {
+        stop("Your data is not properly matched. Maybe some pairs contain missings?")
+      }
+      cont.table <- table(tmp1$var, tmp2$var)
+      arglist <- modifyList(
+        list(
+          x = cont.table,
+          alternative = "two.sided",
+          tsmethod = "central",
+          paired = TRUE
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(
+        p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
+        CI = exact2x2::mcnemarExactDP(n = sum(cont.table), x = cont.table[1, 2], m = cont.table[1, 2] + cont.table[2, 1])$conf.int,
+        CI_name = "Prop. dif. CI"
+      )
+    },
+    `Boschloo's test` = {
+      tabl <- table(var, group)
+      x1 <- tabl[1, 1]
+      n1 <- sum(tabl[, 1])
+      x2 <- tabl[1, 2]
+      n2 <- sum(tabl[, 2])
+      arglist <- modifyList(
+        list(
+          x1 = x1,
+          n1 = n1,
+          x2 = x2,
+          n2 = n2
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(
+        p = ignore_unused_args(exact2x2::boschloo, arglist)$p.value,
+        CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+        CI_name = "Prop. dif. CI"
+      )
+    },
+    `McNemar's test` = {
+      tmp <- tibble(
+        var = var,
+        group = group,
+        idx = test_options[["indices"]]
+      )
+      tmp1 <-
+        tmp %>%
+        filter(group == levels(group)[1]) %>%
+        arrange("idx")
+      tmp2 <-
+        tmp %>%
+        filter(group == levels(group)[2]) %>%
+        arrange("idx")
 
-            tmp <- tibble(
-              var = var,
-              group = group,
-              idx = test_options[["indices"]]
-            )
-            tmp1 <-
-              tmp %>%
-              filter(group == levels(group)[1]) %>%
-              arrange("idx")
-            tmp2 <-
-              tmp %>%
-              filter(group == levels(group)[2]) %>%
-              arrange("idx")
+      if (any(tmp1$idx != tmp2$idx)) {
+        stop("Your data is not properly matched. Maybe some pairs contain missings?")
+      }
+      cont.table <- table(tmp1$var, tmp2$var)
 
-            if (any(tmp1$idx != tmp2$idx)) {
-              stop("Your data is not properly matched. Maybe some pairs contain missings?")
-            }
-            cont.table <- table(tmp1$var, tmp2$var)
-
-            arglist <- modifyList(
-              list(
-                x = cont.table,
-                alternative = "two.sided",
-                tsmethod = "central",
-                paired = TRUE
-              ),
-              as.list(test_options[["additional_test_args"]])
-            )
-
-            list(
-              p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
-              CI = exact2x2::mcnemarExactDP(n = sum(cont.table), x = cont.table[1, 2], m = cont.table[1, 2] + cont.table[2, 1])$conf.int,
-              CI_name = "Prop. dif. CI"
-            )
-          },
-          `Boschloo's test` = {
-            tabl <- table(var, group)
-            x1 <- tabl[1, 1]
-            n1 <- sum(tabl[, 1])
-            x2 <- tabl[1, 2]
-            n2 <- sum(tabl[, 2])
-            arglist <- modifyList(
-              list(
-                x1 = x1,
-                n1 = n1,
-                x2 = x2,
-                n2 = n2
-              ),
-              as.list(test_options[["additional_test_args"]])
-            )
-
-            list(
-              p = ignore_unused_args(exact2x2::boschloo, arglist)$p.value,
-              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-              CI_name = "Prop. dif. CI"
-            )
-          },
-          `McNemar's test` = {
-            tmp <- tibble(
-              var = var,
-              group = group,
-              idx = test_options[["indices"]]
-            )
-            tmp1 <-
-              tmp %>%
-              filter(group == levels(group)[1]) %>%
-              arrange("idx")
-            tmp2 <-
-              tmp %>%
-              filter(group == levels(group)[2]) %>%
-              arrange("idx")
-
-            if (any(tmp1$idx != tmp2$idx)) {
-              stop("Your data is not properly matched. Maybe some pairs contain missings?")
-            }
-            cont.table <- table(tmp1$var, tmp2$var)
-
-            arglist <- modifyList(
-              list(
-                x = cont.table
-              ),
-              as.list(test_options[["additional_test_args"]])
-            )
-            warning("Confidence intervals for differences in proportions ignore the paired structure of the data.
+      arglist <- modifyList(
+        list(
+          x = cont.table
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      warning("Confidence intervals for differences in proportions ignore the paired structure of the data.
 Use Exact McNemar's test if you want confidence intervals which use the test statistic of the
 exact McNemar's test.")
-            list(
-              p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
-              CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-              CI_name = "Prop. dif. CI"
-            )
-          },
-          `Cochran's Q test` = {
-            tmp <- tibble(
-              var = var,
-              group = group,
-              idx = test_options[["indices"]]
-            )
+      list(
+        p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
+        CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+        CI_name = "Prop. dif. CI"
+      )
+    },
+    `Cochran's Q test` = {
+      tmp <- tibble(
+        var = var,
+        group = group,
+        idx = test_options[["indices"]]
+      )
 
-            arglist <- modifyList(
-              list(
-                y = var ~ group | idx,
-                data = tmp
-              ),
-              as.list(test_options[["additional_test_args"]])
-            )
+      arglist <- modifyList(
+        list(
+          y = var ~ group | idx,
+          data = tmp
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      list(p = ignore_unused_args(DescTools::CochranQTest, arglist)$p.value)
+    },
+    `Chi-squared goodness-of-fit test` = {
+      arglist <- modifyList(
+        list(
+          x = table(var),
+          correct = FALSE
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
 
-            list(p = ignore_unused_args(DescTools::CochranQTest, arglist)$p.value)
-          },
-          `Chi-squared goodness-of-fit test` = {
-            arglist <- modifyList(
-              list(
-                x = table(var),
-                correct = FALSE
-              ),
-              as.list(test_options[["additional_test_args"]])
-            )
-
-            list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
-          },
-          `Pearson's chi-squared test` = {
-            arglist <- modifyList(
-              list(
-                x = var,
-                y = group,
-                correct = FALSE
-              ),
-              as.list(test_options[["additional_test_args"]])
-            )
-
-            if (n_levels_group == 2 & n_levels_var == 2) {
-              list(
-                p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
-                CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-                CI_name = "Prop. dif. CI"
-              )
-            } else {
-              list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
-            }
-          },
-          list(
-            p = NA_real_,
-            CI = NA_real_,
-            CI_name = ""
-          )
+      list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
+    },
+    `Pearson's chi-squared test` = {
+      arglist <- modifyList(
+        list(
+          x = var,
+          y = group,
+          correct = FALSE
+        ),
+        as.list(test_options[["additional_test_args"]])
+      )
+      if (n_levels_group == 2 & n_levels_var == 2) {
+        list(
+          p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
+          CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+          CI_name = "Prop. dif. CI"
         )
-    }
+      } else {
+        list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
+      }
+    },
+    list(
+      p = NA_real_,
+      CI = NA_real_,
+      CI_name = ""
+    )
+  )
 
-    if (is.null(erg[["test_name"]])) {
-      erg[["test_name"]] <- test
-    }
-    erg
-  }
+erg[["test_name"]] <- test
+erg
+}
 
 
 #' do.call but without an error for unused arguments
