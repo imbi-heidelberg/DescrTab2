@@ -7,7 +7,7 @@
 #' @references \url{https://stackoverflow.com/a/50892682}
 #'
 in_minipage <- function(text, width, numEscapes = 1, strechSpace = FALSE) {
-  esc <- paste0(rep("\\", numEscapes), collapse="")
+  esc <- paste0(rep("\\", numEscapes), collapse = "")
   paste0(
     esc, "begin{minipage}[t]{",
     width, "}",
@@ -34,21 +34,21 @@ in_minipage <- function(text, width, numEscapes = 1, strechSpace = FALSE) {
 #' @return a \code{tibble} with appropriately escape LaTeX code
 #'
 escape_latex_symbols <- function(tibl, numEscapes = 1) {
-  esc <- paste0(rep("\\", numEscapes), collapse="")
+  esc <- paste0(rep("\\", numEscapes), collapse = "")
   for (i in 1:nrow(tibl)) {
     for (j in 1:ncol(tibl)) {
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("%"), fixed(paste0(esc, "%")))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("$"), fixed(paste0(esc,"$")))
+        str_replace_all(tibl[i, j], fixed("$"), fixed(paste0(esc, "$")))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("<"), fixed(paste0(esc,"textless")))
+        str_replace_all(tibl[i, j], fixed("<"), fixed(paste0(esc, "textless")))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed(">"), fixed(paste0(esc,"textgreater")))
+        str_replace_all(tibl[i, j], fixed(">"), fixed(paste0(esc, "textgreater")))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("_"), fixed(paste0(esc,"_")))
+        str_replace_all(tibl[i, j], fixed("_"), fixed(paste0(esc, "_")))
       tibl[i, j] <-
-        str_replace_all(tibl[i, j], fixed("&"), fixed(paste0(esc,"&")))
+        str_replace_all(tibl[i, j], fixed("&"), fixed(paste0(esc, "&")))
     }
   }
   tibl

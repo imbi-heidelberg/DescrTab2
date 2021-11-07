@@ -71,6 +71,13 @@ in case of a one-sided hypthesis. This means that the lower or upper vound are v
 confidence bounds at level \eqn{\alpha} in this case.
 The confidence interval is constructed by inverting the two-sided test directly.
 }
+\examples{
+x <- c(rep(TRUE, 20), rep(FALSE, 15))
+y <- c(rep(TRUE, 30), rep(FALSE, 25))
+
+farrington.manning(x, y, -.3)
+
+}
 \references{
 [1] Farrington, Conor P., and Godfrey Manning. "Test statistics and sample size formulae for comparative binomial trials with null hypothesis of non-zero risk difference or non-unity relative risk." Statistics in medicine 9.12 (1990): 1447-1454.
 }

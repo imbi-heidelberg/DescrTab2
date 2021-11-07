@@ -215,3 +215,22 @@ descr(iris, "Species", var_options = list(Sepal.Length = list(
 )))
 ```
 
+## Use user defined test statistics
+`DescrTab2` has many predefined significance tests, but sometimes you may need to use a custom test.
+In this case, you can use the test_override option in test_options (or as a part of per 
+variable options, see above). To do so, test_override must be a list with at least 3 members:
+
+ - the name of the test (e.g. "custom t-test")
+ - an abbreviation for this name (e.g. "ct")
+ - a function that takes the variable to be analysed and possibly a group variable and returns the p-value.
+```{r}
+custom_ttest <- list(
+  name = "custom t-test",
+  abbreviation = "ct",
+  p = function(var) {
+    return(t.test(var, alternative = "greater")$p.value)
+  }
+)
+
+descr(iris %>% select(-Species), test_options = list(test_override = custom_ttest))
+```

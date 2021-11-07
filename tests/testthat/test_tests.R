@@ -675,17 +675,34 @@ verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../consol
 
 test_that("tests are skipped if variables do not contain enough observations",
           {
-            expect_warning(descr(data.frame(a = 1))%>%
-                             print(silent = TRUE))
-            expect_warning(descr(data.frame(a = "a"))%>%
-                             print(silent = TRUE))
+            expect_warning(descr(data.frame(a = 1)))
+            expect_warning(descr(data.frame(a = "a")))
           })
 
 
+custom_ttest <- list(
+  name = "custom t-test",
+  abbreviation = "custom",
+  p = function(var) {
+    return(t.test(var)$p.value)
+  }
+)
+custom_ttest2 <- list(
+  name = "custom t-test",
+  abbreviation = "custom",
+  p = function(var, group) {
+    return(t.test(var ~ group, data.frame(var = var, group = group))$p.value)
+  }
+)
 
+test_that("Custom tests work", {
+  expect_error(descr(iris %>% select(-Species), test_options = list(test_override = custom_ttest)), NA)
 
-
-
+  expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_options = list(test_override = custom_ttest2)))
+  ), NA)
+})
 
 
 
