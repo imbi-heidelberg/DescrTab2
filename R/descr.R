@@ -223,6 +223,7 @@ descr <-
              print_CI = TRUE,
              combine_mean_sd = FALSE,
              combine_median_Q1_Q3 = FALSE,
+             omit_factor_level = "none",
              omit_Nmiss_if_0 = TRUE,
              omit_missings_in_group = TRUE,
              percent_accuracy = NULL,
@@ -495,8 +496,8 @@ descr <-
     format_summary_stats <-
       fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
     ### do all summary_stats have a corresponding format function?
-    tmp_names <- setdiff(names(format_summary_stats), "Nmiss")
-    if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)) {
+    tmp_names <- names(format_summary_stats)
+    if (!all(setdiff(names(c(summary_stats_cat, summary_stats_cont)),"Nmiss") %in% tmp_names)) {
       warning(
         "All summary stats must have a corresponding formatting function. Defaulting to as.character"
       )
@@ -1798,8 +1799,9 @@ create_character_subtable <-
           format_summary_stats[[summary_stat]](DescrVarObj[["results"]][["Total"]][["summary_stats"]][[summary_stat]])
       }
 
-      for (reshape_name in names(reshape_rows)) {
-        reshape <- reshape_rows[[reshape_name]]
+      for (i in seq_along(names(reshape_rows))) {
+        reshape_name <- names(reshape_rows)[[i]]
+        reshape <- reshape_rows[[i]]
 
         if (all(reshape[["args"]] %in% summary_stat_names)) {
           DescrVarObj[["results"]][["Total"]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
@@ -1833,19 +1835,7 @@ create_character_subtable <-
             sum(unlist(DescrVarObj[["results"]][["Total"]][["categories"]][cat_names_nonmissing]))
         }
 
-        for (cat_name in cat_names_nonmissing) {
-          DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] <-
-            format_freqs(
-              DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
-              ifelse(format_options[["row_percent"]] == TRUE,
-                DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
-                N_nonmissing
-              ),
-              format_options[["absolute_relative_frequency_mode"]],
-              format_options[["percent_accuracy"]],
-              format_options[["percent_suffix"]]
-            )
-        }
+
 
         if ("(Missing)" %in% cat_names) {
           if (format_options[["omit_missings_in_categorical_var"]] == TRUE) {
@@ -1866,6 +1856,40 @@ create_character_subtable <-
                 format_options[["percent_suffix"]]
               )
           }
+        }
+
+        if (length(setdiff(names(DescrVarObj[["results"]][["Total"]][["categories"]]), "(Missing)")) > 1) {
+          if (isTRUE(format_options[["omit_factor_level"]] == "first")) {
+            remove_level <- tail(setdiff(names(DescrVarObj[["results"]][["Total"]][["categories"]]), "(Missing)"), 1)
+          } else if (isTRUE(format_options[["omit_factor_level"]] == "last")) {
+            remove_level <- tail(setdiff(names(DescrVarObj[["results"]][["Total"]][["categories"]]), "(Missing)"), 1)
+          } else{
+            remove_level <- NULL
+          }
+          if (!is.null(remove_level)) {
+            DescrVarObj[["results"]][["Total"]][["categories"]][names(DescrVarObj[["results"]][["Total"]][["categories"]]) ==
+              remove_level] <- NULL
+            cat_names <- setdiff(
+              cat_names, remove_level
+            )
+            cat_names_nonmissing <- setdiff(
+              cat_names_nonmissing, remove_level
+            )
+          }
+        }
+
+        for (cat_name in cat_names_nonmissing) {
+          DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]] <-
+            format_freqs(
+              DescrVarObj[["results"]][["Total"]][["categories"]][[cat_name]],
+              ifelse(format_options[["row_percent"]] == TRUE,
+                DescrVarObj_unformatted[["results"]][["Total"]][["categories"]][[cat_name]],
+                N_nonmissing
+              ),
+              format_options[["absolute_relative_frequency_mode"]],
+              format_options[["percent_accuracy"]],
+              format_options[["percent_suffix"]]
+            )
         }
       }
       tot <- c(
@@ -1911,8 +1935,9 @@ create_character_subtable <-
             format_summary_stats[[summary_stat]](DescrVarObj[["results"]][[group]][["summary_stats"]][[summary_stat]])
         }
 
-        for (reshape_name in names(reshape_rows)) {
-          reshape <- reshape_rows[[reshape_name]]
+        for (i in seq_along(names(reshape_rows))) {
+          reshape_name <- names(reshape_rows)[[i]]
+          reshape <- reshape_rows[[i]]
 
           if (all(reshape[["args"]] %in% summary_stat_names)) {
             DescrVarObj[["results"]][[group]][["summary_stats"]][[reshape[["args"]][[1]]]] <-
@@ -1977,9 +2002,18 @@ create_character_subtable <-
                 )
             }
           }
+
+          if (length(setdiff(names(DescrVarObj[["results"]][[group]][["categories"]]), "(Missing)")) > 1) {
+            if (isTRUE(format_options[["omit_factor_level"]] == "first")) {
+            DescrVarObj[["results"]][[group]][["categories"]][names(DescrVarObj[["results"]][[group]][["categories"]]) !=
+              head(setdiff(names(DescrVarObj[["results"]][[group]][["categories"]]), "(Missing)"), 1)] <- NULL
+            } else if (isTRUE(format_options[["omit_factor_level"]] == "last")) {
+            DescrVarObj[["results"]][[group]][["categories"]][names(DescrVarObj[["results"]][[group]][["categories"]]) !=
+              head(setdiff(names(DescrVarObj[["results"]][[group]][["categories"]]), "(Missing)"), 1)] <- NULL
+            }
+          }
         }
 
-        ## TODO: implement categories first option
         tmp <- c(
           "",
           unlist(list(

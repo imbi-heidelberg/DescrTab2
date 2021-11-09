@@ -234,3 +234,88 @@ custom_ttest <- list(
 
 descr(iris %>% select(-Species), test_options = list(test_override = custom_ttest))
 ```
+
+## Supress the last factor level
+If you have a lot of binary factors, you may want to suppress one of the factor levels to save space.
+A common use case for this practise is when you analyse questionaires with a great deal of "yes" / "no" items.
+You can do so by setting the `omit_factor_level` option to either `"first"` or `"last"`.
+
+```r
+descr(factor(c("a", "b")), format_options=list(omit_factor_level = "last"))
+```
+
+## Confidence intervals as summary statistics
+Sometimes it may be a good idea to show the confidence intervals as summary statistics.
+To do so, you can supply appropriate summary statistics for the confidence intervals with corresponding formatting functions.
+`DescrTab2` offers the following predefined CI functions:
+
+- `DescrTab2:::.meanCIlower`
+- `DescrTab2:::.meanCIupper`
+- `DescrTab2:::.factor_firstlevel_CIlower`
+- `DescrTab2:::.factor_firstlevel_CIupper`
+- `DescrTab2:::.factor_lastlevel_CIlower`
+- `DescrTab2:::.factor_lastlevel_CIupper`
+
+```{r}
+summary_stats_cat <- list(
+  CIL = DescrTab2:::.factor_firstlevel_CIlower,
+  CIU = DescrTab2:::.factor_firstlevel_CIupper)
+
+summary_stats_cont  <-  list(
+  N = DescrTab2:::.N,
+  Nmiss = DescrTab2:::.Nmiss,
+  mean = DescrTab2:::.mean,
+  sd = DescrTab2:::.sd,
+  CILM = DescrTab2:::.meanCIlower,
+  CIUM = DescrTab2:::.meanCIupper)
+
+format_summary_stats <- list(
+  CIL = scales::label_percent(),
+  CIU = scales::label_percent(),
+  CILM = function(x) format(x, digits = 2, scientific = 3),
+  CIUM = function(x) format(x, digits = 2, scientific = 3),
+  N = function(x) {
+    format(x, digits = 2, scientific = 3)
+  },
+  mean = function(x) {
+    format(x, digits = 2, scientific = 3)
+  },
+  sd = function(x) {
+    format(x, digits = 2, scientific = 3)
+  },
+  CI = function(x) {
+    format(x, digits = 2, scientific = 3)
+  }
+)
+
+reshape_rows <- list(
+  `CI` = list(
+    args = c("CIL", "CIU"),
+    fun = function(CIL, CIU) {
+      paste0("[", CIL, ", ", CIU, "]")
+    }
+  ),
+  `CI` = list(
+    args = c("CILM", "CIUM"),
+    fun = function(CILM, CIUM) {
+      paste0("[", CILM, ", ", CIUM, "]")
+    }
+  )
+)
+
+set.seed(123)
+dat <- tibble(a_factor = factor(c(rep("a", 70), rep("b", 30))),
+              a_numeric = rnorm(100),
+              group = sample(c("Trt", "Ctrl"), 100, TRUE)
+)
+
+descr(dat, "group",
+  format_options=list(omit_factor_level = "last",
+  categories_first_summary_stats_second = FALSE,
+  combine_mean_sd = TRUE
+  ),
+  summary_stats_cat = summary_stats_cat,
+  summary_stats_cont = summary_stats_cont,
+  reshape_rows = reshape_rows,
+  format_summary_stats = format_summary_stats)
+```

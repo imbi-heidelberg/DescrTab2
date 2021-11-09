@@ -10,28 +10,29 @@ descr(
   group_labels = list(),
   var_labels = list(),
   var_options = list(),
-  summary_stats_cont = list(N = DescrTab2:::.N, mean = DescrTab2:::.mean, sd =
-    DescrTab2:::.sd, median = DescrTab2:::.median, Q1 = DescrTab2:::.Q1, Q3 =
-    DescrTab2:::.Q3, min = DescrTab2:::.min, max = DescrTab2:::.max),
+  summary_stats_cont = list(N = DescrTab2:::.N, Nmiss = DescrTab2:::.Nmiss, mean =
+    DescrTab2:::.mean, sd = DescrTab2:::.sd, median = DescrTab2:::.median, Q1 =
+    DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
+    DescrTab2:::.max),
   summary_stats_cat = list(),
   format_summary_stats = list(N = function(x) {     format(x, digits = 2, scientific =
-    3) }, Nmiss = function(x) {     format(x, digits = 2, scientific = 3) }, mean =
-    function(x) {     format(x, digits = 2, scientific = 3) }, sd = function(x) {    
-    format(x, digits = 2, scientific = 3) }, median = function(x) {     format(x, digits
-    = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2, scientific = 3)
-    }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) }, min = function(x)
-    {     format(x, digits = 2, scientific = 3) }, max = function(x) {     format(x,
-    digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits = 2,
-    scientific = 3) }),
+    3) }, mean = function(x) {     format(x, digits = 2, scientific = 3) }, sd =
+    function(x) {     format(x, digits = 2, scientific = 3) }, median = function(x) {    
+    format(x, digits = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2,
+    scientific = 3) }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) },
+    min = function(x) {     format(x, digits = 2, scientific = 3) }, max = function(x) { 
+       format(x, digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits =
+    2, scientific = 3) }),
   format_p = scales::pvalue_format(),
   format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
-    combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE,
-    omit_missings_in_group = TRUE, percent_accuracy = NULL, percent_suffix = "\%",
-    row_percent = FALSE, Nmiss_row_percent = FALSE, absolute_relative_frequency_mode =
-    c("both", "only_absolute", "only_relative"), omit_missings_in_categorical_var =
-    FALSE, categorical_missing_percent_mode = c("no_missing_percent",
-    "missing_as_regular_category", "missing_as_separate_category"),      caption = NULL,
-    replace_empty_string_with_NA = TRUE, categories_first_summary_stats_second = FALSE),
+    combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_factor_level = "none",
+    omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = NULL,
+    percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,
+    absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
+    omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
+    c("no_missing_percent", "missing_as_regular_category",     
+    "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
+    categories_first_summary_stats_second = FALSE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), guess_id = TRUE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
