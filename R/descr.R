@@ -177,7 +177,6 @@ descr <-
            var_options = list(),
            summary_stats_cont = list(
              N = DescrTab2:::.N,
-             Nmiss = DescrTab2:::.Nmiss,
              mean = DescrTab2:::.mean,
              sd = DescrTab2:::.sd,
              median = DescrTab2:::.median,
@@ -317,7 +316,7 @@ descr <-
     # Check for empty strings
     if (any(dat == "", na.rm = TRUE)) {
       if (isTRUE(format_options[["replace_empty_string_with_NA"]])) {
-        dat %<>% mutate(across(everything(), ~ na_if(., "")))
+        dat %<>% mutate(across(everything(), ~ na_if(., "")))#
         dat %<>% mutate(across(where(function(x) {
           "" %in% levels(x)
         }), ~ fct_drop(., c(""))))
@@ -498,7 +497,7 @@ descr <-
     format_summary_stats <-
       fill_list_with_default_arguments(format_summary_stats, descr, "format_summary_stats")
     ### do all summary_stats have a corresponding format function?
-    tmp_names <- names(format_summary_stats)
+    tmp_names <- setdiff(names(format_summary_stats), "Nmiss")
     if (!all(names(c(summary_stats_cat, summary_stats_cont)) %in% tmp_names)) {
       warning(
         "All summary stats must have a corresponding formatting function. Defaulting to as.character"
@@ -626,7 +625,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
           format_summary_stats[name_diff]
 
         tmp_names <-
-          names(var_options[[var_option_name]][["format_summary_stats"]])
+          setdiff(names(var_options[[var_option_name]][["format_summary_stats"]]), "Nmiss")
         if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% tmp_names)) {
           warning(
             "All summary stats in var_options must have a corresponding formatting function. Defaulting to as.character"

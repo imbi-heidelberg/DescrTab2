@@ -22,7 +22,7 @@ linters: with_defaults(
   nonportable_path_linter=            NULL,
   object_length_linter=               NULL,
   object_name_linter=                 NULL,
-  object_usage_linter=                NULL,
+  # object_usage_linter=                NULL,
   open_curly_linter=                  NULL,
   paren_body_linter=                  NULL,
   paren_brace_linter=                 NULL,

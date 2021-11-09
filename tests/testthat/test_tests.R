@@ -86,7 +86,7 @@ test_that("wilcox.test_2_sample paired with ID in dataset",
                 format_options = list(print_Total = FALSE)
               ),
               NA
-            )})
+            )})            
 
 test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
           {
