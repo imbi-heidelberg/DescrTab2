@@ -143,3 +143,55 @@
     NA_real_
   }
 }
+
+.meanCIlower <- function(var) {
+  if (sum(is.na(var)) > 2) {
+    t.test(var)$conf.int[1]
+  } else {
+    return(NA_real_)
+  }
+}
+
+.meanCIupper <- function(var) {
+  if (sum(is.na(var)) > 2) {
+    t.test(var)$conf.int[2]
+  } else {
+    return(NA_real_)
+  }
+}
+
+.factorCIlowerfirstref <- function(var) {
+  if (any(!is.na(var))) {
+    var <- var[!is.na(var)]
+    prop.test(sum(var == levels(var)[1]), length(var))$conf.int[2]
+  } else {
+    NA_real_
+  }
+}
+
+.factorCIupperfirstref <- function(var) {
+  if (any(!is.na(var))) {
+    var <- var[!is.na(var)]
+    prop.test(sum(var == levels(var)[1]), length(var))$conf.int[2]
+  } else {
+    NA_real_
+  }
+}
+
+.factorCIlowerlastref <- function(var) {
+  if (any(!is.na(var))) {
+    var <- var[!is.na(var)]
+    prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[2]
+  } else {
+    NA_real_
+  }
+}
+
+.factorCIupperlastref <- function(var) {
+  if (any(!is.na(var))) {
+    var <- var[!is.na(var)]
+    prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[2]
+  } else {
+    NA_real_
+  }
+}
