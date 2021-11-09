@@ -4,58 +4,6 @@ dat <- iris[, c("Species", "Sepal.Length")]
 dat %<>% mutate(animal = c("Mammal", "Fish") %>% rep(75) %>% factor())
 dat %<>% mutate(food = c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
 
-
-test_that("Confidence intervals",
-          {
-            expect_error(descr(
-              dat %>% select(-"Species"),
-              "animal",
-              test_options = list(exact = TRUE, nonparametric = TRUE)
-            ) %>%  print(silent = TRUE),
-            NA)
-
-            expect_error(descr(
-              dat %>% select(-"Species"),
-              "animal",
-              test_options = list(exact = TRUE, nonparametric = TRUE)
-            ) %>%  print(silent = TRUE, print_format="numeric"),
-            NA)
-
-            expect_error(descr(
-              dat ,
-              "Species",
-              format_options = list(print_CI = FALSE)
-            ) %>%  print(silent = TRUE, print_format="numeric"),
-            NA)
-
-            expect_error(descr(
-              dat %>% select(-"Species") ,
-              "animal",
-              format_options = list(print_CI = FALSE)
-            ) %>%  print(silent = TRUE, print_format="console"),
-            NA)
-
-            expect_error(descr(
-              dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
-              "animal",
-              ) %>%  print(silent = TRUE),
-            NA)
-
-            expect_error(descr(
-              dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
-              "animal",
-            ) %>%  print(silent = TRUE, print_format="numeric"),
-            NA)
-
-            expect_error(descr(
-              dat %>% select(-"Species") %>% mutate(all_na = NA_character_),
-              "animal",
-            ) %>%  print(silent = TRUE, print_format="numeric"),
-            NA)
-
-          })
-
-
 test_that("Ommit summary stats",
           {
             expect_error(descr(

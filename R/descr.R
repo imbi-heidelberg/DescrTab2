@@ -1634,6 +1634,13 @@ knit_print.DescrPrint <- function(x,
 
 #' Function to create (a part of a) nicely formatted table
 #'
+#' @param DescrVarObj Variable object to be formatted
+#' @param var_name (character) Name of the variable
+#' @param format_options named list of options for formatting
+#' @param format_summary_stats named list of summary statistcs
+#' @param format_p formatting function for p-values
+#' @param reshape_rows named list of row reshaping functions
+#' 
 #' @importFrom magrittr `%<>%`
 #' @import dplyr
 #' @import rlang
@@ -1716,6 +1723,8 @@ create_numeric_subtable <-
 
 
 #' Function to create (a part of a) nicely formatted table
+#' 
+#' @inheritParams create_numeric_subtable
 #'
 #' @importFrom magrittr `%<>%`
 #' @import dplyr
@@ -1750,7 +1759,7 @@ create_character_subtable <-
     label <- DescrVarObj[["variable_options"]][["label"]]
     DescrVarObj[["label"]] <- label
 
-    if (isTRUE(DescrVarObj[["variable_lengths"]][["Total"]][["summary_stats"]][["Nmiss"]] == DescrVarObj[["variable_lengths"]][["Total"]][["summary_stats"]][["N"]])) {
+    if (isTRUE(DescrVarObj[["variable_lengths"]][["Total"]][["Nmiss"]] == DescrVarObj[["variable_lengths"]][["Total"]][["N"]])) {
       all_summary_stats_missing <- T
     } else {
       all_summary_stats_missing <- F
@@ -1992,14 +2001,14 @@ create_character_subtable <-
         } else {
           format_p(DescrVarObj[["test_list"]]$p)
         },
-        rep("", length_tibl -
-          2)
+        rep("", max(c(0, length_tibl -
+          2)))
       ))
       tibl %<>% bind_cols(Test = c(
         "",
         DescrVarObj[["test_list"]]$test_name,
-        rep("", length_tibl -
-          2)
+        rep("", max(c(0, length_tibl -
+          2)))
       ))
 
       if (length(groups) == 2) {
@@ -2018,11 +2027,11 @@ create_character_subtable <-
             )
         }
         tibl %<>% bind_cols(CI = c(
-          "",
+          if (length_tibl >= 3L) "" else NULL,
           CI_name,
           CI,
-          rep("", length_tibl -
-            3)
+          rep("", max(c(0, length_tibl -
+            3)))
         ))
       }
     }

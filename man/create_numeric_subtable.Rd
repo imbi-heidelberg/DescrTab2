@@ -13,6 +13,19 @@ create_numeric_subtable(
   reshape_rows
 )
 }
+\arguments{
+\item{DescrVarObj}{Variable object to be formatted}
+
+\item{var_name}{(character) Name of the variable}
+
+\item{format_options}{named list of options for formatting}
+
+\item{format_summary_stats}{named list of summary statistcs}
+
+\item{format_p}{formatting function for p-values}
+
+\item{reshape_rows}{named list of row reshaping functions}
+}
 \description{
 Function to create (a part of a) nicely formatted table
 }
