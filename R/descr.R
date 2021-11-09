@@ -177,6 +177,7 @@ descr <-
            var_options = list(),
            summary_stats_cont = list(
              N = DescrTab2:::.N,
+             Nmiss = DescrTab2:::.Nmiss,
              mean = DescrTab2:::.mean,
              sd = DescrTab2:::.sd,
              median = DescrTab2:::.median,
@@ -188,9 +189,6 @@ descr <-
            summary_stats_cat = list(),
            format_summary_stats = list(
              N = function(x) {
-               format(x, digits = 2, scientific = 3)
-             },
-             Nmiss = function(x) {
                format(x, digits = 2, scientific = 3)
              },
              mean = function(x) {
