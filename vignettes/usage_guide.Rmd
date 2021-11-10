@@ -255,6 +255,8 @@ To do so, you can supply appropriate summary statistics for the confidence inter
 - `DescrTab2:::.factor_firstlevel_CIupper`
 - `DescrTab2:::.factor_lastlevel_CIlower`
 - `DescrTab2:::.factor_lastlevel_CIupper`
+- `DescrTab2:::.HLCIlower`
+- `DescrTab2:::.HLCIupper`
 
 ```{r}
 summary_stats_cat <- list(

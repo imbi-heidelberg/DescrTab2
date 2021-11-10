@@ -195,3 +195,49 @@
     NA_real_
   }
 }
+
+.HLCIlower <- function(var) {
+  if (any(!is.na(var))) {
+    var <- var[!is.na(var)]
+    conds <- list()
+    ret <- withCallingHandlers({
+      wilcox.test(var, conf.int=TRUE)$conf.int[1]
+      },
+      condition = function(cond) {
+        conds <<- append(conds, cond)
+      }
+    )
+    for (cond in conds[names(conds)=="message"]) {
+      if (cond == "requested conf.level not achievable") {
+        warning(cond)
+        return(NA_real_)
+      }
+    }
+    return(ret)
+  } else {
+    NA_real_
+  }
+}
+
+.HLCIupper <- function(var) {
+  if (any(!is.na(var))) {
+    var <- var[!is.na(var)]
+    conds <- list()
+    ret <- withCallingHandlers({
+      wilcox.test(var, conf.int=TRUE)$conf.int[1]
+      },
+      condition = function(cond) {
+        conds <<- append(conds, cond)
+      }
+    )
+    for (cond in conds[names(conds)=="message"]) {
+      if (cond == "requested conf.level not achievable") {
+        warning(cond)
+        return(NA_real_)
+      }
+    }
+    return(ret)
+  } else {
+    NA_real_
+  }
+}
