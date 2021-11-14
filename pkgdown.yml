@@ -2,12 +2,12 @@ pandoc: 2.14.0.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  maintenance_guide: maintenance_guide.html
-  other_software_comparison: other_software_comparison.html
-  test_choice_tree_pdf: test_choice_tree_pdf.pdf
-  usage_guide: usage_guide.html
-  validation_statement: validation_statement.html
-last_built: 2021-10-08T14:59Z
+  1_usage_guide: 1_usage_guide.html
+  2_test_choice_tree_pdf: 2_test_choice_tree_pdf.pdf
+  3_other_software_comparison: 3_other_software_comparison.html
+  4_validation_statement: 4_validation_statement.html
+  5_maintenance_guide: 5_maintenance_guide.html
+last_built: 2021-11-14T12:53Z
 urls:
   reference: https://imbi-heidelberg.github.io/DescrTab2/reference
   article: https://imbi-heidelberg.github.io/DescrTab2/articles
