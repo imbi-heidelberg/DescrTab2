@@ -37,8 +37,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: rcmdcheck
-
+          extra-packages:
+            rcmdcheck
+            pkgdown
       - uses: r-lib/actions/setup-tinytex@v1
       - run: tlmgr --version
 
@@ -55,3 +56,7 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Build website
+        run: Rscript -e "pkgdown::build_site()"
+        
