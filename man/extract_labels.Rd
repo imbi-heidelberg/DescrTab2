@@ -16,3 +16,8 @@ list of labels
 \description{
 Extract the label attribute from data
 }
+\examples{
+a <- c(1, 2)
+attr(a, "label") <- "b"
+identical(extract_labels(a), list(a = attr(a, "label")))
+}

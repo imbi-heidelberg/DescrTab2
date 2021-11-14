@@ -20,3 +20,8 @@ data from non-repeating instruments. "missings_everywhere", which is data which 
 The last parts are all the repeating instruments, which are referred to by their name as recorded in
 \code{dat$redcap_repeat_instrument}.
 }
+\examples{
+path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
+dat <- read_redcap_formatted(path_to_redcap_script)
+d <- split_redcap_dataset(dat, guess_ID_variable(dat, TRUE))
+}

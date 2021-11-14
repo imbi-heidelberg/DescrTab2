@@ -4,6 +4,10 @@
 #' or \code{\link[tibble]{tibble}}, or a vector
 #'
 #' @return list of labels
+#' @examples
+#' a <- c(1, 2)
+#' attr(a, "label") <- "b"
+#' identical(extract_labels(a), list(a = attr(a, "label")))
 #' @export
 #'
 extract_labels <- function(dat) {
@@ -24,12 +28,18 @@ extract_labels <- function(dat) {
 #' @inheritParams extract_labels
 #'
 #' @return data with the labels removed
+#' @examples
+#' a <- c(1, 2)
+#' attr(a, "label") <- "b"
+#' identical(unlabel(a), c(1, 2))
 #' @export
 #'
 unlabel <- function(dat) {
   unlabel_fun <- function(x) {
     if (inherits(x, "labelled")) {
       class(x) <- class(x)[class(x) != "labelled"]
+    }
+    if (!is.null(attr(x, "label") <- NULL)){
       attr(x, "label") <- NULL
     }
     return(x)
@@ -57,6 +67,9 @@ unlabel <- function(dat) {
 #' @param path_to_redcap_script (character) Path to the (automatically generated) redcap script for data import
 #'
 #' @return tibble with data
+#' @examples
+#' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
+#' read_redcap_formatted(path_to_redcap_script)
 #' @export
 #' @importFrom Hmisc label label<-
 read_redcap_formatted <- function(path_to_redcap_script = NULL) {
@@ -87,7 +100,11 @@ read_redcap_formatted <- function(path_to_redcap_script = NULL) {
 #'
 #' @return a list of datasets separated into the categories as described
 #' @export
-#'
+#' 
+#' @examples
+#' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
+#' dat <- read_redcap_formatted(path_to_redcap_script)
+#' d <- split_redcap_dataset(dat, guess_ID_variable(dat, TRUE))
 split_redcap_dataset <- function(dat, id_name = "patid") {
   missings_everywhere <-
     dat %>% select(!!id_name, where(~ (all(is.na(.x)) | all(.x == ""))))
@@ -122,7 +139,10 @@ split_redcap_dataset <- function(dat, id_name = "patid") {
 #'
 #' @return tibble with data
 #' @export
-#'
+#' @examples
+#' path_to_data <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
+#' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
+#' haven::read_sas(path_to_data, pat_to_format)
 #' @importFrom haven read_sas
 #'
 read_sas_formatted <- function(path_to_data = NULL, path_to_format = NULL) {
@@ -135,13 +155,16 @@ read_sas_formatted <- function(path_to_data = NULL, path_to_format = NULL) {
   erg
 }
 
-
-
 #' Create a markdown listing from a character dataset
 #'
 #' @param dat a character \code{data.frame} or \code{tibble}.
 #'
 #' @return string containing markdown code listing all nonempty free text in the dataset
+#' @examples
+#' dat  <- data.frame(Freetext = c("Some text", "More text"))
+#' list_freetext_markdown(dat)
+#' # use inside a .Rmd document like this:
+#' # `r list_freetext_markdown(dat)`
 #' @export
 #'
 list_freetext_markdown <- function(dat) {
@@ -155,13 +178,12 @@ list_freetext_markdown <- function(dat) {
     var <- var[!(var %in% c("", NA_character_))]
     if (length(var) > 0) {
       namerow <- paste0("**", print_name, "**\n\n")
-      varrows <- paste0(" * ", var, "\n\n")
+      varrows <- paste0(" * ", var, "\n")
       str <- paste0(str, namerow, paste0(varrows, collapse = ""), collapse = "")
     }
   }
   str
 }
-
 
 
 #' Parse a text file containing format information
@@ -174,6 +196,15 @@ list_freetext_markdown <- function(dat) {
 #' @param encoding Encoding for the text file
 #'
 #' @return A named list with format definitions
+#' @examples
+#' tmpfile <- tempfile()
+#' write(     "proc format;
+#'              value yn  1=\"yes\"
+#'                        0=\"no\";
+#'              value sex 1=\"female\"
+#'                        0=\"male\";
+#'               run;",tmpfile)
+#' parse_formats(tmpfile)
 #' @export
 parse_formats <- function(path_to_format_definition,
                           ignore_keywords = c("value"),
@@ -317,7 +348,6 @@ text file and make sure there are no labels containing strings of the form '/*' 
   return(format_list)
 }
 
-
 #' Create code to load all SAS datasets in a folder.
 #'
 #' This is useful if you work with lots of separate SAS datasets spread out in the same folder.
@@ -326,6 +356,8 @@ text file and make sure there are no labels containing strings of the form '/*' 
 #' @param format path to format file
 #'
 #' @return NULL. Relevant code is printed to the console.
+#' @examples
+#' codegen_load_all_sas_data(system.file("examples", package = "DescrTab2"))
 #' @export
 codegen_load_all_sas_data <- function(dir, format = NULL) {
   e <- str_subset(list.files(dir), "\\.sas7bdat$")
@@ -348,7 +380,11 @@ codegen_load_all_sas_data <- function(dir, format = NULL) {
 #'
 #' @return if exactly one possible
 #' @export
-#'
+#' 
+#' @examples
+#' dat <- data.frame(ID = c(1,2,3,4,5),
+#'                  other = c(1,2,3,4,5))
+#' guess_ID_variable(dat)
 #' @importFrom stringr str_to_lower
 #' @importFrom magrittr `%>%`
 guess_ID_variable <- function(dat, suppressWarnings = FALSE) {
@@ -383,7 +419,7 @@ guess_ID_variable <- function(dat, suppressWarnings = FALSE) {
     return(NULL)
   }
 }
-
+# nocov start
 # work in progress
 split_data_from_listing <- function(dat, n_split_levels = 10, n_split_characters = 35) {
   dat <- as_tibble(dat)
@@ -408,3 +444,4 @@ split_data_from_listing <- function(dat, n_split_levels = 10, n_split_characters
     list = dat[, unlist(idx_list)]
   ))
 }
+# nocov end

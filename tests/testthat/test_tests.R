@@ -719,6 +719,21 @@ test_that("Fisher's exact test works",{
 })
 
 
+dat <- tibble(
+  group = factor(rep(c("Experimental", "Control"), 30)),
+  variable = ordered(rep(c(1, 2, 3), 20))
+)
+test_that("Cochran-Armitage's test",{
+  expect_error(descr(dat, "group", test_options = list(test_override = "Cochran-Armitage's test")), NA)
+})
+
+dat <- tibble(
+  group = ordered(rep(c(1, 2, 3), 20), levels=c(2,1,3), labels = c("first", "second", "third")),
+  var = rep(c(1,5,3,1,8,5,0,12,3,14,3,7), 5)
+)
+test_that("Jonckheere-Terpstra's test works",{
+  expect_error(descr(dat, "group", test_options = list(test_override = "Jonckheere-Terpstra's test")) , NA)
+})
 
 
 

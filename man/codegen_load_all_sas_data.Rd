@@ -17,3 +17,6 @@ NULL. Relevant code is printed to the console.
 \description{
 This is useful if you work with lots of separate SAS datasets spread out in the same folder.
 }
+\examples{
+codegen_load_all_sas_data(system.file("examples", package = "DescrTab2"))
+}

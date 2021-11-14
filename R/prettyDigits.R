@@ -1,3 +1,4 @@
+# nocov start
 #' Formatting function for absolute and relative frequencies
 #'
 #' @param numerator (numeric) numerator for \% calculations
@@ -176,3 +177,4 @@ good_format <- function(x,
     x
   }
 }
+# nocov end

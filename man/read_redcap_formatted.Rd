@@ -22,3 +22,7 @@ once as a factor and once in an unformatted way.
 \details{
 This script removes the "unformatted factor" variables and properly assignes labels.
 }
+\examples{
+path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
+read_redcap_formatted(path_to_redcap_script)
+}

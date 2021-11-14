@@ -25,29 +25,31 @@
 
 .Q1 <- function(var) {
   stats::quantile(var,
-                  probs = 0.25,
-                  na.rm = TRUE,
-                  type = 2
+    probs = 0.25,
+    na.rm = TRUE,
+    type = 2
   )
 }
 
 .Q3 <- function(var) {
   stats::quantile(var,
-                  probs = 0.75,
-                  na.rm = TRUE,
-                  type = 2
+    probs = 0.75,
+    na.rm = TRUE,
+    type = 2
   )
 }
 
 .IQR <- function(var) {
   stats::quantile(var,
-                  probs = 0.75,
-                  na.rm = TRUE,
-                  type = 2) -
+    probs = 0.75,
+    na.rm = TRUE,
+    type = 2
+  ) -
     stats::quantile(var,
-                    probs = 0.25,
-                    na.rm = TRUE,
-                    type = 2)
+      probs = 0.25,
+      na.rm = TRUE,
+      type = 2
+    )
 }
 
 .min <- function(var) {
@@ -72,11 +74,11 @@
 }
 
 .skew <- function(var) {
-  base::mean((var-.mean(var))^(3)) / (stats::sd(var))^(3/2)
+  base::mean((var - .mean(var))^(3)) / (stats::sd(var))^(3 / 2)
 }
 
 .kurtosis <- function(var) {
-  base::mean((var-.mean(var))^(4)) / (stats::sd(var))^(2) -3
+  base::mean((var - .mean(var))^(4)) / (stats::sd(var))^(2) - 3
 }
 
 .factormean <- function(var) {
@@ -200,14 +202,26 @@
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
     conds <- list()
-    ret <- withCallingHandlers({
-      stats::wilcox.test(var, conf.int=TRUE)$conf.int[1]
-      },
-      condition = function(cond) {
-        conds <<- append(conds, cond)
-      }
-    )
-    for (cond in conds[names(conds)=="message"]) {
+    ret <-
+      tryCatch(
+        {
+          withCallingHandlers(
+            {
+              stats::wilcox.test(var, conf.int = TRUE)$conf.int[1]
+            },
+            condition = function(cond) {
+              conds <<- append(conds, cond)
+              if (inherits(cond, "warning")) {
+                tryInvokeRestart("muffleWarning")
+              }
+            }
+          )
+        },
+        warning = function(cond) {
+          return(NULL)
+        }
+      )
+    for (cond in conds[names(conds) == "message"]) {
       if (cond == "requested conf.level not achievable") {
         warning(cond)
         return(NA_real_)
@@ -223,14 +237,18 @@
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
     conds <- list()
-    ret <- withCallingHandlers({
-      stats::wilcox.test(var, conf.int=TRUE)$conf.int[1]
+    ret <- withCallingHandlers(
+      {
+        stats::wilcox.test(var, conf.int = TRUE)$conf.int[1]
       },
       condition = function(cond) {
         conds <<- append(conds, cond)
+        if (inherits(cond, "warning")) {
+          tryInvokeRestart("muffleWarning")
+        }
       }
     )
-    for (cond in conds[names(conds)=="message"]) {
+    for (cond in conds[names(conds) == "message"]) {
       if (cond == "requested conf.level not achievable") {
         warning(cond)
         return(NA_real_)
