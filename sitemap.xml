@@ -4,6 +4,9 @@
     <loc>https://imbi-heidelberg.github.io/DescrTab2/index.html</loc>
   </url>
   <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/DescrTab2.html</loc>
+  </url>
+  <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/codegen_load_all_sas_data.html</loc>
   </url>
   <url>
@@ -14,9 +17,6 @@
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/descr.html</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/DescrTab2.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/dot-onLoad.html</loc>
@@ -73,13 +73,13 @@
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/read_sas_formatted.html</loc>
   </url>
   <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/sig_test.html</loc>
+  </url>
+  <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/sigfig.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/sigfig_gen.html</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/sig_test.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/split_redcap_dataset.html</loc>

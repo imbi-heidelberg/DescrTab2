@@ -444,7 +444,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;/table&gt;</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format <span class='op'>=</span> <span class='st'>"word"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='descr.html'>descr</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, print_format <span class='op'>=</span> <span class='st'>"numeric"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 44 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 44 × 3</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    Variable         Total Test                            </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> <span style='color: #949494;'> </span>Sepal.Length<span style='color: #949494;'> </span>  <span style='color: #BB0000;'>  </span>     Student's one-sample t-test     </span>
@@ -953,63 +953,72 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> pvalue(x, accuracy = accuracy, decimal.mark = decimal.mark, prefix = prefix, </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>     add_p = add_p)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;bytecode: 0x000000002e14f800&gt;</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x0000000054ad91c8&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;bytecode: 0x55e3bd2c8b88&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b65153d8&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$N</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$mean</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$sd</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$median</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$Q1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$Q3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$min</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$max</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$summary_stats$CI</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(x) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                format(x, digits = 2, scientific = 3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$options</span>
@@ -1075,10 +1084,11 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Q1" "Q3"</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$reshape_rows$`Q1 - Q3`$fun</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(Q1, Q3) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  paste0(Q1, " -- ", Q3)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (Q1, Q3) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     paste0(Q1, " -- ", Q3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$reshape_rows$`min - max`</span>
@@ -1086,10 +1096,11 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "min" "max"</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$reshape_rows$`min - max`$fun</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> function(min, max) {</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  paste0(min, " -- ", max)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                }</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x00000000547db418&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> function (min, max) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     paste0(min, " -- ", max)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x55e3b726d810&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
@@ -1111,6 +1122,9 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`Boschloo's test`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Bolo"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`Exact binomial test`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Bin"</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`Fisher's exact test`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Fish"</span>
@@ -1154,8 +1168,8 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`CI for difference in proportions derived from a normal ("Wald") approximation`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "PWa"</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`CI for difference in proportions derived from Boschloo's test`</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "PBo"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`CI for difference in proportions derived from an unconditional exact test`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "PUnc"</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`CI for difference in proportions derived from an exact McNemar's test`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "PMcN"</span>
@@ -1165,6 +1179,9 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`CI for the Hodges-Lehmann estimator`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "HL"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`CI for odds ratio derived from Fisher's exact test`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Odds"</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $format$test_abbreviations$`No test`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "NA"</span>
@@ -1192,7 +1209,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $tibble</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 32 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 32 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    Variables    Total        p        Test                         </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                        </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> Sepal.Length <span style='color: #949494;'>""</span>           <span style='color: #949494;'>""</span>       <span style='color: #949494;'>""</span>                           </span>
@@ -1205,7 +1222,7 @@ be printed as html, tex code, as a flextable object or simply to the console.</p
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> Sepal.Width  <span style='color: #949494;'>""</span>           <span style='color: #949494;'>""</span>       <span style='color: #949494;'>""</span>                           </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> N            <span style='color: #949494;'>"</span>150<span style='color: #949494;'>"</span>        <span style='color: #949494;'>"</span>&lt;0.001<span style='color: #949494;'>"</span> <span style='color: #949494;'>"</span>Student's one-sample t-test<span style='color: #949494;'>"</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> mean         <span style='color: #949494;'>"</span>3.1<span style='color: #949494;'>"</span>        <span style='color: #949494;'>""</span>       <span style='color: #949494;'>""</span>                           </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># ... with 22 more rows</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 22 more rows</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"class")</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "DescrPrint"          "DescrPrintCharacter" "list"               </span>

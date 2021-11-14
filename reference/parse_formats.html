@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prints all possible tests names — print_test_names • DescrTab2</title>
+<title>Parse a text file containing format information — parse_formats • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Prints all possible tests names — print_test_names" />
-<meta property="og:description" content="Prints all possible tests names" />
+<meta property="og:title" content="Parse a text file containing format information — parse_formats" />
+<meta property="og:description" content="Useful to extract factor formatting information contained in a proc format SAS statement." />
 
 
 
@@ -137,45 +137,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prints all possible tests names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
-    <div class="hidden name"><code>print_test_names.Rd</code></div>
+    <h1>Parse a text file containing format information</h1>
+    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/loadData.R'><code>R/loadData.R</code></a></small>
+    <div class="hidden name"><code>parse_formats.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Prints all possible tests names</p>
+    <p>Useful to extract factor formatting information contained in a proc format SAS statement.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>parse_formats</span><span class='op'>(</span>
+  <span class='va'>path_to_format_definition</span>,
+  ignore_keywords <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"value"</span><span class='op'>)</span>,
+  encoding <span class='op'>=</span> <span class='st'>"ISO-8859-1"</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>path_to_format_definition</th>
+      <td><p>(string) Path to the text file to be parsed</p></td>
+    </tr>
+    <tr>
+      <th>ignore_keywords</th>
+      <td><p>A vector of keywords to be ignored when searching for the name of
+the variable to be formatted</p></td>
+    </tr>
+    <tr>
+      <th>encoding</th>
+      <td><p>Encoding for the text file</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the names of all possible test names you can specify.</p>
+    <p>A named list with format definitions</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='fu'>print_test_names</span><span class='op'>(</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "Cochran's Q test"                      </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [2] "McNemar's test"                        </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] "Chi-squared goodness-of-fit test"      </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "Pearson's chi-squared test"            </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "Exact McNemar's test"                  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [6] "Boschloo's test"                       </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "Fisher's exact test"                   </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] "Exact binomal test"                    </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "Friedman test"                         </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "Wilcoxon two-sample signed-rank test"  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [11] "Wilcoxon's one-sample signed-rank test"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [12] "Mann-Whitney's U test"                 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "Kruskal-Wallis's one-way ANOVA"        </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [14] "Student's paired t-test"               </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [15] "Mixed model ANOVA"                     </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] "Student's one-sample t-test"           </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [17] "Welch's two-sample t-test"             </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [18] "Cochran-Armitage's test"               </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [19] "Jonckheere-Terpstra's test"            </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [20] "F-test (ANOVA)"                        </span>
-</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
