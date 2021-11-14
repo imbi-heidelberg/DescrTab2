@@ -33,7 +33,7 @@ into your R console.
 
 This article may be useful to get aquainted with DescTab2:
 
-https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html
+https://imbi-heidelberg.github.io/DescrTab2/articles/a_usage_guide.html
 
 
 You may also check out our documentation page which hosts serveral long-form documentation articles:
