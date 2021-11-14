@@ -172,6 +172,26 @@ once as a factor and once in an unformatted way.</p>
 
     <p>This script removes the "unformatted factor" variables and properly assignes labels.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='r-in'><span class='va'>path_to_redcap_script</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"examples"</span>, <span class='st'>"testredcap.r"</span>, package <span class='op'>=</span> <span class='st'>"DescrTab2"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>read_redcap_formatted</span><span class='op'>(</span><span class='va'>path_to_redcap_script</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: lattice</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: survival</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: Formula</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: ggplot2</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘Hmisc’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     format.pval, units</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 4 × 5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   patid      redcap_repeat_instrument age        sex    time      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;labelled&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;labelled&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;labelled&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 1          <span style='color: #BB0000;'>NA</span>                       20         Male   NA        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2          <span style='color: #BB0000;'>NA</span>                       25         Female NA        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 2          Interview                NA         <span style='color: #BB0000;'>NA</span>      1        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 2          Interview                NA         <span style='color: #BB0000;'>NA</span>      2        </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
