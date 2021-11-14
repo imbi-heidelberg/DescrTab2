@@ -56,7 +56,4 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-      - name: Build website
-        run: Rscript -e "pkgdown::build_site()"
         
