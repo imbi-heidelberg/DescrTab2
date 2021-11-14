@@ -15,3 +15,9 @@ string containing markdown code listing all nonempty free text in the dataset
 \description{
 Create a markdown listing from a character dataset
 }
+\examples{
+dat  <- data.frame(Freetext = c("Some text", "More text"))
+list_freetext_markdown(dat)
+# use inside a .Rmd document like this:
+# `r list_freetext_markdown(dat)`
+}

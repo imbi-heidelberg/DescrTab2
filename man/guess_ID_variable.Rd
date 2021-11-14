@@ -17,3 +17,8 @@ if exactly one possible
 \description{
 Make an educated guess about the name of the ID variable from a dataset
 }
+\examples{
+dat <- data.frame(ID = c(1,2,3,4,5),
+                 other = c(1,2,3,4,5))
+guess_ID_variable(dat)
+}

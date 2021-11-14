@@ -12,3 +12,4 @@ index.Rmd
 inst/.lintr$
 ^.lintr$
 ^.vscode$
+^benchmarks$

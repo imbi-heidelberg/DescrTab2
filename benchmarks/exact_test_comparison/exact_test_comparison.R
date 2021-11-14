@@ -25,7 +25,6 @@ for (nsim in c(100, 200, 300, 400, 500)) {
 }
 
 
-
 for (nsim in c(100, 200, 300, 400, 500)) {
   starttime <- Sys.time()
 
