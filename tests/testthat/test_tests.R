@@ -86,7 +86,7 @@ test_that("wilcox.test_2_sample paired with ID in dataset",
                 format_options = list(print_Total = FALSE)
               ),
               NA
-            )})
+            )})            
 
 test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
           {
@@ -675,17 +675,48 @@ verify_output(ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../consol
 
 test_that("tests are skipped if variables do not contain enough observations",
           {
-            expect_warning(descr(data.frame(a = 1))%>%
-                             print(silent = TRUE))
-            expect_warning(descr(data.frame(a = "a"))%>%
-                             print(silent = TRUE))
+            expect_warning(descr(data.frame(a = 1)))
+            expect_warning(descr(data.frame(a = "a")))
           })
 
 
+custom_ttest <- list(
+  name = "custom t-test",
+  abbreviation = "custom",
+  p = function(var) {
+    return(t.test(var)$p.value)
+  }
+)
+custom_ttest2 <- list(
+  name = "custom t-test",
+  abbreviation = "custom",
+  p = function(var, group) {
+    return(t.test(var ~ group, data.frame(var = var, group = group))$p.value)
+  }
+)
+
+test_that("Custom tests work", {
+  expect_error(descr(iris %>% select(-Species), test_options = list(test_override = custom_ttest)), NA)
+
+  expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_options = list(test_override = custom_ttest2)))
+  ), NA)
+})
 
 
+dat <- tibble(
+  group = factor(rep( c(rep("Guess", 4), rep("Truth", 4)), 100)),
+  var = factor(rep( c("Milk", "Milk", "Milk", "Tea", "Milk", "Tea", "Tea", "Tea"), 100))
+)
 
+test_that("Exact binomial test works",{
+  expect_error(descr(dat, test_options = list(exact=TRUE)), NA)
+})
 
+test_that("Fisher's exact test works",{
+  expect_warning(descr(dat, "group", test_options = list(exact=TRUE)))
+})
 
 
 

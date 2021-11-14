@@ -16,26 +16,27 @@ descr(
     DescrTab2:::.max),
   summary_stats_cat = list(),
   format_summary_stats = list(N = function(x) {     format(x, digits = 2, scientific =
-    3) }, Nmiss = function(x) {     format(x, digits = 2, scientific = 3) }, mean =
-    function(x) {     format(x, digits = 2, scientific = 3) }, sd = function(x) {    
-    format(x, digits = 2, scientific = 3) }, median = function(x) {     format(x, digits
-    = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2, scientific = 3)
-    }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) }, min = function(x)
-    {     format(x, digits = 2, scientific = 3) }, max = function(x) {     format(x,
-    digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits = 2,
-    scientific = 3) }),
+    3) }, mean = function(x) {     format(x, digits = 2, scientific = 3) }, sd =
+    function(x) {     format(x, digits = 2, scientific = 3) }, median = function(x) {    
+    format(x, digits = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2,
+    scientific = 3) }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) },
+    min = function(x) {     format(x, digits = 2, scientific = 3) }, max = function(x) { 
+       format(x, digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits =
+    2, scientific = 3) }),
   format_p = scales::pvalue_format(),
   format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
-    combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_Nmiss_if_0 = TRUE,
-    omit_missings_in_group = TRUE, percent_accuracy = NULL, percent_suffix = "\%",
-    row_percent = FALSE, Nmiss_row_percent = FALSE, absolute_relative_frequency_mode =
-    c("both", "only_absolute", "only_relative"), omit_missings_in_categorical_var =
-    FALSE, categorical_missing_percent_mode = c("no_missing_percent",
-    "missing_as_regular_category", "missing_as_separate_category"),      caption = NULL,
-    replace_empty_string_with_NA = TRUE),
+    combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_factor_level = "none",
+    omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = NULL,
+    percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,
+    absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
+    omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
+    c("no_missing_percent", "missing_as_regular_category",     
+    "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
+    categories_first_summary_stats_second = FALSE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
-    c(), include_group_missings_in_test = FALSE, include_categorical_missings_in_test =
-    FALSE, test_override = NULL, additional_test_args = list()),
+    c(), guess_id = TRUE, include_group_missings_in_test = FALSE,
+    include_categorical_missings_in_test = FALSE, test_override = NULL,
+    additional_test_args = list(), boschloo_max_n = 200),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
       paste0(Q1, " -- ", Q3) }), `min - max` = list(args = c("min", "max"), fun =
     function(min, max) {     paste0(min, " -- ", max) })),
@@ -51,7 +52,7 @@ descr(
 
 \item{var_labels}{named list of variable labels.}
 
-\item{var_options}{A named list of lists. For each variable, you can have special options that apply only to that variable.
+\item{var_options}{named list of lists. For each variable, you can have special options that apply only to that variable.
 These options are specified in this argument. See the details and examples for more explanation.}
 
 \item{summary_stats_cont}{named list of summary statistic functions to be used for numeric variables.}
@@ -64,9 +65,9 @@ These options are specified in this argument. See the details and examples for m
 
 \item{format_options}{named list of formatting options.}
 
-\item{test_options}{A named list of test options.}
+\item{test_options}{named list of test options.}
 
-\item{reshape_rows}{A named list of lists. Describes how to combine different summary statistics into the same row.}
+\item{reshape_rows}{named list of lists. Describes how to combine different summary statistics into the same row.}
 
 \item{...}{further argument to be passed along}
 }
@@ -80,8 +81,8 @@ Generate a list of descriptive statistics. By default, the function calculates s
 standard deviation, quantiles, minimum and maximum for continuous variables and relative and absolute frequencies
 for categorical variables. Also calculates p-values for an appropriately chosen statistical test.
 For two-group comparisons, confidence intervals for appropriate summary measures of group differences are calculated aswell. In particular,
-Wilson score intervals [1] from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
-are used for continuous variables and confidence intervals for the Hodge-Lehman estimator [2] from \link[stats]{wilcox.test} are used for ordinal variables.
+Wald confidence intervals from \link[stats]{prop.test} are used for categorical variables with 2 levels, confidence intervals from \link[stats]{t.test}
+are used for continuous variables and confidence intervals for the Hodges-Lehman estimator [1] from \link[stats]{wilcox.test} are used for ordinal variables.
 }
 \section{Labels}{
 
@@ -145,6 +146,7 @@ and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%),
  }
 \item{\code{replace_empty_string_with_NA}}{ (logical) controls whether empty strings ("") should be replaced
 with missing value (\code{NA_character_}).}
+\item{\code{categories_first_summary_stats_second}}{ (logical) controls whether the categories should be printed first in the summary statistics table.}
 }
 }
 
@@ -156,7 +158,10 @@ with missing value (\code{NA_character_}).}
 specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
 Use \code{print_test_names()} to see a list of all available test names. If \code{paired = TRUE} is specified, you need to supply an index variable
 \code{indices} that specifies which datapoints in your dataset are paired. \code{indices} may either be a length one character vector that describes
-the name of the index variable in your dataset, or a vector containing the respective indices. See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
+the name of the index variable in your dataset, or a vector containing the respective indices.
+If you have \code{guess_id} set to \code{TRUE} (the default), \code{DescrTab2} will try to guess
+the ID variable from your dataset and report a warning if it succeedes.
+See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
 for a bit more explanation. The optional list \code{additional_test_args} can be used to pass arguments along to test functions,
 e.g. \code{additional_test_args=list(correct=TRUE)} will request continuity correction if available.
 }
@@ -217,8 +222,5 @@ print(DescrList)
 descr(iris, "Species")
 }
 \references{
-[1] Wilson, E. B. (1927). "Probable inference, the law of succession, and statistical inference". Journal of the American Statistical Association. 22 (158): 209-212. doi:10.1080/01621459.1927.10502953. JSTOR 2276774
-
-
-[2] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
+[1] Hodges, J. L.; Lehmann, E. L. (1963). "Estimation of location based on ranks". Annals of Mathematical Statistics. 34 (2): 598-611. doi:10.1214/aoms/1177704172. JSTOR 2238406. MR 0152070. Zbl 0203.21105. PE euclid.aoms/1177704172
 }

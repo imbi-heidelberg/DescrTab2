@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -96,19 +96,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
+      <a href="../articles/1_usage_guide.html">Usage guidance</a>
     </li>
     <li>
-      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
+      <a href="../articles/2_test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
+      <a href="../articles/3_other_software_comparison.html">Comparison with other software</a>
     </li>
     <li>
-      <a href="../articles/usage_guide.html">Usage guidance</a>
+      <a href="../articles/4_validation_statement.html">Validation statement</a>
     </li>
     <li>
-      <a href="../articles/validation_statement.html">Validation statement</a>
+      <a href="../articles/5_maintenance_guide.html">Maintenance guidance</a>
     </li>
   </ul>
 </li>
@@ -162,6 +162,24 @@
       <tr>
         
         <td>
+          <p><code><a href="codegen_load_all_sas_data.html">codegen_load_all_sas_data()</a></code> </p>
+        </td>
+        <td><p>Create code to load all SAS datasets in a folder.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create_character_subtable.html">create_character_subtable()</a></code> </p>
+        </td>
+        <td><p>Function to create (a part of a) nicely formatted table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create_numeric_subtable.html">create_numeric_subtable()</a></code> </p>
+        </td>
+        <td><p>Function to create (a part of a) nicely formatted table</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="descr.html">descr()</a></code> </p>
         </td>
         <td><p>Calculate descriptive statistics</p></td>
@@ -180,9 +198,15 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="escape_latex_symbols.html">escape_latex_symbols()</a></code> </p>
+        </td>
+        <td><p>Escape LaTeX Symbols</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="extract_labels.html">extract_labels()</a></code> </p>
         </td>
-        <td><p>Extract the label attributes from data</p></td>
+        <td><p>Extract the label attribute from data</p></td>
       </tr><tr>
         
         <td>
@@ -194,7 +218,13 @@
         <td>
           <p><code><a href="format_freqs.html">format_freqs()</a></code> </p>
         </td>
-        <td><p>Make pretty frequencies</p></td>
+        <td><p>Formatting function for absolute and relative frequencies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="guess_ID_variable.html">guess_ID_variable()</a></code> </p>
+        </td>
+        <td><p>Make an educated guess about the name of the ID variable from a dataset</p></td>
       </tr><tr>
         
         <td>
@@ -204,15 +234,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="inMinipage.html">inMinipage()</a></code> </p>
+          <p><code><a href="in_minipage.html">in_minipage()</a></code> </p>
         </td>
-        <td><p>Wrap cell text in minipage LaTeX environment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inMinipage2.html">inMinipage2()</a></code> </p>
-        </td>
-        <td><p>Wrap cell text in minipage LaTeX environment</p></td>
+        <td><p>Wrap cell text in minipage LaTeX environment with stretchy space</p></td>
       </tr><tr>
         
         <td>
@@ -228,9 +252,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="n_int_digits.html">n_int_digits()</a></code> <code><a href="n_int_digits.html">n_int_digits()</a></code> </p>
+          <p><code><a href="list_freetext_markdown.html">list_freetext_markdown()</a></code> </p>
+        </td>
+        <td><p>Create a markdown listing from a character dataset</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_int_digits.html">n_int_digits()</a></code> </p>
         </td>
         <td><p>Digits before decimal -1</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parse_formats.html">parse_formats()</a></code> </p>
+        </td>
+        <td><p>Parse a text file containing format information</p></td>
       </tr><tr>
         
         <td>
@@ -248,37 +284,43 @@
         <td>
           <p><code><a href="read_redcap_formatted.html">read_redcap_formatted()</a></code> </p>
         </td>
-        <td><p>Convencience function to load redcap datasets</p></td>
+        <td><p>Convencience function to load datasets downloaded from a Redcap database</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="read_sas_formatted.html">read_sas_formatted()</a></code> <code><a href="read_sas_formatted.html">read_sas_formatted()</a></code> </p>
+          <p><code><a href="read_sas_formatted.html">read_sas_formatted()</a></code> </p>
         </td>
-        <td><p>Convencience function to load sas datasets</p></td>
+        <td><p>Convencience function to load SAS datasets</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="sigfig.html">sigfig()</a></code> <code><a href="sigfig.html">sigfig()</a></code> </p>
+          <p><code><a href="sigfig.html">sigfig()</a></code> </p>
         </td>
         <td><p>Format number to a specified number of digits, considering threshold for usage of scientific notation</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="sigfig_gen.html">sigfig_gen()</a></code> <code><a href="sigfig_gen.html">sigfig_gen()</a></code> </p>
+          <p><code><a href="sigfig_gen.html">sigfig_gen()</a></code> </p>
         </td>
         <td><p>Generator function for nice formatting functions</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="test_cat.html">test_cat()</a></code> </p>
+          <p><code><a href="sig_test.html">sig_test()</a></code> </p>
         </td>
-        <td><p>Calculate a statistical test for a categorical variable.</p></td>
+        <td><p>Calculates a statistical significance test</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="test_cont.html">test_cont()</a></code> </p>
+          <p><code><a href="split_redcap_dataset.html">split_redcap_dataset()</a></code> </p>
         </td>
-        <td><p>Calculate a statistical test for a numerical variable.</p></td>
+        <td><p>Split a dataset imported from Redcap into convenient subsets</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="unlabel.html">unlabel()</a></code> </p>
+        </td>
+        <td><p>Remove the label attribute from data</p></td>
       </tr><tr>
         
         <td>
@@ -300,7 +342,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
 </div>
 
 <div class="pkgdown">

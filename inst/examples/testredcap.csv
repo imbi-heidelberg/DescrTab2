@@ -1,3 +1,5 @@
-age,sex
-1,0
-2,1
+patid,redcap_repeat_instrument,age,sex,time
+1,,20,0,
+2,,25,1,
+2,0,,,1
+2,0,,,2

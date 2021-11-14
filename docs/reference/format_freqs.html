@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make pretty frequencies — format_freqs • DescrTab2</title>
+<title>Formatting function for absolute and relative frequencies — format_freqs • DescrTab2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Make pretty frequencies — format_freqs" />
-<meta property="og:description" content="Make pretty frequencies" />
+<meta property="og:title" content="Formatting function for absolute and relative frequencies — format_freqs" />
+<meta property="og:description" content="Formatting function for absolute and relative frequencies" />
 
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -97,19 +97,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
+      <a href="../articles/1_usage_guide.html">Usage guidance</a>
     </li>
     <li>
-      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
+      <a href="../articles/2_test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
+      <a href="../articles/3_other_software_comparison.html">Comparison with other software</a>
     </li>
     <li>
-      <a href="../articles/usage_guide.html">Usage guidance</a>
+      <a href="../articles/4_validation_statement.html">Validation statement</a>
     </li>
     <li>
-      <a href="../articles/validation_statement.html">Validation statement</a>
+      <a href="../articles/5_maintenance_guide.html">Maintenance guidance</a>
     </li>
   </ul>
 </li>
@@ -137,13 +137,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make pretty frequencies</h1>
-    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
+    <h1>Formatting function for absolute and relative frequencies</h1>
+    <small class="dont-index">Source: <a href='https://github.com/imbi-heidelberg/DescrTab2/blob/master/R/prettyDigits.R'><code>R/prettyDigits.R</code></a></small>
     <div class="hidden name"><code>format_freqs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Make pretty frequencies</p>
+    <p>Formatting function for absolute and relative frequencies</p>
     </div>
 
     <pre class="usage"><span class='fu'>format_freqs</span><span class='op'>(</span>
@@ -159,29 +159,32 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>numerator</th>
-      <td><p>numeric</p></td>
+      <td><p>(numeric) numerator for % calculations</p></td>
     </tr>
     <tr>
       <th>denominator</th>
-      <td><p>numeric</p></td>
+      <td><p>(numeric) denominator for % calculations</p></td>
     </tr>
     <tr>
       <th>absolute_relative_frequency_mode</th>
-      <td><p>"both","only_absolute" or "only_relative"</p></td>
+      <td><p>one of <code>c("both", "only_absolute", "only_relative")</code>.
+"both" will print "Absolute Freq. (Relative Freq. %)", the other options work accordingly.</p></td>
     </tr>
     <tr>
       <th>percent_accuracy</th>
-      <td><p>NULL or numeric</p></td>
+      <td><p>NULL or numeric. Refer to the <code>accuracy</code> argument in
+<code><a href='https://scales.r-lib.org/reference/label_percent.html'>percent</a></code>.</p></td>
     </tr>
     <tr>
       <th>percent_suffix</th>
-      <td><p>"%" or "" (or something else)</p></td>
+      <td><p>usually "%" or "". Refer to the <code>suffix</code> argument in
+<code><a href='https://scales.r-lib.org/reference/label_percent.html'>percent</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character element of formatted frequencies</p>
+    <p>string of formatted frequencies</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -194,7 +197,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
 </div>
 
 <div class="pkgdown">

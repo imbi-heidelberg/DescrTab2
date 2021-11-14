@@ -64,3 +64,4 @@ test_that("summary statistics for factors work",
 
 
 
+ 
