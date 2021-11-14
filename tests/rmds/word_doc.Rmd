@@ -33,6 +33,10 @@ descr(
   format_options=list(caption="Test Caption")
 )
 
+Tooth2 <- ToothGrowth
+Tooth2$categorical <- factor(sample(c("a", "b"), nrow(Tooth2), TRUE))
+descr(Tooth2, "supp")
+
 ```
 
 

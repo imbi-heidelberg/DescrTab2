@@ -1,3 +1,16 @@
+# Version 2.1.2
+
+* Major code refactoring, removing alot of code duplication
+* The confidence interval column now behaves more similarily to the p-value colum and now supports footnotes.
+* Fixed github actions and updated documentation
+* Added Fisher's exact test for KxL tables
+* Added exact binomial test for 1xL tables
+
+# Version 2.1.1
+
+* Fixed some issue in the usage documentation where a code chuck was accidentally hidden
+* Some work on github actions
+
 # Version 2.1
 
 * knit_print now works properly. R chunks in .Rmd documents don't need the results = 'asis' option anymore.

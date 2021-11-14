@@ -36,7 +36,7 @@ descr(
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), guess_id = TRUE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
-    additional_test_args = list()),
+    additional_test_args = list(), boschloo_max_n = 200),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
       paste0(Q1, " -- ", Q3) }), `min - max` = list(args = c("min", "max"), fun =
     function(min, max) {     paste0(min, " -- ", max) })),

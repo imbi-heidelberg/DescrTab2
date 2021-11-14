@@ -7,8 +7,8 @@ Warning in sig_test(var, group, test_options, test_override, var_name): Confiden
 Use Exact McNemar's test if you want confidence intervals which use the test statistic of the
 exact McNemar's test.
 
-  Variables      first       second      p        Test             CI           
+  Variables      first       second      p        Test             CI    CI_name
 1  var                                                                          
-2    Approve      944 (59%)   880 (55%)   <0.001   McNemar's test   Prop. dif. ~
-3    Disapprove   656 (41%)   720 (45%)                             [0.0058, 0.~
+2    Approve      944 (59%)   880 (55%)   <0.001   McNemar's test   [0.~  CI fo~
+3    Disapprove   656 (41%)   720 (45%)                                         
 

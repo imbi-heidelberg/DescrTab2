@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -97,19 +97,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
+      <a href="../articles/1_usage_guide.html">Usage guidance</a>
     </li>
     <li>
-      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
+      <a href="../articles/2_test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
+      <a href="../articles/3_other_software_comparison.html">Comparison with other software</a>
     </li>
     <li>
-      <a href="../articles/usage_guide.html">Usage guidance</a>
+      <a href="../articles/4_validation_statement.html">Validation statement</a>
     </li>
     <li>
-      <a href="../articles/validation_statement.html">Validation statement</a>
+      <a href="../articles/5_maintenance_guide.html">Maintenance guidance</a>
     </li>
   </ul>
 </li>
@@ -166,20 +166,22 @@
     <p>The result of the (evaluated) function call.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># works:</span>
-<span class='fu'>DescrTab2</span><span class='fu'>:::</span><span class='fu'>ignore_unused_args</span><span class='op'>(</span>
-  <span class='va'>chisq.test</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, abc <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; 
-#&gt; 	Pearson's Chi-squared test
-#&gt; 
-#&gt; data:  structure(c(2L, 1L, 2L, 2L, 2L, 1L), .Label = c("0", "1"), class = "factor") and structure(c(1L, 2L, 2L, 1L, 2L, 1L), .Label = c("0", "1"), class = "factor")
-#&gt; X-squared = 0, df = 1, p-value = 1
-#&gt; </div><div class='input'>
-<span class='co'># would produce error:</span>
-<span class='co'># do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># works:</span></span>
+<span class='r-in'><span class='fu'>DescrTab2</span><span class='fu'>:::</span><span class='fu'>ignore_unused_args</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>chisq.test</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>, abc <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Pearson's Chi-squared test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  structure(c(2L, 1L, 2L, 2L, 2L, 1L), .Label = c("0", "1"), class = "factor") and structure(c(1L, 2L, 2L, 1L, 2L, 1L), .Label = c("0", "1"), class = "factor")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X-squared = 0, df = 1, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># would produce error:</span></span>
+<span class='r-in'><span class='co'># do.call(chisq.test, list(x=factor(c(1,0,1,1,1,0)), y=factor(c(0,1,1,0,1,0)), abc=3 ) )</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -191,7 +193,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
 </div>
 
 <div class="pkgdown">

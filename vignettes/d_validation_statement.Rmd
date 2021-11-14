@@ -32,8 +32,9 @@ institution associated with the creation, production or distribution of
 
 ## Unit tests
 
-`DescrTab2` features 100% `covr` unit test coverage, which means that
-each line of code is executed at least once by some automated unit test.
+`DescrTab2` features a suite of unit tests. The percentage of
+lines of codes covered by at least one unit tests is reported via the
+`covr` package.
 Most of these unit tests only check whether the code associated with
 it produces errors. This aims to ensure that the various options in
 `DescrTab2` work error-free with a variations of possible input datasets

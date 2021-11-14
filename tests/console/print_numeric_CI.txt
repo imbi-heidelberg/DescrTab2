@@ -1,48 +1,48 @@
 > descr(dat, "Species") %>% print(print_format = "numeric")
-# A tibble: 43 x 7
-   Variable       versicolor virginica   Total Test            CI_upper CI_lower
-   <chr>               <dbl>     <dbl>   <dbl> <chr>              <dbl>    <dbl>
- 1  Sepal.Length      NA        NA      NA     Welch's two-sa~   NA       NA    
- 2    N               50        50     100     <NA>              NA       NA    
- 3    Nmiss            0         0       0     <NA>              NA       NA    
- 4    mean             5.94      6.59    6.26  <NA>              NA       NA    
- 5    sd               0.516     0.636   0.663 <NA>              NA       NA    
- 6    median           5.9       6.5     6.3   <NA>              NA       NA    
- 7    Q1               5.6       6.2     5.8   <NA>              NA       NA    
- 8    Q3               6.3       6.9     6.7   <NA>              NA       NA    
- 9    min              4.9       4.9     4.9   <NA>              NA       NA    
-10    max              7         7.9     7.9   <NA>              NA       NA    
-11  Sepal.Width       NA        NA      NA     Welch's two-sa~   NA       NA    
-12    N               50        50     100     <NA>              NA       NA    
-13    Nmiss            0         0       0     <NA>              NA       NA    
-14    mean             2.77      2.97    2.87  <NA>              NA       NA    
-15    sd               0.314     0.322   0.333 <NA>              NA       NA    
-16    median           2.8       3       2.9   <NA>              NA       NA    
-17    Q1               2.5       2.8     2.7   <NA>              NA       NA    
-18    Q3               3         3.2     3.05  <NA>              NA       NA    
-19    min              2         2.2     2     <NA>              NA       NA    
-20    max              3.4       3.8     3.8   <NA>              NA       NA    
-21  Petal.Length      NA        NA      NA     Welch's two-sa~   NA       NA    
-22    N               50        50     100     <NA>              NA       NA    
-23    Nmiss            0         0       0     <NA>              NA       NA    
-24    mean             4.26      5.55    4.91  <NA>              NA       NA    
-25    sd               0.470     0.552   0.826 <NA>              NA       NA    
-26    median           4.35      5.55    4.9   <NA>              NA       NA    
-27    Q1               4         5.1     4.35  <NA>              NA       NA    
-28    Q3               4.6       5.9     5.55  <NA>              NA       NA    
-29    min              3         4.5     3     <NA>              NA       NA    
-30    max              5.1       6.9     6.9   <NA>              NA       NA    
-31  Petal.Width       NA        NA      NA     Welch's two-sa~   NA       NA    
-32    N               50        50     100     <NA>              NA       NA    
-33    Nmiss            0         0       0     <NA>              NA       NA    
-34    mean             1.33      2.03    1.68  <NA>              NA       NA    
-35    sd               0.198     0.275   0.425 <NA>              NA       NA    
-36    median           1.3       2       1.6   <NA>              NA       NA    
-37    Q1               1.2       1.8     1.3   <NA>              NA       NA    
-38    Q3               1.5       2.3     2     <NA>              NA       NA    
-39    min              1         1.4     1     <NA>              NA       NA    
-40    max              1.8       2.5     2.5   <NA>              NA       NA    
-41  cat_var           NA        NA      NA     Pearson's chi-~   -0.196    0.196
-42    a               25        25      50     <NA>              NA       NA    
-43    b               25        25      50     <NA>              NA       NA    
+# A tibble: 43 x 8
+   Variable       versicolor virginica   Total Test   CI_upper CI_lower CI_name 
+   <chr>               <dbl>     <dbl>   <dbl> <chr>     <dbl>    <dbl> <chr>   
+ 1  Sepal.Length      NA        NA      NA     Welch~   -0.882  -0.422   CI for~
+ 2    N               50        50     100     <NA>     NA      NA              
+ 3    Nmiss            0         0       0     <NA>     NA      NA              
+ 4    mean             5.94      6.59    6.26  <NA>     NA      NA              
+ 5    sd               0.516     0.636   0.663 <NA>     NA      NA              
+ 6    median           5.9       6.5     6.3   <NA>     NA      NA              
+ 7    Q1               5.6       6.2     5.8   <NA>     NA      NA              
+ 8    Q3               6.3       6.9     6.7   <NA>     NA      NA              
+ 9    min              4.9       4.9     4.9   <NA>     NA      NA              
+10    max              7         7.9     7.9   <NA>     NA      NA              
+11  Sepal.Width       NA        NA      NA     Welch~   -0.330  -0.0777  CI for~
+12    N               50        50     100     <NA>     NA      NA              
+13    Nmiss            0         0       0     <NA>     NA      NA              
+14    mean             2.77      2.97    2.87  <NA>     NA      NA              
+15    sd               0.314     0.322   0.333 <NA>     NA      NA              
+16    median           2.8       3       2.9   <NA>     NA      NA              
+17    Q1               2.5       2.8     2.7   <NA>     NA      NA              
+18    Q3               3         3.2     3.05  <NA>     NA      NA              
+19    min              2         2.2     2     <NA>     NA      NA              
+20    max              3.4       3.8     3.8   <NA>     NA      NA              
+21  Petal.Length      NA        NA      NA     Welch~   -1.50   -1.09    CI for~
+22    N               50        50     100     <NA>     NA      NA              
+23    Nmiss            0         0       0     <NA>     NA      NA              
+24    mean             4.26      5.55    4.91  <NA>     NA      NA              
+25    sd               0.470     0.552   0.826 <NA>     NA      NA              
+26    median           4.35      5.55    4.9   <NA>     NA      NA              
+27    Q1               4         5.1     4.35  <NA>     NA      NA              
+28    Q3               4.6       5.9     5.55  <NA>     NA      NA              
+29    min              3         4.5     3     <NA>     NA      NA              
+30    max              5.1       6.9     6.9   <NA>     NA      NA              
+31  Petal.Width       NA        NA      NA     Welch~   -0.795  -0.605   CI for~
+32    N               50        50     100     <NA>     NA      NA              
+33    Nmiss            0         0       0     <NA>     NA      NA              
+34    mean             1.33      2.03    1.68  <NA>     NA      NA              
+35    sd               0.198     0.275   0.425 <NA>     NA      NA              
+36    median           1.3       2       1.6   <NA>     NA      NA              
+37    Q1               1.2       1.8     1.3   <NA>     NA      NA              
+38    Q3               1.5       2.3     2     <NA>     NA      NA              
+39    min              1         1.4     1     <NA>     NA      NA              
+40    max              1.8       2.5     2.5   <NA>     NA      NA              
+41  cat_var           NA        NA      NA     Pears~   -0.196   0.196   CI for~
+42    a               25        25      50     <NA>     NA      NA              
+43    b               25        25      50     <NA>     NA      NA              
 

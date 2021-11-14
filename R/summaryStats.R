@@ -146,7 +146,7 @@
 
 .meanCIlower <- function(var) {
   if (sum(!is.na(var)) > 2) {
-    t.test(var)$conf.int[1]
+    stats::t.test(var)$conf.int[1]
   } else {
     return(NA_real_)
   }
@@ -154,7 +154,7 @@
 
 .meanCIupper <- function(var) {
   if (sum(!is.na(var)) > 2) {
-    t.test(var)$conf.int[2]
+    stats::t.test(var)$conf.int[2]
   } else {
     return(NA_real_)
   }
@@ -163,7 +163,7 @@
 .factor_firstlevel_CIlower <- function(var) {
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
-    prop.test(sum(var == levels(var)[1]), length(var))$conf.int[1]
+    stats::prop.test(sum(var == levels(var)[1]), length(var))$conf.int[1]
   } else {
     NA_real_
   }
@@ -172,7 +172,7 @@
 .factor_firstlevel_CIupper <- function(var) {
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
-    prop.test(sum(var == levels(var)[1]), length(var))$conf.int[2]
+    stats::prop.test(sum(var == levels(var)[1]), length(var))$conf.int[2]
   } else {
     NA_real_
   }
@@ -181,7 +181,7 @@
 .factor_lastlevel_CIlower <- function(var) {
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
-    prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[1]
+    stats::prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[1]
   } else {
     NA_real_
   }
@@ -190,7 +190,7 @@
 .factor_lastlevel_CIupper <- function(var) {
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
-    prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[2]
+    stats::prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[2]
   } else {
     NA_real_
   }
@@ -201,7 +201,7 @@
     var <- var[!is.na(var)]
     conds <- list()
     ret <- withCallingHandlers({
-      wilcox.test(var, conf.int=TRUE)$conf.int[1]
+      stats::wilcox.test(var, conf.int=TRUE)$conf.int[1]
       },
       condition = function(cond) {
         conds <<- append(conds, cond)
@@ -224,7 +224,7 @@
     var <- var[!is.na(var)]
     conds <- list()
     ret <- withCallingHandlers({
-      wilcox.test(var, conf.int=TRUE)$conf.int[1]
+      stats::wilcox.test(var, conf.int=TRUE)$conf.int[1]
       },
       condition = function(cond) {
         conds <<- append(conds, cond)

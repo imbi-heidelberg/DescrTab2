@@ -1,7 +1,7 @@
 > descr(dat, "gender") %>% print()
-  Variables       F           M           Total        p        Test       CI   
+  Variables       F           M           Total        p     Test  CI    CI_name
 1  party                                                                        
-2    Democrat      762 (49%)   484 (40%)   1246 (45%)   <0.001   Pearson'~      
+2    Democrat      762 (49%)   484 (40%)   1246 (45%)   <0.~  Pea~              
 3    Independent   327 (21%)   239 (20%)   566 (21%)                            
 4    Republican    468 (30%)   477 (40%)   945 (34%)                            
 

@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -100,19 +100,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/maintenance_guide.html">Maintenance guidance</a>
+      <a href="../articles/1_usage_guide.html">Usage guidance</a>
     </li>
     <li>
-      <a href="../articles/other_software_comparison.html">Comparison with other software</a>
+      <a href="../articles/2_test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
     </li>
     <li>
-      <a href="../articles/test_choice_tree_pdf.pdf">Test choice tree (PDF)</a>
+      <a href="../articles/3_other_software_comparison.html">Comparison with other software</a>
     </li>
     <li>
-      <a href="../articles/usage_guide.html">Usage guidance</a>
+      <a href="../articles/4_validation_statement.html">Validation statement</a>
     </li>
     <li>
-      <a href="../articles/validation_statement.html">Validation statement</a>
+      <a href="../articles/5_maintenance_guide.html">Maintenance guidance</a>
     </li>
   </ul>
 </li>
@@ -235,23 +235,24 @@ The confidence interval is constructed by inverting the two-sided test directly.
     <p>Kevin Kunzmann</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fl'>20</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fl'>30</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>farrington.manning</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='op'>-</span><span class='fl'>.3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; 	Farrington-Manning test for non-inferiority of rates
-#&gt; 
-#&gt; data:  group 1: x, group 2: y
-#&gt; Z-statistic = 3.1546, noninferiority margin = -0.3, p-value = 0.0008037
-#&gt; alternative hypothesis: true rate difference (group 1 - group 2) is greater than -0.3
-#&gt; 95 percent confidence interval:
-#&gt;  -0.1824742  0.2282376
-#&gt; sample estimates:
-#&gt; rate difference (group 1 - group 2) 
-#&gt;                          0.02597403 
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fl'>20</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fl'>30</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>farrington.manning</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='op'>-</span><span class='fl'>.3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Farrington-Manning test for non-inferiority of rates</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  group 1: x, group 2: y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Z-statistic = 3.1546, noninferiority margin = -0.3, p-value = 0.0008037</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: true rate difference (group 1 - group 2) is greater than -0.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95 percent confidence interval:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  -0.1824742  0.2282376</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sample estimates:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> rate difference (group 1 - group 2) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                          0.02597403 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -263,7 +264,7 @@ The confidence interval is constructed by inverting the two-sided test directly.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz.</p>
+  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
 </div>
 
 <div class="pkgdown">

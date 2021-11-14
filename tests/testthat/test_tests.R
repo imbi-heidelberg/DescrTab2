@@ -705,6 +705,18 @@ test_that("Custom tests work", {
 })
 
 
+dat <- tibble(
+  group = factor(rep( c(rep("Guess", 4), rep("Truth", 4)), 100)),
+  var = factor(rep( c("Milk", "Milk", "Milk", "Tea", "Milk", "Tea", "Tea", "Tea"), 100))
+)
+
+test_that("Exact binomial test works",{
+  expect_error(descr(dat, test_options = list(exact=TRUE)), NA)
+})
+
+test_that("Fisher's exact test works",{
+  expect_warning(descr(dat, "group", test_options = list(exact=TRUE)))
+})
 
 
 

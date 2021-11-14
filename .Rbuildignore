@@ -10,3 +10,5 @@ index.Rmd
 ^pkgdown$
 ^\.github$
 inst/.lintr$
+^.lintr$
+^.vscode$

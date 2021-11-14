@@ -254,7 +254,8 @@ descr <-
              include_group_missings_in_test = FALSE,
              include_categorical_missings_in_test = FALSE,
              test_override = NULL,
-             additional_test_args = list()
+             additional_test_args = list(),
+             boschloo_max_n = 200
            ),
            reshape_rows = list(
              `Q1 - Q3` = list(
@@ -569,6 +570,8 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       `Pearson's chi-squared test` = "chi2",
       `Exact McNemar's test` = "eMcN",
       `Boschloo's test` = "Bolo",
+      `Exact binomial test` = "Bin",
+      `Fisher's exact test` = "Fish",
       `Friedman test` = "Frie",
       `Wilcoxon two-sample signed-rank test` = "Wil2",
       `Wilcoxon's one-sample signed-rank test` = "Wil1",
@@ -579,6 +582,14 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       `Student's one-sample t-test` = "tt1",
       `Welch's two-sample t-test` = "tt2",
       `F-test (ANOVA)` = "F",
+      `Cochran-Armitage's test` = "CocA",
+      `Jonckheere-Terpstra's test` = "JT",
+      `CI for difference in proportions derived from a normal (\"Wald\") approximation` = "PWa",
+      `CI for difference in proportions derived from an unconditional exact test` = "PUnc",
+      `CI for difference in proportions derived from an exact McNemar's test` = "PMcN",
+      `CI for difference in means derived from the t-distribution` = "t",
+      `CI for the Hodges-Lehmann estimator` = "HL",
+      `CI for odds ratio derived from Fisher's exact test` = "Odds",
       `No test` = "NA"
     )
 
@@ -1160,10 +1171,12 @@ create_DescrPrint <- function(DescrListObj, print_format) {
     if (print_format == "numeric") {
       if ("CI_upper" %in% names(tibl) && "CI_lower" %in% names(tibl)) {
         tibl %<>% select(-c("CI_upper", "CI_lower"))
+        tibl %<>% select(-"CI_name")
       }
     } else {
       if ("CI" %in% names(tibl)) {
         tibl %<>% select(-"CI")
+        tibl %<>% select(-"CI_name")
       }
     }
   }
@@ -1281,8 +1294,10 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
 
   # indx_varnames <- c1 %in% labels
 
+  print_footnotes <- FALSE
   if ("p" %in% names(tibl)) {
-    print_footnotes <- T
+    print_footnotes <- TRUE
+    p_exists <- TRUE
     tests <-
       tibl %>%
       filter(get("Test") != "") %>%
@@ -1294,13 +1309,35 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
     for (idx in p_indx) {
       tibl[idx, "p"] %<>% paste0("\\textsuperscript{", test_abbrev[match(tibl[idx, "Test"], tests)], "}")
     }
-  } else {
-    print_footnotes <- F
-  }
-
+  } else p_exists <- FALSE
   if ("Test" %in% names(tibl)) {
     tibl %<>% select(-"Test")
   }
+
+  if ("CI" %in% names(tibl)) {
+  print_footnotes <- TRUE
+  CIs <-
+    tibl %>%
+    filter(get("CI_name") != "") %>%
+    pull("CI_name") %>%
+    unique()
+  p_vec <- tibl %>% pull("CI")
+  p_indx <- which(p_vec != "")
+  ci_abbrev <- create_test_abbreviations(CIs, DescrPrintObj[["format"]][["test_abbreviations"]])
+  for (idx in p_indx) {
+    tibl[idx, "CI"] %<>% paste0("\\textsuperscript{", ci_abbrev[match(tibl[idx, "CI_name"], CIs)], "}")
+  }
+  if (p_exists) {
+    test_abbrev <- c(test_abbrev, ci_abbrev)
+    tests <- c(tests, CIs)
+  } else {
+    test_abbrev <- ci_abbrev
+    tests <- CIs
+  }
+}
+if ("CI_name" %in% names(tibl)) {
+  tibl %<>% select(-"CI_name")
+}
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
@@ -1404,8 +1441,10 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
       c(indx_varnames, c(TRUE, rep(FALSE, DescrPrintObj$lengths[[i]] - 1)))
   }
 
+  print_footnotes <- FALSE
   if ("p" %in% names(tibl)) {
-    print_footnotes <- T
+    print_footnotes <- TRUE
+    p_exists <- TRUE
     tests <-
       tibl %>%
       filter(get("Test") != "") %>%
@@ -1417,13 +1456,35 @@ print_html <- function(DescrPrintObj, silent = FALSE) {
     for (idx in p_indx) {
       tibl[idx, "p"] %<>% paste0("<sup>", test_abbrev[match(tibl[idx, "Test"], tests)], "</sup>")
     }
-  } else {
-    print_footnotes <- F
-  }
-
+  } else p_exists <- FALSE
   if ("Test" %in% names(tibl)) {
     tibl %<>% select(-"Test")
   }
+
+  if ("CI" %in% names(tibl)) {
+  print_footnotes <- T
+  CIs <-
+    tibl %>%
+    filter(get("CI_name") != "") %>%
+    pull("CI_name") %>%
+    unique()
+  p_vec <- tibl %>% pull("CI")
+  p_indx <- which(p_vec != "")
+  ci_abbrev <- create_test_abbreviations(CIs, DescrPrintObj[["format"]][["test_abbreviations"]])
+  for (idx in p_indx) {
+    tibl[idx, "CI"] %<>% paste0("<sup>", ci_abbrev[match(tibl[idx, "CI_name"],  CIs)], "</sup>")
+  }
+  if (p_exists) {
+    test_abbrev <- c(test_abbrev, ci_abbrev)
+    tests <- c(tests, CIs)
+  } else {
+    test_abbrev <- ci_abbrev
+    tests <- CIs
+  }
+}
+if ("CI_name" %in% names(tibl)) {
+  tibl %<>% select(-"CI_name")
+}
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
@@ -1477,8 +1538,11 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
   c1 <- tibl %>% pull(1)
   indx_varnames <- c1 %in% var_names
 
+
+  print_footnotes <- FALSE
   if ("p" %in% names(tibl)) {
-    print_footnotes <- T
+    print_footnotes <- TRUE
+    p_exists <- TRUE
     tests <-
       tibl %>%
       filter(get("Test") != "") %>%
@@ -1487,14 +1551,29 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
     p_vec <- tibl %>% pull("p")
     p_indx <- which(p_vec != "")
     test_abbrev <- create_test_abbreviations(tests, DescrPrintObj[["format"]][["test_abbreviations"]])
-  } else {
-    print_footnotes <- F
-  }
-
+  } else p_exists <- FALSE
   if ("Test" %in% names(tibl)) {
     tibl2 <- tibl %>% select(-"Test")
   } else {
     tibl2 <- tibl
+  }
+
+  if ("CI" %in% names(tibl)) {
+    print_footnotes <- TRUE
+    CI_exists <- TRUE
+    CIs <-
+      tibl %>%
+      filter(get("CI_name") != "") %>%
+      pull("CI_name") %>%
+      unique()
+    p_vec <- tibl %>% pull("CI")
+    p_indx <- which(p_vec != "")
+    ci_abbrev <- create_test_abbreviations(CIs, DescrPrintObj[["format"]][["test_abbreviations"]])
+  } else CI_exists <- FALSE
+  if ("CI_name" %in% names(tibl)) {
+    tibl2 <- tibl2 %>% select(-"CI_name")
+  } else {
+    tibl2 <- tibl2
   }
 
 
@@ -1526,14 +1605,27 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
     )
 
   if (print_footnotes) {
-    for (test in tests) {
-      ft %<>% flextable::footnote(
-        i = which((tibl %>% pull("Test")) %in% test),
-        j = which(names(tibl2) == "p"),
-        value = flextable::as_paragraph(c(test)),
-        ref_symbols = c(test_abbrev[match(test, tests)]),
-        part = "body"
-      )
+    if (p_exists) {
+      for (test in tests) {
+        ft %<>% flextable::footnote(
+          i = which((tibl %>% pull("Test")) %in% test),
+          j = which(names(tibl2) == "p"),
+          value = flextable::as_paragraph(c(test)),
+          ref_symbols = c(test_abbrev[match(test, tests)]),
+          part = "body"
+        )
+      }
+    }
+    if (CI_exists) {
+      for (CI in CIs) {
+        ft %<>% flextable::footnote(
+          i = which((tibl %>% pull("CI_name")) %in% CI),
+          j = which(names(tibl2) == "CI"),
+          value = flextable::as_paragraph(c(CI)),
+          ref_symbols = c(ci_abbrev[match(CI, CIs)]),
+          part = "body"
+        )
+      }
     }
   }
   if (!is.null(caption)) {
@@ -1698,17 +1790,20 @@ create_numeric_subtable <-
     tibl %<>% bind_cols(Test = test_name)
 
     if (length(groups) == 2) {
-      if (length(cat_names) == 2) {
+      if (!is.null(DescrVarObj[["test_list"]]$CI[1])) {
         CI_upper <-
           c(DescrVarObj[["test_list"]]$CI[1], rep(NA_real_, length_tibl - 1))
         CI_lower <-
           c(DescrVarObj[["test_list"]]$CI[2], rep(NA_real_, length_tibl - 1))
+        CI_name  <-
+        c(DescrVarObj[["test_list"]]$CI_name, rep("", length_tibl - 1))
 
-        tibl %<>% bind_cols(CI_upper = CI_upper, CI_lower = CI_lower)
+        tibl %<>% bind_cols(CI_upper = CI_upper, CI_lower = CI_lower, CI_name=CI_name)
       } else {
         tibl %<>% bind_cols(
           CI_upper = rep(NA_real_, length_tibl),
-          CI_lower = rep(NA_real_, length_tibl)
+          CI_lower = rep(NA_real_, length_tibl),
+          CI_name = rep("", length_tibl)
         )
       }
     }
@@ -2037,7 +2132,11 @@ create_character_subtable <-
       ))
       tibl %<>% bind_cols(Test = c(
         "",
-        DescrVarObj[["test_list"]]$test_name,
+        if (isFALSE(format_options[["print_p"]])) {
+          ""
+        } else {
+        DescrVarObj[["test_list"]]$test_name
+        },
         rep("", max(c(0, length_tibl -
           2)))
       ))
@@ -2058,11 +2157,24 @@ create_character_subtable <-
             )
         }
         tibl %<>% bind_cols(CI = c(
-          if (length_tibl >= 3L) "" else NULL,
-          CI_name,
-          CI,
+          "",
+          if (isFALSE(format_options[["print_CI"]])) {
+            ""
+          } else {
+            CI
+          },
           rep("", max(c(0, length_tibl -
-            3)))
+            2)))
+        ))
+        tibl %<>% bind_cols(CI_name = c(
+          "",
+          if (isFALSE(format_options[["print_CI"]])) {
+            ""
+          } else {
+            CI_name
+          },
+          rep("", max(c(0, length_tibl -
+            2)))
         ))
       }
     }
@@ -2100,6 +2212,8 @@ print_test_names <- function() {
     "Pearson's chi-squared test",
     "Exact McNemar's test",
     "Boschloo's test",
+    "Fisher's exact test",
+    "Exact binomal test",
     "Friedman test",
     "Wilcoxon two-sample signed-rank test",
     "Wilcoxon's one-sample signed-rank test",
@@ -2109,6 +2223,8 @@ print_test_names <- function() {
     "Mixed model ANOVA",
     "Student's one-sample t-test",
     "Welch's two-sample t-test",
+    "Cochran-Armitage's test",
+    "Jonckheere-Terpstra's test",
     "F-test (ANOVA)"
   )
 }
@@ -2141,6 +2257,9 @@ sig_test <- function(var,
                      test_options = list(),
                      test = NULL,
                      var_name = NULL) {
+
+                  
+  id  <- test_options[["indices"]]
 
   # decide how to handle missings
   if (!is.null(group)) {
@@ -2271,16 +2390,30 @@ sig_test <- function(var,
             stop(
               "You need to supply patient IDs, e.g. via test_options=list(indices=patIDs)."
             )
-          } else if (n_levels_group == 2 & n_levels_var == 2) {
+          } else if (n_levels_group == 2 && n_levels_var == 2) {
             test <- "Exact McNemar's test"
           } else {
             test <- "No test"
           }
         } else {
           # nominal variable, exact independent test
-          if (n_levels_group == 2 & n_levels_var == 2) {
+          if (n_levels_group >= 2 && n_levels_var >= 2 ){
+              if (n_levels_group == 2 && n_levels_var == 2 &
+              (is.null(test_options[["boschloo_max_n"]]) || length(var) <= test_options[["boschloo_max_n"]]) ) {
             test <- "Boschloo's test"
           } else {
+            if (!(is.null(test_options[["boschloo_max_n"]]) || length(var) <= test_options[["boschloo_max_n"]])){
+              warning(paste0("You requested an exact test for a variable with more than ",
+              test_options[["boschloo_max_n"]], " observations.
+The calculations for Boschloo's test may take a very long time, therefore Fisher's exact test is applied.
+If you really want to use Boschloo's test, you can set the variable
+boschloo_max_n in test_options to a larger value or to NULL."))
+            }
+            test <- "Fisher's exact test"
+          } 
+        } else if (n_levels_group == 1 && n_levels_var <= 2 && 1 <= n_levels_var){
+          test <- "Exact binomial test"
+        } else {
             test <- "No test"
           }
         }
@@ -2407,7 +2540,7 @@ sig_test <- function(var,
         list(
           p = tl$p.value,
           CI = tl$conf.int,
-          CI_name = "HL CI"
+          CI_name = "CI for the Hodges-Lehmann estimator"
         )
       },
       `Kruskal-Wallis's one-way ANOVA` = {
@@ -2456,7 +2589,7 @@ sig_test <- function(var,
         list(
           p = tl$p.value,
           CI = tl$conf.int,
-          CI_name = "Mean dif. CI"
+          CI_name = "CI for difference in means derived from the t-distribution"
         )
       },
       `Mixed model ANOVA` = {
@@ -2502,7 +2635,7 @@ sig_test <- function(var,
         list(
           p = tl$p.value,
           CI = tl$conf.int,
-          CI_name = "Mean dif. CI"
+          CI_name = "CI for difference in means derived from the t-distribution"
         )
       },
       `F-test (ANOVA)` = {
@@ -2550,7 +2683,7 @@ sig_test <- function(var,
         list(
           p = ignore_unused_args(exact2x2::exact2x2, arglist)$p.value,
           CI = exact2x2::mcnemarExactDP(n = sum(cont.table), x = cont.table[1, 2], m = cont.table[1, 2] + cont.table[2, 1])$conf.int,
-          CI_name = "Prop. dif. CI"
+          CI_name = "CI for difference in proportions derived from an exact McNemar's test"
         )
       },
       `Boschloo's test` = {
@@ -2564,15 +2697,71 @@ sig_test <- function(var,
             x1 = x1,
             n1 = n1,
             x2 = x2,
-            n2 = n2
+            n2 = n2,
+            conf.int = FALSE
+          ),
+          as.list(test_options[["additional_test_args"]])
+        )
+        arglist2 <- modifyList(
+          list(
+            x1 = x1,
+            n1 = n1,
+            x2 = x2,
+            n2 = n2,
+            conf.int = TRUE,
+            method = "FisherAdj",
+            parmtype = "difference"
+          ),
+          as.list(test_options[["additional_test_args"]])
+        )
+        tl  <- ignore_unused_args(exact2x2::boschloo, arglist)
+        cl  <- ignore_unused_args(exact2x2::uncondExact2x2, arglist2)
+        list(
+          p = tl$p.value,
+          CI = cl$conf.int,
+          CI_name = "CI for difference in proportions derived from an unconditional exact test"
+        )
+      },
+      `Exact binomial test` = {
+        if (length(table(var))>2){
+          stop("Exact binomial test can only be used on variables with less than 3 levels.")
+        }
+        arglist <- modifyList(
+          list(
+            x  = table(var)[1],
+            n = length(var)
           ),
           as.list(test_options[["additional_test_args"]])
         )
         list(
-          p = ignore_unused_args(exact2x2::boschloo, arglist)$p.value,
-          CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-          CI_name = "Prop. dif. CI"
+          p = ignore_unused_args(stats::binom.test, arglist)$p.value
         )
+      },
+      `Fisher's exact test` = {
+        if (length(levels(var)) == 2 && length(levels(group)) == 2) {
+          conf.int <- TRUE
+        } else {
+          conf.int <- FALSE
+        }
+        arglist <- modifyList(
+          list(
+            x = table(var, group),
+            conf.int = conf.int
+          ),
+          as.list(test_options[["additional_test_args"]])
+        )
+        tl <- ignore_unused_args(stats::fisher.test, arglist)
+        if (conf.int) {
+          list(
+            p = tl$p.value,
+            CI = tl$conf.int,
+            CI_name = "CI for odds ratio derived from Fisher's exact test"
+          )
+        } else{
+          list(
+            p = tl$p.value
+          )
+        }
       },
       `McNemar's test` = {
         tmp <- tibble(
@@ -2606,7 +2795,7 @@ exact McNemar's test.")
         list(
           p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
           CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-          CI_name = "Prop. dif. CI"
+          CI_name = "CI for difference in proportions derived from a normal (\"Wald\") approximation"
         )
       },
       `Cochran's Q test` = {
@@ -2648,11 +2837,31 @@ exact McNemar's test.")
           list(
             p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
             CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
-            CI_name = "Prop. dif. CI"
+            CI_name = "CI for difference in proportions derived from a normal (\"Wald\") approximation"
           )
         } else {
           list(p = ignore_unused_args(stats::chisq.test, arglist)$p.value)
         }
+      },
+      `Cochran-Armitage's test` = {
+        arglist <- modifyList(
+          list(
+            x = table(var, group)
+          ),
+          as.list(test_options[["additional_test_args"]])
+        )
+        list(p = ignore_unused_args(DescTools::CochranArmitageTest, arglist)$p.value)
+      },
+      `Jonckheere-Terpstra's test` = {
+        arglist <- modifyList(
+          list(
+            x = var,
+            g = group,
+            nperm = 1000
+          ),
+          as.list(test_options[["additional_test_args"]])
+        )
+        list(p = ignore_unused_args(DescTools::JonckheereTerpstraTest, arglist)$p.value)
       },
       list(
         p = NA_real_,

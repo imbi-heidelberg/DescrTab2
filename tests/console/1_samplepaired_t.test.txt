@@ -3,10 +3,10 @@
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
-  Variables     `1`           `2`           p       Test              CI        
+  Variables     `1`           `2`           p       Test     CI     CI_name     
 1  extra                                                                        
-2    N           10            10            0.003   Student's paire~  Mean dif~
-3    mean        0.75          2.3                                     [-2.5, -~
+2    N           10            10            0.003   Studen~  [-2.~  CI for dif~
+3    mean        0.75          2.3                                              
 4    sd          1.8           2                                                
 5    median      0.35          1.8                                              
 6    Q1 - Q3     -0.2 -- 2     0.8 -- 4.4                                       
