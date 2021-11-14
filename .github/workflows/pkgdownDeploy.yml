@@ -23,6 +23,8 @@ jobs:
         with:
           extra-packages: pkgdown
           needs: website
+      - uses: r-lib/actions/setup-tinytex@v1
+      - run: tlmgr --version
 
       - name: Deploy package
         run: |
