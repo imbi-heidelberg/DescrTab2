@@ -2936,6 +2936,7 @@ ignore_unused_args <- function(what, args) {
 #' Convenience function to apply descr to a list of datasets and print the results
 #'
 #' @param list a list of datasets (tibbles or data.frames)
+#' @param ... arguments to be passed to the descr call
 #'
 #' @return something printable.
 #' @export

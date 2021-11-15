@@ -8,6 +8,8 @@ lapply_descr(list, ...)
 }
 \arguments{
 \item{list}{a list of datasets (tibbles or data.frames)}
+
+\item{...}{arguments to be passed to the descr call}
 }
 \value{
 something printable.
