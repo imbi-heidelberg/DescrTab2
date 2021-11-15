@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.3</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Usage guidance</h1>
             
-            <h4 class="date">2021-11-14</h4>
+            <h4 class="date">2021-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/a_usage_guide.Rmd"><code>vignettes/a_usage_guide.Rmd</code></a></small>
       <div class="hidden name"><code>a_usage_guide.Rmd</code></div>
@@ -131,11 +131,22 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://imbi-heidelberg.github.io/DescrTab2">DescrTab2</a></span><span class="op">)</span></code></pre></div>
 <p>somewhere in the document before you use it. You are now ready to go!</p>
-<p>For instructive purposes, we will use the following dataset:</p>
+<p>We will use two <code>tidyverse</code> libraries for data manipulation and a the following dataset for instructive purposes:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">]</span>
-<span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mammal"</span>, <span class="st">"Fish"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">75</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="va">dat</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>food<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fries"</span>, <span class="st">"wedges"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org">forcats</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mammal"</span>, <span class="st">"Fish"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">75</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>food <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fries"</span>, <span class="st">"wedges"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>
+<span class="co">#&gt;   Species Sepal.Length animal   food</span>
+<span class="co">#&gt; 1  setosa          5.1 Mammal  fries</span>
+<span class="co">#&gt; 2  setosa          4.9   Fish  fries</span>
+<span class="co">#&gt; 3  setosa          4.7 Mammal  fries</span>
+<span class="co">#&gt; 4  setosa          4.6   Fish wedges</span>
+<span class="co">#&gt; 5  setosa          5.0 Mammal  fries</span>
+<span class="co">#&gt; 6  setosa          5.4   Fish wedges</span></code></pre></div>
 <p>Producing beautiful descriptive tables is now as easy as typing:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
@@ -307,10 +318,10 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-71 (47%)
+76 (51%)
 </td>
 <td style="text-align:center;">
-0.514<sup>chi1</sup>
+0.870<sup>chi1</sup>
 </td>
 </tr>
 <tr>
@@ -318,7 +329,7 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-79 (53%)
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -351,7 +362,7 @@ wedges
 <p>Rstudios autocomplete suggestions are very helpful when navigating this list.</p>
 <p>The <code>print</code> function returns a formatted version of this list, which you can also save and access using the same syntax.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">my_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="specifying-a-group" class="section level2">
 <h2 class="hasAnchor">
@@ -587,19 +598,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
-20 (40%)
+30 (60%)
 </td>
 <td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.075<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -607,16 +618,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-30 (60%)
+20 (40%)
 </td>
 <td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -869,19 +880,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
-20 (40%)
+30 (60%)
 </td>
 <td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.075<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -889,16 +900,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-30 (60%)
+20 (40%)
 </td>
 <td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1155,19 +1166,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
-20 (40%)
+30 (60%)
 </td>
 <td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.075<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -1175,16 +1186,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-30 (60%)
+20 (40%)
 </td>
 <td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1448,19 +1459,19 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-34 (45%)
-</td>
-<td style="text-align:center;">
 37 (49%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-0.624<sup>chi2</sup>
+76 (51%)
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]<sup>PWa</sup>
+0.744<sup>chi2</sup>
+</td>
+<td style="text-align:center;">
+[-0.19, 0.13]<sup>PWa</sup>
 </td>
 </tr>
 <tr>
@@ -1468,13 +1479,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-41 (55%)
-</td>
-<td style="text-align:center;">
 38 (51%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+36 (48%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1512,7 +1523,7 @@ wedges
 <p>There are a lot of different tests available. Check out the test_choice vignette for details: <a href="https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf" class="uri">https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf</a></p>
 <p>Here are some different tests in action:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span>, nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>exact<span class="op">=</span><span class="cn">TRUE</span>, nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1691,19 +1702,19 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-34 (45%)
-</td>
-<td style="text-align:center;">
 37 (49%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-0.674<sup>Bolo</sup>
+76 (51%)
 </td>
 <td style="text-align:center;">
-[-0.12, 0.2]<sup>PUnc</sup>
+0.803<sup>Bolo</sup>
+</td>
+<td style="text-align:center;">
+[-0.14, 0.18]<sup>PUnc</sup>
 </td>
 </tr>
 <tr>
@@ -1711,13 +1722,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-41 (55%)
-</td>
-<td style="text-align:center;">
 38 (51%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+36 (48%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1749,7 +1760,7 @@ wedges
 </tfoot>
 </table>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">)</span>, <span class="st">"Species"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Sepal.Length"</span><span class="op">)</span><span class="op">)</span>, <span class="st">"Species"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nonparametric<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -1937,7 +1948,7 @@ min - max
 <a href="#paired-observations" class="anchor"></a>Paired observations</h2>
 <p>In situations with paired data, the <code>group</code> variable usually denotes the timing of the measurement (e.g. “before” and “after” or “time 1”, “time 2”, etc.). In these scenarios, you need an additional index variable that specifies which observations from the different timepoints should be paired. The <code>test_options =list(paired=TRUE, indices = &lt;Character name of index variable name or vector of indices&gt;)</code> option can be used to specify the pairing indices, see the example below. DescrTab2 only works with data in “long format”, see e.g. <code><a href="https://rdrr.io/r/stats/reshape.html">?reshape</a></code> or <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">?tidyr::pivot_longer</a></code> for information on how to transoform your data from wide to long format.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode</a></span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
 <span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span>
 <span class="co">#&gt; Warning in sig_test(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.</span>
@@ -2095,16 +2106,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-34 (45%)
-</td>
-<td style="text-align:center;">
 37 (49%)
 </td>
 <td style="text-align:center;">
-0.742<sup>McN</sup>
+39 (52%)
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]<sup>PWa</sup>
+0.877<sup>McN</sup>
+</td>
+<td style="text-align:center;">
+[-0.19, 0.13]<sup>PWa</sup>
 </td>
 </tr>
 <tr>
@@ -2112,10 +2123,10 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-41 (55%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2148,7 +2159,7 @@ wedges
 </table>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>animal <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span>, idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="st">"idx"</span> <span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode</a></span><span class="op">(</span><span class="va">animal</span>, Before<span class="op">=</span><span class="st">"Fish"</span>, After<span class="op">=</span><span class="st">"Mammal"</span><span class="op">)</span>, idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span>, each<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="st">"Species"</span><span class="op">)</span>, <span class="st">"animal"</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>paired<span class="op">=</span><span class="cn">TRUE</span>, indices<span class="op">=</span><span class="st">"idx"</span> <span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; You specified paired tests and did not explicitly</span>
 <span class="co">#&gt; specify format_options$print_Total. print_Total is set to FALSE.</span>
 <span class="co">#&gt; Warning in sig_test(var, group, test_options, test_override, var_name): Confidence intervals for differences in proportions ignore the paired structure of the data.</span>
@@ -2306,16 +2317,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-34 (45%)
-</td>
-<td style="text-align:center;">
 37 (49%)
 </td>
 <td style="text-align:center;">
-0.742<sup>McN</sup>
+39 (52%)
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]<sup>PWa</sup>
+0.877<sup>McN</sup>
+</td>
+<td style="text-align:center;">
+[-0.19, 0.13]<sup>PWa</sup>
 </td>
 </tr>
 <tr>
@@ -2323,10 +2334,10 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-41 (55%)
+38 (51%)
 </td>
 <td style="text-align:center;">
-38 (51%)
+36 (48%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2592,19 +2603,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
-20 (40%)
+30 (60%)
 </td>
 <td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.075<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2612,16 +2623,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-30 (60%)
+20 (40%)
 </td>
 <td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2858,19 +2869,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
-20 (40%)
+30 (60%)
 </td>
 <td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.075<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -2878,16 +2889,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-30 (60%)
+20 (40%)
 </td>
 <td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2914,7 +2925,7 @@ wedges
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create example dataset</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">iris</span>
-<span class="va">dat2</span><span class="op">$</span><span class="va">cat_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">dat2</span><span class="op">$</span><span class="va">cat_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">150</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"cat_var"</span><span class="op">)</span><span class="op">]</span>
 
 <span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="st">"Species"</span>, summary_stats_cat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean<span class="op">=</span><span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormean</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -2982,19 +2993,19 @@ p
 1
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+20 (40%)
 </td>
 <td style="text-align:center;">
-76 (51%)
+31 (62%)
 </td>
 <td style="text-align:center;">
-0.830<sup>chi2</sup>
+78 (52%)
+</td>
+<td style="text-align:center;">
+0.083<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3002,16 +3013,16 @@ p
 2
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-25 (50%)
+30 (60%)
 </td>
 <td style="text-align:center;">
-74 (49%)
+19 (38%)
+</td>
+<td style="text-align:center;">
+72 (48%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3024,10 +3035,10 @@ mean
 1.5
 </td>
 <td style="text-align:center;">
-1.5
+1.6
 </td>
 <td style="text-align:center;">
-1.5
+1.4
 </td>
 <td style="text-align:center;">
 1.5
@@ -3258,19 +3269,19 @@ Mammal
 fries
 </td>
 <td style="text-align:center;">
-24 (48%)
-</td>
-<td style="text-align:center;">
-20 (40%)
+30 (60%)
 </td>
 <td style="text-align:center;">
 27 (54%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+19 (38%)
 </td>
 <td style="text-align:center;">
-0.372<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.075<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3278,16 +3289,16 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-26 (52%)
-</td>
-<td style="text-align:center;">
-30 (60%)
+20 (40%)
 </td>
 <td style="text-align:center;">
 23 (46%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+31 (62%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3524,16 +3535,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-34 (45%)
-</td>
-<td style="text-align:center;">
 37 (49%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-[-0.2, 0.12]<sup>PWa</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+[-0.19, 0.13]<sup>PWa</sup>
 </td>
 </tr>
 <tr>
@@ -3541,13 +3552,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-41 (55%)
-</td>
-<td style="text-align:center;">
 38 (51%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+36 (48%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -3781,16 +3792,16 @@ min - max
 fries
 </td>
 <td style="text-align:center;">
-34 (45%)
-</td>
-<td style="text-align:center;">
 37 (49%)
 </td>
 <td style="text-align:center;">
-71 (47%)
+39 (52%)
 </td>
 <td style="text-align:center;">
-0.624<sup>chi2</sup>
+76 (51%)
+</td>
+<td style="text-align:center;">
+0.744<sup>chi2</sup>
 </td>
 </tr>
 <tr>
@@ -3798,13 +3809,13 @@ fries
 wedges
 </td>
 <td style="text-align:center;">
-41 (55%)
-</td>
-<td style="text-align:center;">
 38 (51%)
 </td>
 <td style="text-align:center;">
-79 (53%)
+36 (48%)
+</td>
+<td style="text-align:center;">
+74 (49%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -4403,7 +4414,7 @@ min - max
   <span class="op">}</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>test_override <span class="op">=</span> <span class="va">custom_ttest</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span>, test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>test_override <span class="op">=</span> <span class="va">custom_ttest</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead>
 <tr>
@@ -4775,7 +4786,7 @@ min - max
 <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>a_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">70</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>a_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">70</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
               a_numeric <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,
               group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Trt"</span>, <span class="st">"Ctrl"</span><span class="op">)</span>, <span class="fl">100</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="op">)</span>
