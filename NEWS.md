@@ -1,3 +1,7 @@
+# Version 2.1.3
+
+* Added lapply_descr function which allows applying descr to a list of datasets
+
 # Version 2.1.2
 
 * Major code refactoring, removing alot of code duplication

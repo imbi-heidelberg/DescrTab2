@@ -56,6 +56,17 @@ test_that("write_in_tmpfile_for_cran function works",{
   }
 })
 
+test_that("lapply_descr works",
+          {
+            l <- list()
+            for (i in 1:2){
+              l <- append(l, list(iris))
+            }
+            expect_output(lapply_descr(l, group="Species"))
+          })
+
+
+
 
 
 

@@ -1730,7 +1730,7 @@ knit_print.DescrPrint <- function(x,
 #' @param format_summary_stats named list of summary statistcs
 #' @param format_p formatting function for p-values
 #' @param reshape_rows named list of row reshaping functions
-#' 
+#'
 #' @importFrom magrittr `%<>%`
 #' @import dplyr
 #' @import rlang
@@ -1816,7 +1816,7 @@ create_numeric_subtable <-
 
 
 #' Function to create (a part of a) nicely formatted table
-#' 
+#'
 #' @inheritParams create_numeric_subtable
 #'
 #' @importFrom magrittr `%<>%`
@@ -2258,7 +2258,7 @@ sig_test <- function(var,
                      test = NULL,
                      var_name = NULL) {
 
-                  
+
   id  <- test_options[["indices"]]
 
   # decide how to handle missings
@@ -2410,7 +2410,7 @@ If you really want to use Boschloo's test, you can set the variable
 boschloo_max_n in test_options to a larger value or to NULL."))
             }
             test <- "Fisher's exact test"
-          } 
+          }
         } else if (n_levels_group == 1 && n_levels_var <= 2 && 1 <= n_levels_var){
           test <- "Exact binomial test"
         } else {
@@ -2930,5 +2930,33 @@ ignore_unused_args <- function(what, args) {
   } else {
     acceptable_args <- args[names(args) %in% (formals(what) %>% names())]
     do.call(what, acceptable_args %>% as.list())
+  }
+}
+
+#' Convenience function to apply descr to a list of datasets and print the results
+#'
+#' @param list a list of datasets (tibbles or data.frames)
+#'
+#' @return something printable.
+#' @export
+#'
+#' @examples
+#' l <- list()
+#' for (i in 1:2){
+#'   l <- append(l, list(iris))
+#' }
+#' lapply_descr(l, group="Species")
+#'
+#' @importFrom magrittr `%>%`
+lapply_descr <- function(list, ...) {
+  descrlist <- lapply(list, descr, ...)
+  results <- character()
+  for (d in descrlist) {
+    results <- c(results, knitr::knit_print(d))
+  }
+  if (knitr::is_html_output() || knitr::is_latex_output() || knitr::pandoc_to("docx")) {
+    return(knitr::asis_output(results))
+  } else {
+    return(invisible(knitr::asis_output(results)))
   }
 }
