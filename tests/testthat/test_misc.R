@@ -66,7 +66,9 @@ test_that("lapply_descr works",
           })
 
 
-
+test_that("strechSpace works in_minipage, even though i forgot why this is even implemented",{
+  expect_true(grepl("setstretch", in_minipage("abc", "1cm", 1, TRUE), fixed = TRUE))
+})
 
 
 

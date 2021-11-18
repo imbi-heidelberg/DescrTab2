@@ -736,7 +736,12 @@ test_that("Jonckheere-Terpstra's test works",{
 })
 
 
-
+test_that("unknown string in test_override produces a warning",{
+  expect_warning(descr(c(1), test_options = list(test_override = "unknown")))
+  expect_warning(descr(c(1), test_options = list(test_override = 3)))
+  expect_warning(descr(tibble(a=1), var_options = list(a = list( test_override = "unknown")  )))
+  expect_warning(descr(tibble(a=1), var_options = list(a = list( test_override = 3         ))))
+})
 
 
 

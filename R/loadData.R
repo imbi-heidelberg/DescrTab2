@@ -39,7 +39,7 @@ unlabel <- function(dat) {
     if (inherits(x, "labelled")) {
       class(x) <- class(x)[class(x) != "labelled"]
     }
-    if (!is.null(attr(x, "label") <- NULL)){
+    if (!is.null(attr(x, "label"))){
       attr(x, "label") <- NULL
     }
     return(x)
@@ -142,7 +142,7 @@ split_redcap_dataset <- function(dat, id_name = "patid") {
 #' @examples
 #' path_to_data <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
 #' pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-#' haven::read_sas(path_to_data, pat_to_format)
+#' read_sas_formatted(path_to_data, pat_to_format)
 #' @importFrom haven read_sas
 #'
 read_sas_formatted <- function(path_to_data = NULL, path_to_format = NULL) {

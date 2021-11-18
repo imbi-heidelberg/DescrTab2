@@ -292,3 +292,80 @@ test_that("Guessing ID variable works", {
     )
   )
 })
+
+  dat <- tibble(a_factor = factor(c(rep("a", 70), rep("b", 30))),
+              a_numeric = rnorm(100),
+              group = sample(c("Trt", "Ctrl"), 100, TRUE))
+
+test_that("categories_first_summary_stats_second options works", {
+  expect_error(descr(dat, "group",
+    format_options = list(
+      categories_first_summary_stats_second = FALSE,
+      combine_mean_sd = TRUE
+    )
+  ), NA)
+
+  expect_error(descr(dat, "group",
+    format_options = list(
+      categories_first_summary_stats_second = TRUE,
+      combine_mean_sd = TRUE
+    )
+  ), NA)
+
+
+    expect_error(descr(dat, "group",
+    format_options = list(
+      categories_first_summary_stats_second = FALSE,
+      combine_mean_sd = TRUE
+    )
+  )  %>% print(print_format="numeric"), NA)
+
+  expect_error(descr(dat, "group",
+    format_options = list(
+      categories_first_summary_stats_second = TRUE,
+      combine_mean_sd = TRUE
+    )
+  )%>% print(print_format="numeric"),  NA)
+
+
+})
+
+
+
+
+test_that("omit_factor_level options works", {
+  expect_error(descr(dat, "group",
+    format_options = list(
+      omit_factor_level="first",
+      categories_first_summary_stats_second = FALSE,
+      combine_mean_sd = TRUE
+    )
+  ), NA)
+
+  expect_error(descr(dat, "group",
+    format_options = list(
+      omit_factor_level="last",
+      categories_first_summary_stats_second = TRUE,
+      combine_mean_sd = TRUE
+    )
+  ), NA)
+
+
+    expect_error(descr(dat, "group",
+    format_options = list(
+      omit_factor_level="first",
+      categories_first_summary_stats_second = FALSE,
+      combine_mean_sd = TRUE
+    )
+  )  %>% print(print_format="numeric"), NA)
+
+  expect_error(descr(dat, "group",
+    format_options = list(
+      omit_factor_level="last",
+      categories_first_summary_stats_second = TRUE,
+      combine_mean_sd = TRUE
+    )
+  )%>% print(print_format="numeric"),  NA)
+
+
+})

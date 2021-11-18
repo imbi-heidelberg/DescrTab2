@@ -1783,9 +1783,13 @@ create_numeric_subtable <-
       tibl %<>% bind_cols(!!group := tmp)
     }
     tibl %<>% bind_cols(Total = tot)
+    
+    p <- c(DescrVarObj[["test_list"]]$p, rep(NA_real_, length_tibl - 1))
+    tibl %<>% bind_cols(p = p)
 
     test_name <-
       c(DescrVarObj[["test_list"]]$test_name, rep(NA_real_, length_tibl - 1))
+
 
     tibl %<>% bind_cols(Test = test_name)
 
@@ -2869,7 +2873,7 @@ exact McNemar's test.")
         CI_name = ""
       )
     )
-  } else {
+  } else if (is.list(test)) {
     # If a custom test list was supplied, the calcuation is performed below
     erg <- list(
       p = if (!is.null(group) && !is.function(id) && !is.null(id)) {
@@ -2901,6 +2905,9 @@ exact McNemar's test.")
       erg[["CI_name"]] <- test[["CI_name"]]
     }
     test <- test[["name"]]
+  } else {
+    erg <- list(p = NA_real_)
+    test <- "No test"
   }
   erg[["test_name"]] <- test
   erg

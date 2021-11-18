@@ -48,7 +48,7 @@ test_that("read_sas_formatted works",
 {
 path_to_data <- system.file("examples", "testsas.sas7bdat", package = "DescrTab2")
 pat_to_format <- system.file("examples", "formats.sas7bcat", package = "DescrTab2")
-expect_error(haven::read_sas(path_to_data, pat_to_format), NA)
+expect_error(read_sas_formatted(path_to_data, pat_to_format), NA)
 }
 )
 
@@ -61,12 +61,15 @@ expect_error(list_freetext_markdown(dat), NA)
 test_that("parse_formats works",
 {
 tmpfile <- tempfile()
-write(     "proc format;
-             value yn  1=\"yes\"
-                       0=\"no\";
-             value sex 1=\"female\"
-                       0=\"male\";
-              run;",tmpfile)
+write("proc format;
+        value yn  1=\"yes\"
+                  0=\"no\";
+        value sex 1=\"female\"
+                  0=\"male\";
+        value $dummy \" \"=\"   \";
+        value other_delim 0 = '0'
+                          1 = '1';
+        run;",tmpfile)
 expect_warning(parse_formats(tmpfile))
 }
 )
@@ -74,4 +77,13 @@ expect_warning(parse_formats(tmpfile))
 test_that("codegen_load_all_sas_data",
 {
 expect_output(codegen_load_all_sas_data(system.file("examples", package = "DescrTab2")))
+})
+
+
+test_that("edge cases work in loadData.R",{
+  a <- c(1, 2)
+  class(a) <- "labelled"
+  attr(a, "label") <- "a"
+  expect_identical(unlabel(a), c(1,2))
+
 })

@@ -75,3 +75,23 @@ test_that("categorical summary stats work",{
     expect_error(descr(ToothGrowth2, "supp", summary_stats_cat = summary_stats_cat,
     format_summary_stats = format_summary_stats), NA)
 })
+
+
+test_that("edge cases are handled correctly in summary stats",{
+    expect_equal(.meanCIlower(c(1)), NA_real_)
+    expect_equal(.meanCIupper(c(1)), NA_real_)
+    .HLCIlower(ordered(c("1", "2", "3", "2", "4", "1", "5", "5")))
+    .HLCIupper(ordered(c("1", "2", "3", "2", "4", "1", "5", "5")))
+})
+
+
+
+
+test_that("numeric printing fails if some summary stat does not return numeric",{
+    expect_warning(expect_error(print(descr(c(3), summary_stats_cont = list(a = as.character),
+    format_summary_stats = list(a = as.character)), print_format="numeric")))
+})
+
+
+
+
