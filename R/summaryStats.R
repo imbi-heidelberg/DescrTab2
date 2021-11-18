@@ -163,8 +163,12 @@
 }
 
 .factor_firstlevel_CIlower <- function(var) {
-  if (any(!is.na(var))) {
-    var <- var[!is.na(var)]
+  var <- var[!is.na(var) & !(var=="(Missing)")]
+  var <- factor(var,
+                levels = setdiff(levels(var), "(Missing)"),
+                labels = setdiff(levels(var), "(Missing)"))
+  if (length(var)>1) {
+    var <- var[!is.na(var) | !(var=="(Missing)")]
     stats::prop.test(sum(var == levels(var)[1]), length(var))$conf.int[1]
   } else {
     NA_real_
@@ -172,8 +176,12 @@
 }
 
 .factor_firstlevel_CIupper <- function(var) {
-  if (any(!is.na(var))) {
-    var <- var[!is.na(var)]
+  var <- var[!is.na(var) & !(var=="(Missing)")]
+  var <- factor(var,
+                levels = setdiff(levels(var), "(Missing)"),
+                labels = setdiff(levels(var), "(Missing)"))
+
+  if (length(var)>1) {
     stats::prop.test(sum(var == levels(var)[1]), length(var))$conf.int[2]
   } else {
     NA_real_
@@ -181,8 +189,11 @@
 }
 
 .factor_lastlevel_CIlower <- function(var) {
-  if (any(!is.na(var))) {
-    var <- var[!is.na(var)]
+  var <- var[!is.na(var) & !(var=="(Missing)")]
+  var <- factor(var,
+                levels = setdiff(levels(var), "(Missing)"),
+                labels = setdiff(levels(var), "(Missing)"))
+  if (length(var)>1) {
     stats::prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[1]
   } else {
     NA_real_
@@ -190,8 +201,11 @@
 }
 
 .factor_lastlevel_CIupper <- function(var) {
-  if (any(!is.na(var))) {
-    var <- var[!is.na(var)]
+  var <- var[!is.na(var) & !(var=="(Missing)")]
+  var <- factor(var,
+                levels = setdiff(levels(var), "(Missing)"),
+                labels = setdiff(levels(var), "(Missing)"))
+  if (length(var)>1) {
     stats::prop.test(sum(var == levels(var)[length(levels(var))]), length(var))$conf.int[2]
   } else {
     NA_real_
@@ -199,6 +213,11 @@
 }
 
 .HLCIlower <- function(var) {
+  if (!is.numeric(var)){
+    var <- var %>%
+      as.character() %>%
+      as.numeric()
+  }
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
     conds <- list()
@@ -234,6 +253,11 @@
 }
 
 .HLCIupper <- function(var) {
+  if (!is.numeric(var)){
+    var <- var %>%
+      as.character() %>%
+      as.numeric()
+  }
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
     conds <- list()

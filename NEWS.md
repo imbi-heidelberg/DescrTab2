@@ -1,3 +1,8 @@
+# Version 2.1.4
+
+* Fix major bug where percentages were not calculated correctly if factor levels are omitted.
+* Fix bug with confidence interval functions 
+
 # Version 2.1.3
 
 * Added lapply_descr function which allows applying descr to a list of datasets

@@ -2052,14 +2052,14 @@ create_character_subtable <-
           DescrVarObj[["results"]][[group]][["categories"]][sapply(DescrVarObj[["results"]][[group]][["categories"]], is.null)] <-
             "0 (0%)"
           N_group_total <-
-            sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][cat_names]))
+            sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][DescrVarObj[["variable_levels"]]]))
 
           if (isTRUE(format_options[["categorical_missing_percent_mode"]][1] == "missing_as_regular_category") &
             format_options[["omit_missings_in_categorical_var"]] == FALSE) {
             N_group_nonmissing <- N_group_total
           } else {
             N_group_nonmissing <-
-              sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][cat_names_nonmissing]))
+              sum(unlist(DescrVarObj[["results"]][[group]][["categories"]][setdiff(DescrVarObj[["variable_levels"]], "(Missing)")]))
           }
 
 

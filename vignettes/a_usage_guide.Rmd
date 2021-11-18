@@ -242,7 +242,7 @@ If you have a lot of binary factors, you may want to suppress one of the factor 
 A common use case for this practise is when you analyse questionaires with a great deal of "yes" / "no" items.
 You can do so by setting the `omit_factor_level` option to either `"first"` or `"last"`.
 
-```r
+```{r}
 descr(factor(c("a", "b")), format_options=list(omit_factor_level = "last"))
 ```
 
