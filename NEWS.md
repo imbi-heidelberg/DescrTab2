@@ -1,3 +1,7 @@
+# Version 2.1.5
+
+* Fix bug with group_labels that lead to group N numbers not being dispalyed.
+
 # Version 2.1.4
 
 * Fix major bug where percentages were not calculated correctly if factor levels are omitted.

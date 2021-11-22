@@ -1345,7 +1345,7 @@ if ("CI_name" %in% names(tibl)) {
 
 
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)], ")"))
+    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][DescrPrintObj[["group_labels"]] %in% names(tibl)], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
@@ -1490,7 +1490,7 @@ if ("CI_name" %in% names(tibl)) {
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
   actual_colnames <- names(tibl[!indx_varnames, ])
   N_numbers <-
-    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)], ")"))
+    c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][DescrPrintObj[["group_labels"]] %in% names(tibl)], ")"))
   pad_N <- ncol(tibl) - length(N_numbers)
   N_numbers <- c(N_numbers, rep("", pad_N))
 
@@ -1579,8 +1579,8 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
 
   actual_colnames <- DescrPrintObj[["group_names"]]
   N_numbers <-
-    c(paste0("(N=", DescrPrintObj[["group"]][["lengths"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)], ")"))
-  names(N_numbers) <- unlist(DescrPrintObj[["group_labels"]][names(DescrPrintObj[["group"]][["lengths"]]) %in% names(tibl)])
+    c(paste0("(N=", DescrPrintObj[["group"]][["lengths"]][DescrPrintObj[["group_labels"]] %in% names(tibl)], ")"))
+  names(N_numbers) <- unlist(DescrPrintObj[["group_labels"]][DescrPrintObj[["group_labels"]] %in% names(tibl)])
 
   ft <- tibl2 %>%
     flextable() %>%
