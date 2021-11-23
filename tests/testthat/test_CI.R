@@ -32,7 +32,7 @@ test_that("Confidence intervals for differences work",
     descr(
         dat ,
         "animal",
-        format_options = list(print_CI = FALSE) 
+        format_options = list(print_CI = FALSE)
       ),
       NA
   )
@@ -69,42 +69,37 @@ test_that("Confidence intervals for differences work",
 
 test_that("Confidence intervals for differences work",
 {
-  descr(
+  expect_error(descr(
     dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
     "animal",
     format_options = list(print_CI = TRUE, print_p=FALSE)
-  ) %>% print(print_format="html")
+  ) %>% print(silent = TRUE,print_format="html"), NA)
 
-    descr(
+    expect_error(descr(
     dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
     "animal",
     format_options = list(print_CI = TRUE, print_p=FALSE)
-  ) %>% print(print_format="tex")
+  ) %>% print(silent = TRUE,print_format="tex"), NA)
 
-      descr(
+      expect_error(descr(
     dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
     "animal",
     format_options = list(print_CI = TRUE, print_p=FALSE)
-  ) %>% print(print_format="console")
+  ) %>% print(silent = TRUE,print_format="console"), NA)
 
-  descr(
+  expect_error(descr(
     dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
     "animal",
     format_options = list(print_CI = TRUE, print_p=FALSE)
-  ) %>% print(print_format="word")
+  ) %>% print(silent = TRUE,print_format="word"), NA)
 
-    descr(
+    expect_error(descr(
     dat %>% select(-"Species") %>% mutate(all_na = NA_real_),
     "animal",
     format_options = list(print_CI = TRUE, print_p=FALSE)
-  ) %>% print(print_format="numeric")
+  ) %>% print(silent = TRUE,print_format="numeric"), NA)
 
 })
-
-
-
-
-
 
 
 dat  %<>% mutate(,
@@ -115,3 +110,4 @@ test_that("Confidence intervals for edge cases work",
           {
               expect_warning(descr(dat, "animal"))
           })
+

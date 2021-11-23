@@ -1295,6 +1295,7 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   # indx_varnames <- c1 %in% labels
 
   print_footnotes <- FALSE
+  tests <- NULL
   if ("p" %in% names(tibl)) {
     print_footnotes <- TRUE
     p_exists <- TRUE
@@ -1395,6 +1396,7 @@ if ("CI_name" %in% names(tibl)) {
     capture.output()
 
   tex %<>% str_replace_all("\\\\\\\\(?!\\*)", fixed("\\\\\\\\*"))
+  tex %<>% str_replace_all("\\\\bottomrule", fixed(""))
   pagebreak_indices <-
     str_detect(tex, fixed("textbf")) %>%
     which() %>%
@@ -1405,14 +1407,21 @@ if ("CI_name" %in% names(tibl)) {
       fixed("\\\\ \\noalign{\\vskip 0pt plus 12pt}")
     )
   }
-  if (length(tail(pagebreak_indices, 1))) {
+  if (length(tail(pagebreak_indices, 1))>0) {
     tex[tail(pagebreak_indices, 1) - 2] %<>% str_replace_all(
       fixed("\\\\*"),
       fixed(
-        "\\\\ \\noalign{\\vskip 0pt plus 12pt} \\noalign{\\penalty-5000}"
+        "\\\\ \\noalign{\\vskip 0pt plus 12pt} \\pagebreak[3]"
       )
     )
   }
+  if (length(tex)>2){
+    tex <- c(head(tex, length(tex)-length(tests)-1),
+             "\\bottomrule",
+             tail(tex, length(tests)+1)
+    )
+  }
+
   tex <- c("\\needspace{2cm}", tex)
   if (!silent) {
     cli::cat_line(tex)
@@ -1783,7 +1792,7 @@ create_numeric_subtable <-
       tibl %<>% bind_cols(!!group := tmp)
     }
     tibl %<>% bind_cols(Total = tot)
-    
+
     p <- c(DescrVarObj[["test_list"]]$p, rep(NA_real_, length_tibl - 1))
     tibl %<>% bind_cols(p = p)
 

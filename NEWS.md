@@ -1,3 +1,8 @@
+# Version 2.1.6
+
+* Add hline between footnotes and table in tex mode
+* make pagebreak alogrithm less aggressive
+
 # Version 2.1.5
 
 * Fix bug with group_labels that lead to group N numbers not being dispalyed.
