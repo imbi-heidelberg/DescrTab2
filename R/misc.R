@@ -2,5 +2,9 @@
 #'
 #' @return TRUE for CRAN submission, FALSE otherwise
 write_in_tmpfile_for_cran <- function() {
-  TRUE
+  if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    return(invisible(FALSE))
+  } else {
+    TRUE
+  }
 }
