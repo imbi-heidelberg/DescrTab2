@@ -333,6 +333,12 @@ test_that("mcnemar.test works",
             dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1:1600))
           )))})
 
+test_that("mcnemar.test doesn't work if data is not properly paired",
+          {
+          expect_message(expect_message(descr(
+            dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1, 1:1599))
+          )))})
+
 test_that("exact2x2 mcnemar test works",
           {
           expect_error(descr(
@@ -694,6 +700,37 @@ custom_ttest2 <- list(
     return(t.test(var ~ group, data.frame(var = var, group = group))$p.value)
   }
 )
+custom_ttest3 <- list(
+  name = "custom t-test",
+  abbreviation = "custom",
+  p = function(var, group) {
+    return(t.test(var ~ group, data.frame(var = var, group = group))$p.value)
+  },
+  CI = function(var, group, id) {
+    return(c(0,1))
+  },
+  CI_name = "custom CI"
+)
+
+custom_paired_test<- list(
+  name = "custom mcnemars test",
+  abbreviation = "custom",
+  p = function(var, group, id) {
+    return(1)
+  }
+)
+
+custom_paired_test2 <- list(
+  name = "custom mcnemars test",
+  abbreviation = "custom",
+  p = function(var, group, id) {
+    return(1)
+  },
+  CI = function(var, group, id) {
+    return(c(0,1))
+  },
+  CI_name = "custom CI"
+)
 
 test_that("Custom tests work", {
   expect_error(descr(iris %>% select(-Species), test_options = list(test_override = custom_ttest)), NA)
@@ -701,6 +738,27 @@ test_that("Custom tests work", {
   expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
     "Species",
     var_options = list(Sepal.Length = list(test_options = list(test_override = custom_ttest2)))
+  ), NA)
+
+expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_override = custom_ttest2))
+  ), NA)
+expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_override = custom_ttest3))
+  ), NA)
+  expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_override = custom_paired_test))
+  ), NA)
+  expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_override = custom_paired_test2))
+  ), NA)
+  expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    "Species",
+    var_options = list(Sepal.Length = list(test_override = custom_paired_test2))
   ), NA)
 })
 
@@ -741,7 +799,12 @@ test_that("unknown string in test_override produces a warning",{
   expect_warning(descr(c(1), test_options = list(test_override = 3)))
   expect_warning(descr(tibble(a=1), var_options = list(a = list( test_override = "unknown")  )))
   expect_warning(descr(tibble(a=1), var_options = list(a = list( test_override = 3         ))))
+  expect_warning(descr(tibble(a=1), var_options = list(a = list( test_options = list(test_override = 3)         ))))
 })
 
-
+test_that("No test is calculated when an exact test with 1 group and categorical variable with 3 levls is requested",{
+  expect_error(descr(iris, test_options = list(exact=TRUE))  %>% print(print_format="console", silent=TRUE), NA)
+  expect_message(descr(iris  %>%  select("Species"), test_options = list(test_override = "Exact binomial test"))  %>%
+  print(print_format="console", silent=TRUE))
+})
 

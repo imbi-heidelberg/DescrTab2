@@ -21,5 +21,5 @@ test_that("Outputformat .tex produces no errors",{
     "Species",
     group_labels = list(setosa = "My custom group label"),
     var_options = list(Sepal.Length = list(label = "My custom variable label"))
-  ) %>% print(print_format="tex", silent=F)), NA)
+  ) %>% print(print_format="tex", silent=FALSE)), NA)
 })

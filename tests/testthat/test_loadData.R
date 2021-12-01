@@ -67,6 +67,8 @@ write("proc format;
         value sex 1=\"female\"
                   0=\"male\";
         value $dummy \" \"=\"   \";
+        value $char a=\"a\";
+        value $anotherchar a= a;
         value other_delim 0 = '0'
                           1 = '1';
         run;",tmpfile)

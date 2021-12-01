@@ -263,7 +263,7 @@
     conds <- list()
     ret <- withCallingHandlers(
       {
-        stats::wilcox.test(var, conf.int = TRUE)$conf.int[1]
+        stats::wilcox.test(var, conf.int = TRUE)$conf.int[2]
       },
       condition = function(cond) {
         conds <<- append(conds, cond)

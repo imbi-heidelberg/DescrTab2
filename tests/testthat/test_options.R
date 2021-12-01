@@ -303,14 +303,14 @@ test_that("categories_first_summary_stats_second options works", {
       categories_first_summary_stats_second = FALSE,
       combine_mean_sd = TRUE
     )
-  ), NA)
+  )%>%  print(print_format = "console", silent = TRUE), NA)
 
   expect_error(descr(dat, "group",
     format_options = list(
       categories_first_summary_stats_second = TRUE,
       combine_mean_sd = TRUE
     )
-  ), NA)
+  )  %>%  print(print_format = "console", silent = TRUE), NA)
 
 
     expect_error(descr(dat, "group",
@@ -340,7 +340,7 @@ test_that("omit_factor_level options works", {
       categories_first_summary_stats_second = FALSE,
       combine_mean_sd = TRUE
     )
-  ), NA)
+  )  %>%  print(print_format = "console", silent = TRUE), NA)
 
   expect_error(descr(dat, "group",
     format_options = list(
@@ -348,7 +348,7 @@ test_that("omit_factor_level options works", {
       categories_first_summary_stats_second = TRUE,
       combine_mean_sd = TRUE
     )
-  ), NA)
+  )%>%  print(print_format = "console", silent = TRUE), NA)
 
 
     expect_error(descr(dat, "group",

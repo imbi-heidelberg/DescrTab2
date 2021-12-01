@@ -15,3 +15,13 @@ test_that(
     )
   }
 )
+
+
+test_that("Outputformat word produces no errors",{
+  expect_error(descr(
+    iris,
+    "Species",
+    group_labels = list(setosa = "My custom group label"),
+    var_options = list(Sepal.Length = list(label = "My custom variable label"))
+  ) %>% print(print_format="word", silent=FALSE), NA)
+})

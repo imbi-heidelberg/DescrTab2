@@ -673,6 +673,9 @@ specify format_options$print_Total. print_Total is set to FALSE.")
         var_options[[var_option_name]][["test_options"]][name_diff] <-
           test_options[name_diff]
       }
+      if (!is.null(var_options[[var_option_name]][["test_options"]][["test_override"]])) {
+        var_options[[var_option_name]][["test_override"]] <- var_options[[var_option_name]][["test_options"]][["test_override"]]
+      }
       if (!is.null(var_options[[var_option_name]][["test_override"]])) {
         if (is.character(var_options[[var_option_name]][["test_override"]])) {
           if (!(var_options[[var_option_name]][["test_override"]] %in% print_test_names())) {
@@ -684,7 +687,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
           }
         } else {
           if (!is.list(var_options[[var_option_name]][["test_override"]]) ||
-            !all(c("name", "abbreviation", "p") %in% var_options[[var_option_name]][["test_override"]])) {
+            !all(c("name", "abbreviation", "p") %in% names(var_options[[var_option_name]][["test_override"]]))) {
             warning(paste0(
               "test_override has to be one of: ",
               paste(print_test_names(), collapse = ", "),
@@ -1097,18 +1100,10 @@ create_DescrPrint <- function(DescrListObj, print_format) {
 
 
     if (print_format == "numeric") {
-      if ("cont_summary" %in% class(DescrListObj[["variables"]][[var_name]])) {
-        if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]], is.numeric))) {
-          stop(
-            "You can only create numeric tables if all of your summary statistics return numeric values."
-          )
-        }
-      } else {
-        if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]][["summary_stats"]], is.numeric))) {
-          stop(
-            "You can only create numeric tables if all of your summary statistics return numeric values."
-          )
-        }
+      if (!all(sapply(DescrListObj[["variables"]][[var_name]][["results"]][["Total"]][["summary_stats"]], is.numeric))) {
+        stop(
+          "You can only create numeric tables if all of your summary statistics return numeric values."
+        )
       }
     }
 
@@ -2225,6 +2220,7 @@ print_test_names <- function() {
     "Pearson's chi-squared test",
     "Exact McNemar's test",
     "Boschloo's test",
+    "Exact binomial test",
     "Fisher's exact test",
     "Exact binomal test",
     "Friedman test",
@@ -2893,9 +2889,9 @@ exact McNemar's test.")
         test[["p"]](var, id)
       } else if (is.null(group) && (is.function(id) || is.null(id))) {
         test[["p"]](var)
-      } else {
+      } else { #nocov start
         TRUE ~ NA_real_
-      }
+      } #nocov end
     )
 
     if (!is.null(test[["CI"]])) {
@@ -2907,9 +2903,9 @@ exact McNemar's test.")
         test[["CI"]](var, id)
       } else if (is.null(group) && (is.function(id) || is.null(id))) {
         test[["CI"]](var)
-      } else {
+      } else { #nocov start
         TRUE ~ NA_real_
-      }
+      } #nocov end
       erg[["CI"]] <- CI
       erg[["CI_name"]] <- test[["CI_name"]]
     }
@@ -2971,9 +2967,9 @@ lapply_descr <- function(list, ...) {
   for (d in descrlist) {
     results <- c(results, knitr::knit_print(d))
   }
-  if (knitr::is_html_output() || knitr::is_latex_output() || knitr::pandoc_to("docx")) {
+  if (knitr::is_html_output() || knitr::is_latex_output() || knitr::pandoc_to("docx")) { #nocov start
     return(knitr::asis_output(results))
-  } else {
+  } else {  #nocov end
     return(invisible(knitr::asis_output(results)))
   }
 }
