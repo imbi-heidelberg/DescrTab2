@@ -326,14 +326,14 @@ with missing value (<code>NA_character_</code>).</p></li>
 
 <p><code>test_options</code> is a named list with test options. It's members <code>paired</code>,  <code>nonparametric</code>, and
 <code>exact</code> (logicals) control which test in the corresponding situation. For details, check out the vignette:
-<a href='https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf'>https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf</a>. The <code>test_options = list(test_override="&lt;some test name&gt;")</code> option can be specified to force usage of a
+<a href='https://imbi-heidelberg.github.io/DescrTab2/articles/b_test_choice_tree_pdf.pdf'>https://imbi-heidelberg.github.io/DescrTab2/articles/b_test_choice_tree_pdf.pdf</a>. The <code>test_options = list(test_override="&lt;some test name&gt;")</code> option can be specified to force usage of a
 specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
 Use <code><a href='print_test_names.html'>print_test_names()</a></code> to see a list of all available test names. If <code>paired = TRUE</code> is specified, you need to supply an index variable
 <code>indices</code> that specifies which datapoints in your dataset are paired. <code>indices</code> may either be a length one character vector that describes
 the name of the index variable in your dataset, or a vector containing the respective indices.
 If you have <code>guess_id</code> set to <code>TRUE</code> (the default), <code>DescrTab2</code> will try to guess
 the ID variable from your dataset and report a warning if it succeedes.
-See <a href='https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1'>https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1</a>
+See <a href='https://imbi-heidelberg.github.io/DescrTab2/articles/a_usage_guide.html#Paired-observations-1'>https://imbi-heidelberg.github.io/DescrTab2/articles/a_usage_guide.html#Paired-observations-1</a>
 for a bit more explanation. The optional list <code>additional_test_args</code> can be used to pass arguments along to test functions,
 e.g. <code>additional_test_args=list(correct=TRUE)</code> will request continuity correction if available.</p>
     <h2 class="hasAnchor" id="customization-for-single-variables"><a class="anchor" href="#customization-for-single-variables"></a>Customization for single variables</h2>

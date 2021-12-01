@@ -154,14 +154,14 @@ with missing value (\code{NA_character_}).}
 
 \code{test_options} is a named list with test options. It's members \code{paired},  \code{nonparametric}, and
 \code{exact} (logicals) control which test in the corresponding situation. For details, check out the vignette:
-\url{https://imbi-heidelberg.github.io/DescrTab2/articles/test_choice_tree_pdf.pdf}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
+\url{https://imbi-heidelberg.github.io/DescrTab2/articles/b_test_choice_tree_pdf.pdf}. The \code{test_options = list(test_override="<some test name>")} option can be specified to force usage of a
 specific test. This will produce errors if the data does not allow calculation of that specific test, so be wary.
 Use \code{print_test_names()} to see a list of all available test names. If \code{paired = TRUE} is specified, you need to supply an index variable
 \code{indices} that specifies which datapoints in your dataset are paired. \code{indices} may either be a length one character vector that describes
 the name of the index variable in your dataset, or a vector containing the respective indices.
 If you have \code{guess_id} set to \code{TRUE} (the default), \code{DescrTab2} will try to guess
 the ID variable from your dataset and report a warning if it succeedes.
-See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html#Paired-observations-1}
+See \url{https://imbi-heidelberg.github.io/DescrTab2/articles/a_usage_guide.html#Paired-observations-1}
 for a bit more explanation. The optional list \code{additional_test_args} can be used to pass arguments along to test functions,
 e.g. \code{additional_test_args=list(correct=TRUE)} will request continuity correction if available.
 }
