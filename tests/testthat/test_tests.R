@@ -338,7 +338,14 @@ test_that("mcnemar.test works with var_options and a character string as indices
           {
           expect_warning(descr(
             dat, "group", var_options = list( var = list(test_options = list(paired = TRUE, indices = "id"))
-          )))})
+          )))
+
+          expect_warning(descr(
+            dat, "group", test_options = list(indices = "id"),
+            var_options = list( var = list(test_options = list(paired = TRUE, indices = "id"))
+          )))
+          
+          })
 
 test_that("mcnemar.test doesn't work if data is not properly paired",
           {

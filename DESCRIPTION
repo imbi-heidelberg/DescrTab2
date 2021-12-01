@@ -54,7 +54,7 @@ License: GPL (>=3)
 Copyright: This package contains codes copyrighted by third parites. See file COPYRIGHTS for details.
 LazyLoad: true
 Encoding: UTF-8
-URL: https://imbi-heidelberg.github.io/DescrTab2, https://imbi-heidelberg.github.io/DescrTab2/
+URL: https://imbi-heidelberg.github.io/DescrTab2/
 BugReports: https://github.com/imbi-heidelberg/DescrTab2/issues
 Config/testthat/edition: 3
 RoxygenNote: 7.1.2
