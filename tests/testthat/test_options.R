@@ -318,16 +318,14 @@ test_that("categories_first_summary_stats_second options works", {
       categories_first_summary_stats_second = FALSE,
       combine_mean_sd = TRUE
     )
-  )  %>% print(print_format="numeric"), NA)
+  )  %>% print(print_format="numeric", silent = TRUE), NA)
 
   expect_error(descr(dat, "group",
     format_options = list(
       categories_first_summary_stats_second = TRUE,
       combine_mean_sd = TRUE
     )
-  )%>% print(print_format="numeric"),  NA)
-
-
+  )%>% print(print_format="numeric", silent = TRUE),  NA)
 })
 
 
@@ -357,7 +355,7 @@ test_that("omit_factor_level options works", {
       categories_first_summary_stats_second = FALSE,
       combine_mean_sd = TRUE
     )
-  )  %>% print(print_format="numeric"), NA)
+  )  %>% print(print_format="numeric", silent = TRUE), NA)
 
   expect_error(descr(dat, "group",
     format_options = list(
@@ -365,7 +363,7 @@ test_that("omit_factor_level options works", {
       categories_first_summary_stats_second = TRUE,
       combine_mean_sd = TRUE
     )
-  )%>% print(print_format="numeric"),  NA)
+  )%>% print(print_format="numeric", silent = TRUE),  NA)
 
 
 })

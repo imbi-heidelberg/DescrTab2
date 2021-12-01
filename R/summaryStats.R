@@ -221,25 +221,17 @@
   if (any(!is.na(var))) {
     var <- var[!is.na(var)]
     conds <- list()
-    ret <-
-      tryCatch(
-        {
-          withCallingHandlers(
-            {
-              stats::wilcox.test(var, conf.int = TRUE)$conf.int[1]
-            },
-            condition = function(cond) {
-              conds <<- append(conds, cond)
-              if (inherits(cond, "warning")) {
-                tryInvokeRestart("muffleWarning")
-              }
-            }
-          )
-        },
-        warning = function(cond) {
-          return(NULL)
+    ret <- withCallingHandlers(
+      {
+        stats::wilcox.test(var, conf.int = TRUE)$conf.int[1]
+      },
+      condition = function(cond) {
+        conds <<- append(conds, cond)
+        if (inherits(cond, "warning")) {
+          tryInvokeRestart("muffleWarning")
         }
-      )
+      }
+    )
     for (cond in conds[names(conds) == "message"]) {
       if (cond == "requested conf.level not achievable") {
         warning(cond)

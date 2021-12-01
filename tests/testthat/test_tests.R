@@ -324,7 +324,8 @@ dat <-
       rep("Approve", 86),
       rep("Disapprove", 570)
     ),
-    group = c(rep("first", 1600), rep("second", 1600))
+    group = c(rep("first", 1600), rep("second", 1600)),
+    id = c(1:1600, 1:1600)
   )
 
 test_that("mcnemar.test works",
@@ -333,11 +334,18 @@ test_that("mcnemar.test works",
             dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1:1600))
           )))})
 
+test_that("mcnemar.test works with var_options and a character string as indices option",
+          {
+          expect_warning(descr(
+            dat, "group", var_options = list( var = list(test_options = list(paired = TRUE, indices = "id"))
+          )))})
+
 test_that("mcnemar.test doesn't work if data is not properly paired",
           {
-          expect_message(expect_message(descr(
+          expect_warning(expect_message(expect_message(expect_message(
+            descr(
             dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1, 1:1599))
-          )))})
+          )))))})
 
 test_that("exact2x2 mcnemar test works",
           {
@@ -353,13 +361,13 @@ test_that("exact2x2 mcnemar test works",
 
 test_that("exact2x2 mcnemar test errors if you forget to specify indices",
           {
-          expect_message(descr(
+         expect_message(expect_message(descr(
             dat, "group", test_options = list(
               paired = TRUE,
               exact = T
             ),
             format_options = list(print_Total = FALSE)
-          ))})
+          )))})
 
 
 
@@ -712,6 +720,18 @@ custom_ttest3 <- list(
   CI_name = "custom CI"
 )
 
+custom_ttest4 <- list(
+  name = "custom t-test",
+  abbreviation = "custom",
+  p = function(var) {
+    return(1)
+  },
+  CI = function(var) {
+    return(c(0,1))
+  },
+  CI_name = "custom CI"
+)
+
 custom_paired_test<- list(
   name = "custom mcnemars test",
   abbreviation = "custom",
@@ -750,15 +770,17 @@ expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("s
   ), NA)
   expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
     "Species",
-    var_options = list(Sepal.Length = list(test_override = custom_paired_test))
+    var_options = list(Sepal.Length = list(test_override = custom_paired_test, test_options = list(indices = 1:50)))
   ), NA)
   expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
     "Species",
-    var_options = list(Sepal.Length = list(test_override = custom_paired_test2))
+    var_options = list(Sepal.Length = list(test_override = custom_paired_test2, test_options = list(indices = 1:50)))
   ), NA)
   expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
-    "Species",
-    var_options = list(Sepal.Length = list(test_override = custom_paired_test2))
+    var_options = list(Sepal.Length = list(test_override = custom_paired_test2, test_options = list(indices = 1:50)))
+  ), NA)
+  expect_error(descr(iris %>% mutate(Species = fct_collapse(Species, setosa = c("setosa", "versicolor"))),
+    var_options = list(Sepal.Length = list(test_override = custom_ttest4))
   ), NA)
 })
 

@@ -80,6 +80,8 @@ test_that("categorical summary stats work",{
 test_that("edge cases are handled correctly in summary stats",{
     expect_equal(.meanCIlower(c(1)), NA_real_)
     expect_equal(.meanCIupper(c(1)), NA_real_)
+    expect_warning(.HLCIlower(ordered(c("1", "2", "3"))))
+    expect_warning(.HLCIupper(ordered(c("1", "2", "3"))))
     expect_equal(.HLCIlower(ordered(c("1", "2", "3", "2", "4", "1", "5", "5"))), suppressWarnings(wilcox.test(c(1, 2, 3, 2, 4, 1, 5, 5),conf.int=TRUE)$conf.int[1]))
     expect_equal(.HLCIupper(ordered(c("1", "2", "3", "2", "4", "1", "5", "5"))), suppressWarnings(wilcox.test(c(1, 2, 3, 2, 4, 1, 5, 5),conf.int=TRUE)$conf.int[2]))
 })

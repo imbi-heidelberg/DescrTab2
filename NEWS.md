@@ -1,3 +1,8 @@
+# Version 2.1.7
+
+* Fixed a bug where indices could not be specified inside var_options
+* fixed bug with printing CI abbreviations in tex mode
+
 # Version 2.1.6
 
 * Add hline between footnotes and table in tex mode

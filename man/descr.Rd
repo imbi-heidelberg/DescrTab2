@@ -34,7 +34,7 @@ descr(
     "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
     categories_first_summary_stats_second = FALSE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
-    c(), guess_id = TRUE, include_group_missings_in_test = FALSE,
+    c(), guess_id = FALSE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
     additional_test_args = list(), boschloo_max_n = 200),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  

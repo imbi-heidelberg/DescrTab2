@@ -250,7 +250,7 @@ descr <-
              nonparametric = FALSE,
              exact = FALSE,
              indices = c(),
-             guess_id = TRUE,
+             guess_id = FALSE,
              include_group_missings_in_test = FALSE,
              include_categorical_missings_in_test = FALSE,
              test_override = NULL,
@@ -333,12 +333,12 @@ descr <-
       }
     }
 
-
     test_options %<>% as.list()
 
     if (isTRUE(test_options[["guess_id"]])) {
       test_options[["indices"]] <- guess_ID_variable(dat)
     }
+    idx_name <- NULL
     if (is.character(test_options[["indices"]]) &&
       length(test_options[["indices"]]) == 1 &&
       test_options[["indices"]] %in% names(dat)) {
@@ -663,7 +663,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       if (!is.null(var_options[[var_option_name]][["test_options"]])) {
         if (!is.null(var_options[[var_option_name]][["format_options"]])) {
           if (isTRUE(var_options[[var_option_name]][["format_options"]][["omit_missings_in_categorical_var"]] == TRUE) & isTRUE(var_options[[var_option_name]][["test_options"]][["include_group_missings_in_test"]] == TRUE)) {
-            stop("You have format_options[['omit_missings_in_categorical_var']] == FALSEand test_options[['include_group_missings_in_test']] == TRUE,
+            stop("You have format_options[['omit_missings_in_categorical_var']] == FALSE and test_options[['include_group_missings_in_test']] == TRUE,
            i.e. you request a statistical test that treats missings in categorical variables as regular observations, but you do not report the number of missings.
            You should avoid this.")
           }
@@ -672,6 +672,17 @@ specify format_options$print_Total. print_Total is set to FALSE.")
           setdiff(names(test_options), names(var_options[[var_option_name]][["test_options"]]))
         var_options[[var_option_name]][["test_options"]][name_diff] <-
           test_options[name_diff]
+
+
+        if (!is.null(idx_name) && idx_name == var_options[[var_option_name]][["test_options"]][["indices"]]) {
+          var_options[[var_option_name]][["test_options"]][["indices"]] <- test_options[["indices"]]
+        } else if (is.character(var_options[[var_option_name]][["test_options"]][["indices"]]) &&
+          length(var_options[[var_option_name]][["test_options"]][["indices"]]) == 1 &&
+          var_options[[var_option_name]][["test_options"]][["indices"]] %in% names(dat)
+        ) {
+          idx_name_tmp <- var_options[[var_option_name]][["test_options"]][["indices"]]
+          var_options[[var_option_name]][["test_options"]][["indices"]] <- dat %>% pull(!!idx_name_tmp)
+        }
       }
       if (!is.null(var_options[[var_option_name]][["test_options"]][["test_override"]])) {
         var_options[[var_option_name]][["test_override"]] <- var_options[[var_option_name]][["test_options"]][["test_override"]]
@@ -1292,14 +1303,13 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   print_footnotes <- FALSE
   tests <- NULL
   if ("p" %in% names(tibl)) {
-    print_footnotes <- TRUE
     p_exists <- TRUE
     tests <-
       tibl %>%
       filter(get("Test") != "") %>%
       pull("Test") %>%
       unique()
-    p_vec <- tibl %>% pull("p")
+    p_vec <- tibl %>% pull("Test")
     p_indx <- which(p_vec != "")
     test_abbrev <- create_test_abbreviations(tests, DescrPrintObj[["format"]][["test_abbreviations"]])
     for (idx in p_indx) {
@@ -1311,13 +1321,12 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
   }
 
   if ("CI" %in% names(tibl)) {
-  print_footnotes <- TRUE
   CIs <-
     tibl %>%
     filter(get("CI_name") != "") %>%
     pull("CI_name") %>%
     unique()
-  p_vec <- tibl %>% pull("CI")
+  p_vec <- tibl %>% pull("CI_name")
   p_indx <- which(p_vec != "")
   ci_abbrev <- create_test_abbreviations(CIs, DescrPrintObj[["format"]][["test_abbreviations"]])
   for (idx in p_indx) {
@@ -1330,6 +1339,9 @@ print_tex <- function(DescrPrintObj, silent = FALSE) {
     test_abbrev <- ci_abbrev
     tests <- CIs
   }
+}
+if (length(tests)>0){
+  print_footnotes <- TRUE
 }
 if ("CI_name" %in% names(tibl)) {
   tibl %<>% select(-"CI_name")
@@ -1351,7 +1363,7 @@ if ("CI_name" %in% names(tibl)) {
   width <- min(max(c(
     (sapply(labels, str_length) + 1) %/% 2,
     (sapply(tibl[[1]][!indx_varnames], str_length) + 1) %/% 2, 1
-  )), 6)
+  )), 7.5)
 
   # For some reason, names need double escaping
   names(lengths) <- sapply(escape_latex_symbols(tibble(labels), numEscapes = 2)[[1]],
@@ -1880,6 +1892,7 @@ create_character_subtable <-
 
       if (length(groups) == 2) {
         tibl %<>% bind_cols(CI = c("", "-"))
+        tibl %<>% bind_cols(CI_name = c("", "-"))
       }
     } else {
       summary_stat_names <- names(DescrVarObj[["results"]][["Total"]][["summary_stats"]])

@@ -3,8 +3,15 @@
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
-  Variables      first       second      p        Test     CI     CI_name       
-1  var                                                                          
-2    Approve      944 (59%)   880 (55%)   <0.001   Exact ~  [0.0~  CI for diffe~
-3    Disapprove   656 (41%)   720 (45%)                                         
+   Variables      first         second        p        Test    CI    CI_name    
+ 1  var                                                                         
+ 2    Approve      944 (59%)     880 (55%)     <0.001   Exact~  [0.~  CI for di~
+ 3    Disapprove   656 (41%)     720 (45%)                                      
+ 4  id                                                                          
+ 5    N            1600          1600          <NA>     Stude~  [Na~  CI for di~
+ 6    mean         800           800                                            
+ 7    sd           462           462                                            
+ 8    median       800           800                                            
+ 9    Q1 - Q3      400 -- 1200   400 -- 1200                                    
+10    min - max    1 -- 1600     1 -- 1600                                      
 
