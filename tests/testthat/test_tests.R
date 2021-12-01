@@ -234,7 +234,7 @@ test_that("friedman.test works",
                 test_options = list(
                   nonparametric = TRUE,
                   indices = idx,
-                  paired = T
+                  paired = TRUE
                 ),
                 format_options = list(print_Total = FALSE)
               ) %>%
@@ -253,7 +253,7 @@ test_that("friedman.test works",
               test_options = list(
                 nonparametric = TRUE,
                 indices = idx,
-                paired = T
+                paired = TRUE
               ),
               format_options=list(print_Total=FALSE)
             ),
@@ -268,7 +268,7 @@ verify_output( ifelse(isTRUE(write_in_tmpfile_for_cran()), tempfile(), "../conso
                 test_options = list(
                   nonparametric = TRUE,
                   indices = idx,
-                  paired = T
+                  paired = TRUE
                 )
               ) %>% print())
 
@@ -364,10 +364,17 @@ test_that("exact2x2 mcnemar test errors if you forget to specify indices",
          expect_message(expect_message(descr(
             dat, "group", test_options = list(
               paired = TRUE,
-              exact = T
+              exact = TRUE
             ),
             format_options = list(print_Total = FALSE)
           )))})
+
+test_that("exact2x2 doesn't work if data is not properly paired",
+          {
+          expect_warning(expect_message(expect_message(expect_message(
+            descr(
+            dat, "group", test_options = list(paired = TRUE, exact = TRUE, indices = c(1:1600, 1, 1:1599))
+          )))))})
 
 
 
