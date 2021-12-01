@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -77,7 +73,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/imbi-heidelberg/DescrTab2/">
+  <a href="https://github.com/imbi-heidelberg/DescrTab2/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,35 +94,35 @@
       <h1 data-toc-skip>Validation statement</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/d_validation_statement.Rmd"><code>vignettes/d_validation_statement.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/HEAD/vignettes/d_validation_statement.Rmd" class="external-link"><code>vignettes/d_validation_statement.Rmd</code></a></small>
       <div class="hidden name"><code>d_validation_statement.Rmd</code></div>
 
     </div>
 
     
     
-<div id="liability" class="section level2">
-<h2 class="hasAnchor">
-<a href="#liability" class="anchor"></a>Liability</h2>
+<div class="section level2">
+<h2 id="liability">Liability<a class="anchor" aria-label="anchor" href="#liability"></a>
+</h2>
 <p>As noted in the GPL-3 License, neither the authors nor any person or institution associated with the creation, production or distribution of <code>DescrTab2</code> is liable of any damages caused by the use of the software:</p>
 <blockquote>
 <p>IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
 </blockquote>
 </div>
-<div id="unit-tests" class="section level2">
-<h2 class="hasAnchor">
-<a href="#unit-tests" class="anchor"></a>Unit tests</h2>
+<div class="section level2">
+<h2 id="unit-tests">Unit tests<a class="anchor" aria-label="anchor" href="#unit-tests"></a>
+</h2>
 <p><code>DescrTab2</code> features a suite of unit tests. The percentage of lines of codes covered by at least one unit tests is reported via the <code>covr</code> package. Most of these unit tests only check whether the code associated with it produces errors. This aims to ensure that the various options in <code>DescrTab2</code> work error-free with a variations of possible input datasets and edge-cases.</p>
 </div>
-<div id="manual-external-software-comparisons" class="section level2">
-<h2 class="hasAnchor">
-<a href="#manual-external-software-comparisons" class="anchor"></a>Manual external software comparisons</h2>
+<div class="section level2">
+<h2 id="manual-external-software-comparisons">Manual external software comparisons<a class="anchor" aria-label="anchor" href="#manual-external-software-comparisons"></a>
+</h2>
 <p>Comparisons of the results produced by <code>DescrTab2</code> with other software are not automated. The user may feel free to perform such comparisons by themselves. An exemplary comparison can be examined in this <a href="other_software_comparison.html">document</a>.</p>
 </div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
-<p><code>DescrTab2</code> relies on various other packages to perform its designated purpose. Most of the imported packages are neccesary to facilitate tasks related to data-wrangling and output formatting, namely <code><a href="https://rdrr.io/r/utils/utils-package.html">?utils</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/dplyr-package.html">?dplyr</a></code>, <code>?rlang</code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html">?tibble</a></code>, <code>?stringr</code>, <code><a href="https://forcats.tidyverse.org/reference/forcats-package.html">?forcats</a></code>, <code>?magrittr</code>, <code>?tidyselect</code>, <code>?scales</code>, <code>?cli</code>, <code>?kableExtra</code>, <code>?flextable</code> and <code>?officer</code>. The pre-implemented summary statistics (mean, sd, etc.) make use of functions provided for this purpose in base R (see <code><a href="https://rdrr.io/r/base/base-package.html">?base</a></code> and <code><a href="https://rdrr.io/r/stats/stats-package.html">?stats</a></code>). The test functions used for the calculcation of p-values are mostly from base R (e.g. <code><a href="https://rdrr.io/r/stats/t.test.html">?t.test</a></code> from <code><a href="https://rdrr.io/r/stats/stats-package.html">?stats</a></code>) and the recommended packages (e.g. <code>?lme</code> from <code>?nlme</code> for the Mixed Model Anova p-value). Notable exceptions are the Cochrane Q Test from the <code>?DescTools</code> package (<code><a href="https://andrisignorell.github.io/DescTools/reference/CochranQTest.html">?DescTools::CochranQTest</a></code>) and the Fisher-Boschloo test from the <code>?exact2x2</code> package (<code><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html">?exact2x2::boschloo</a></code>).</p>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
+<p><code>DescrTab2</code> relies on various other packages to perform its designated purpose. Most of the imported packages are neccesary to facilitate tasks related to data-wrangling and output formatting, namely <code><a href="https://rdrr.io/r/utils/utils-package.html" class="external-link">?utils</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/dplyr-package.html" class="external-link">?dplyr</a></code>, <code>?rlang</code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">?tibble</a></code>, <code>?stringr</code>, <code><a href="https://forcats.tidyverse.org/reference/forcats-package.html" class="external-link">?forcats</a></code>, <code>?magrittr</code>, <code>?tidyselect</code>, <code>?scales</code>, <code>?cli</code>, <code>?kableExtra</code>, <code>?flextable</code> and <code>?officer</code>. The pre-implemented summary statistics (mean, sd, etc.) make use of functions provided for this purpose in base R (see <code><a href="https://rdrr.io/r/base/base-package.html" class="external-link">?base</a></code> and <code><a href="https://rdrr.io/r/stats/stats-package.html" class="external-link">?stats</a></code>). The test functions used for the calculcation of p-values are mostly from base R (e.g. <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">?t.test</a></code> from <code><a href="https://rdrr.io/r/stats/stats-package.html" class="external-link">?stats</a></code>) and the recommended packages (e.g. <code>?lme</code> from <code>?nlme</code> for the Mixed Model Anova p-value). Notable exceptions are the Cochrane Q Test from the <code>?DescTools</code> package (<code><a href="https://andrisignorell.github.io/DescTools/reference/CochranQTest.html" class="external-link">?DescTools::CochranQTest</a></code>) and the Fisher-Boschloo test from the <code>?exact2x2</code> package (<code><a href="https://rdrr.io/pkg/exact2x2/man/boschloo.html" class="external-link">?exact2x2::boschloo</a></code>).</p>
 </div>
   </div>
 
@@ -141,11 +137,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
+  <p></p>
+<p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -153,6 +151,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -77,7 +73,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/imbi-heidelberg/DescrTab2/">
+  <a href="https://github.com/imbi-heidelberg/DescrTab2/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,44 +93,44 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Maintenance guidance</h1>
             
-            <h4 class="date">2021-11-24</h4>
+            <h4 data-toc-skip class="date">2021-12-01</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/master/vignettes/e_maintenance_guide.Rmd"><code>vignettes/e_maintenance_guide.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/HEAD/vignettes/e_maintenance_guide.Rmd" class="external-link"><code>vignettes/e_maintenance_guide.Rmd</code></a></small>
       <div class="hidden name"><code>e_maintenance_guide.Rmd</code></div>
 
     </div>
 
     
     
-<div id="intoduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#intoduction" class="anchor"></a>Intoduction</h2>
+<div class="section level2">
+<h2 id="intoduction">Intoduction<a class="anchor" aria-label="anchor" href="#intoduction"></a>
+</h2>
 <p><code>DescrTab2</code> is a powerful package with vast customization options. With this, unfortunately, comes code that has to deal with quite a bit of special cases an exceptions. This document aims to describe the flow of control of the <code>DescrTab2</code> package, so that future generations may continue development and successfully fix potential bugs.</p>
 </div>
-<div id="flow-of-control" class="section level2">
-<h2 class="hasAnchor">
-<a href="#flow-of-control" class="anchor"></a>Flow of control</h2>
-<div id="descr" class="section level3">
-<h3 class="hasAnchor">
-<a href="#descr" class="anchor"></a>descr</h3>
+<div class="section level2">
+<h2 id="flow-of-control">Flow of control<a class="anchor" aria-label="anchor" href="#flow-of-control"></a>
+</h2>
+<div class="section level3">
+<h3 id="descr">descr<a class="anchor" aria-label="anchor" href="#descr"></a>
+</h3>
 <p>The user interfaces mostly with the <code>descr</code> function. <code>descr</code> does all the calculations, i.e. the evaluation of the summary statistics on the data (mean, sd, median, etc. for continuous variables and counts for categorical variables) and the calculation of statistical tests. For this <code>descr</code> calls the <code>descr_cat</code> and <code>descr_cont</code> functions, which evaluate the list of summary statistics on the data. <code>descr_cat</code> then calls <code>test_cat</code> and <code>descr_cont</code> calls <code>test_cont</code>, which calculate appropriate statistical tests. A detailed description for the choice of test can be read in the “Test choice” vignette.</p>
 <p><code>descr</code> returns a <code>DescrList</code> object, which is basically a named list containing all calculation results and the formatting options.</p>
 </div>
-<div id="print" class="section level3">
-<h3 class="hasAnchor">
-<a href="#print" class="anchor"></a>print</h3>
+<div class="section level3">
+<h3 id="print">print<a class="anchor" aria-label="anchor" href="#print"></a>
+</h3>
 <p>To turn a <code>DescrList</code> object into pretty output, the object has to be passed to the print function. <code>print</code> is a generic function. This means that if a <code>DescrList</code> object is passed to <code>print</code>, the specialized <code>print.DescrList</code> function will be invoked automatically.</p>
-<div id="preprocessing" class="section level4">
-<h4 class="hasAnchor">
-<a href="#preprocessing" class="anchor"></a>Preprocessing</h4>
+<div class="section level4">
+<h4 id="preprocessing">Preprocessing<a class="anchor" aria-label="anchor" href="#preprocessing"></a>
+</h4>
 <p>Since the proper output format is highly document type dependent, <code>print.DescrList</code> creates output in two steps. The first step is independent of the output format: The creation of a <code>DescrPrintObj</code> by calling the <code>create_printObj</code> function.</p>
 <p>In this function, proper formatting is applied to the results in the <code>DescrList</code> and the formatted values are saved inside a tibble. Formatting in this case means converting numbers to characters, reducing the number of decimal digits, combining variables like “Q1” and “Q3” into “Q1 - Q3”, formatting small p values to display as “&lt;0.001” and adding “%” values to categorical variables.</p>
 <p>Somewhat of an exception is the case <code>printFormat="numeric"</code>. Here, numbers are not converted characters and consequently very little formatting can be applied.</p>
 <p>The formatting in <code>create_printObj</code> is done by iterating over all variables in the <code>DescrList</code> object and creating an appropriate sub-table by calling one of <code>create_numeric_subtable.cat_summary</code>, <code>create_numeric_subtable.cont_summary</code>, <code>create_character_subtable.cat_summary</code> or <code>create_character_subtable.cont_summary</code>. Whether <code>create_numeric_subtable</code> or <code>create_character_subtable</code> is called is determined by the <code>printFormat</code> option (all options lead to <code>create_character_subtable</code> except <code>printFormat="numeric</code>). Whether <code>.cat_summary</code> or <code>.cont_summary</code> is called depends on the type of variable. The sub-tables are then concatenated to a master table.</p>
 </div>
-<div id="postprocessing" class="section level4">
-<h4 class="hasAnchor">
-<a href="#postprocessing" class="anchor"></a>Postprocessing</h4>
+<div class="section level4">
+<h4 id="postprocessing">Postprocessing<a class="anchor" aria-label="anchor" href="#postprocessing"></a>
+</h4>
 <p>The <code>DescrPintObj</code> is the transformed into appropriate output format by calling one of <code>print_tex</code>, <code>print_html</code>, <code>print_word</code>, <code>print_console</code> or <code>print_numeric</code>.</p>
 <p><code>print_console</code> basically prints the tibble that is produces by <code>create_printObj</code> using a slightly modified version of the default method for printing tibbles.</p>
 <p><code>print_numeric</code> basically prints the tibble produces by <code>create_printObj</code> if <code>printFormat="numeric"</code> was specified.</p>
@@ -156,11 +152,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
+  <p></p>
+<p>Developed by Jan Meis, Lukas Baumann, Maximilian Pilz, Lukas Sauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -168,6 +166,8 @@
 
   
 
+
+  
 
   </body>
 </html>
