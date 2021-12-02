@@ -2674,7 +2674,6 @@ boschloo_max_n in test_options to a larger value or to NULL."))
         list(p = pv)
       },
       `Exact McNemar's test` = {
-        # list(p = exact2x2::mcnemar.exact(var, group)$p.value)
         tmp <- tibble(
           var = var,
           group = group,
