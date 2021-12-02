@@ -45,7 +45,7 @@ and edge-cases.
 Comparisons of the results produced by `DescrTab2` with other software
 are not automated. The user may feel free to perform such comparisons by
 themselves. An exemplary comparison can be examined in this
-[document](other_software_comparison.html).
+[document](c_other_software_comparison.html).
 
 ## Dependencies
 
