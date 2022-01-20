@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/404.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/a_usage_guide.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/c_other_software_comparison.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/d_validation_statement.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/e_maintenance_guide.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/maintenance_guide.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/other_software_comparison.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/usage_guide.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/validation_statement.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/authors.html</loc>
+  </url>
+  <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/index.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/news/index.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/codegen_load_all_sas_data.html</loc>
@@ -38,6 +74,15 @@
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/ignore_unused_args.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/inMinipage.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/inMinipage2.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/in_minipage.html</loc>
@@ -88,24 +133,15 @@
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/split_redcap_dataset.html</loc>
   </url>
   <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/test_cat.html</loc>
+  </url>
+  <url>
+    <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/test_cont.html</loc>
+  </url>
+  <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/unlabel.html</loc>
   </url>
   <url>
     <loc>https://imbi-heidelberg.github.io/DescrTab2/reference/write_in_tmpfile_for_cran.html</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/a_usage_guide.html</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/b_test_choice_tree_pdf.pdf</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/c_other_software_comparison.html</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/d_validation_statement.html</loc>
-  </url>
-  <url>
-    <loc>https://imbi-heidelberg.github.io/DescrTab2/articles/e_maintenance_guide.html</loc>
   </url>
 </urlset>

@@ -147,7 +147,7 @@
 }
 
 .meanCIlower <- function(var) {
-  if (sum(!is.na(var)) > 2) {
+  if (sum(!is.na(var)) > 1 && (length(table(var[!is.na(var)])) > 1)) {
     stats::t.test(var)$conf.int[1]
   } else {
     return(NA_real_)
@@ -155,7 +155,7 @@
 }
 
 .meanCIupper <- function(var) {
-  if (sum(!is.na(var)) > 2) {
+  if (sum(!is.na(var)) > 1 && (length(table(var[!is.na(var)])) > 1)) {
     stats::t.test(var)$conf.int[2]
   } else {
     return(NA_real_)

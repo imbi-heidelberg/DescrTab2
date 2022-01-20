@@ -41,8 +41,7 @@ test_that("wilcox.test_2_sample",
               dat_wilcox.test_2_sample,
               "group",
               test_options = c(nonparametric = TRUE)
-            ) %>% print(silent = TRUE),
-            NA
+            ) %>% print(silent = TRUE), NA
           )})
 
 test_that("wilcox.test_2_sample categorical",
@@ -86,7 +85,7 @@ test_that("wilcox.test_2_sample paired with ID in dataset",
                 format_options = list(print_Total = FALSE)
               ),
               NA
-            )})            
+            )})
 
 test_that("wilcox.test_2_sample paired errors if you forget to specify indices",
           {
@@ -131,7 +130,7 @@ test_that("wilcox.test_2_sample paired works with missings",
 
 test_that("wilcox.test_2_sample paired categorical",
           {
-            expect_error(
+            expect_warning(
               descr(
                 dat_wilcox.test_2_sample_paired %>% mutate(var = ordered(var)),
                 "group",
@@ -141,9 +140,7 @@ test_that("wilcox.test_2_sample paired categorical",
                   indices = rep(1:10, 2)
                 ),
                 format_options = list(print_Total = FALSE)
-              ) %>% print(silent = TRUE),
-              NA
-            )
+              ))
           })
 
 verify_output(
@@ -344,7 +341,7 @@ test_that("mcnemar.test works with var_options and a character string as indices
             dat, "group", test_options = list(indices = "id"),
             var_options = list( var = list(test_options = list(paired = TRUE, indices = "id"))
           )))
-          
+
           })
 
 test_that("mcnemar.test doesn't work if data is not properly paired",
@@ -843,4 +840,17 @@ test_that("No test is calculated when an exact test with 1 group and categorical
   expect_message(descr(iris  %>%  select("Species"), test_options = list(test_override = "Exact binomial test"))  %>%
   print(print_format="console", silent=TRUE))
 })
+
+dat <- tibble(
+  var = ordered(c("a", "b", "a", "b", "c", "e")),
+  group = factor(rep(c("exp", "ctl"), 3))
+)
+test_that(
+  "Mann-Whitney-U test for ordered factors works",
+  {
+  expect_warning(expect_warning(descr(dat, "group")))
+  }
+)
+
+
 
