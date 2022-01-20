@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.9</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Comparison with other software</h1>
             
-            <h4 data-toc-skip class="date">2021-12-03</h4>
+            <h4 data-toc-skip class="date">2022-01-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/imbi-heidelberg/DescrTab2/blob/HEAD/vignettes/c_other_software_comparison.Rmd" class="external-link"><code>vignettes/c_other_software_comparison.Rmd</code></a></small>
       <div class="hidden name"><code>c_other_software_comparison.Rmd</code></div>
@@ -102,22 +102,22 @@
 
     
     
-<div class="section level1">
-<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>In this document, we compare various DescrTab2 tests and descriptive statistics with their SAS equivalents.</p>
 <p>These comparisons are not automated. The user may check if the results presented within this document are according to the users preferences.</p>
 <p>The datasets used in these comparisons are taken mostly from the <code><a href="https://rdrr.io/r/utils/help.html" class="external-link">?help</a></code> pages of the underlying test functions used within <code>DescrTab2</code>. For the SAS comparisons, these datasets are then written to <code>.csv</code> format and read into SAS with help of the <code>?foreign</code> package.</p>
 <p>The origin of these datasets is described in the respective sections.</p>
 </div>
-<div class="section level1">
-<h1 id="a-note-about-the-layout">A note about the layout<a class="anchor" aria-label="anchor" href="#a-note-about-the-layout"></a>
-</h1>
+<div class="section level2">
+<h2 id="a-note-about-the-layout">A note about the layout<a class="anchor" aria-label="anchor" href="#a-note-about-the-layout"></a>
+</h2>
 <p>This document is created by including in the .html SAS output. Unfortunately, this has ugly side effects for the formatting of this document, but everything should still be readable.</p>
 </div>
-<div class="section level1">
-<h1 id="wilcoxon-one-sample-signed-rank-test">Wilcoxon one-sample signed-rank test<a class="anchor" aria-label="anchor" href="#wilcoxon-one-sample-signed-rank-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="wilcoxon-one-sample-signed-rank-test">Wilcoxon one-sample signed-rank test<a class="anchor" aria-label="anchor" href="#wilcoxon-one-sample-signed-rank-test"></a>
+</h2>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/wilcox.test.html" class="external-link">?wilcox.test</a></code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -230,9 +230,9 @@ min - max
 </tr></tfoot>
 </table>
 </div>
-<div class="section level1">
-<h1 id="mann-whitney-u-test">Mann-Whitney U test<a class="anchor" aria-label="anchor" href="#mann-whitney-u-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="mann-whitney-u-test">Mann-Whitney U test<a class="anchor" aria-label="anchor" href="#mann-whitney-u-test"></a>
+</h2>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/wilcox.test.html" class="external-link">?wilcox.test</a></code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -425,9 +425,9 @@ min - max
 </tfoot>
 </table>
 </div>
-<div class="section level1">
-<h1 id="kruskal-wallis-one-way-anova">Kruskal-Wallis one-way ANOVA<a class="anchor" aria-label="anchor" href="#kruskal-wallis-one-way-anova"></a>
-</h1>
+<div class="section level2">
+<h2 id="kruskal-wallis-one-way-anova">Kruskal-Wallis one-way ANOVA<a class="anchor" aria-label="anchor" href="#kruskal-wallis-one-way-anova"></a>
+</h2>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">?kruskal.test</a></code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -2303,9 +2303,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="friedman-test">Friedman test<a class="anchor" aria-label="anchor" href="#friedman-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="friedman-test">Friedman test<a class="anchor" aria-label="anchor" href="#friedman-test"></a>
+</h2>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/friedman.test.html" class="external-link">?friedman.test</a></code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -4210,9 +4210,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="cochrans-q-test">Cochrans Q test<a class="anchor" aria-label="anchor" href="#cochrans-q-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="cochrans-q-test">Cochrans Q test<a class="anchor" aria-label="anchor" href="#cochrans-q-test"></a>
+</h2>
 <p>Dataset origin: This is a replicate of the dataset from the <a href="https://documentation.sas.com/?cdcId=pgmsascdc&amp;cdcVersion=9.4_3.4&amp;docsetId=statug&amp;docsetTarget=statug_freq_examples10.htm&amp;locale=en" class="external-link">SAS documentation of the Cochrane Q test from proc freq</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -6007,9 +6007,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="mcnemars-test">McNemars test<a class="anchor" aria-label="anchor" href="#mcnemars-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="mcnemars-test">McNemars test<a class="anchor" aria-label="anchor" href="#mcnemars-test"></a>
+</h2>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">?mcnemar.test</a></code> (accessed on R-version 4.0.3). Note that this dataset is not explicitly defined in <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">?mcnemar.test</a></code>. It is constructed to reflect the cross table defined there.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">794</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Approve"</span>, <span class="fl">150</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">86</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Disapprove"</span>, <span class="fl">570</span><span class="op">)</span>,
@@ -8144,9 +8144,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="chi-squared-test">Chi-squared test<a class="anchor" aria-label="anchor" href="#chi-squared-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="chi-squared-test">Chi-squared test<a class="anchor" aria-label="anchor" href="#chi-squared-test"></a>
+</h2>
 <p>Dataset origin: “Gender-Party dataset”:<code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">?chisq.test</a></code> (accessed on R-version 4.0.3). “a-b dataset”: selfmade.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -10923,9 +10923,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="t-test">t-test<a class="anchor" aria-label="anchor" href="#t-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="t-test">t-test<a class="anchor" aria-label="anchor" href="#t-test"></a>
+</h2>
 <p>Dataset origin: <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">?t.test</a></code>, which references <code><a href="https://rdrr.io/r/datasets/sleep.html" class="external-link">?sleep</a></code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -13539,9 +13539,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="f-test">F-test<a class="anchor" aria-label="anchor" href="#f-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="f-test">F-test<a class="anchor" aria-label="anchor" href="#f-test"></a>
+</h2>
 <p>Dataset origin: Modified version of <code><a href="https://rdrr.io/r/datasets/npk.html" class="external-link">?datasets::npk</a></code>. <code>npk</code> is used in <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">?aov</a></code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -15910,9 +15910,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="mixed-model-anova">Mixed model ANOVA<a class="anchor" aria-label="anchor" href="#mixed-model-anova"></a>
-</h1>
+<div class="section level2">
+<h2 id="mixed-model-anova">Mixed model ANOVA<a class="anchor" aria-label="anchor" href="#mixed-model-anova"></a>
+</h2>
 <p>Dataset origin: Modified version of <code><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html" class="external-link">?nlme::Orthodont</a></code>. <code>Orthodont</code> is used in <code>?lme</code> (accessed on R-version 4.0.3).</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -18034,9 +18034,9 @@ var _ie64 = _info.indexOf("x64") > 0
 
 
 </div>
-<div class="section level1">
-<h1 id="boschloos-test">Boschloos test<a class="anchor" aria-label="anchor" href="#boschloos-test"></a>
-</h1>
+<div class="section level2">
+<h2 id="boschloos-test">Boschloos test<a class="anchor" aria-label="anchor" href="#boschloos-test"></a>
+</h2>
 <p>Dataset origin: selfmade.</p>
 <p>DescrTab2 uses the exact2x2::boschloo with option <code>tsmethod=central</code> to calculate p-values. There is no comparison for this option readily available.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -18211,7 +18211,7 @@ B
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
