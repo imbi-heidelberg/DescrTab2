@@ -1,3 +1,7 @@
+# Version 2.1.9
+
+* Fix a bug where ordered factors were not correctly converted to rank data for non-parametric testing purposes
+
 # Version 2.1.8
 
 * Add check in .meanCIlower and .meanCIupper for non-constantness of data

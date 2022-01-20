@@ -1,5 +1,5 @@
 > descr(dat, "group", test_options = list(nonparametric = TRUE, indices = idx,
-+   paired = T)) %>% print()
++   paired = TRUE)) %>% print()
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 

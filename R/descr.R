@@ -2481,11 +2481,13 @@ boschloo_max_n in test_options to a larger value or to NULL."))
       "Student's one-sample t-test",
       "Welch's two-sample t-test",
       "F-test (ANOVA)"
-    ) && is.factor(var)) {
-      var <- as.numeric(as.character(var))
+    )) {
+      if (is.ordered(var)) {
+        var <- as.numeric(var)
+      } else if (is.factor(var)) {
+        var <- as.numeric(as.character(var))
+      }
     }
-
-
     erg <- switch(test,
       `Wilcoxon two-sample signed-rank test` = {
         good_idx <- names(table(id)[table(id) == 2])
