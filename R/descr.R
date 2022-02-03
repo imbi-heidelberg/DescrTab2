@@ -2492,7 +2492,8 @@ boschloo_max_n in test_options to a larger value or to NULL."))
       `Wilcoxon two-sample signed-rank test` = {
         good_idx <- names(table(id)[table(id) == 2])
         if (!all(id %in% good_idx)) {
-          warning("Removed paired observations with missings.")
+          warning(paste0("Datapoints with the following IDs are improperly matched and have been removed for p-value calculation: ",
+                         paste(names(table(id)[table(id) != 2]), collapse = ", ")))
         }
         tibl <- tibble(
           var = var,
@@ -2581,7 +2582,8 @@ boschloo_max_n in test_options to a larger value or to NULL."))
       `Student's paired t-test` = {
         good_idx <- names(table(id)[table(id) == 2])
         if (!all(id %in% good_idx)) {
-          warning("Removed paired observations with missings.")
+          warning(paste0("Datapoints with the following IDs are improperly matched and have been removed: ",
+                         paste(names(table(id)[table(id) != 2]), collapse = ", ")))
         }
         tibl <- tibble(
           var = var,
@@ -2676,24 +2678,32 @@ boschloo_max_n in test_options to a larger value or to NULL."))
         list(p = pv)
       },
       `Exact McNemar's test` = {
-        tmp <- tibble(
+        good_idx <- names(table(id)[table(id) == 2])
+        if (!all(id %in% good_idx)) {
+          warning(paste0("Datapoints with the following IDs are improperly matched and have been removed: ",
+                         paste(names(table(id)[table(id) != 2]), collapse = ", ")))
+        }
+        tibl <- tibble(
           var = var,
           group = group,
-          idx = test_options[["indices"]]
+          id = id
         )
-        tmp1 <-
-          tmp %>%
-          filter(group == levels(group)[1]) %>%
-          arrange("idx")
-        tmp2 <-
-          tmp %>%
-          filter(group == levels(group)[2]) %>%
-          arrange("idx")
+        tibl %<>% filter(id %in% good_idx)
+        level1 <- levels(group)[1]
+        level2 <- levels(group)[2]
+        x <-
+          tibl %>%
+          filter(group == level1) %>%
+          arrange(id) %>%
+          pull(var)
+        y <-
+          tibl %>%
+          filter(group == level2) %>%
+          arrange(id) %>%
+          pull(var)
 
-        if (any(tmp1$idx != tmp2$idx)) {
-          stop("Your data is not properly matched. Maybe some pairs contain missings?")
-        }
-        cont.table <- table(tmp1$var, tmp2$var)
+        cont.table <- table(x, y)
+
         arglist <- modifyList(
           list(
             x = cont.table,
@@ -2768,7 +2778,7 @@ boschloo_max_n in test_options to a larger value or to NULL."))
         }
         arglist <- modifyList(
           list(
-            x = table(var, group),
+            x = table(group, var),
             conf.int = conf.int
           ),
           as.list(test_options[["additional_test_args"]])
@@ -2787,24 +2797,31 @@ boschloo_max_n in test_options to a larger value or to NULL."))
         }
       },
       `McNemar's test` = {
-        tmp <- tibble(
+        good_idx <- names(table(id)[table(id) == 2])
+        if (!all(id %in% good_idx)) {
+          warning(paste0("Datapoints with the following IDs are improperly matched and have been removed: ",
+                         paste(names(table(id)[table(id) != 2]), collapse = ", ")))
+        }
+        tibl <- tibble(
           var = var,
           group = group,
-          idx = test_options[["indices"]]
+          id = id
         )
-        tmp1 <-
-          tmp %>%
-          filter(group == levels(group)[1]) %>%
-          arrange("idx")
-        tmp2 <-
-          tmp %>%
-          filter(group == levels(group)[2]) %>%
-          arrange("idx")
+        tibl %<>% filter(id %in% good_idx)
+        level1 <- levels(group)[1]
+        level2 <- levels(group)[2]
+        x <-
+          tibl %>%
+          filter(group == level1) %>%
+          arrange(id) %>%
+          pull(var)
+        y <-
+          tibl %>%
+          filter(group == level2) %>%
+          arrange(id) %>%
+          pull(var)
 
-        if (any(tmp1$idx != tmp2$idx)) {
-          stop("Your data is not properly matched. Maybe some pairs contain missings?")
-        }
-        cont.table <- table(tmp1$var, tmp2$var)
+        cont.table <- table(x, y)
 
         arglist <- modifyList(
           list(
@@ -2817,7 +2834,7 @@ Use Exact McNemar's test if you want confidence intervals which use the test sta
 exact McNemar's test.")
         list(
           p = ignore_unused_args(stats::mcnemar.test, arglist)$p.value,
-          CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+          CI = stats::prop.test(table(group, var), correct = FALSE)$conf.int,
           CI_name = "CI for difference in proportions derived from a normal (\"Wald\") approximation"
         )
       },
@@ -2859,7 +2876,7 @@ exact McNemar's test.")
         if (n_levels_group == 2 & n_levels_var == 2) {
           list(
             p = ignore_unused_args(stats::chisq.test, arglist)$p.value,
-            CI = stats::prop.test(table(var, group), correct = FALSE)$conf.int,
+            CI = stats::prop.test(table(group, var), correct = FALSE)$conf.int,
             CI_name = "CI for difference in proportions derived from a normal (\"Wald\") approximation"
           )
         } else {
