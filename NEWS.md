@@ -1,3 +1,8 @@
+# Version 2.1.10
+
+* Fix bug where confidence intervals for differences in rates where displayed as differences in row-proportions instead of column-proportions
+* Make error message for improperly matched data more precise
+
 # Version 2.1.9
 
 * Fix a bug where ordered factors were not correctly converted to rank data for non-parametric testing purposes

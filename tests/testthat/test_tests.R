@@ -346,10 +346,10 @@ test_that("mcnemar.test works with var_options and a character string as indices
 
 test_that("mcnemar.test doesn't work if data is not properly paired",
           {
-          expect_warning(expect_message(expect_message(expect_message(
+          expect_message(expect_message(expect_warning(expect_warning(expect_warning(
             descr(
             dat, "group", test_options = list(paired = TRUE, indices = c(1:1600, 1, 1:1599))
-          )))))})
+          ))))))})
 
 test_that("exact2x2 mcnemar test works",
           {
@@ -375,7 +375,7 @@ test_that("exact2x2 mcnemar test errors if you forget to specify indices",
 
 test_that("exact2x2 doesn't work if data is not properly paired",
           {
-          expect_warning(expect_message(expect_message(expect_message(
+            expect_message(expect_message(expect_warning(expect_warning(
             descr(
             dat, "group", test_options = list(paired = TRUE, exact = TRUE, indices = c(1:1600, 1, 1:1599))
           )))))})

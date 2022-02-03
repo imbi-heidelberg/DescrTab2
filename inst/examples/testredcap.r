@@ -2,7 +2,7 @@
 rm(list=ls())
 #graphics.off()
 #Load Hmisc library
-library(Hmisc)
+suppressMessages(library(Hmisc))
 #Read Data
 
 data=read.csv(system.file("examples", "testredcap.csv", package = "DescrTab2"))
