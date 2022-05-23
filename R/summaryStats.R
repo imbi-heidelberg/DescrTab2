@@ -81,14 +81,28 @@
   base::mean((var - .mean(var))^(4)) / (stats::sd(var))^(2) - 3
 }
 
+.factorN <- function(var){
+  sum(var!="(Missing)")
+}
+.factorNmiss <- function(var){
+  sum(var=="(Missing)")
+}
+
 .factormean <- function(var) {
-  var %>%
+  var <- var[var!="(Missing)"]
+  ret <- var %>%
     as.character() %>%
     as.numeric() %>%
     mean(na.rm = TRUE)
+  if (is.nan(ret)) {
+    return(NA_real_)
+  } else {
+    return(ret)
+  }
 }
 
 .factorsd <- function(var) {
+  var <- var[var!="(Missing)"]
   var %>%
     as.character() %>%
     as.numeric() %>%
@@ -96,6 +110,7 @@
 }
 
 .factormedian <- function(var) {
+  var <- var[var!="(Missing)"]
   var %>%
     as.character() %>%
     as.numeric() %>%
@@ -103,6 +118,7 @@
 }
 
 .factorQ1 <- function(var) {
+  var <- var[var!="(Missing)"]
   var %>%
     as.character() %>%
     as.numeric() %>%
@@ -114,6 +130,7 @@
 }
 
 .factorQ3 <- function(var) {
+  var <- var[var!="(Missing)"]
   var %>%
     as.character() %>%
     as.numeric() %>%
@@ -125,6 +142,7 @@
 }
 
 .factormin <- function(var) {
+  var <- var[var!="(Missing)"]
   var_num <- var %>%
     as.character() %>%
     as.numeric()
@@ -136,6 +154,7 @@
 }
 
 .factormax <- function(var) {
+  var <- var[var!="(Missing)"]
   var_num <- var %>%
     as.character() %>%
     as.numeric()

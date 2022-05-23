@@ -636,7 +636,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
 
         tmp_names <-
           setdiff(names(var_options[[var_option_name]][["format_summary_stats"]]), "Nmiss")
-        if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% tmp_names)) {
+        if (!all(setdiff(names(var_options[[var_option_name]][["summary_stats"]]), "Nmiss") %in% tmp_names)) {
           warning(
             "All summary stats in var_options must have a corresponding formatting function. Defaulting to as.character"
           )
@@ -1757,7 +1757,7 @@ create_numeric_subtable <-
            format_summary_stats,
            format_p,
            reshape_rows) {
-    if (isTRUE(format_options[["categories_first_summary_stats_second"]])) {
+    if (!isTRUE(format_options[["categories_first_summary_stats_second"]])) {
       order <- c(1:2)
     } else {
       order <- c(2:1)
@@ -1851,7 +1851,7 @@ create_character_subtable <-
     DescrVarObj_unformatted <- DescrVarObj
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
-    if (isTRUE(format_options[["categories_first_summary_stats_second"]])) {
+    if (!isTRUE(format_options[["categories_first_summary_stats_second"]])) {
       order <- c(1:2)
     } else {
       order <- c(2:1)

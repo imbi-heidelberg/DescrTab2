@@ -15,14 +15,32 @@ descr(
     DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
     DescrTab2:::.max),
   summary_stats_cat = list(),
-  format_summary_stats = list(N = function(x) {     format(x, digits = 2, scientific =
-    3) }, mean = function(x) {     format(x, digits = 2, scientific = 3) }, sd =
-    function(x) {     format(x, digits = 2, scientific = 3) }, median = function(x) {    
-    format(x, digits = 2, scientific = 3) }, Q1 = function(x) {     format(x, digits = 2,
-    scientific = 3) }, Q3 = function(x) {     format(x, digits = 2, scientific = 3) },
-    min = function(x) {     format(x, digits = 2, scientific = 3) }, max = function(x) { 
-       format(x, digits = 2, scientific = 3) }, CI = function(x) {     format(x, digits =
-    2, scientific = 3) }),
+  format_summary_stats = list(N = function(x) {
+     format(x, digits = 2, scientific =
+    3)
+ }, mean = function(x) {
+     format(x, digits = 2, scientific = 3)
+ }, sd =
+    function(x) {
+     format(x, digits = 2, scientific = 3)
+ }, median = function(x) {
+ 
+       format(x, digits = 2, scientific = 3)
+ }, Q1 = function(x) {
+     format(x, digits
+    = 2, scientific = 3)
+ }, Q3 = function(x) {
+     format(x, digits = 2, scientific =
+    3)
+ }, min = function(x) {
+     format(x, digits = 2, scientific = 3)
+ }, max =
+    function(x) {
+     format(x, digits = 2, scientific = 3)
+ }, CI = function(x) {
+    
+    format(x, digits = 2, scientific = 3)
+ }),
   format_p = scales::pvalue_format(),
   format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
     combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_factor_level = "none",
@@ -30,16 +48,21 @@ descr(
     percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,
     absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
     omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
-    c("no_missing_percent", "missing_as_regular_category",     
+    c("no_missing_percent", "missing_as_regular_category", 
+    
     "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
     categories_first_summary_stats_second = FALSE),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), guess_id = FALSE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
     additional_test_args = list(), boschloo_max_n = 200),
-  reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {  
-      paste0(Q1, " -- ", Q3) }), `min - max` = list(args = c("min", "max"), fun =
-    function(min, max) {     paste0(min, " -- ", max) })),
+  reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {
+ 
+       paste0(Q1, " -- ", Q3)
+ }), `min - max` = list(args = c("min", "max"), fun =
+    function(min, max) {
+     paste0(min, " -- ", max)
+ })),
   ...
 )
 }

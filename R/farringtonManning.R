@@ -144,7 +144,7 @@ farrington.manning <- function(
     a               <- 1 + theta
     v               <- b^3/(27*a^3) - b*c/(6*a^2) + d/(2*a)
     u               <- sign(v)*sqrt(b^2/(9*a^2) - c/(3*a))
-    w               <- (pi + acos(v/u^3))/3
+    w               <- (pi + acos(   max(min(1, v/u^3), 0, na.rm = TRUE)  ))/3
     p1_ML_null      <- 2*u*cos(w) - b/(3*a)
     p2_ML_null      <- p1_ML_null - delta
     sd_diff_ML_null <- sqrt(p1_ML_null*(1 - p1_ML_null)/n1 + p2_ML_null*(1 - p2_ML_null)/n2)
@@ -177,10 +177,14 @@ farrington.manning <- function(
 
     # confidence interval by inversion of two-sided test
   p_value_two.sided <- function(delta) {
-    z <- get_z(delta)
-    p_value_greater <- 1 - pnorm(z)
-    p_value_less <- pnorm(z)
-    2*min(p_value_less, p_value_greater)
+    if (abs(get_sd_diff_ML_null(delta)) < .Machine$double.eps) {
+      return(1)
+    } else{
+      z <- get_z(delta)
+      p_value_greater <- 1 - pnorm(z)
+      p_value_less <- pnorm(z)
+      2 * min(p_value_less, p_value_greater)
+    }
   }
 
   alpha_mod <- ifelse(alternative == "two.sided", alpha, 2*alpha)

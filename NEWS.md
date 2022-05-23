@@ -1,3 +1,7 @@
+# Version 2.1.11
+
+* Some random bugfixes i seem to have forgotten to push.
+
 # Version 2.1.10
 
 * Fix bug where confidence intervals for differences in rates where displayed as differences in row-proportions instead of column-proportions
