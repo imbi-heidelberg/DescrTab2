@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.11</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -70,18 +70,19 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="2.1.11" id="version-2111">Version 2.1.11<a class="anchor" aria-label="anchor" href="#version-2111"></a></h2>
+<ul><li>Some random bugfixes i seem to have forgotten to push.</li></ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.10" id="version-2110">Version 2.1.10<a class="anchor" aria-label="anchor" href="#version-2110"></a></h2>
 <ul><li>Fix bug where confidence intervals for differences in rates where displayed as differences in row-proportions instead of column-proportions</li>
 <li>Make error message for improperly matched data more precise</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.9" id="version-219">Version 2.1.9<small>2022-01-20</small><a class="anchor" aria-label="anchor" href="#version-219"></a></h2>
-<ul><li>Fix a bug where ordered factors were not correctly converted to rank data for non-parametric testing purposes</li>
-</ul></div>
+<ul><li>Fix a bug where ordered factors were not correctly converted to rank data for non-parametric testing purposes</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.8" id="version-218">Version 2.1.8<a class="anchor" aria-label="anchor" href="#version-218"></a></h2>
-<ul><li>Add check in .meanCIlower and .meanCIupper for non-constantness of data</li>
-</ul></div>
+<ul><li>Add check in .meanCIlower and .meanCIupper for non-constantness of data</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.7" id="version-217">Version 2.1.7<small>2021-12-02</small><a class="anchor" aria-label="anchor" href="#version-217"></a></h2>
 <ul><li>Fixed a bug where indices could not be specified inside var_options</li>
@@ -94,8 +95,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.5" id="version-215">Version 2.1.5<a class="anchor" aria-label="anchor" href="#version-215"></a></h2>
-<ul><li>Fix bug with group_labels that lead to group N numbers not being dispalyed.</li>
-</ul></div>
+<ul><li>Fix bug with group_labels that lead to group N numbers not being dispalyed.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.4" id="version-214">Version 2.1.4<a class="anchor" aria-label="anchor" href="#version-214"></a></h2>
 <ul><li>Fix major bug where percentages were not calculated correctly if factor levels are omitted.</li>
@@ -103,8 +103,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.3" id="version-213">Version 2.1.3<a class="anchor" aria-label="anchor" href="#version-213"></a></h2>
-<ul><li>Added lapply_descr function which allows applying descr to a list of datasets</li>
-</ul></div>
+<ul><li>Added lapply_descr function which allows applying descr to a list of datasets</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.1.2" id="version-212">Version 2.1.2<a class="anchor" aria-label="anchor" href="#version-212"></a></h2>
 <ul><li>Major code refactoring, removing alot of code duplication</li>
@@ -125,16 +124,13 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.13" id="version-2013">Version 2.0.13<a class="anchor" aria-label="anchor" href="#version-2013"></a></h2>
-<ul><li>LaTeX tables will now properly wrap the names of long factor levels and long variable names.</li>
-</ul></div>
+<ul><li>LaTeX tables will now properly wrap the names of long factor levels and long variable names.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.12" id="version-2012">Version 2.0.12<a class="anchor" aria-label="anchor" href="#version-2012"></a></h2>
-<ul><li>.mean now returns NA_real_ in cases were NaN was previously returned.</li>
-</ul></div>
+<ul><li>.mean now returns NA_real_ in cases were NaN was previously returned.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.11" id="version-2011">Version 2.0.11<a class="anchor" aria-label="anchor" href="#version-2011"></a></h2>
-<ul><li>Fixed a bug with paired data, where some of the pairs contain missing. In some cases, tests were not calculated and a misleading error message was produced.</li>
-</ul></div>
+<ul><li>Fixed a bug with paired data, where some of the pairs contain missing. In some cases, tests were not calculated and a misleading error message was produced.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.10" id="version-2010">Version 2.0.10<a class="anchor" aria-label="anchor" href="#version-2010"></a></h2>
 <ul><li>Added the ability to suppress the “Total” column via the format_options(print_Total = FALSE) option.</li>
@@ -144,24 +140,19 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.9" id="version-209">Version 2.0.9<a class="anchor" aria-label="anchor" href="#version-209"></a></h2>
-<ul><li>Fixed a bug with print_CI = FALSE option in format_options.</li>
-</ul></div>
+<ul><li>Fixed a bug with print_CI = FALSE option in format_options.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.8" id="version-208">Version 2.0.8<a class="anchor" aria-label="anchor" href="#version-208"></a></h2>
-<ul><li>“&amp;” signs in factor labels are now properly escaped in LaTeX code.</li>
-</ul></div>
+<ul><li>“&amp;” signs in factor labels are now properly escaped in LaTeX code.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.7" id="version-207">Version 2.0.7<small>2021-03-15</small><a class="anchor" aria-label="anchor" href="#version-207"></a></h2>
-<ul><li>Added the “combine_median_Q1_Q3” argument to format_options, which reshapes these summary statistics to “median (Q1, Q3)”.</li>
-</ul></div>
+<ul><li>Added the “combine_median_Q1_Q3” argument to format_options, which reshapes these summary statistics to “median (Q1, Q3)”.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.6" id="version-206">Version 2.0.6<a class="anchor" aria-label="anchor" href="#version-206"></a></h2>
-<ul><li>Added the following members to format_options: percent_suffix, row_percent, Nmiss_row_percent and absolute_relative_frequency_mode. They can be used to control control how absolute and relative frequencies are displayed.</li>
-</ul></div>
+<ul><li>Added the following members to format_options: percent_suffix, row_percent, Nmiss_row_percent and absolute_relative_frequency_mode. They can be used to control control how absolute and relative frequencies are displayed.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.5" id="version-205">Version 2.0.5<a class="anchor" aria-label="anchor" href="#version-205"></a></h2>
-<ul><li>Added documentation for confidence intervals.</li>
-</ul></div>
+<ul><li>Added documentation for confidence intervals.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.4" id="version-204">Version 2.0.4<a class="anchor" aria-label="anchor" href="#version-204"></a></h2>
 <ul><li>All tests that previously used continuity correction by default do <em>not</em> use continuity correction anymore.</li>
@@ -169,8 +160,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.3" id="version-203">Version 2.0.3<small>2020-12-16</small><a class="anchor" aria-label="anchor" href="#version-203"></a></h2>
-<ul><li>First cran release.</li>
-</ul></div>
+<ul><li>First cran release.</li></ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -185,7 +175,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
