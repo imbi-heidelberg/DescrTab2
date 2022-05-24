@@ -22,7 +22,7 @@ are used for continuous variables and confidence intervals for the Hodges-Lehman
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.12</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@ are used for continuous variables and confidence intervals for the Hodges-Lehman
     <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no_missing_percent"</span>, <span class="st">"missing_as_regular_category"</span>, 
     
     <span class="st">"missing_as_separate_category"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="cn">NULL</span>, replace_empty_string_with_NA <span class="op">=</span> <span class="cn">TRUE</span>,
-    categories_first_summary_stats_second <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
+    categories_first_summary_stats_second <span class="op">=</span> <span class="cn">FALSE</span>, max_first_col_width <span class="op">=</span> <span class="fl">7.5</span><span class="op">)</span>,
   test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>paired <span class="op">=</span> <span class="cn">FALSE</span>, nonparametric <span class="op">=</span> <span class="cn">FALSE</span>, exact <span class="op">=</span> <span class="cn">FALSE</span>, indices <span class="op">=</span>
     <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, guess_id <span class="op">=</span> <span class="cn">FALSE</span>, include_group_missings_in_test <span class="op">=</span> <span class="cn">FALSE</span>,
     include_categorical_missings_in_test <span class="op">=</span> <span class="cn">FALSE</span>, test_override <span class="op">=</span> <span class="cn">NULL</span>,
@@ -243,6 +243,7 @@ and "(Missing)" with 10 counts, they will become "A": 10 (50%), "B": 10 (50%), "
 <li><p><code>replace_empty_string_with_NA</code> (logical) controls whether empty strings ("") should be replaced
 with missing value (<code>NA_character_</code>).</p></li>
 <li><p><code>categories_first_summary_stats_second</code> (logical) controls whether the categories should be printed first in the summary statistics table.</p></li>
+<li><p><code>max_first_col_width</code> (numeric) controls the maximum width of the first column in LaTeX tables.</p></li>
 </ul></div>
     <div id="test-options">
     <h2>Test options</h2>
