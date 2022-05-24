@@ -84,7 +84,9 @@ utils::globalVariables(".")
 #' \item{\code{replace_empty_string_with_NA}}{ (logical) controls whether empty strings ("") should be replaced
 #' with missing value (\code{NA_character_}).}
 #' \item{\code{categories_first_summary_stats_second}}{ (logical) controls whether the categories should be printed first in the summary statistics table.}
+#' \item{\code{max_first_col_width}}{ (numeric) controls the maximum width of the first column in LaTeX tables.}
 #' }
+#'
 #'
 #'
 #' @section Test options:
@@ -243,7 +245,8 @@ descr <-
              ),
              caption = NULL,
              replace_empty_string_with_NA = TRUE,
-             categories_first_summary_stats_second = FALSE
+             categories_first_summary_stats_second = FALSE,
+             max_first_col_width = 7.5
            ),
            test_options = list(
              paired = FALSE,
@@ -1360,10 +1363,13 @@ if ("CI_name" %in% names(tibl)) {
 
   tibl <- escape_latex_symbols(tibl, numEscapes = 1)
 
-  width <- min(max(c(
+  width <- min(
+    max(
     (sapply(labels, str_length) + 1) %/% 2,
-    (sapply(tibl[[1]][!indx_varnames], str_length) + 1) %/% 2, 1
-  )), 7.5)
+    (sapply(tibl[[1]][!indx_varnames], str_length) + 1) %/% 2,
+    1
+  ),
+  DescrPrintObj[["format"]][["options"]][["max_first_col_width"]])
 
   # For some reason, names need double escaping
   names(lengths) <- sapply(escape_latex_symbols(tibble(labels), numEscapes = 2)[[1]],

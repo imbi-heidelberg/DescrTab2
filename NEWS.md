@@ -1,3 +1,7 @@
+# Version 2.1.12
+
+* Added max_first_col_width format option for LaTeX tables.
+
 # Version 2.1.11
 
 * Some random bugfixes i seem to have forgotten to push.

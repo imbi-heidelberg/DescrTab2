@@ -51,7 +51,7 @@ descr(
     c("no_missing_percent", "missing_as_regular_category", 
     
     "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
-    categories_first_summary_stats_second = FALSE),
+    categories_first_summary_stats_second = FALSE, max_first_col_width = 7.5),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), guess_id = FALSE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
@@ -170,6 +170,7 @@ and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%),
 \item{\code{replace_empty_string_with_NA}}{ (logical) controls whether empty strings ("") should be replaced
 with missing value (\code{NA_character_}).}
 \item{\code{categories_first_summary_stats_second}}{ (logical) controls whether the categories should be printed first in the summary statistics table.}
+\item{\code{max_first_col_width}}{ (numeric) controls the maximum width of the first column in LaTeX tables.}
 }
 }
 
