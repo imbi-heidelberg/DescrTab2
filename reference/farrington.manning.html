@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.13</span>
       </span>
     </div>
 
@@ -81,34 +81,45 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">farrington.manning</span><span class="op">(</span>
-  <span class="va">group1</span>,
-  <span class="va">group2</span>,
-  delta <span class="op">=</span> <span class="fl">0</span>,
-  alternative <span class="op">=</span> <span class="st">"greater"</span>,
-  alpha <span class="op">=</span> <span class="fl">0.025</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">farrington.manning</span><span class="op">(</span></span>
+<span>  <span class="va">group1</span>,</span>
+<span>  <span class="va">group2</span>,</span>
+<span>  delta <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">"greater"</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.025</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>group1</dt>
 <dd><p>a logical vector of data from group 1, where <code>TRUE</code> indicates a success</p></dd>
+
+
 <dt>group2</dt>
 <dd><p>a logical vector of data from group 2, where <code>TRUE</code> indicates a success</p></dd>
+
+
 <dt>delta</dt>
 <dd><p>the rate difference under the null hypothesis</p></dd>
+
+
 <dt>alternative</dt>
 <dd><p>character string indicating the alternative to use, either of
 "two.sided", "less", "greater"</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>the significance level (acceptable error of the first kind),
 a two-sided confidence intnerval is returned with confidence level 1 - 2*alpha, such that
 the lower bound is a valid one sided confidence interval at the confidence level 1 - alpha.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of class "htest" containing the following components:</p><table class="table table"><tr><td><code>statistic</code>:</td><td>the value of the Z-statistic</td></tr><tr><td><code>parameter</code>:</td><td>delta, rate difference (group 1 - group 2) under the null hypothesis</td></tr><tr><td><code>p.value</code>:</td><td>the p-value for the Farrington-Manning test</td></tr><tr><td><code>null.value</code>:</td><td>rate difference (group 1 - group 2) under the null</td></tr><tr><td><code>alternative</code>:</td><td>a character string indicating the alternative hypothesis</td></tr><tr><td><code>method</code>:</td><td>a character string indicating the exact method employed</td></tr><tr><td><code>data.name</code>:</td><td>a character string giving the names of the data used</td></tr><tr><td><code>estimate</code>:</td><td>the estimated rate difference (maximum likelihood)</td></tr><tr><td><code>conf.int</code>:</td><td>a confidence interval for the rate difference</td></tr><tr><td><code>sample.size</code>:</td><td>the total sample size used for the test</td></tr></table></div>
+    
+
+<p>A list of class "htest" containing the following components:</p><table class="table table"><tr><td><code>statistic</code>:</td><td>the value of the Z-statistic</td></tr><tr><td><code>parameter</code>:</td><td>delta, rate difference (group 1 - group 2) under the null hypothesis</td></tr><tr><td><code>p.value</code>:</td><td>the p-value for the Farrington-Manning test</td></tr><tr><td><code>null.value</code>:</td><td>rate difference (group 1 - group 2) under the null</td></tr><tr><td><code>alternative</code>:</td><td>a character string indicating the alternative hypothesis</td></tr><tr><td><code>method</code>:</td><td>a character string indicating the exact method employed</td></tr><tr><td><code>data.name</code>:</td><td>a character string giving the names of the data used</td></tr><tr><td><code>estimate</code>:</td><td>the estimated rate difference (maximum likelihood)</td></tr><tr><td><code>conf.int</code>:</td><td>a confidence interval for the rate difference</td></tr><tr><td><code>sample.size</code>:</td><td>the total sample size used for the test</td></tr></table></div>
     <div id="details">
     <h2>Details</h2>
     <p>The Farrington-Maning test for rate differences test the null hypothesis
@@ -147,10 +158,10 @@ The confidence interval is constructed by inverting the two-sided test directly.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">20</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">30</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">farrington.manning</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="op">-</span><span class="fl">.3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">20</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">30</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">farrington.manning</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="op">-</span><span class="fl">.3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Farrington-Manning test for non-inferiority of rates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -163,7 +174,7 @@ The confidence interval is constructed by inverting the two-sided test directly.
 <span class="r-out co"><span class="r-pr">#&gt;</span> rate difference (group 1 - group 2) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          0.02597403 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -178,7 +189,7 @@ The confidence interval is constructed by inverting the two-sided test directly.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

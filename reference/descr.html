@@ -22,7 +22,7 @@ are used for continuous variables and confidence intervals for the Hodges-Lehman
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.13</span>
       </span>
     </div>
 
@@ -85,102 +85,133 @@ are used for continuous variables and confidence intervals for the Hodges-Lehman
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">descr</span><span class="op">(</span>
-  <span class="va">dat</span>,
-  group <span class="op">=</span> <span class="cn">NULL</span>,
-  group_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  var_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  summary_stats_cont <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.N</span>, Nmiss <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Nmiss</span>, mean <span class="op">=</span>
-    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.mean</span>, sd <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.sd</span>, median <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.median</span>, Q1 <span class="op">=</span>
-    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Q1</span>, Q3 <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Q3</span>, min <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.min</span>, max <span class="op">=</span>
-    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.max</span><span class="op">)</span>,
-  summary_stats_cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  format_summary_stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span>
-    <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, sd <span class="op">=</span>
-    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, median <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
- 
-       <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, Q1 <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits
-    <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, Q3 <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span>
-    <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, min <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, max <span class="op">=</span>
-    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span>, CI <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-    
-    <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
- <span class="op">}</span><span class="op">)</span>,
-  format_p <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pvalue_format.html" class="external-link">pvalue_format</a></span><span class="op">(</span><span class="op">)</span>,
-  format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>print_Total <span class="op">=</span> <span class="cn">NULL</span>, print_p <span class="op">=</span> <span class="cn">TRUE</span>, print_CI <span class="op">=</span> <span class="cn">TRUE</span>,
-    combine_mean_sd <span class="op">=</span> <span class="cn">FALSE</span>, combine_median_Q1_Q3 <span class="op">=</span> <span class="cn">FALSE</span>, omit_factor_level <span class="op">=</span> <span class="st">"none"</span>,
-    omit_Nmiss_if_0 <span class="op">=</span> <span class="cn">TRUE</span>, omit_missings_in_group <span class="op">=</span> <span class="cn">TRUE</span>, percent_accuracy <span class="op">=</span> <span class="cn">NULL</span>,
-    percent_suffix <span class="op">=</span> <span class="st">"%"</span>, row_percent <span class="op">=</span> <span class="cn">FALSE</span>, Nmiss_row_percent <span class="op">=</span> <span class="cn">FALSE</span>,
-    absolute_relative_frequency_mode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"only_absolute"</span>, <span class="st">"only_relative"</span><span class="op">)</span>,
-    omit_missings_in_categorical_var <span class="op">=</span> <span class="cn">FALSE</span>, categorical_missing_percent_mode <span class="op">=</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no_missing_percent"</span>, <span class="st">"missing_as_regular_category"</span>, 
-    
-    <span class="st">"missing_as_separate_category"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="cn">NULL</span>, replace_empty_string_with_NA <span class="op">=</span> <span class="cn">TRUE</span>,
-    categories_first_summary_stats_second <span class="op">=</span> <span class="cn">FALSE</span>, max_first_col_width <span class="op">=</span> <span class="fl">7.5</span><span class="op">)</span>,
-  test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>paired <span class="op">=</span> <span class="cn">FALSE</span>, nonparametric <span class="op">=</span> <span class="cn">FALSE</span>, exact <span class="op">=</span> <span class="cn">FALSE</span>, indices <span class="op">=</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, guess_id <span class="op">=</span> <span class="cn">FALSE</span>, include_group_missings_in_test <span class="op">=</span> <span class="cn">FALSE</span>,
-    include_categorical_missings_in_test <span class="op">=</span> <span class="cn">FALSE</span>, test_override <span class="op">=</span> <span class="cn">NULL</span>,
-    additional_test_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, boschloo_max_n <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,
-  reshape_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`Q1 - Q3` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q3"</span><span class="op">)</span>, fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">Q1</span>, <span class="va">Q3</span><span class="op">)</span> <span class="op">{</span>
- 
-       <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">Q1</span>, <span class="st">" -- "</span>, <span class="va">Q3</span><span class="op">)</span>
- <span class="op">}</span><span class="op">)</span>, `min - max` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span>, fun <span class="op">=</span>
-    <span class="kw">function</span><span class="op">(</span><span class="va">min</span>, <span class="va">max</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">min</span>, <span class="st">" -- "</span>, <span class="va">max</span><span class="op">)</span>
- <span class="op">}</span><span class="op">)</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">descr</span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  group_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  var_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  summary_stats_cont <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.N</span>, Nmiss <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Nmiss</span>, mean <span class="op">=</span></span>
+<span>    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.mean</span>, sd <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.sd</span>, median <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.median</span>, Q1 <span class="op">=</span></span>
+<span>    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Q1</span>, Q3 <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.Q3</span>, min <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.min</span>, max <span class="op">=</span></span>
+<span>    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.max</span><span class="op">)</span>,</span>
+<span>  summary_stats_numeric_ord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factorN</span>, Nmiss <span class="op">=</span></span>
+<span>    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factorNmiss</span>, mean <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormean</span>, sd <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factorsd</span>,</span>
+<span>    median <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormedian</span>, Q1 <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factorQ1</span>, Q3 <span class="op">=</span></span>
+<span>    <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factorQ3</span>, min <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormin</span>, max <span class="op">=</span> <span class="fu">DescrTab2</span><span class="fu">:::</span><span class="va">.factormax</span><span class="op">)</span>,</span>
+<span>  summary_stats_cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  format_summary_stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span></span>
+<span>    <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, mean <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, sd <span class="op">=</span></span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, median <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span> </span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, Q1 <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits</span>
+<span>    <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, Q3 <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span></span>
+<span>    <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, min <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, max <span class="op">=</span></span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span>, CI <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, scientific <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span> <span class="op">}</span><span class="op">)</span>,</span>
+<span>  format_p <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pvalue_format.html" class="external-link">pvalue_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  format_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>print_Total <span class="op">=</span> <span class="cn">NULL</span>, print_p <span class="op">=</span> <span class="cn">TRUE</span>, print_CI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    combine_mean_sd <span class="op">=</span> <span class="cn">FALSE</span>, combine_median_Q1_Q3 <span class="op">=</span> <span class="cn">FALSE</span>, omit_factor_level <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    omit_Nmiss_if_0 <span class="op">=</span> <span class="cn">TRUE</span>, omit_missings_in_group <span class="op">=</span> <span class="cn">TRUE</span>, percent_accuracy <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    percent_suffix <span class="op">=</span> <span class="st">"%"</span>, row_percent <span class="op">=</span> <span class="cn">FALSE</span>, Nmiss_row_percent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    absolute_relative_frequency_mode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"only_absolute"</span>, <span class="st">"only_relative"</span><span class="op">)</span>,</span>
+<span>    omit_missings_in_categorical_var <span class="op">=</span> <span class="cn">FALSE</span>, categorical_missing_percent_mode <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no_missing_percent"</span>, <span class="st">"missing_as_regular_category"</span>, </span>
+<span>    </span>
+<span>    <span class="st">"missing_as_separate_category"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="cn">NULL</span>, replace_empty_string_with_NA <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    categories_first_summary_stats_second <span class="op">=</span> <span class="cn">FALSE</span>, max_first_col_width <span class="op">=</span> <span class="fl">7.5</span><span class="op">)</span>,</span>
+<span>  test_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>paired <span class="op">=</span> <span class="cn">FALSE</span>, nonparametric <span class="op">=</span> <span class="cn">FALSE</span>, exact <span class="op">=</span> <span class="cn">FALSE</span>, indices <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, guess_id <span class="op">=</span> <span class="cn">FALSE</span>, include_group_missings_in_test <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    include_categorical_missings_in_test <span class="op">=</span> <span class="cn">FALSE</span>, test_override <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    additional_test_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, boschloo_max_n <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,</span>
+<span>  reshape_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`Q1 - Q3` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q3"</span><span class="op">)</span>, fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">Q1</span>, <span class="va">Q3</span><span class="op">)</span> <span class="op">{</span></span>
+<span> </span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">Q1</span>, <span class="st">" -- "</span>, <span class="va">Q3</span><span class="op">)</span></span>
+<span> <span class="op">}</span><span class="op">)</span>, `min - max` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span>, fun <span class="op">=</span></span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">min</span>, <span class="va">max</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">min</span>, <span class="st">" -- "</span>, <span class="va">max</span><span class="op">)</span></span>
+<span> <span class="op">}</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dat</dt>
 <dd><p>Data frame or tibble. The data set to be analyzed. Can contain continuous or factor (also ordered) variables.</p></dd>
+
+
 <dt>group</dt>
 <dd><p>name (as character) of the group variable in dat.</p></dd>
+
+
 <dt>group_labels</dt>
 <dd><p>named list of labels for the levels of the group variable in dat.</p></dd>
+
+
 <dt>var_labels</dt>
 <dd><p>named list of variable labels.</p></dd>
+
+
 <dt>var_options</dt>
 <dd><p>named list of lists. For each variable, you can have special options that apply only to that variable.
 These options are specified in this argument. See the details and examples for more explanation.</p></dd>
+
+
 <dt>summary_stats_cont</dt>
 <dd><p>named list of summary statistic functions to be used for numeric variables.</p></dd>
+
+
 <dt>summary_stats_cat</dt>
 <dd><p>named list of summary statistic function to be used for categorical variables.</p></dd>
+
+
 <dt>format_summary_stats</dt>
 <dd><p>named list of formatting functions for summary statistics.</p></dd>
+
+
 <dt>format_p</dt>
 <dd><p>formatting function for p-values.</p></dd>
+
+
 <dt>format_options</dt>
 <dd><p>named list of formatting options.</p></dd>
+
+
 <dt>test_options</dt>
 <dd><p>named list of test options.</p></dd>
+
+
 <dt>reshape_rows</dt>
 <dd><p>named list of lists. Describes how to combine different summary statistics into the same row.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further argument to be passed along</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a A <code>DescrList</code> object, which is a named list of descriptive statistics
+    
+
+<p>Returns a A <code>DescrList</code> object, which is a named list of descriptive statistics
 which can be passed along to the print function to create
 pretty summary tables.</p>
     </div>
@@ -313,7 +344,7 @@ the character strings specified in <code>args</code>. Check out the default opti
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">descr</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">descr</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Variables      Total        p        Test                              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;"> </span>Sepal.Length<span style="color: #949494;"> </span> <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;"> </span>  N<span style="color: #949494;"> </span>          <span style="color: #949494;"> </span>150<span style="color: #949494;"> </span>        <span style="color: #949494;"> </span>&lt;0.001<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Student's one-sample t-test<span style="color: #949494;"> </span>     </span>
@@ -347,10 +378,10 @@ the character strings specified in <code>args</code>. Check out the default opti
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">30</span> <span style="color: #949494;"> </span>  setosa<span style="color: #949494;"> </span>     <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;"> </span>&gt;0.999<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Chi-squared goodness-of-fit test<span style="color: #949494;"> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">31</span> <span style="color: #949494;"> </span>  versicolor<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">32</span> <span style="color: #949494;"> </span>  virginica<span style="color: #949494;"> </span>  <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
-<span class="r-in"><span class="va">DescrList</span> <span class="op">&lt;-</span> <span class="fu">descr</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">DescrList</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">mean</span></span>
+<span class="r-in"><span><span class="va">DescrList</span> <span class="op">&lt;-</span> <span class="fu">descr</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">DescrList</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">mean</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DescrList</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DescrList</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Variables      Total        p        Test                              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;"> </span>Sepal.Length<span style="color: #949494;"> </span> <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;"> </span>  N<span style="color: #949494;"> </span>          <span style="color: #949494;"> </span>150<span style="color: #949494;"> </span>        <span style="color: #949494;"> </span>&lt;0.001<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Student's one-sample t-test<span style="color: #949494;"> </span>     </span>
@@ -384,7 +415,7 @@ the character strings specified in <code>args</code>. Check out the default opti
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">30</span> <span style="color: #949494;"> </span>  setosa<span style="color: #949494;"> </span>     <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;"> </span>&gt;0.999<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Chi-squared goodness-of-fit test<span style="color: #949494;"> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">31</span> <span style="color: #949494;"> </span>  versicolor<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">32</span> <span style="color: #949494;"> </span>  virginica<span style="color: #949494;"> </span>  <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
-<span class="r-in"><span class="fu">descr</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">descr</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Variables      setosa       versicolor   virginica    Total       p     Test </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;"> </span>Sepal.Length<span style="color: #949494;"> </span> <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>          <span style="color: #949494;">  </span>    <span style="color: #949494;">  </span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;"> </span>  N<span style="color: #949494;"> </span>          <span style="color: #949494;"> </span>50<span style="color: #949494;"> </span>         <span style="color: #949494;"> </span>50<span style="color: #949494;"> </span>         <span style="color: #949494;"> </span>50<span style="color: #949494;"> </span>         <span style="color: #949494;"> </span>150<span style="color: #949494;"> </span>       <span style="color: #949494;"> </span>&lt;0.… <span style="color: #949494;"> </span>F-t…</span>
@@ -428,7 +459,7 @@ the character strings specified in <code>args</code>. Check out the default opti
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

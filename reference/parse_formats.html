@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.13</span>
       </span>
     </div>
 
@@ -75,38 +75,45 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parse_formats</span><span class="op">(</span>
-  <span class="va">path_to_format_definition</span>,
-  ignore_keywords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"value"</span><span class="op">)</span>,
-  encoding <span class="op">=</span> <span class="st">"ISO-8859-1"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parse_formats</span><span class="op">(</span></span>
+<span>  <span class="va">path_to_format_definition</span>,</span>
+<span>  ignore_keywords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"value"</span><span class="op">)</span>,</span>
+<span>  encoding <span class="op">=</span> <span class="st">"ISO-8859-1"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>path_to_format_definition</dt>
 <dd><p>(string) Path to the text file to be parsed</p></dd>
+
+
 <dt>ignore_keywords</dt>
 <dd><p>A vector of keywords to be ignored when searching for the name of
 the variable to be formatted</p></dd>
+
+
 <dt>encoding</dt>
 <dd><p>Encoding for the text file</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A named list with format definitions</p>
+    
+
+<p>A named list with format definitions</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tmpfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>     <span class="st">"proc format;</span>
-<span class="r-in">             value yn  1=\"yes\"</span>
-<span class="r-in">                       0=\"no\";</span>
-<span class="r-in">             value sex 1=\"female\"</span>
-<span class="r-in">                       0=\"male\";</span>
-<span class="r-in">              run;"</span>,<span class="va">tmpfile</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parse_formats</span><span class="op">(</span><span class="va">tmpfile</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tmpfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>     <span class="st">"proc format;</span></span></span>
+<span class="r-in"><span><span class="st">             value yn  1=\"yes\"</span></span></span>
+<span class="r-in"><span><span class="st">                       0=\"no\";</span></span></span>
+<span class="r-in"><span><span class="st">             value sex 1=\"female\"</span></span></span>
+<span class="r-in"><span><span class="st">                       0=\"male\";</span></span></span>
+<span class="r-in"><span><span class="st">              run;"</span>,<span class="va">tmpfile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parse_formats</span><span class="op">(</span><span class="va">tmpfile</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The algorithm to extract SAS comments in this function is not implemented well.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> This function works best if you manually remove all comments from the</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> text file and make sure there are no labels containing strings of the form '/*' or '*/'.</span>
@@ -140,7 +147,7 @@ the variable to be formatted</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

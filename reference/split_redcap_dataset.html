@@ -20,7 +20,7 @@ dat$redcap_repeat_instrument.'><!-- mathjax --><script src="https://cdnjs.cloudf
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.13</span>
       </span>
     </div>
 
@@ -81,26 +81,31 @@ The last parts are all the repeating instruments, which are referred to by their
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">split_redcap_dataset</span><span class="op">(</span><span class="va">dat</span>, id_name <span class="op">=</span> <span class="st">"patid"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">split_redcap_dataset</span><span class="op">(</span><span class="va">dat</span>, id_name <span class="op">=</span> <span class="st">"patid"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dat</dt>
 <dd><p>a <code>tibble</code> produced by <code><a href="read_redcap_formatted.html">read_redcap_formatted</a></code>.</p></dd>
+
+
 <dt>id_name</dt>
 <dd><p>(character) the name of the subject ID variable.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a list of datasets separated into the categories as described</p>
+    
+
+<p>a list of datasets separated into the categories as described</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">path_to_redcap_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"testredcap.r"</span>, package <span class="op">=</span> <span class="st">"DescrTab2"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_redcap_formatted.html">read_redcap_formatted</a></span><span class="op">(</span><span class="va">path_to_redcap_script</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">split_redcap_dataset</span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="guess_ID_variable.html">guess_ID_variable</a></span><span class="op">(</span><span class="va">dat</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">path_to_redcap_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"testredcap.r"</span>, package <span class="op">=</span> <span class="st">"DescrTab2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_redcap_formatted.html">read_redcap_formatted</a></span><span class="op">(</span><span class="va">path_to_redcap_script</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">split_redcap_dataset</span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="guess_ID_variable.html">guess_ID_variable</a></span><span class="op">(</span><span class="va">dat</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -115,7 +120,7 @@ The last parts are all the repeating instruments, which are referred to by their
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

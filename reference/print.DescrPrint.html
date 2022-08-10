@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DescrTab2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.13</span>
       </span>
     </div>
 
@@ -75,29 +75,38 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for DescrPrint</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, print_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"print_format"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, silent <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for DescrPrint</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, print_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"print_format"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, silent <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <code>DescrList</code> object returned from <code><a href="descr.html">descr</a></code>.</p></dd>
+
+
 <dt>print_format</dt>
 <dd><p>Possible values: "console" (default), "tex", "html", "word", "numeric"</p></dd>
+
+
 <dt>silent</dt>
 <dd><p>I TRUE, suppresses output to stdout.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments to be passed along to print method</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A DescrPrint object which can be printed in various formats.</p>
+    
+
+<p>A DescrPrint object which can be printed in various formats.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Variables      Total        p        Test                              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;"> </span>Sepal.Length<span style="color: #949494;"> </span> <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;"> </span>  N<span style="color: #949494;"> </span>          <span style="color: #949494;"> </span>150<span style="color: #949494;"> </span>        <span style="color: #949494;"> </span>&lt;0.001<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Student's one-sample t-test<span style="color: #949494;"> </span>     </span>
@@ -131,7 +140,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">30</span> <span style="color: #949494;"> </span>  setosa<span style="color: #949494;"> </span>     <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;"> </span>&gt;0.999<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Chi-squared goodness-of-fit test<span style="color: #949494;"> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">31</span> <span style="color: #949494;"> </span>  versicolor<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">32</span> <span style="color: #949494;"> </span>  virginica<span style="color: #949494;"> </span>  <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
-<span class="r-in"><span class="va">DescrPrint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">DescrPrint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="descr.html">descr</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Variables      Total        p        Test                              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;"> </span>Sepal.Length<span style="color: #949494;"> </span> <span style="color: #949494;">  </span>           <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;"> </span>  N<span style="color: #949494;"> </span>          <span style="color: #949494;"> </span>150<span style="color: #949494;"> </span>        <span style="color: #949494;"> </span>&lt;0.001<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Student's one-sample t-test<span style="color: #949494;"> </span>     </span>
@@ -165,9 +174,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">30</span> <span style="color: #949494;"> </span>  setosa<span style="color: #949494;"> </span>     <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;"> </span>&gt;0.999<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>Chi-squared goodness-of-fit test<span style="color: #949494;"> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">31</span> <span style="color: #949494;"> </span>  versicolor<span style="color: #949494;"> </span> <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">32</span> <span style="color: #949494;"> </span>  virginica<span style="color: #949494;"> </span>  <span style="color: #949494;"> </span>50 (33%)<span style="color: #949494;"> </span>   <span style="color: #949494;">  </span>       <span style="color: #949494;">  </span>                                </span>
-<span class="r-in"><span class="va">DescrPrint</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">mean</span></span>
+<span class="r-in"><span><span class="va">DescrPrint</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">mean</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DescrPrint</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DescrPrint</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variables$Sepal.Length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $results</span>
@@ -500,8 +509,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pvalue(x, accuracy = accuracy, decimal.mark = decimal.mark, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         prefix = prefix, add_p = add_p)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x560609f0f198&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x560608a7f288&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5557e5870058&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e72d2ef0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$N</span>
@@ -509,63 +518,63 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$sd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$median</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$Q1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$Q3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$max</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$summary_stats$CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     format(x, digits = 2, scientific = 3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$options</span>
@@ -638,7 +647,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     paste0(Q1, " -- ", Q3)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $format$reshape_rows$`min - max`</span>
@@ -650,7 +659,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     paste0(min, " -- ", max)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56060a2d0df8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5557e6f2ba48&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -773,6 +782,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> N            <span style="color: #949494;">"</span>150<span style="color: #949494;">"</span>        <span style="color: #949494;">"</span>&lt;0.001<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>Student's one-sample t-test<span style="color: #949494;">"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mean         <span style="color: #949494;">"</span>3.1<span style="color: #949494;">"</span>        <span style="color: #949494;">""</span>       <span style="color: #949494;">""</span>                           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 22 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "DescrPrint"          "DescrPrintCharacter" "list"               </span>
@@ -790,7 +800,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
