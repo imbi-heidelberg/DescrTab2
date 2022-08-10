@@ -188,6 +188,17 @@ descr <-
              min = DescrTab2:::.min,
              max = DescrTab2:::.max
            ),
+           summary_stats_numeric_ord = list(
+             N = DescrTab2:::.factorN,
+             Nmiss = DescrTab2:::.factorNmiss,
+             mean = DescrTab2:::.factormean,
+             sd = DescrTab2:::.factorsd,
+             median = DescrTab2:::.factormedian,
+             Q1 = DescrTab2:::.factorQ1,
+             Q3 = DescrTab2:::.factorQ3,
+             min = DescrTab2:::.factormin,
+             max = DescrTab2:::.factormax
+           ),
            summary_stats_cat = list(),
            format_summary_stats = list(
              N = function(x) {
@@ -288,9 +299,9 @@ descr <-
     dat %<>% unlabel()
 
     # Coerce all date columns to factors
-    if (isTRUE(any(sapply(dat, function(x) inherits(x, "Date"))))) {
-      warning("Your dataset contains variables of type 'Date'. These are automatically converted to factors")
-      dat %<>% mutate(across(where(function(x) inherits(x, "Date")), function(x) {
+    if (isTRUE(any(sapply(dat, function(x) inherits(x, c("Date", "POSIXt")))))) {
+      warning("Your dataset contains variables of type 'Date' or 'POSIXt'. These are automatically converted to factors")
+      dat %<>% mutate(across(where(function(x) inherits(x, c("Date", "POSIXt"))), function(x) {
         x %>%
           as.factor() %>%
           fct_explicit_na()
@@ -783,12 +794,19 @@ specify format_options$print_Total. print_Total is set to FALSE.")
     # Loop over all variables
     for (var_name in names(dat)) {
       var <- dat %>% pull(var_name)
-
-      var_descr <- NULL
+      if (is.ordered(var) && can.be.numeric(var)){
+        summary_stats <- summary_stats_numeric_ord
+      } else if (is.factor(var)){
+        summary_stats <- summary_stats_cat
+      } else if (is.numeric(var)){
+        summary_stats <- summary_stats_cont
+      } else {
+        stop("Unkown variable type.")
+      }
       var_descr <- descr_var(var,
         group_var,
         var_name,
-        if (is.factor(var)) summary_stats_cat else if (is.numeric(var)) summary_stats_cont else stop("Unkown variable type."),
+        summary_stats,
         var_options = var_options[[var_name]],
         test_options
       )
@@ -3010,3 +3028,21 @@ lapply_descr <- function(list, ...) {
     return(invisible(knitr::asis_output(results)))
   }
 }
+
+
+#' Check whether a vector (usually a factor) can be cleanly converted to a numeric
+#'
+#' From https://stackoverflow.com/a/47677916
+#' @param x a vector
+can.be.numeric <- function(x) {
+  stopifnot(is.atomic(x) || is.list(x)) # check if x is a vector
+  numNAs <- sum(is.na(x))
+  numNAs_new <- suppressWarnings(sum(is.na(as.numeric(as.character(x)))))
+  return(numNAs_new == numNAs)
+}
+
+
+
+
+
+

@@ -823,7 +823,7 @@ dat <- tibble(
   var = rep(c(1,5,3,1,8,5,0,12,3,14,3,7), 5)
 )
 test_that("Jonckheere-Terpstra's test works",{
-  expect_error(descr(dat, "group", test_options = list(test_override = "Jonckheere-Terpstra's test")) , NA)
+  expect_warning(descr(dat, "group", test_options = list(test_override = "Jonckheere-Terpstra's test")))
 })
 
 

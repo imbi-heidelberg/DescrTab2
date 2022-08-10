@@ -24,7 +24,7 @@ test_that("No test is calculated if a test is requested that is not implemented"
           )
 
 
-descr(dat, format_options=list(replace_empty_string_with_NA=FALSE))
+
 
 dat <- tibble(a=c("a", ""), b=factor(c("a", "")))
 dat2 <- tibble(a=c("a", "(empty)"), b=factor(c("a", "")))

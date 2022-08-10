@@ -14,6 +14,10 @@ descr(
     DescrTab2:::.mean, sd = DescrTab2:::.sd, median = DescrTab2:::.median, Q1 =
     DescrTab2:::.Q1, Q3 = DescrTab2:::.Q3, min = DescrTab2:::.min, max =
     DescrTab2:::.max),
+  summary_stats_numeric_ord = list(N = DescrTab2:::.factorN, Nmiss =
+    DescrTab2:::.factorNmiss, mean = DescrTab2:::.factormean, sd = DescrTab2:::.factorsd,
+    median = DescrTab2:::.factormedian, Q1 = DescrTab2:::.factorQ1, Q3 =
+    DescrTab2:::.factorQ3, min = DescrTab2:::.factormin, max = DescrTab2:::.factormax),
   summary_stats_cat = list(),
   format_summary_stats = list(N = function(x) {
      format(x, digits = 2, scientific =

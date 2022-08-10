@@ -4,7 +4,6 @@ dat <- iris[iris$Species != "setosa", ]
 dat$Species <- factor(as.character(dat$Species))
 dat$cat_var <- c(1, 2) %>% sample(100, TRUE) %>% factor()
 
-
 test_that("summary statistics for factors work",
           {
           expect_error(
@@ -61,7 +60,15 @@ test_that("summary statistics for factors work",
 
 
 
+dat <- data.frame(mrs = ordered(c(0,2,3, 0)), group=c("a", "a", "b", "b"))
+
+test_that("summary statistics for factors work",
+          {
+            expect_warning(expect_warning(descr(dat,
+                                                "group")))
+          })
 
 
 
- 
+
+

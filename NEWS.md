@@ -1,3 +1,7 @@
+# Version 2.1.13
+
+* Added functionality to automatically apply both "usual" summmary statistics aswell as categorical descriptions to ordered variables which can be converted to numeric without warning.
+
 # Version 2.1.12
 
 * Added max_first_col_width format option for LaTeX tables.
