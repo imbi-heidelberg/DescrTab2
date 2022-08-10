@@ -85,6 +85,8 @@ utils::globalVariables(".")
 #' with missing value (\code{NA_character_}).}
 #' \item{\code{categories_first_summary_stats_second}}{ (logical) controls whether the categories should be printed first in the summary statistics table.}
 #' }
+#' \item{\code{latex_first_column_max_width}}{(numeric) this constant is used in
+#' determining the width of the first column in LaTeX output tables.}
 #'
 #'
 #' @section Test options:
@@ -243,7 +245,8 @@ descr <-
              ),
              caption = NULL,
              replace_empty_string_with_NA = TRUE,
-             categories_first_summary_stats_second = FALSE
+             categories_first_summary_stats_second = FALSE,
+             latex_first_column_max_width = 50
            ),
            test_options = list(
              paired = FALSE,
@@ -636,7 +639,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
 
         tmp_names <-
           setdiff(names(var_options[[var_option_name]][["format_summary_stats"]]), "Nmiss")
-        if (!all(names(var_options[[var_option_name]][["summary_stats"]]) %in% tmp_names)) {
+        if (!all(setdiff(names(var_options[[var_option_name]][["summary_stats"]]), "Nmiss") %in% tmp_names)) {
           warning(
             "All summary stats in var_options must have a corresponding formatting function. Defaulting to as.character"
           )
@@ -1363,7 +1366,7 @@ if ("CI_name" %in% names(tibl)) {
   width <- min(max(c(
     (sapply(labels, str_length) + 1) %/% 2,
     (sapply(tibl[[1]][!indx_varnames], str_length) + 1) %/% 2, 1
-  )), 7.5)
+  )), DescrPrintObj[["format"]][["latex_first_column_max_width"]] %/% length(names(tibl)))
 
   # For some reason, names need double escaping
   names(lengths) <- sapply(escape_latex_symbols(tibble(labels), numEscapes = 2)[[1]],
@@ -1757,7 +1760,7 @@ create_numeric_subtable <-
            format_summary_stats,
            format_p,
            reshape_rows) {
-    if (isTRUE(format_options[["categories_first_summary_stats_second"]])) {
+    if (!isTRUE(format_options[["categories_first_summary_stats_second"]])) {
       order <- c(1:2)
     } else {
       order <- c(2:1)
@@ -1851,7 +1854,7 @@ create_character_subtable <-
     DescrVarObj_unformatted <- DescrVarObj
     groups <- setdiff(names(DescrVarObj[["results"]]), "Total")
 
-    if (isTRUE(format_options[["categories_first_summary_stats_second"]])) {
+    if (!isTRUE(format_options[["categories_first_summary_stats_second"]])) {
       order <- c(1:2)
     } else {
       order <- c(2:1)

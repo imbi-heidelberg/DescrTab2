@@ -100,7 +100,7 @@ read_redcap_formatted <- function(path_to_redcap_script = NULL) {
 #'
 #' @return a list of datasets separated into the categories as described
 #' @export
-#' 
+#'
 #' @examples
 #' path_to_redcap_script <- system.file("examples", "testredcap.r", package = "DescrTab2")
 #' dat <- read_redcap_formatted(path_to_redcap_script)
@@ -179,7 +179,7 @@ list_freetext_markdown <- function(dat) {
     if (length(var) > 0) {
       namerow <- paste0("**", print_name, "**\n\n")
       varrows <- paste0(" * ", var, "\n")
-      str <- paste0(str, namerow, paste0(varrows, collapse = ""), collapse = "")
+      str <- paste0(str, namerow, paste0(varrows, collapse = ""), "\n", collapse = "")
     }
   }
   str
@@ -380,7 +380,7 @@ codegen_load_all_sas_data <- function(dir, format = NULL) {
 #'
 #' @return if exactly one possible
 #' @export
-#' 
+#'
 #' @examples
 #' dat <- data.frame(ID = c(1,2,3,4,5),
 #'                  other = c(1,2,3,4,5))

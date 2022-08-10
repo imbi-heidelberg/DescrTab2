@@ -32,7 +32,7 @@ descr(
     omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =
     c("no_missing_percent", "missing_as_regular_category",     
     "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
-    categories_first_summary_stats_second = FALSE),
+    categories_first_summary_stats_second = FALSE, latex_first_column_max_width = 50),
   test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
     c(), guess_id = FALSE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
@@ -148,6 +148,8 @@ and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%),
 with missing value (\code{NA_character_}).}
 \item{\code{categories_first_summary_stats_second}}{ (logical) controls whether the categories should be printed first in the summary statistics table.}
 }
+\item{\code{latex_first_column_max_width}}{(numeric) this constant is used in
+determining the width of the first column in LaTeX output tables.}
 }
 
 \section{Test options}{

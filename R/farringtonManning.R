@@ -126,6 +126,9 @@ farrington.manning <- function(
   n2 <- length(group2)
   res$sample.size <- n1 + n2
 
+  k1 <- sum(group1)
+  k2 <- sum(group2)
+
   # compute maximum likelihood estimates
   p1_ML <- mean(group1)
   p2_ML <- mean(group2)
@@ -144,26 +147,35 @@ farrington.manning <- function(
     a               <- 1 + theta
     v               <- b^3/(27*a^3) - b*c/(6*a^2) + d/(2*a)
     u               <- sign(v)*sqrt(b^2/(9*a^2) - c/(3*a))
-    w               <- (pi + acos(v/u^3))/3
+    w               <- (pi + acos(   max(min(1, if (sign(v)==0 && sqrt(b^2/(9*a^2) - c/(3*a)) != 0) 0 else v/u^3), 0)  ) )/3 # Truncate v/u^3 to interval [0, 1]
     p1_ML_null      <- 2*u*cos(w) - b/(3*a)
     p2_ML_null      <- p1_ML_null - delta
     sd_diff_ML_null <- sqrt(p1_ML_null*(1 - p1_ML_null)/n1 + p2_ML_null*(1 - p2_ML_null)/n2)
     return(sd_diff_ML_null)
   }
-  sd_diff_ML_null <- get_sd_diff_ML_null(delta)
 
   # test statistic
   get_z <- function(delta) {
     z <- (diff_ML - delta)/get_sd_diff_ML_null(delta)
     return(z)
   }
-  z <- get_z(delta)
+
+
+  # p-value, probability of Z > < == z
+  if (delta == 0 && ((k1 == n1 && k2 == n2) || (k1 == 0 && k2 == 0))) {
+    z <- NA_real_
+    p_value_greater <- 1
+    p_value_less <- 1
+  }else{
+    z <- get_z(delta)
+    p_value_greater <- 1 - pnorm(z)
+    p_value_less <- pnorm(z)
+  }
+
   res$statistic <- z
   names(res$statistic) <- "Z-statistic"
 
-  # p-value, probability of Z > < == z
-  p_value_greater <- 1 - pnorm(z)
-  p_value_less <- pnorm(z)
+
   p_value_two.sided <- 2*min(p_value_less, p_value_greater)
   if (alternative == "greater") {
     res$p.value <- p_value_greater
@@ -175,21 +187,48 @@ farrington.manning <- function(
     res$p.value <- p_value_two.sided
   }
 
-    # confidence interval by inversion of two-sided test
+  # confidence interval by inversion of two-sided test
   p_value_two.sided <- function(delta) {
-    z <- get_z(delta)
-    p_value_greater <- 1 - pnorm(z)
-    p_value_less <- pnorm(z)
-    2*min(p_value_less, p_value_greater)
+    if (delta == 0 && ((k1 == n1 && k2 == n2) || (k1 == 0 && k2 == 0))) {
+      z <- NA_real_
+      p_value_greater <- 1
+      p_value_less <- 1
+    }else{
+      z <- get_z(delta)
+      p_value_greater <- 1 - pnorm(z)
+      p_value_less <- pnorm(z)
+    }
+
+    2 * min(p_value_less, p_value_greater)
   }
 
   alpha_mod <- ifelse(alternative == "two.sided", alpha, 2*alpha)
-  ci_lo <- uniroot(
-    function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(-1+1e-6, res$estimate), tol = 1e-12
-  )$root
-  ci_hi <- uniroot(
-    function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(res$estimate, 1 - 1e-6), tol = 1e-12
-  )$root
+  if (res$estimate == -1) {
+    ci_lo <- -1
+    ci_hi <- uniroot(
+      function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(-1 + 1e-6, if (n1 + n2 < 4) .5 else .9), tol = 1e-12, extendInt = "downX"
+    )$root
+    } else if (res$estimate == 1){
+    ci_lo <- uniroot(
+      function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(if (n1 + n2 < 4) .5 else .9, 1 - 1e-6), tol = 1e-12, extendInt = "upX"
+    )$root
+    ci_hi <- 1
+    }else{
+    if (abs(-1 - res$estimate) < 1e-6) {
+      ci_lo <- NA_real_
+    } else{
+      ci_lo <- uniroot(
+        function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(-1+1e-6, res$estimate), tol = 1e-12
+      )$root
+    }
+    if (abs(1 -res$estimate) < 1e-6) {
+      ci_hi <- NA_real_
+    } else{
+      ci_hi <- uniroot(
+        function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(res$estimate, 1 - 1e-6), tol = 1e-12
+      )$root
+    }
+  }
 
   # confidence interval
   res$conf.int <- c(ci_lo, ci_hi)
