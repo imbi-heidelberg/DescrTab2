@@ -3037,7 +3037,7 @@ lapply_descr <- function(list, ...) {
 #' @param x a vector
 can.be.numeric <- function(x) {
   stopifnot(is.atomic(x) || is.list(x)) # check if x is a vector
-  numNAs <- sum(is.na(x)) + sum(x=="(Missing)")
+  numNAs <- sum(is.na(x)) + sum(x=="(Missing)", na.rm = TRUE)
   numNAs_new <- suppressWarnings(sum(is.na(as.numeric(as.character(x)))))
   return(numNAs_new == numNAs)
 }
