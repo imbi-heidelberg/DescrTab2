@@ -18,6 +18,7 @@ utils::globalVariables(".")
 #' @param var_options named list of lists. For each variable, you can have special options that apply only to that variable.
 #' These options are specified in this argument. See the details and examples for more explanation.
 #' @param summary_stats_cont named list of summary statistic functions to be used for numeric variables.
+#' @param summary_stats_numeric_ord named list of summary statistic function to be used for ordered factor variables which can be converted to numeric.
 #' @param summary_stats_cat named list of summary statistic function to be used for categorical variables.
 #' @param format_summary_stats named list of formatting functions for summary statistics.
 #' @param format_p formatting function for p-values.

@@ -84,6 +84,8 @@ These options are specified in this argument. See the details and examples for m
 
 \item{summary_stats_cont}{named list of summary statistic functions to be used for numeric variables.}
 
+\item{summary_stats_numeric_ord}{named list of summary statistic function to be used for ordered factor variables which can be converted to numeric.}
+
 \item{summary_stats_cat}{named list of summary statistic function to be used for categorical variables.}
 
 \item{format_summary_stats}{named list of formatting functions for summary statistics.}
