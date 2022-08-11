@@ -1,3 +1,7 @@
+# Version 2.1.14
+
+* Added var_equal option to test_options which will lead to use of Student's t-test instead of Welch's.
+
 # Version 2.1.13
 
 * Added functionality to automatically apply both "usual" summmary statistics aswell as categorical descriptions to ordered variables which can be converted to numeric without warning.

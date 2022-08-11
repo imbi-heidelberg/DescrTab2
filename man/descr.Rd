@@ -56,8 +56,8 @@ descr(
     
     "missing_as_separate_category"), caption = NULL, replace_empty_string_with_NA = TRUE,
     categories_first_summary_stats_second = FALSE, max_first_col_width = 7.5),
-  test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, indices =
-    c(), guess_id = FALSE, include_group_missings_in_test = FALSE,
+  test_options = list(paired = FALSE, nonparametric = FALSE, exact = FALSE, var_equal =
+    FALSE, indices = c(), guess_id = FALSE, include_group_missings_in_test = FALSE,
     include_categorical_missings_in_test = FALSE, test_override = NULL,
     additional_test_args = list(), boschloo_max_n = 200),
   reshape_rows = list(`Q1 - Q3` = list(args = c("Q1", "Q3"), fun = function(Q1, Q3) {
@@ -227,6 +227,7 @@ by typing \code{print_test_names()}. Possible choices are:
 \item{\code{"Student's paired t-test"}}{ }
 \item{\code{"Mixed model ANOVA"}}{ }
 \item{\code{"Student's one-sample t-test"}}{ }
+\item{\code{"Student's two-sample t-test"}}{ }
 \item{\code{"Welch's two-sample t-test"}}{ }
 \item{\code{"F-test (ANOVA)"}}{ }
   }

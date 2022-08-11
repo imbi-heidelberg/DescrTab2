@@ -509,6 +509,38 @@ test_that("t.test 2 sample for factor variables works",
           })
 
 
+test_that("Student t.test 2 sample works",
+          {
+            expect_error(descr(dat, "group", test_options = list(var_equal=TRUE)),
+                         NA)
+          })
+
+test_that("Student t.test 2 sample works if specifically requrested",
+          {
+            expect_error(descr(dat, "group", var_options = list(
+              extra = list(test_override = "Student's two-sample t-test")
+            )) %>%
+              print(silent = TRUE),
+            NA)
+          })
+
+test_that("Student t.test 2 sample for factor variables works",
+          {
+            expect_error(descr(
+              dat %>% mutate(extra = factor(extra)),
+              "group",
+              test_options = list(
+                paired = TRUE,
+                indices = rep(1:10, 2),
+                test_override  = "Student's two-sample t-test"
+              ),
+              format_options = list(print_Total = FALSE)
+            ),
+            NA)
+          })
+
+
+
 
 test_that("t.test paired 2 sample test works",
           {

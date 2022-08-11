@@ -134,6 +134,7 @@ utils::globalVariables(".")
 #' \item{\code{"Student's paired t-test"}}{ }
 #' \item{\code{"Mixed model ANOVA"}}{ }
 #' \item{\code{"Student's one-sample t-test"}}{ }
+#' \item{\code{"Student's two-sample t-test"}}{ }
 #' \item{\code{"Welch's two-sample t-test"}}{ }
 #' \item{\code{"F-test (ANOVA)"}}{ }
 #'   }
@@ -264,6 +265,7 @@ descr <-
              paired = FALSE,
              nonparametric = FALSE,
              exact = FALSE,
+             var_equal = FALSE,
              indices = c(),
              guess_id = FALSE,
              include_group_missings_in_test = FALSE,
@@ -595,6 +597,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       `Student's paired t-test` = "tpar",
       `Mixed model ANOVA` = "MiAn",
       `Student's one-sample t-test` = "tt1",
+      `Student's two-sample t-test` = "stt2",
       `Welch's two-sample t-test` = "tt2",
       `F-test (ANOVA)` = "F",
       `Cochran-Armitage's test` = "CocA",
@@ -2269,6 +2272,7 @@ print_test_names <- function() {
     "Student's paired t-test",
     "Mixed model ANOVA",
     "Student's one-sample t-test",
+    "Student's two-sample t-test",
     "Welch's two-sample t-test",
     "Cochran-Armitage's test",
     "Jonckheere-Terpstra's test",
@@ -2420,7 +2424,11 @@ sig_test <- function(var,
         if (n_levels_group == 1) {
           test <- "Student's one-sample t-test"
         } else if (n_levels_group == 2) {
-          test <- "Welch's two-sample t-test"
+          if (isTRUE(test_options[["var_equal"]])){
+            test <- "Student's two-sample t-test"
+          } else {
+            test <- "Welch's two-sample t-test"
+          }
         } else if (n_levels_group >= 3) {
           test <- "F-test (ANOVA)"
         } else {
@@ -2504,6 +2512,7 @@ boschloo_max_n in test_options to a larger value or to NULL."))
       "Student's paired t-test",
       "Mixed model ANOVA",
       "Student's one-sample t-test",
+      "Student's two-sample t-test",
       "Welch's two-sample t-test",
       "F-test (ANOVA)"
     )) {
@@ -2671,6 +2680,23 @@ boschloo_max_n in test_options to a larger value or to NULL."))
           as.list(test_options[["additional_test_args"]])
         )
         list(p = ignore_unused_args(stats::t.test, arglist)$p.value)
+      },
+      `Student's two-sample t-test` = {
+        tmp <- tibble(var = var, group = group)
+        arglist <- modifyList(
+          list(
+            formula = var ~ group,
+            var.equal = TRUE,
+            data = tmp
+          ),
+          as.list(test_options[["additional_test_args"]])
+        )
+        tl <- ignore_unused_args(stats::t.test, arglist)
+        list(
+          p = tl$p.value,
+          CI = tl$conf.int,
+          CI_name = "CI for difference in means derived from the t-distribution"
+        )
       },
       `Welch's two-sample t-test` = {
         tmp <- tibble(var = var, group = group)
