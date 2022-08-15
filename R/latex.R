@@ -13,7 +13,7 @@ in_minipage <- function(text, width, numEscapes = 1, strechSpace = FALSE) {
     width, "}",
     esc, "raggedright ",
     if (isTRUE(strechSpace)) {
-      paste0(esc, "setstretch{0.5}")
+      paste0(esc, "setstretch{0.3}")
     } else {
       NULL
     },

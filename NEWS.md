@@ -1,3 +1,7 @@
+# Version 2.1.15
+
+* Reintroduce strech space to LaTeX tables.
+
 # Version 2.1.14
 
 * Added var_equal option to test_options which will lead to use of Student's t-test instead of Welch's.

@@ -1402,7 +1402,8 @@ if ("CI_name" %in% names(tibl)) {
   )
   tibl[!indx_varnames, 1] <- sapply(tibl[[1]][!indx_varnames], in_minipage,
     width = paste0(width, "em"),
-    numEscapes = 1
+    numEscapes = 1,
+    strechSpace = TRUE
   )
 
   tex <- tibl[!indx_varnames, ] %>%
