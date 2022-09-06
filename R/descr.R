@@ -78,10 +78,9 @@ utils::globalVariables(".")
 #' all observations (i.e. #(Missing) / N), but calculates all other catetgory percentages with respect to the non-missing
 #' observations (e.g. #A / N_nonmissing). This means that if You have three categories: "A" with 10 counts, "B" with 10 counts
 #' and "(Missing)" with 10 counts, they will become "A": 10 (50\%), "B": 10 (50\%), "(Missing)": 10 (33\%)}
-#'
-#' \item{\code{"caption"}}{ adds a table caption to the LaTeX, Word or PDf document}
-#'   }
 #'  }
+#'   }
+#' \item{\code{"caption"}}{ adds a table caption to the LaTeX, Word or PDf document}
 #' \item{\code{replace_empty_string_with_NA}}{ (logical) controls whether empty strings ("") should be replaced
 #' with missing value (\code{NA_character_}).}
 #' \item{\code{categories_first_summary_stats_second}}{ (logical) controls whether the categories should be printed first in the summary statistics table.}
