@@ -2373,7 +2373,7 @@ sig_test <- function(var,
         )
       )
       test <- "No test"
-    } else if ((!is.null(group) && !all(table(group) > 1)) || length(var) == 1) {
+    } else if ((!is.null(group) && is.numeric(var) && !all(table(group) > 1)) || length(var) == 1) {
       warning(
         paste0(
           "Skipping test for variable ",

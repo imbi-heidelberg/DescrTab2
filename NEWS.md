@@ -1,6 +1,10 @@
+# Version 2.1.16
+
+* The requirement that variables need at least 2 nonmissing observations in each group for a significance test to be performed now only applies to numeric variables
+
 # Version 2.1.15
 
-* Reintroduce strech space to LaTeX tables.
+* Reintroduce stretch space to LaTeX tables.
 
 # Version 2.1.14
 

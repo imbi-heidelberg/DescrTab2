@@ -1,16 +1,14 @@
 Package: DescrTab2
 Type: Package
 Title: Publication Quality Descriptive Statistics Tables
-Version: 2.1.15
-Date: 2022-08-15
+Version: 2.1.16
+Date: 2022-09-06
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")),
              person("Lukas", "Baumann", role = c("aut"), comment = c(ORCID = "0000-0001-7931-7470")),
              person("Maximilian", "Pilz", role = c("aut"), comment = c(ORCID = "0000-0002-9685-1613")),
              person("Lukas", "Sauer", role = c("aut"), comment= c(ORCID = "0000-0002-1340-9994")),
              person("Lorenz", "Uhlmann", role = c("ctb")),
-             person("Csilla", "van Lunteren", role = c("ctb")),
-             person("Kevin", "Kunzmann", role = c("ctb")),
-             person("Hao", "Zhu", role = c("ctb"), comment=c(ORCID = "0000-0002-3386-6076")))
+             person("Csilla", "van Lunteren", role = c("ctb")))
 Description: Provides functions to create descriptive statistics tables for continuous and categorical variables.
     By default, summary statistics such as mean, standard deviation, quantiles, minimum and maximum for continuous
     variables and relative and absolute frequencies for categorical variables are calculated. 'DescrTab2' features a sophisticated algorithm to
