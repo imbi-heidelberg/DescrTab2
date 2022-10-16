@@ -10,6 +10,7 @@ test_that(
     expect_error(farrington.manning(x,y, 0.3, "less"), NA)
     expect_error(farrington.manning(x,y, 0.3, "greater"), NA)
     expect_error(farrington.manning(x,y, 0.3, "two.sided"), NA)
+    expect_error(farrington.manning(T,T), NA)
   }
 )
 
@@ -24,3 +25,12 @@ test_that(
     expect_error(farrington.manning(x,y, -2, "two.sided"))
   }
 )
+
+test_that(
+  "farrington.manning function throws appropriate warnings",
+  {
+    expect_message(farrington.manning(T, F))
+    expect_message(farrington.manning(F, T))
+  }
+  )
+

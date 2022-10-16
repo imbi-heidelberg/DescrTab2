@@ -1,3 +1,7 @@
+# Version 2.1.17
+
+* Added a few tests to get code coverage back up to 100%.
+
 # Version 2.1.16
 
 * The requirement that variables need at least 2 nonmissing observations in each group for a significance test to be performed now only applies to numeric variables

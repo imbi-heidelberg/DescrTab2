@@ -175,7 +175,7 @@ farrington.manning <- function(
     res$p.value <- p_value_two.sided
   }
 
-    # confidence interval by inversion of two-sided test
+  # confidence interval by inversion of two-sided test
   p_value_two.sided <- function(delta) {
     if (abs(get_sd_diff_ML_null(delta)) < .Machine$double.eps) {
       return(1)
@@ -188,13 +188,24 @@ farrington.manning <- function(
   }
 
   alpha_mod <- ifelse(alternative == "two.sided", alpha, 2*alpha)
-  ci_lo <- uniroot(
-    function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(-1+1e-6, res$estimate), tol = 1e-12
-  )$root
-  ci_hi <- uniroot(
-    function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(res$estimate, 1 - 1e-6), tol = 1e-12
-  )$root
-
+  ci_lo <- tryCatch(
+    uniroot(
+      function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(-1+1e-6, res$estimate), tol = 1e-12
+    )$root,
+    error = function(cond){
+      message("Error converted to warning:", cond)
+      NA_real_
+    }
+  )
+  ci_hi <- tryCatch(
+    uniroot(
+      function(delta) p_value_two.sided(delta) - alpha_mod, interval = c(res$estimate, 1 - 1e-6), tol = 1e-12
+    )$root,
+    error = function(cond){
+      message("Error converted to warning:", cond)
+      NA_real_
+    }
+  )
   # confidence interval
   res$conf.int <- c(ci_lo, ci_hi)
   attr(res$conf.int, "conf.level") <- 1 - alpha_mod

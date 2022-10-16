@@ -803,9 +803,9 @@ specify format_options$print_Total. print_Total is set to FALSE.")
         summary_stats <- summary_stats_cat
       } else if (is.numeric(var)){
         summary_stats <- summary_stats_cont
-      } else {
+      } else { # nocov start
         stop("Unkown variable type.")
-      }
+      } # nocov end
       var_descr <- descr_var(var,
         group_var,
         var_name,
