@@ -6,6 +6,7 @@ header-includes:
    - \usepackage{booktabs}
    - \usepackage{setspace}
    - \usepackage{array}
+   - \let\CheckCommand\providecommand
 output:
   pdf_document:
     toc: true

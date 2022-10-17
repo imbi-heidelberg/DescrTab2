@@ -367,18 +367,3 @@ test_that("omit_factor_level options works", {
 
 
 })
-
-
-test_that(
-  "summary_stats_numeric_ord throws",
-
-
-
-  )
-
-
-
-
-
-
-

@@ -3,7 +3,7 @@
 test_that("knit a tex file with DescrTab2 tables", {
   skip_on_cran()
   skip_on_travis()
-  expect_type(
+  expect_warning(expect_type(
     rmarkdown::render(
       "../rmds/tex_doc.Rmd",
       clean = TRUE,
@@ -11,7 +11,7 @@ test_that("knit a tex file with DescrTab2 tables", {
       output_dir = if(isTRUE(write_in_tmpfile_for_cran())) tempfile() else NULL
     ),
     "character"
-  )
+  ))
 })
 
 
