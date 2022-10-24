@@ -46,4 +46,5 @@ Tooth2 <- ToothGrowth
 Tooth2$categorical <- factor(sample(c("a", "b"), nrow(Tooth2), TRUE))
 descr(Tooth2, "supp")
 
+descr(data.frame(a=c("b\nc", "d"), e="f", "g"), "e")
 ```

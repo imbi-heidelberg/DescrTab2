@@ -49,6 +49,8 @@ escape_latex_symbols <- function(tibl, numEscapes = 1) {
         str_replace_all(tibl[i, j], fixed("_"), fixed(paste0(esc, "_")))
       tibl[i, j] <-
         str_replace_all(tibl[i, j], fixed("&"), fixed(paste0(esc, "&")))
+      tibl[i, j] <-
+        str_replace_all(tibl[i, j], fixed("\n"), fixed(" "))
     }
   }
   tibl

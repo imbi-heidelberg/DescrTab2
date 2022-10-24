@@ -1,3 +1,7 @@
+# Version 2.1.18
+
+* Fixed a bug with newline characters in variables in latex tables.
+
 # Version 2.1.17
 
 * Added a few tests to get code coverage back up to 100%.
