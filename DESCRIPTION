@@ -54,4 +54,4 @@ Encoding: UTF-8
 URL: https://imbi-heidelberg.github.io/DescrTab2/
 BugReports: https://github.com/imbi-heidelberg/DescrTab2/issues
 Config/testthat/edition: 3
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
