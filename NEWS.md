@@ -1,3 +1,7 @@
+# Version 2.1.19
+
+* Fix warning in fct_explicit_na from forcats package.
+
 # Version 2.1.18
 
 * Fixed a bug with newline characters in variables in latex tables.

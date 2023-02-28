@@ -306,7 +306,7 @@ descr <-
       dat %<>% mutate(across(where(function(x) inherits(x, c("Date", "POSIXt"))), function(x) {
         x %>%
           as.factor() %>%
-          fct_explicit_na()
+          explicit_na()
       }))
     }
     # Coerce all difftime columns to numeric
@@ -395,7 +395,7 @@ descr <-
         dat %>%
         pull(!!group) %>%
         as_factor() %>%
-        fct_explicit_na()
+        explicit_na()
       dat %<>% select(-!!group)
 
       group_levels <- levels(group_var)
@@ -432,7 +432,7 @@ descr <-
     dat %<>% mutate(across(-where(is.numeric), function(x) {
       x %>%
         as_factor() %>%
-        fct_explicit_na()
+        explicit_na()
     }))
 
 
