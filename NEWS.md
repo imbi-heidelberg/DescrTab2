@@ -1,3 +1,7 @@
+# Version 2.1.20
+
+* Fix bug where empty strings could no longer be replaced with NA values due to changes in dplyr.
+
 # Version 2.1.19
 
 * Fix warning in fct_explicit_na from forcats package.
