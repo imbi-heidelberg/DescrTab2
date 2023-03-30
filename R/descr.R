@@ -332,7 +332,8 @@ descr <-
     # Check for empty strings
     if (any(dat == "", na.rm = TRUE)) {
       if (isTRUE(format_options[["replace_empty_string_with_NA"]])) {
-        dat %<>% mutate(across(where(~ is.character(.)|is.factor(.)), ~ na_if(., "")))#
+        dat %<>% mutate(across(where(~ is.character(.)), ~ na_if(., "")))
+        dat %<>% mutate(across(where(~ is.factor(.) & ("" %in% levels(.))), ~ na_if(., "")))
         dat %<>% mutate(across(where(function(x) {
           "" %in% levels(x)
         }), ~ fct_drop(., c(""))))
