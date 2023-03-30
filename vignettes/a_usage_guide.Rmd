@@ -118,7 +118,7 @@ descr(dat, "Species", format_options = list(caption="Description of our example 
 
 
 ## Confidence intervals for two group comparisons
-For 2-group comparisons, decrtab automatically calculates confidence intervals for differences in effect measures:
+For 2-group comparisons, `DescrTab2` automatically calculates confidence intervals for differences in effect measures:
 
 ```{r}
 descr(dat, "animal")
