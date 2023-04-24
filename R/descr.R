@@ -1639,7 +1639,7 @@ print_word <- function(DescrPrintObj, silent = FALSE) {
     flextable::border_inner(part = "header", border = officer::fp_border(width = 0)) %>%
     flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) %>%
     align(
-      j = which(names(tibl2) != "Variables"),
+      j = which(names(tibl2) != "Variable"),
       part = "all",
       align = "center"
     ) %>%
@@ -1909,7 +1909,7 @@ create_character_subtable <-
 
     if (all_summary_stats_missing) {
       length_tibl <- 2
-      tibl <- bind_cols(Variables = c(label, "-"))
+      tibl <- bind_cols(Variable = c(label, "-"))
 
       for (group in groups) {
         tibl %<>% bind_cols(!!group := c("", "-"))
@@ -2048,7 +2048,7 @@ create_character_subtable <-
       label <- DescrVarObj[["variable_options"]][["label"]]
       DescrVarObj[["label"]] <- label
 
-      tibl <- tibble(Variables = c(
+      tibl <- tibble(Variable = c(
         label,
         unlist(list(
           names(DescrVarObj[["results"]][["Total"]][["summary_stats"]]),

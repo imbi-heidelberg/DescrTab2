@@ -1,3 +1,7 @@
+# Version 2.1.21
+
+* Change "Variables" to "Variable"
+
 # Version 2.1.20
 
 * Fix bug where empty strings could no longer be replaced with NA values due to changes in dplyr.
