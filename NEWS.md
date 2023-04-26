@@ -1,3 +1,7 @@
+# Version 2.1.22
+
+* Fix flextable printing
+
 # Version 2.1.21
 
 * Change "Variables" to "Variable"

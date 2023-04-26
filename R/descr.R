@@ -1758,10 +1758,7 @@ knit_print.DescrPrint <- function(x,
       print_format = "word",
       silent = TRUE
     )[["ft"]]
-    is_bookdown <- isTRUE(opts_knit$get("bookdown.internal.label"))
-    pandoc2 <- pandoc_version() >= numeric_version("2.0")
-    str <- flextable_to_rmd(ft, bookdown = is_bookdown, pandoc2 = pandoc2, print = FALSE)
-    knit_print(asis_output(str))
+    knit_print(ft)
   } else {
     print(x, ...)
   }
