@@ -20,35 +20,35 @@ descr(
     DescrTab2:::.factorQ3, min = DescrTab2:::.factormin, max = DescrTab2:::.factormax),
   summary_stats_cat = list(),
   format_summary_stats = list(N = function(x) {
-     format(x, digits = 2, scientific =
-    3)
+     format(x, digits = 3, scientific =
+    4)
  }, mean = function(x) {
-     format(x, digits = 2, scientific = 3)
+     format(x, digits = 3, scientific = 4)
  }, sd =
     function(x) {
-     format(x, digits = 2, scientific = 3)
+     format(x, digits = 3, scientific = 4)
  }, median = function(x) {
  
-       format(x, digits = 2, scientific = 3)
+       format(x, digits = 3, scientific = 4)
  }, Q1 = function(x) {
      format(x, digits
-    = 2, scientific = 3)
+    = 3, scientific = 4)
  }, Q3 = function(x) {
-     format(x, digits = 2, scientific =
-    3)
+     format(x, digits = 3, scientific =
+    4)
  }, min = function(x) {
-     format(x, digits = 2, scientific = 3)
+     format(x, digits = 3, scientific = 4)
  }, max =
     function(x) {
-     format(x, digits = 2, scientific = 3)
+     format(x, digits = 3, scientific = 4)
  }, CI = function(x) {
     
-    format(x, digits = 2, scientific = 3)
+    format(x, digits = 3, scientific = 4)
  }),
   format_p = scales::pvalue_format(),
   format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
     combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_factor_level = "none",
-    omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = NULL,
+    omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = 0.1,
     percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,
     absolute_relative_frequency_mode = c("both", "only_absolute", "only_relative"),
     omit_missings_in_categorical_var = FALSE, categorical_missing_percent_mode =

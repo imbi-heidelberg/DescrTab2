@@ -203,31 +203,31 @@ descr <-
            summary_stats_cat = list(),
            format_summary_stats = list(
              N = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              mean = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              sd = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              median = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              Q1 = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              Q3 = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              min = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              max = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              },
              CI = function(x) {
-               format(x, digits = 2, scientific = 3)
+               format(x, digits = 3, scientific = 4)
              }
            ),
            format_p = scales::pvalue_format(),
@@ -240,7 +240,7 @@ descr <-
              omit_factor_level = "none",
              omit_Nmiss_if_0 = TRUE,
              omit_missings_in_group = TRUE,
-             percent_accuracy = NULL,
+             percent_accuracy = 0.1,
              percent_suffix = "%",
              row_percent = FALSE,
              Nmiss_row_percent = FALSE,
@@ -580,36 +580,7 @@ specify format_options$print_Total. print_Total is set to FALSE.")
       )
     }
 
-    test_abbreviations <- list(
-      `Cochran's Q test` = "CocQ",
-      `McNemar's test` = "McN",
-      `Chi-squared goodness-of-fit test` = "chi1",
-      `Pearson's chi-squared test` = "chi2",
-      `Exact McNemar's test` = "eMcN",
-      `Boschloo's test` = "Bolo",
-      `Exact binomial test` = "Bin",
-      `Fisher's exact test` = "Fish",
-      `Friedman test` = "Frie",
-      `Wilcoxon two-sample signed-rank test` = "Wil2",
-      `Wilcoxon's one-sample signed-rank test` = "Wil1",
-      `Mann-Whitney's U test` = "MWU",
-      `Kruskal-Wallis's one-way ANOVA` = "KW",
-      `Student's paired t-test` = "tpar",
-      `Mixed model ANOVA` = "MiAn",
-      `Student's one-sample t-test` = "tt1",
-      `Student's two-sample t-test` = "stt2",
-      `Welch's two-sample t-test` = "tt2",
-      `F-test (ANOVA)` = "F",
-      `Cochran-Armitage's test` = "CocA",
-      `Jonckheere-Terpstra's test` = "JT",
-      `CI for difference in proportions derived from a normal (\"Wald\") approximation` = "PWa",
-      `CI for difference in proportions derived from an unconditional exact test` = "PUnc",
-      `CI for difference in proportions derived from an exact McNemar's test` = "PMcN",
-      `CI for difference in means derived from the t-distribution` = "t",
-      `CI for the Hodges-Lehmann estimator` = "HL",
-      `CI for odds ratio derived from Fisher's exact test` = "Odds",
-      `No test` = "NA"
-    )
+    test_abbreviations <- print_test_abbreviations()
 
     if (!is.null(test_options[["test_override"]])) {
       if (is.character(test_options[["test_override"]])) {
@@ -1269,12 +1240,15 @@ print_numeric <- function(DescrPrintObj,
 }
 
 
+
+#' @importFrom stringr str_detect
 print_console <- function(DescrPrintObj,
                           silent = FALSE,
                           n = 1000,
                           width = NULL,
                           n_extra = NULL,
-                          print_red_NA = FALSE) {
+                          print_red_NA = FALSE,
+                          abbreviate = TRUE) {
   tibl <- DescrPrintObj[["tibble"]]
   var_names <- names(DescrPrintObj[["variables"]])
   lengths <- c(unlist(DescrPrintObj[["lengths"]]) - 1)
@@ -1289,6 +1263,17 @@ print_console <- function(DescrPrintObj,
   }
   c1 <- tibl %>% pull(1)
   c1[!indx_varnames] <- paste0("  ", c1[!indx_varnames])
+  if (abbreviate) {
+    regex <- "(^\\s\\smean($|\\s))|(^\\s\\smin($|\\s))|(^\\s\\smedian($|\\s))|(^\\s\\sN$)|(^\\s\\sNmiss$)|(^\\s\\ssd$)|(^\\s\\sQ1($|\\s))"
+    c1[!str_detect(c1, regex)] <- abbreviate(c1[!str_detect(c1, regex)])
+    names(tibl)[!(names(tibl) %in% c("Variable", "p", "Test", "CI"))] <-
+      abbreviate(names(tibl)[!(names(tibl) %in% c("Variable", "p", "Test", "CI"))])
+    if ("Test" %in% names(tibl)) {
+      test_abbreviations <- print_test_abbreviations()
+      good <- tibl$Test[tibl$Test %in% names(test_abbreviations)]
+      tibl$Test[tibl$Test %in% names(test_abbreviations)] <- unlist(test_abbreviations[match(good, names(test_abbreviations))])
+    }
+  }
   tibl[, 1] <- c1
 
   print_format <- format(tibl,
@@ -1746,13 +1731,13 @@ knit_print.DescrPrint <- function(x,
       print_format = "html",
       silent = TRUE
     )[["html"]]
-    knit_print(asis_output(str))
+    knit_print(asis_output(paste0(str, collapse="")))
   } else if (knitr::is_latex_output()) {
     str <- print.DescrPrintCharacter(x,
       print_format = "tex",
       silent = TRUE
     )[["tex"]]
-    knit_print(asis_output(str))
+    knit_print(asis_output(paste0(str, collapse="")))
   } else if (knitr::pandoc_to("docx")) {
     ft <- print.DescrPrintCharacter(x,
       print_format = "word",
@@ -2276,6 +2261,40 @@ print_test_names <- function() {
     "Jonckheere-Terpstra's test",
     "F-test (ANOVA)"
   )
+}
+
+print_test_abbreviations <- function() {
+  lst <- list(
+  `Cochran's Q test` = "CocQ",
+  `McNemar's test` = "McN",
+  `Chi-squared goodness-of-fit test` = "chi1",
+  `Pearson's chi-squared test` = "chi2",
+  `Exact McNemar's test` = "eMcN",
+  `Boschloo's test` = "Bolo",
+  `Exact binomial test` = "Bin",
+  `Fisher's exact test` = "Fish",
+  `Friedman test` = "Frie",
+  `Wilcoxon two-sample signed-rank test` = "Wil2",
+  `Wilcoxon's one-sample signed-rank test` = "Wil1",
+  `Mann-Whitney's U test` = "MWU",
+  `Kruskal-Wallis's one-way ANOVA` = "KW",
+  `Student's paired t-test` = "tpar",
+  `Mixed model ANOVA` = "MiAn",
+  `Student's one-sample t-test` = "tt1",
+  `Student's two-sample t-test` = "stt2",
+  `Welch's two-sample t-test` = "tt2",
+  `F-test (ANOVA)` = "F",
+  `Cochran-Armitage's test` = "CocA",
+  `Jonckheere-Terpstra's test` = "JT",
+  `CI for difference in proportions derived from a normal (\"Wald\") approximation` = "PWa",
+  `CI for difference in proportions derived from an unconditional exact test` = "PUnc",
+  `CI for difference in proportions derived from an exact McNemar's test` = "PMcN",
+  `CI for difference in means derived from the t-distribution` = "t",
+  `CI for the Hodges-Lehmann estimator` = "HL",
+  `CI for odds ratio derived from Fisher's exact test` = "Odds",
+  `No test` = "NA"
+)
+  lst
 }
 
 

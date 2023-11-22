@@ -1,3 +1,8 @@
+# Version 2.1.23
+
+* Change default decimal accuracies.
+* Fix descrtab for quarto.
+
 # Version 2.1.22
 
 * Fix flextable printing
