@@ -9,7 +9,7 @@ pkgdown:
   extension: pdf
   title: Test choice tree
 
-output: pdf_document
+output: html_document
 
 vignette: >
   %\VignetteIndexEntry{Test choice tree}
@@ -22,4 +22,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-\includepdf[pages=-, fitpaper=true]{test_choice_tree.pdf}
+```{r test-choice-tree, out.width='100%', out.height='100%', echo=FALSE}
+knitr::include_graphics("test_choice_tree.pdf")
+```
