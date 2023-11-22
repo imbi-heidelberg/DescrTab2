@@ -112,16 +112,16 @@ split_redcap_dataset <- function(dat, id_name = "patid") {
   d <-
     lapply(
       as.character(unique(
-        fct_explicit_na(dat$redcap_repeat_instrument)
+        fct_na_value_to_level(dat$redcap_repeat_instrument)
       )),
       function(x) {
         dat %>%
-          filter(fct_explicit_na(dat$redcap_repeat_instrument) == !!x)
+          filter(fct_na_value_to_level(dat$redcap_repeat_instrument) == !!x)
       }
     )
 
   names(d) <-
-    as.character(unique(fct_explicit_na(dat$redcap_repeat_instrument)))
+    as.character(unique(fct_na_value_to_level(dat$redcap_repeat_instrument)))
   names(d)[names(d) == "(Missing)"] <- "Singular"
 
   d <- lapply(d, function(x) {
