@@ -234,7 +234,7 @@ descr <-
            format_options = list(
              print_Total = NULL,
              print_p = TRUE,
-             print_CI = TRUE,
+             print_CI = FALSE,
              combine_mean_sd = FALSE,
              combine_median_Q1_Q3 = FALSE,
              omit_factor_level = "none",
@@ -1273,6 +1273,14 @@ print_console <- function(DescrPrintObj,
       good <- tibl$Test[tibl$Test %in% names(test_abbreviations)]
       tibl$Test[tibl$Test %in% names(test_abbreviations)] <- unlist(test_abbreviations[match(good, names(test_abbreviations))])
     }
+    if ("CI_n" %in% names(tibl)) {
+      test_abbreviations <- print_test_abbreviations()
+      good <- tibl$CI_n[tibl$CI_n %in% names(test_abbreviations)]
+      tibl$CI_n[tibl$CI_n %in% names(test_abbreviations)] <- unlist(test_abbreviations[match(good, names(test_abbreviations))])
+    }
+  }
+  if ("CI_n" %in% names(tibl)) {
+    names(tibl)[names(tibl)=="CI_n"] <- "CI_type"
   }
   tibl[, 1] <- c1
 

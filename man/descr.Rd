@@ -46,7 +46,7 @@ descr(
     format(x, digits = 3, scientific = 4)
  }),
   format_p = scales::pvalue_format(),
-  format_options = list(print_Total = NULL, print_p = TRUE, print_CI = TRUE,
+  format_options = list(print_Total = NULL, print_p = TRUE, print_CI = FALSE,
     combine_mean_sd = FALSE, combine_median_Q1_Q3 = FALSE, omit_factor_level = "none",
     omit_Nmiss_if_0 = TRUE, omit_missings_in_group = TRUE, percent_accuracy = 0.1,
     percent_suffix = "\%", row_percent = FALSE, Nmiss_row_percent = FALSE,

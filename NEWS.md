@@ -1,3 +1,8 @@
+# Version 2.1.24
+
+* Change default for print_CI to false.
+* Fix CI abbreviations in console printing.
+
 # Version 2.1.23
 
 * Change default decimal accuracies.
