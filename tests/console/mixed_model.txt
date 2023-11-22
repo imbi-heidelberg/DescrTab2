@@ -3,12 +3,12 @@
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
-  Variables     Male       Female     Divers     p       Test               
-1  distance                                                                 
-2    N           64         44         64         0.003   Mixed model ANOVA 
-3    mean        25         23         25                                   
-4    sd          2.9        2.4        2.9                                  
-5    median      25         23         25                                   
-6    Q1 - Q3     23 -- 26   21 -- 24   23 -- 27                             
-7    min - max   17 -- 32   16 -- 28   17 -- 32                             
+  Variable      Male         Feml         Dvrs           p       Test  
+1  dstn                                                                
+2    N           64           44           64             0.003   MiAn 
+3    mean        25           22.6         25.2                        
+4    sd          2.9          2.4          2.93                        
+5    median      24.8         22.8         25                          
+6    Q1 - Q3     23 -- 26.5   21 -- 24.2   23.1 -- 26.8                
+7    min - max   17 -- 31.5   16.5 -- 28   17 -- 31.7                  
 

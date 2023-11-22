@@ -1,10 +1,10 @@
 > descr(dat, "group") %>% print()
-  Variables     `1`           `2`           Total      p     Test  CI    CI_name
-1  extra                                                                        
-2    N           10            10            20         0.0~  Wel~  [-3~  CI fo~
-3    mean        0.75          2.3           1.5                                
-4    sd          1.8           2             2                                  
-5    median      0.35          1.8           0.95                               
-6    Q1 - Q3     -0.2 -- 2     0.8 -- 4.4    -0.05 --~                          
-7    min - max   -1.6 -- 3.7   -0.1 -- 5.5   -1.6 -- ~                          
+  Variable      `1`           `2`           Totl           p       Test 
+1  extr                                                                 
+2    N           10            10            20             0.079   tt2 
+3    mean        0.75          2.33          1.54                       
+4    sd          1.79          2             2.02                       
+5    median      0.35          1.75          0.95                       
+6    Q1 - Q3     -0.2 -- 2     0.8 -- 4.4    -0.05 -- 3.4               
+7    min - max   -1.6 -- 3.7   -0.1 -- 5.5   -1.6 -- 5.5                
 

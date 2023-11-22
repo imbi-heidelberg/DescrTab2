@@ -3,12 +3,12 @@
 Message: You specified paired tests and did not explicitly
 specify format_options$print_Total. print_Total is set to FALSE.
 
-  Variables     `Round Out`  `Narrow Angle` `Wide Angle` p       Test           
-1  var                                                                          
-2    N           22           22             22           0.003   Friedman test 
-3    mean        5.6          5.5            5.5                                
-4    sd          0.27         0.26           0.27                               
-5    median      5.5          5.5            5.4                                
-6    Q1 - Q3     5.5 -- 5.7   5.5 -- 5.6     5.4 -- 5.6                         
-7    min - max   5.1 -- 6.3   5 -- 6.3       5 -- 6.3                           
+  Variable      RndO           NrrA           WdAn           p       Test  
+1  var                                                                     
+2    N           22             22             22             0.003   Frie 
+3    mean        5.55           5.55           5.47                        
+4    sd          0.27           0.257          0.272                       
+5    median      5.51           5.53           5.43                        
+6    Q1 - Q3     5.46 -- 5.66   5.46 -- 5.61   5.36 -- 5.56                
+7    min - max   5.06 -- 6.31   5.01 -- 6.31   4.96 -- 6.26                
 
