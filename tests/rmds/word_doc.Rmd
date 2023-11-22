@@ -6,7 +6,9 @@ output: word_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+library(dplyr)
+library(forcats)
+library(tibble)
 library(magrittr)
 library(kableExtra)
 library(DescrTab2)
