@@ -15,13 +15,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(dpylr)
-library(forcats)
-library(tibble)
-library(magrittr)
-library(kableExtra)
 library(DescrTab2)
-library(knitr)
 ```
 
 
