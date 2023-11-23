@@ -9,7 +9,7 @@ pkgdown:
   extension: pdf
   title: Test choice tree
 
-output: html_document
+output: pdf_document
 
 vignette: >
   %\VignetteIndexEntry{Test choice tree}
