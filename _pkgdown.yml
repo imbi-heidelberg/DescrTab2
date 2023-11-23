@@ -1,1 +1,4 @@
-url: https://imbi-heidelberg.github.io/DescrTab2
+url: https://imbi-heidelberg.github.io/DescrTab2/
+template:
+  bootstrap: 5
+
