@@ -58,9 +58,9 @@ dataset for instructive purposes:
 library(dplyr, warn.conflicts = FALSE)
 library(forcats)
 set.seed(123)
-dat <- iris[, c("Species", "Sepal.Length")] %>%
-  mutate(animal = c("Mammal", "Fish") %>% rep(75) %>% factor()) %>%
-  mutate(food = c("fries", "wedges") %>% sample(150, TRUE) %>% factor())
+dat <- iris[, c("Species", "Sepal.Length")] |>
+  mutate(animal = c("Mammal", "Fish") |> rep(75) |> factor()) |>
+  mutate(food = c("fries", "wedges") |> sample(150, TRUE) |> factor())
 head(dat)
 ```
 
@@ -91,7 +91,7 @@ Rstudios autocomplete suggestions are very helpful when navigating this list.
 The `print` function returns a formatted version of this list, which you can also save and access using the same syntax.
 
 ```{r}
-my_table <- descr(dat) %>% print(silent=TRUE)
+my_table <- descr(dat) |> print(silent=TRUE)
 ```
 
 
@@ -130,12 +130,12 @@ There are a lot of different tests available. Check out the test_choice vignette
 Here are some different tests in action:
 
 ```{r}
-descr(dat %>% select(-"Species"), "animal", test_options = list(exact=TRUE, nonparametric=TRUE))
+descr(dat |> select(-"Species"), "animal", test_options = list(exact=TRUE, nonparametric=TRUE))
 ```
 
 
 ```{r}
-descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = list(nonparametric=TRUE))
+descr(dat |> select(c("Species", "Sepal.Length")), "Species", test_options = list(nonparametric=TRUE))
 ```
 
 ## Paired observations
@@ -143,9 +143,9 @@ descr(dat %>% select(c("Species", "Sepal.Length")), "Species", test_options = li
 In situations with paired data, the `group` variable usually denotes the timing of the measurement (e.g. "before" and "after" or "time 1", "time 2", etc.). In these scenarios, you need an additional index variable that specifies which observations from the different timepoints should be paired. The `test_options =list(paired=TRUE, indices = <Character name of index variable name or vector of indices>)` option can be used to specify the pairing indices, see the example below. DescrTab2 only works with data in "long format", see e.g. `?reshape` or `?tidyr::pivot_longer` for information on how to transoform your data from wide to long format.
 
 ```{r}
-descr(dat %>% mutate(animal = fct_recode(animal, Before="Fish", After="Mammal")) %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices=rep(1:75, each=2)))
+descr(dat |> mutate(animal = fct_recode(animal, Before="Fish", After="Mammal")) |> select(-"Species"), "animal", test_options = list(paired=TRUE, indices=rep(1:75, each=2)))
 
-descr(dat %>% mutate(animal = fct_recode(animal, Before="Fish", After="Mammal"), idx = rep(1:75, each=2)) %>% select(-"Species"), "animal", test_options = list(paired=TRUE, indices="idx" ))
+descr(dat |> mutate(animal = fct_recode(animal, Before="Fish", After="Mammal"), idx = rep(1:75, each=2)) |> select(-"Species"), "animal", test_options = list(paired=TRUE, indices="idx" ))
 ```
 
 ## Significant digits
@@ -173,7 +173,7 @@ Let's say you have a categorical variable, but for some reason it's levels are n
 ```{r}
 # Create example dataset
 dat2 <- iris
-dat2$cat_var <- c(1,2) %>% sample(150, TRUE) %>% factor()
+dat2$cat_var <- c(1,2) |> sample(150, TRUE) |> factor()
 dat2 <- dat2[, c("Species", "cat_var")]
 
 descr(dat2, "Species", summary_stats_cat=list(mean=DescrTab2:::.factormean))
@@ -234,7 +234,7 @@ custom_ttest <- list(
   }
 )
 
-descr(iris %>% select(-Species), test_options = list(test_override = custom_ttest))
+descr(iris |> select(-Species), test_options = list(test_override = custom_ttest))
 ```
 
 ## Supress the last factor level

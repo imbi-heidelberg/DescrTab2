@@ -1,11 +1,11 @@
 > descr(dat_kruskal.test, "group", test_options = c(nonparametric = TRUE)) %>%
 +   print()
-  Variables     Trt          Ctrl         Placebo      Total        p      Test 
+  Variable      Trt          Ctrl          Plcb         Totl         p     Test 
 1  var                                                                          
-2    N           5            4            5            14           0.68~  Kru~
-3    mean        2.8          3.2          2.8          2.9                     
-4    sd          0.29         0.79         0.74         0.61                    
-5    median      2.9          3.2          2.8          2.8                     
-6    Q1 - Q3     2.6 -- 3     2.5 -- 3.9   2.2 -- 3.4   2.5 -- 3.4              
-7    min - max   2.5 -- 3.2   2.4 -- 4     2 -- 3.7     2 -- 4                  
+2    N           5            4             5            14           0.6~  KW  
+3    mean        2.84         3.23          2.82         2.94                   
+4    sd          0.288        0.793         0.736        0.61                   
+5    median      2.9          3.25          2.8          2.85                   
+6    Q1 - Q3     2.6 -- 3     2.55 -- 3.9   2.2 -- 3.4   2.5 -- 3.4             
+7    min - max   2.5 -- 3.2   2.4 -- 4      2 -- 3.7     2 -- 4                 
 

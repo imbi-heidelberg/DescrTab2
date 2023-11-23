@@ -1,10 +1,10 @@
 > descr(dat) %>% print()
-  Variables       Total        p        Test                              
-1  gender                                                                 
-2    F             1557 (56%)   <0.001   Chi-squared goodness-of-fit test 
-3    M             1200 (44%)                                             
-4  party                                                                  
-5    Democrat      1246 (45%)   <0.001   Chi-squared goodness-of-fit test 
-6    Independent   566 (21%)                                              
-7    Republican    945 (34%)                                              
+  Variable Totl           p        Test  
+1 gndr                                   
+2 F         1557 (56.5%)   <0.001   chi1 
+3 M         1200 (43.5%)                 
+4 prty                                   
+5 Dmcr      1246 (45.2%)   <0.001   chi1 
+6 Indp      566 (20.5%)                  
+7 Rpbl      945 (34.3%)                  
 
