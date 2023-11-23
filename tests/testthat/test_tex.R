@@ -2,7 +2,7 @@
 
 test_that("knit a tex file with DescrTab2 tables", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
   suppressWarnings(expect_type(
     rmarkdown::render(
       "../rmds/tex_doc.Rmd",
