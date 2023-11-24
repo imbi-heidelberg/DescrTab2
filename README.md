@@ -1,5 +1,5 @@
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/imbi-heidelberg/DescrTab2/workflows/R-CMD-check/badge.svg)](https://github.com/imbi-heidelberg/DescrTab2/actions)
+[![R-CMD-check](https://github.com/imbi-heidelberg/DescrTab2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/imbi-heidelberg/DescrTab2/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/imbi-heidelberg/DescrTab2/branch/master/graph/badge.svg)](https://app.codecov.io/gh/imbi-heidelberg/DescrTab2)
 [![Github version](https://img.shields.io/github/r-package/v/imbi-heidelberg/DescrTab2/master?label=Github%20version%20%40master)](https://github.com/imbi-heidelberg/DescrTab2/tree/master)
 [![CRAN Version](https://www.r-pkg.org/badges/version/DescrTab2)](https://www.r-pkg.org/badges/version/DescrTab2)
