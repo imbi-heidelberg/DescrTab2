@@ -1,8 +1,6 @@
-
-
 test_that("knit a tex file with DescrTab2 tables", {
   skip_on_cran()
-  skip_on_ci()
+  # skip_on_ci()
   suppressWarnings(expect_type(
     rmarkdown::render(
       "../rmds/tex_doc.Rmd",
@@ -13,7 +11,6 @@ test_that("knit a tex file with DescrTab2 tables", {
     "character"
   ))
 })
-
 
 test_that("Outputformat .tex produces no errors",{
   expect_error(capture_output(descr(
