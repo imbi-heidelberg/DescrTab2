@@ -1,3 +1,7 @@
+# Version 2.1.25
+
+* Throw an error if a group level is called "Total", "Variable", "p", "test_name", "CI", or "CI_name".
+
 # Version 2.1.24
 
 * Change default for print_CI to false.

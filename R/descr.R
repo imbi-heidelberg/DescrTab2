@@ -401,6 +401,9 @@ descr <-
 
       group_levels <- levels(group_var)
       names(group_levels) <- group_levels
+      if (any(c("Total", "Variable", "p", "test_name", "CI", "CI_name") %in% group_levels)) {
+        stop("Your group variable may not contain the levels named 'Total', 'Variable', 'p', 'test_name', 'CI', or 'CI_name'. Please rename the levels in your group variable.")
+      }
     } else {
       group_var <- NULL
       group_levels <- NULL
@@ -440,6 +443,10 @@ descr <-
     # Input option cleaning (except format_options, which were cleaned in the beginning)
     ## If options lists were passed as named named vectors, coerce to list
     group_labels %<>% as.list()
+
+    if (any(c("Total", "Variable", "p", "test_name", "CI", "CI_name") %in% group_labels)) {
+      stop("Your group labels may not contain the names 'Total', 'Variable', 'p', 'test_name', 'CI', or 'CI_name'. Please rename the levels in your group variable.")
+    }
 
     var_options <- lapply(var_options, as.list)
 
