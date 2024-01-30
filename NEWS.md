@@ -1,3 +1,7 @@
+# Version 2.1.26
+
+* Properly escape < and > if they appear in the column headings in LaTeX tables.
+
 # Version 2.1.25
 
 * Throw an error if a group level is called "Total", "Variable", "p", "test_name", "CI", or "CI_name".

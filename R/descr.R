@@ -1374,8 +1374,10 @@ if ("CI_name" %in% names(tibl)) {
 
   alig <- paste0(c("l", rep("c", ncol(tibl) - 1)), collapse = "")
   alig2 <- paste0(c("l", rep("c", ncol(tibl) - 1)))
-  actual_colnames <- names(tibl[!indx_varnames, ])
-
+  actual_colnames <- names(tibl[!indx_varnames, ]) |>
+    as_tibble() |>
+    escape_latex_symbols(numEscapes = 2) |>
+    pull(value)
 
   N_numbers <-
     c("", paste0("(N=", DescrPrintObj[["group"]][["lengths"]][DescrPrintObj[["group_labels"]] %in% names(tibl)], ")"))
@@ -1424,7 +1426,7 @@ if ("CI_name" %in% names(tibl)) {
     ) %>%
     column_spec(1, width = paste0(width + 1, "em")) %>%
     kableExtra::pack_rows(index = lengths, latex_gap_space = "0.5cm", escape = FALSE) %>%
-    add_header_above(actual_colnames, line = FALSE, align = alig2) %>%
+    add_header_above(actual_colnames, line = FALSE, align = alig2, escape = FALSE) %>%
     kable_styling(
       latex_options = "repeat_header",
       repeat_header_continued = FALSE
